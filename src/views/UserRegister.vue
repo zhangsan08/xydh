@@ -89,12 +89,6 @@ export default {
                 this.$router.push({name:'SetSite'})
               }
             });
-            // this.$notify({
-            //   title: "注册成功!",
-            //   message: `您的小站链接为</br><a target="_blank" href="/${res.data.name}">https://xydh.fun/${res.data.name}</a> </br></br> <a href='/u/login'>点击登录网站后台管理您的导航页</a>`,
-            //   type: "success",
-            //   dangerouslyUseHTMLString: "true"
-            // });
           }
         })
         .catch(error => {

@@ -3,8 +3,8 @@
 		<p>用户: {{ username }}</p>
 		<p>siteName: {{ sitename }}</p>
 		<p>siteInfo: {{ siteinfo }}</p>
-		<li v-for="link in links" :key="link.id">
-			<el-card :span="12" shadow="hover">
+		<li class="linkcard" v-for="link in links" :key="link.id">
+			<el-card :span="12" shadow="hover"  @click.native="go(link.url)">
 					{{ link.name }}
 			</el-card>
 		</li>
@@ -37,6 +37,9 @@ export default {
 				this.links = res.data
 			})
 		},
+		go(url){
+			window.open(url,"target")
+		}
 	},
 	beforeMount() {
 		this.load()
@@ -45,4 +48,5 @@ export default {
 </script>
 
 <style>
+
 </style>

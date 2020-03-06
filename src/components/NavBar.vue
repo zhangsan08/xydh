@@ -1,8 +1,6 @@
 <template>
   <el-menu class="el-menu-demo" mode="horizontal" router>
     <el-menu-item index="/">Home</el-menu-item>
-    <el-menu-item index="/admin2/">admin2</el-menu-item>
-    <el-menu-item index="/u/register/">register</el-menu-item>
     <el-menu-item index="/u/login/">login</el-menu-item>
     <el-menu-item index="/set/site/">SiteSet</el-menu-item>
     <el-menu-item index="/set/link/">LinkSet</el-menu-item>

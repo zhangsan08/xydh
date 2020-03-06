@@ -53,8 +53,6 @@ export default {
               message: res.msg
             });
           } else {
-            // API.currentUser = res.data.name
-            // console.log("用户"+API.currentUser+"登入")
             this.$router.push({name:'SetSite'})
             this.$notify({
               title: "登录成功!",
