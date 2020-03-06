@@ -81,12 +81,20 @@ export default {
               message: res.msg
             });
           } else {
-            this.$notify({
-              title: "注册成功!",
-              message: `您的小站链接为</br><a target="_blank" href="/${res.data.name}">https://xydh.fun/${res.data.name}</a> </br></br> <a href='/u/login'>点击登录网站后台管理您的导航页</a>`,
-              type: "success",
-              dangerouslyUseHTMLString: "true"
+            this.$alert('', '注册成功', {
+              confirmButtonText: '点击进入控制台',
+              message: '您的小站链接为 https://xydh.fun/'+this.registerForm.name+"  访问此链接无需登录, 方便您查看、分享",
+              type: 'success',
+              callback: () => {
+                this.$router.push({name:'SetSite'})
+              }
             });
+            // this.$notify({
+            //   title: "注册成功!",
+            //   message: `您的小站链接为</br><a target="_blank" href="/${res.data.name}">https://xydh.fun/${res.data.name}</a> </br></br> <a href='/u/login'>点击登录网站后台管理您的导航页</a>`,
+            //   type: "success",
+            //   dangerouslyUseHTMLString: "true"
+            // });
           }
         })
         .catch(error => {

@@ -1,5 +1,5 @@
 <template>
-	<div class="home" >
+	<div class="links" >
 		<li v-for="link in links" :key="link.id">
 			<el-card :span="12" shadow="hover">
 					{{ link.name }}
@@ -32,10 +32,10 @@ export default {
 }
 </script>
 
-<style>
-	.card{
+<style scoped>
+	/* .card{
 		width: 100px;
-	}
+	} */
 	li {
 		float: left;
 		list-style:none; 

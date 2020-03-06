@@ -6,7 +6,7 @@
       </el-form-item>
       
       <el-form-item label="密码" prop="pass">
-        <el-input type="password" v-model="loginForm.password" autocomplete="off"></el-input>
+        <el-input type="password" v-model="loginForm.password" autocomplete="off" @keyup.enter.native="submitForm('loginForm')"></el-input>
       </el-form-item>
       
       <el-form-item>
@@ -58,7 +58,7 @@ export default {
             this.$router.push({name:'SetSite'})
             this.$notify({
               title: "登录成功!",
-              message: `${res.data.name}您好，进入后台管理页面`,
+              message: `${res.data.name}您好,欢迎进入控制台`,
               type: "success",
             });
           }

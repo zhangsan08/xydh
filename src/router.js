@@ -33,9 +33,9 @@ export default new Router({
             component: () => import('./views/SiteSet.vue')
         },
         {
-            path: '/set/links',
-            name: 'SetLinks',
-            component: () => import('./views/UserLogin.vue')
+            path: '/set/link',
+            name: 'SetLink',
+            component: () => import('./views/LinkSet.vue')
         },
         
     ]

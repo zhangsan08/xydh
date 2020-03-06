@@ -2,6 +2,7 @@
     <div>
         当前用户: {{ username }}
         用户id: {{ userid }}
+        <p>您的专属链接 <a :href="'/'+username">xydh.fun/{{username}}</a></p>
         <el-form :model="SiteForm">
             <el-form-item label="站点名">
                 <el-input type="text" v-model="SiteForm.name" minlength="2" maxlength="10"></el-input>
@@ -11,12 +12,17 @@
                 <el-input type="text" v-model="SiteForm.info" minlength="0" maxlength="100"></el-input>
             </el-form-item>
             
-            
-            <el-form-item>
-                <el-button type="primary" @click="updateSite()">更新站点信息</el-button>
-            </el-form-item>
+            <el-popconfirm
+            confirmButtonText='OK'
+            cancelButtonText='取消'
+            icon="el-icon-info"
+            iconColor="red"
+            title="确定更新站点信息吗"
+            @onConfirm="updateSite()"
+            >
+            <el-button slot="reference" type="primary">更新站点信息</el-button>
+            </el-popconfirm>
         </el-form>
-        
     </div>
 </template>
 
@@ -32,8 +38,8 @@ export default {
             username: "未登录",
             LoginCode: -1,
             SiteForm: {
-                name: "123",
-                info: "123",
+                name: "未登录",
+                info: "未登录",
             },
         }
     },
@@ -43,7 +49,7 @@ export default {
                 this.LoginCode = res.code
                 if (this.LoginCode > 0) {
                     alert("未登录")
-                    this.$router.push({name:'Home'})
+                    this.$router.push({name:'ULogin'})
                 }else{  
                     this.userid = res.data.id
                     this.username = res.data.name
@@ -65,12 +71,10 @@ export default {
                     message: res.msg
                     });
                 } else {
-                    // API.currentUser = res.data.name
-                    // console.log("用户"+API.currentUser+"登入")
                     this.$router.push({name:'SetSite'})
                     this.$notify({
-                    title: "信息已更新😊",
-                    message: `${res.data.name}您好，进入后台管理页面`,
+                    title: "更新完成😊",
+                    // message: `${res.data.name}您好，进入后台管理页面`,
                     type: "success",
                     });
                 }

@@ -5,6 +5,7 @@
     <el-menu-item index="/u/register/">register</el-menu-item>
     <el-menu-item index="/u/login/">login</el-menu-item>
     <el-menu-item index="/set/site/">SiteSet</el-menu-item>
+    <el-menu-item index="/set/link/">LinkSet</el-menu-item>
     <el-menu-item @click="logout">Logout</el-menu-item>
 
   </el-menu>

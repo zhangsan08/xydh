@@ -1,6 +1,8 @@
 <template>
-	<div class="home" >
-
+	<div>
+		<p>用户: {{ username }}</p>
+		<p>siteName: {{ sitename }}</p>
+		<p>siteInfo: {{ siteinfo }}</p>
 		<li v-for="link in links" :key="link.id">
 			<el-card :span="12" shadow="hover">
 					{{ link.name }}
@@ -11,18 +13,27 @@
 
 <script>
 
-import * as API from '@/api/link/'
+import * as LinkAPI from '@/api/link/'
+import * as SiteAPI from '@/api/site/'
 
 export default {
 	name: 'ShowSite',
 	data(){
 		return{
+			username: "",
+			sitename: "",
+			siteinfo: "",
 			links: [],
 		}
 	},
 	methods: {
 		load(){
-			API.getLinks(this.$route.params.username).then((res) => {
+			this.username = this.$route.params.username
+			SiteAPI.getSite(this.$route.params.username).then((res) => {
+				this.sitename = res.data.name
+				this.siteinfo = res.data.info
+			})
+			LinkAPI.getLinks(this.$route.params.username).then((res) => {
 				this.links = res.data
 			})
 		},
@@ -33,13 +44,5 @@ export default {
 }
 </script>
 
-<style >
-	.card{
-		width: 100px;
-	}
-	li {
-		float: left;
-		list-style:none; 
-		cursor: pointer;
-	}
+<style>
 </style>
