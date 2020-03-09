@@ -1,24 +1,24 @@
 <template>
-  <div class="container">
-    <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="100px" class="demo-loginForm">
-      <el-form-item label="用户名" prop="name">
-        <el-input type="text" placeholder="" v-model="loginForm.name" minlength="5" maxlength="15"></el-input>
-      </el-form-item>
-      
-      <el-form-item label="密码" prop="pass">
-        <el-input type="password" v-model="loginForm.password" autocomplete="off" @keyup.enter.native="submitForm('loginForm')"></el-input>
-      </el-form-item>
-      
-      <el-form-item>
-        <el-row :gutter="20">
-          <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
-          <el-button ><a href="/u/register/">注册</a></el-button>
-        </el-row>
-        
-      </el-form-item>
-    </el-form>
-    
-  </div>
+    <div class="loginForm">
+
+        <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="100px" class="demo-loginForm">
+            
+            <el-form-item label="用户名" prop="name">
+            <el-input type="text" placeholder="" v-model="loginForm.name" minlength="5" maxlength="15"></el-input>
+            </el-form-item>
+            
+            <el-form-item label="密码" prop="pass">
+            <el-input type="password" v-model="loginForm.password" autocomplete="off" @keyup.enter.native="submitForm('loginForm')"></el-input>
+            </el-form-item>
+            
+            <el-form-item>
+                    <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+                    <el-button ><a href="/u/register/">注册</a></el-button>
+            </el-form-item>
+            
+        </el-form>
+
+    </div>
 </template>
 
 <script>
@@ -53,7 +53,7 @@ export default {
               message: res.msg
             });
           } else {
-            this.$router.push({name:'SetSite'})
+            this.$router.push({name:'Me'})
             this.$notify({
               title: "登录成功!",
               message: `${res.data.name}您好,欢迎进入控制台`,
@@ -82,12 +82,11 @@ export default {
 };
 </script>
 
+
 <style scoped>
-.container {
-  /* height: 200px; */
-  top: 100px;
-  align-self: auto;;
-  max-width: 2080px;
-  position: absolute;
-}
+  .loginForm { 
+    min-width: 200px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
 </style>

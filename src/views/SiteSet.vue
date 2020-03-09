@@ -1,26 +1,17 @@
 <template>
-    <div>
-        当前用户: {{ username }}
-        用户id: {{ userid }}
-        <p>您的专属链接 <a :href="'/'+username">xydh.fun/{{username}}</a></p>
+    <div class="siteForm">
+        <p>热度: {{ userview }} [后期推出排行榜功能]</p>
         <el-form :model="SiteForm">
             <el-form-item label="站点名">
-                <el-input type="text" v-model="SiteForm.name" minlength="2" maxlength="10"></el-input>
+                <el-input type="text" v-model="SiteForm.name" minlength="2" maxlength="10" placeholder="2-10字符"></el-input>
             </el-form-item>
             
             <el-form-item label="站点简介">
-                <el-input type="text" v-model="SiteForm.info" minlength="0" maxlength="100"></el-input>
+                <el-input type="text" v-model="SiteForm.info" minlength="0" maxlength="100" placeholder="可为空"></el-input>
             </el-form-item>
             
-            <el-popconfirm
-            confirmButtonText='OK'
-            cancelButtonText='取消'
-            icon="el-icon-info"
-            iconColor="red"
-            title="确定更新站点信息吗"
-            @onConfirm="updateSite()"
-            >
-            <el-button slot="reference" type="primary">更新站点信息</el-button>
+            <el-popconfirm confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更新站点信息吗" @onConfirm="updateSite()">
+                <el-button slot="reference" type="primary">更新站点信息</el-button>
             </el-popconfirm>
         </el-form>
     </div>
@@ -28,39 +19,28 @@
 
 <script>
 
-import * as UserAPI from '@/api/user/'
+// import * as UserAPI from '@/api/user/'
 import * as SiteAPI from '@/api/site/'
 
 export default {
+    props:["userID"],
     data() {
         return {
-            userid: 0,
-            username: "未登录",
-            LoginCode: -1,
+            uid: "",
+            userview: 0,
             SiteForm: {
-                name: "未登录",
-                info: "未登录",
+                name: "",
+                info: "",
             },
         }
     },
     methods: {
-        getUser(){
-            UserAPI.UserMe().then((res) => {
-                this.LoginCode = res.code
-                if (this.LoginCode > 0) {
-                    alert("未登录")
-                    this.$router.push({name:'ULogin'})
-                }else{  
-                    this.userid = res.data.id
-                    this.username = res.data.name
-                    this.getSite()
-                }
-            })
-        },
         getSite(){
-            SiteAPI.getSitebyID(this.userid).then((res) =>{
+            this.uid = this.userID,
+            SiteAPI.getSitebyID(this.uid).then((res) =>{
                 this.SiteForm.name = res.data.name
                 this.SiteForm.info = res.data.info
+                this.userview = res.data.view
             })
         },
         updateSite(){
@@ -71,7 +51,7 @@ export default {
                     message: res.msg
                     });
                 } else {
-                    this.$router.push({name:'SetSite'})
+                    this.$router.push({name:'Me'})
                     this.$notify({
                     title: "更新完成😊",
                     // message: `${res.data.name}您好，进入后台管理页面`,
@@ -84,9 +64,33 @@ export default {
     components:{
 
     },
-    beforeMount() {
-        this.getUser()
+    // created(){
+    //     console.log("创建完成：");
+    //     // this.getSite()
+    // },
+    // beforeMount() {
+    //     console.log("挂载前：");
+    //     // this.getSite()
+    // },
+    // mounted() {
+    //     console.log("挂载完成：");
+    //     // this.getSite()
+    // },
+    watch: {
+        userID: function() {
+            this.uid = this.userID,
+            this.getSite()
+        },
     }
 }
 
 </script>
+
+<style scoped>
+.siteForm {
+    min-width: 400px;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+</style>

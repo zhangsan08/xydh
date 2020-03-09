@@ -1,29 +1,28 @@
 <template>
-  <div class="container">
+<div class="regForm">
     <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px" class="demo-registerForm">
-      <el-form-item label="邀请码" prop="yuankey">
-        <el-input v-model="registerForm.yuankey"></el-input>
-      </el-form-item>
+        <el-form-item label="邀请码" prop="yuankey">
+            <el-input v-model="registerForm.yuankey"></el-input>
+        </el-form-item>
 
-      <el-form-item label="用户名" prop="name">
-        <p class="tips">tips: 用户名将决定您的专属访问链接<br>如用户xiaoming的链接为 http://xydh.fun/xiaoming</p>
-        <el-input type="text" placeholder="5~15字符 建议使用简短好记的字母组合" v-model="registerForm.name" minlength="5" maxlength="15" show-word-limit></el-input>
-      </el-form-item>
-      
-      <el-form-item label="密码" prop="pass">
-        <el-input type="password" v-model="registerForm.password" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="checkPass">
-        <el-input type="password" v-model="registerForm.password_confirm" autocomplete="off"></el-input>
-      </el-form-item>
+        <el-form-item label="用户名" prop="name">
+            <p class="tips">tips: 用户名将决定您的专属访问链接<br>如用户{{registerForm.name}}的链接为 http://xydh.fun/{{registerForm.name}}</p>
+            <el-input type="text" placeholder="5~15字符 建议使用简短好记的字母组合" v-model="registerForm.name" minlength="5" maxlength="15" show-word-limit></el-input>
+        </el-form-item>
+        
+        <el-form-item label="密码" prop="pass">
+            <el-input type="password" v-model="registerForm.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="checkPass">
+            <el-input type="password" v-model="registerForm.password_confirm" autocomplete="off"></el-input>
+        </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
-        <el-button type="danger" @click="resetForm('registerForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
-    
-  </div>
+        <el-form-item>
+            <el-button type="primary"   @click="submitForm('registerForm')" >注册</el-button>
+            <el-button type="danger"    @click="resetForm('registerForm')"  >重置</el-button>
+        </el-form-item>
+    </el-form> 
+</div>
 </template>
 
 <script>
@@ -60,7 +59,7 @@ export default {
     return {
       registerForm: {
         yuankey: "",
-        name: "",
+        name: "XiaoMing",
         password: "",
         password_confirm: ""
       },
@@ -86,7 +85,7 @@ export default {
               message: '您的小站链接为 https://xydh.fun/'+this.registerForm.name+"  访问此链接无需登录, 方便您查看、分享",
               type: 'success',
               callback: () => {
-                this.$router.push({name:'SetSite'})
+                this.$router.push({name:'ULogin'})
               }
             });
           }
@@ -116,12 +115,10 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  /* height: 200px; */
-  top: 100px;
-  align-self: auto;;
-  max-width: 2080px;
-  position: absolute;
+.regForm { 
+  min-width: 400px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 .tips{
   color: red;

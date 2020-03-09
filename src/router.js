@@ -13,6 +13,11 @@ export default new Router({
             component: Home,
         },
         {
+            path: '/Me',
+            name: 'Me',
+            component: () => import('./views/Me.vue')
+        },
+        {
             path: '/:username',
             name: 'ShowSite',
             component: () => import('./views/SiteShow.vue')
@@ -27,6 +32,7 @@ export default new Router({
             name: 'ULogin',
             component: () => import('./views/UserLogin.vue')
         },
+        
         {
             path: '/set/site',
             name: 'SetSite',

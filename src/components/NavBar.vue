@@ -5,7 +5,6 @@
     <el-menu-item index="/set/site/">SiteSet</el-menu-item>
     <el-menu-item index="/set/link/">LinkSet</el-menu-item>
     <el-menu-item @click="logout">Logout</el-menu-item>
-
   </el-menu>
 </template>
 
