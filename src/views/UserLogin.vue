@@ -13,7 +13,7 @@
             
             <el-form-item>
                     <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
-                    <el-button ><a href="/u/register/">注册</a></el-button>
+                    <el-button @click.native="reg()">注册</el-button>
             </el-form-item>
             
         </el-form>
@@ -78,6 +78,9 @@ export default {
         }
       });
     },
+    reg(){
+      this.$router.push('/u/register')
+    }
   }
 };
 </script>
@@ -87,6 +90,7 @@ export default {
   .loginForm { 
     min-width: 200px;
     max-width: 400px;
-    margin: 0 auto;
+    min-height: 600px;
+    margin: 200px auto;
   }
 </style>

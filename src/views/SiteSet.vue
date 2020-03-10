@@ -14,7 +14,10 @@
                 <el-button slot="reference" type="primary">更新站点信息</el-button>
             </el-popconfirm>
         </el-form>
+        <el-divider content-position="center">更多定制化功能开发ing</el-divider>
+        <el-divider content-position="center">欢迎提出你的意见</el-divider>
     </div>
+    
 </template>
 
 <script>

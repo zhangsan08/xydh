@@ -59,7 +59,7 @@ import * as API from '@/api/user/'
     top: 20px;
     right:30px;
     border-radius: 15px;
-    border: 2px solid yellow;
+    border: 1px solid yellow;
     box-shadow: 0 0 5px #666;
   }
 
@@ -79,7 +79,10 @@ import * as API from '@/api/user/'
     /* 定制 */
     bottom: 200px;
     background: rgb(18, 173, 240);
-    border: 2px solid red;
+    /* border: 2px solid red; */
     color:white;
+  }
+  .btn :hover{
+    color:yellow;
   }
 </style>

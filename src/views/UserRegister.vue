@@ -1,5 +1,7 @@
 <template>
 <div class="regForm">
+  <p>内测期间 功能仅供测试 账号可能删档[待定]</p>
+  <p>正式上线之后 内测人员享受第一批邀请码注册</p>
     <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px" class="demo-registerForm">
         <el-form-item label="邀请码" prop="yuankey">
             <el-input v-model="registerForm.yuankey"></el-input>
@@ -118,7 +120,8 @@ export default {
 .regForm { 
   min-width: 400px;
   max-width: 400px;
-  margin: 0 auto;
+  margin: 100px auto;
+  min-height: 400px;
 }
 .tips{
   color: red;

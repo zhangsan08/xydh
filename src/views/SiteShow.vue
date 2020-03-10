@@ -6,7 +6,7 @@
 		</div>
 
 			<div class="linksdiv">
-			<li class="linkdiv" v-for="link in links" :key="link.id" @click="go(link.url)">
+			<li class="link" v-for="link in links" :key="link.id" @click="go(link.url)">
 				<p>{{ link.name }}</p>
 			</li>
 			</div>
@@ -80,11 +80,11 @@ body {
 .linksdiv {
 	/* min-width: 350px; */
 	/* max-width: 1800px; */
-	margin: 0 0;
+	margin: 20px 0px;
 	padding: 0 auto;
 	display:inline-block;
 }
-.linkdiv {
+.link {
 		/* 大小布局 */
 		min-width: 160px;
 		height: 88px;
@@ -99,16 +99,12 @@ body {
 		/* 指针 */
 		cursor: pointer;
 		/* 边框 */
-		/* border:1px solid rgba(255, 255, 255, 0.1); */
-		/* border-radius:20px; */
+		border:1px solid rgba(255, 255, 0, 0.1);
+		border-radius:20px;
 		background:rgba(255, 255, 255, 0.1);
 }
-h1{
-	color: white;
-	text-align: center;
-}
 p {
-	margin: 0 auto;
+	margin: 10px auto;
 	color: white;
 	text-align: center;
 }
