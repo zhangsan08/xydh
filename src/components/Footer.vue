@@ -1,7 +1,7 @@
 <template>
     <footer class="footer">
-        <el-row>
-            <el-col :span="6">
+        <el-row type="flex" justify="space-around">
+            <el-col :span="6" class="hidden-md-and-down">
                 1
             </el-col>
             <el-col :span="6">
@@ -21,5 +21,6 @@
     footer {
         margin: 10px auto;
         text-align: center;
+        color: coral;
     }
 </style>

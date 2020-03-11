@@ -2,16 +2,22 @@
     <div class="me">
         <!-- <p>当前用户: {{ username }}</p> -->
         <!-- <p>用户id: {{ userID }}</p> -->
-        <p>您的专属链接 <a :href="'/'+username" target="_blank">xydh.fun/{{username}}</a></p>
-        
+        <p>您的专属链接: <el-link icon="el-icon-link" type="primary" target="_blank" :href="'/'+username">xydh.fun/{{username}}</el-link></p>
+        <p>访问此链接无需登录</p>
         <el-button @click="logout">登出</el-button>
         <div class="notice">
+            <el-divider>⚠️警告</el-divider>
 			<p>为了炫猿长久地发展，请勿上传涉政涉黄涉黑等违法犯罪网站。</p>
 			<p style="color:red;font-weight:bolder;">发现一条永久封号。</p>
 			<p>排行榜可任意查看用户数据。</p>
 			<p>举报者可获得邀请码奖励。</p>
+            <el-divider></el-divider>
 		</div>
         <el-tabs type="border-card" :stretch="true">
+            <el-tab-pane label="公告">
+                <Notice></Notice>
+            </el-tab-pane>
+
             <el-tab-pane label="小站配置">
                 <SiteSet :userID=userID></SiteSet>
             </el-tab-pane>
@@ -34,6 +40,7 @@
 <script>
 
 import * as UserAPI from '@/api/user/'
+import Notice from './Notice'
 import SiteSet from './SiteSet'
 import LinkSet from './LinkSet'
 import Other from './Other'
@@ -75,6 +82,7 @@ export default {
         }
     },
     components:{
+        Notice,
         SiteSet,
         LinkSet,
         Other,

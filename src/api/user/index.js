@@ -8,6 +8,8 @@ const UserRegister = form => axios.post('/api/v1/user/register', form).then(res 
 
 const UserLogin = form => axios.post('/api/v1/user/login', form).then(res => res.data)
 
+const UserUpdate = form => axios.put('/api/v1/user/update', form).then(res => res.data)
+
 const UserLogout = () => axios.delete('/api/v1/user/logout/').then(res => res.data)
 
 const UserMe = () => axios.get('/api/v1/user/me').then(res => res.data)
@@ -15,6 +17,7 @@ const UserMe = () => axios.get('/api/v1/user/me').then(res => res.data)
 export {
     UserRegister,
     UserLogin,
+    UserUpdate,
     UserLogout,
-    UserMe
+    UserMe,
 }

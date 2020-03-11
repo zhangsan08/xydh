@@ -6,8 +6,7 @@
           <a href="/"><i class="el-icon-s-home"></i></a>
           <a href="/Me"><i class="el-icon-user"></i></a>
     </div>
-
-    <div class="btn">
+    <!-- <div class="btn">
       <el-popover
         placement="top-start"
         title="实时线报爬虫"
@@ -19,10 +18,7 @@
           实时线报
         </p>
       </el-popover>
-    </div>
-
-
-
+    </div> -->
   </div>
 </template>
 
@@ -34,7 +30,6 @@ import * as API from '@/api/user/'
     methods: {
         logout(){
             API.UserLogout()
-            // alert('登出')
             this.$alert('即将回到主页', '注销成功', {
               // confirmButtonText: '点击进入控制台',
               type: 'success',
@@ -44,45 +39,26 @@ import * as API from '@/api/user/'
             });
         }
     },
+    components: {
+    }
   }
 </script>
 
 <style>
-  .nav{
-    position:fixed;
-    /* min-height: 1080px; */
-    background: rgba(0, 0, 0, 0.5);
-    max-width: 40px;
-    font-size: 30px;
-    color: white;
-    text-align: center;
-    top: 20px;
-    right:30px;
-    border-radius: 15px;
-    border: 1px solid yellow;
-    box-shadow: 0 0 5px #666;
-  }
-
-  .btn{
-    /* 通用 */
-    width: 20px;
-    font-size: 14px;
-    font-weight:500;
-    margin: 10px auto;
-    padding: 5px 5px;
-    cursor: pointer;
-    position:fixed;
-    box-shadow: 0 0 5px #666;
-    border-radius: 5px;
-    text-align: center;
-    right: -4px;
-    /* 定制 */
-    bottom: 200px;
-    background: rgb(18, 173, 240);
-    /* border: 2px solid red; */
-    color:white;
-  }
-  .btn :hover{
-    color:yellow;
-  }
+    .nav{
+        position:fixed;
+        /* min-height: 1080px; */
+        background: rgba(0, 0, 0, 0.5);
+        max-width: 26px;
+        font-size: 20px;
+        color: white;
+        text-align: center;
+        padding: 5px 0px;
+        /* 位置 */
+        top: 20px;
+        right:30px;
+        border-radius: 5px;
+        /* border: 2px solid yellow; */
+        box-shadow: 0 0 5px #666;
+    }
 </style>

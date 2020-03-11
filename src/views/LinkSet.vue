@@ -1,6 +1,6 @@
 <template>
 	<div class="links">
-		<el-row justify="center">
+		<el-row type="flex" justify="center">
 			<el-col :span="4">名称</el-col>
 			<el-col :span="6">链接</el-col>
 			<el-col :span="6">介绍</el-col>
@@ -8,7 +8,7 @@
 			<el-col :span="2">排序</el-col>
 			<el-col :span="3">操作</el-col>
 		</el-row>
-		<el-row :model="linkform" :gutter="1" justify="center">
+		<el-row :model="linkform" :gutter="1" type="flex" justify="center">
 			<el-col :span="4"><el-input type="text" v-model="linkform.name" 	minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
 			<el-col :span="6"><el-input type="text" v-model="linkform.url"		minlength="0" maxlength="50" placeholder="http开头" ></el-input></el-col>
 			<el-col :span="6"><el-input type="text" v-model="linkform.info"		minlength="0" maxlength="30" placeholder="鼠标放上时的提示语(可为空)"></el-input></el-col>
@@ -155,8 +155,6 @@ export default {
 
 <style scoped>
 .links {
-	/* min-width: 800px; */
-    /* max-width: 1680px; */
     margin: 0 auto;
     text-align: center;
 }

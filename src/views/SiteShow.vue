@@ -1,17 +1,184 @@
 <template>
-	<div class="siteshow">
+<div>
 		<div>
 			<p class="siteName">{{ sitename }}</p>
 			<p class="siteInfo">{{ siteinfo }}</p>
 		</div>
 
-			<div class="linksdiv">
-			<li class="link" v-for="link in links" :key="link.id" @click="go(link.url)">
-				<p>{{ link.name }}</p>
-			</li>
-			</div>
+	<el-row>
 
-	</div>
+		<el-col :xs="24" :sm="12" :md="8">
+			<div class="cat">
+				<div class="catname"><p>Favorite</p></div>
+				<div v-for="link in links" :key="link.id" @click="go(link.url)">
+					<el-col :span="8"><div class="link">{{link.name}}</div></el-col>
+				</div>
+			</div>
+		</el-col>		
+		<el-col :xs="24" :sm="12" :md="8">
+			<div class="cat">
+				<div class="catname"><p>FolderName</p></div>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+			</div>
+		</el-col>		
+		<el-col :xs="24" :sm="12" :md="8">
+			<div class="cat">
+				<div class="catname"><p>FolderName</p></div>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+			</div>
+		</el-col>		
+		<el-col :xs="24" :sm="12" :md="8">
+			<div class="cat">
+				<div class="catname"><p>FolderName</p></div>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+			</div>
+		</el-col>		
+		<el-col :xs="24" :sm="12" :md="8">
+			<div class="cat">
+				<div class="catname"><p>FolderName</p></div>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+			</div>
+		</el-col>		
+		<el-col :xs="24" :sm="12" :md="8">
+			<div class="cat">
+				<div class="catname"><p>FolderName</p></div>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+			</div>
+		</el-col>		
+		<el-col :xs="24" :sm="12" :md="8">
+			<div class="cat">
+				<div class="catname"><p>FolderName</p></div>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+			</div>
+		</el-col>		
+		<el-col :xs="24" :sm="12" :md="8">
+			<div class="cat">
+				<div class="catname"><p>FolderName</p></div>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+			</div>
+		</el-col>		
+		<el-col :xs="24" :sm="12" :md="8">
+			<div class="cat">
+				<div class="catname"><p>FolderName</p></div>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+					<el-col :span="8"><div class="link">百度</div></el-col>
+				</el-row>
+			</div>
+		</el-col>		
+
+	</el-row>
+
+</div>
 </template>
 
 <script>
@@ -33,6 +200,15 @@ export default {
 	methods: {
 		load(name){
 			SiteAPI.getSite(name).then((res) => {
+				if (res.code ><div class="link">1</div>){
+						this.$alert('', '走迷路了', {
+						confirmButtonText: '回主页',
+						callback: () => {
+							this.$router.push({name:'Home'}).catch(() => { })
+						}
+					});
+					return
+				}
 				this.sitename = res.data.name
 				this.siteinfo = res.data.info
 			})
@@ -55,7 +231,6 @@ export default {
 	watch: {
         userName: function() {
 			console.log("watch")
-            this.username = this.userName,
             this.load(this.username)
         },
     }
@@ -66,50 +241,43 @@ export default {
 body {
 	background-image: url(../assets/bg.jpg);
 	background-repeat: no-repeat;
-	/* background-size: 100% 100%; */
+	/* background-size: <div class="link">1</div>00% <div class="link">1</div>00%; */
 	background-size: cover;
-	background: black;
-	padding: 0 10px 0 10%;
+	/* background: black; */
 	text-align:center;
-}
-.siteshow {
-	min-height: 800px;
-	margin: 0 auto;
-	padding: 0px auto;
-}
-.linksdiv {
-	/* min-width: 350px; */
-	/* max-width: 1800px; */
-	margin: 20px 0px;
-	padding: 0 auto;
-	display:inline-block;
-}
-.link {
-		/* 大小布局 */
-		min-width: 160px;
-		height: 88px;
-		line-height:88px;
-		margin:10px 5px;
-		
-		float: left;
-		/* overflow:hidden; */
-		/* 文字 */
-		text-align: center;
-		font-size: 20px;
-		/* 指针 */
-		cursor: pointer;
-		/* 边框 */
-		border:1px solid rgba(255, 255, 0, 0.1);
-		border-radius:20px;
-		background:rgba(255, 255, 255, 0.1);
-}
-p {
-	margin: 10px auto;
 	color: white;
-	text-align: center;
 }
 .siteName {
+	color: white;
 	font-size: 20px;
-	font-weight: bolder;
+	font-weight: bold;
+	margin: 0 0;
+}
+.siteInfo {
+	color: white;
+	margin: 5px;
+}
+.cat {
+	background: rgba(0, 0, 0, 0.1);
+	/* background: red; */
+	height: 160px;
+	margin: 6px 10px;
+	padding: 10px;
+	overflow: auto;
+	border-radius: 15px;
+	/* 滚动条 */
+	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none; /* IE 10+ */
+}
+/* 滚动条 */
+::-webkit-scrollbar {
+	display: none; /* Chrome Safari */
+}
+.catname {
+	left: 0;
+}
+.link {
+	font-size: 12.6px;
+	margin: 5px;
 }
 </style>

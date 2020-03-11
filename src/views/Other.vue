@@ -9,20 +9,79 @@
         multiple>
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">导入书签，将Chrome浏览器导出的html文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">此功能未来开发</div>
+        <div class="el-upload__tip" slot="tip">仅限赞助用户</div>
     </el-upload>
     <el-divider content-position="center">密码修改</el-divider>
-    <div>
-        仅赞助1w元用户可改密码
-        <el-divider content-position="center">我去这么狗血吗？</el-divider>
-        <el-divider content-position="center">逗你的只是还懒得写代码</el-divider>
+    <div class="pwdForm">
+        <el-form :model="pwdForm" status-icon ref="pwdForm" label-width="100px">
+            
+            <el-form-item label="密码">
+                <el-input type="password" v-model="pwdForm.password"            autocomplete="off" minlength="6" maxlength="40"></el-input>
+            </el-form-item>
+            
+            <el-form-item label="确认密码">
+                <el-input type="password" v-model="pwdForm.password_confirm"    autocomplete="off" minlength="6" maxlength="40"></el-input>
+            </el-form-item>
+            
+            <el-popconfirm confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更改密码吗" @onConfirm="updatePWD()">
+                <el-button slot="reference" type="primary">更改密码</el-button>
+            </el-popconfirm>
+            
+        </el-form>
+
     </div>
 </div>
 
 </template>
 
+<script>
+import * as API from "@/api/user/";
+
+export default {
+  data() {
+    return {
+      pwdForm: {
+        password: "",
+        password_confirm: "",
+      },
+    };
+  },
+  methods: {
+    updatePWD() {
+        API.UserUpdate(this.pwdForm).then((res) => {
+          if (res.code > 0) {
+            this.$notify.error({
+              title: "更改失败",
+              message: res.msg
+            });
+          } else {
+            this.$router.push({name:'ULogin'})
+            this.$notify({
+              title: "更改成功!",
+              message: "请重新登录",
+              type: "success",
+            });
+          }
+        })
+        .catch(error => {
+          this.$notify.error({
+            title: "错误 请检查",
+            message: error
+          });
+        });
+    },
+  }
+};
+</script>
+
+
 <style scoped>
 .upload {
 	margin: 20px auto 50px;
 }
+  .pwdForm { 
+    min-width: 200px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
 </style>

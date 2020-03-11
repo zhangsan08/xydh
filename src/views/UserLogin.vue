@@ -1,7 +1,7 @@
 <template>
     <div class="loginForm">
 
-        <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="100px" class="demo-loginForm">
+        <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="100px">
             
             <el-form-item label="用户名" prop="name">
             <el-input type="text" placeholder="" v-model="loginForm.name" minlength="5" maxlength="15"></el-input>
@@ -90,7 +90,7 @@ export default {
   .loginForm { 
     min-width: 200px;
     max-width: 400px;
-    min-height: 600px;
-    margin: 200px auto;
+    min-height: 400px;
+    margin: 100px auto;
   }
 </style>
