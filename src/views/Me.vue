@@ -18,13 +18,15 @@
                 <Notice></Notice>
             </el-tab-pane>
 
-            <el-tab-pane label="小站配置">
+            <el-tab-pane label="小站配置" :lazy="false">
                 <SiteSet :userID=userID></SiteSet>
             </el-tab-pane>
 
-            <el-tab-pane label="文件夹" disabled="">none</el-tab-pane>
+            <el-tab-pane label="文件夹" :lazy="false">
+                <FolderSet :userID=userID></FolderSet>
+            </el-tab-pane>
 
-            <el-tab-pane label="书签管理">
+            <el-tab-pane label="书签管理" :lazy="false">
                 <LinkSet :userID=userID></LinkSet>
             </el-tab-pane>
 
@@ -42,6 +44,7 @@
 import * as UserAPI from '@/api/user/'
 import Notice from './Notice'
 import SiteSet from './SiteSet'
+import FolderSet from './FolderSet'
 import LinkSet from './LinkSet'
 import Other from './Other'
 
@@ -84,6 +87,7 @@ export default {
     components:{
         Notice,
         SiteSet,
+        FolderSet,
         LinkSet,
         Other,
     },

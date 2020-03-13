@@ -200,7 +200,7 @@ export default {
 	methods: {
 		load(name){
 			SiteAPI.getSite(name).then((res) => {
-				if (res.code ><div class="link">1</div>){
+				if (res.code > 0 ){
 						this.$alert('', '走迷路了', {
 						confirmButtonText: '回主页',
 						callback: () => {

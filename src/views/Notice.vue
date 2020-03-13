@@ -27,8 +27,6 @@
   export default {
     data() {
       return {
-        drawer: false,
-        count: 0,
       };
     },
     methods: {
