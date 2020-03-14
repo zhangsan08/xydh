@@ -4,22 +4,27 @@
         <el-collapse accordion>
             <el-collapse-item>
                 <template slot="title">
-                正在开发<el-badge :value="2" class="item"></el-badge>
+                正在开发<el-badge :value="8" class="item"></el-badge>
                 </template>
-                <li><el-checkbox>文件夹</el-checkbox></li>
+                <li><el-checkbox>下拉选择文件夹</el-checkbox></li>
+                <li><el-checkbox>排序</el-checkbox></li>
                 <li><el-checkbox>小图标</el-checkbox></li>
                 <li><el-checkbox>聚合搜索框</el-checkbox></li>
+                <li><el-checkbox>天气模块</el-checkbox></li>
                 <li><el-checkbox>讨论模块</el-checkbox></li>
                 <li><el-checkbox>线报模块</el-checkbox></li>
                 <li><el-checkbox>书签导入</el-checkbox></li>
             </el-collapse-item>
-            <el-collapse-item>
+            <div v-for="n in Notice" :key="n.name">
+                <el-collapse-item>
                 <template slot="title">
-                v0.1 特性 -2020.03.10<el-badge :value="2" class="item"></el-badge>
+                {{ n.name }}<el-badge :value="n.list.length" class="item"></el-badge>
                 </template>
-                <li>站点信息修改</li>
-                <li>书签增删改</li>
+                 <div v-for="l in n.list" :key="l.id">
+                     {{ l.li }}
+                 </div>
             </el-collapse-item>
+            </div>
         </el-collapse>
     </div>
 </template>
@@ -27,6 +32,10 @@
   export default {
     data() {
       return {
+        Notice: [
+          {"name":"v0.2 特性 -2020.03.14","list":[{"li":"文件夹功能上线"}],},
+          {"name":"v0.1 特性 -2020.03.10","list":[{"li":"站点基本信息修改"},{"li":"书签增删改"}],},
+        ],
       };
     },
     methods: {
