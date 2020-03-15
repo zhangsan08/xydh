@@ -1,18 +1,8 @@
 <template>
     <div class="me">
-        <!-- <p>当前用户: {{ username }}</p> -->
-        <!-- <p>用户id: {{ userID }}</p> -->
-        <p>您的专属链接: <el-link icon="el-icon-link" type="primary" target="_blank" :href="'/'+username">xydh.fun/{{username}}</el-link></p>
+        <p>您的专属链接:<i class="fa fa-link"></i><el-link type="primary" target="_blank" :href="'/'+username">xydh.fun/{{username}}</el-link></p>
         <p>访问此链接无需登录</p>
-        <el-button @click="logout">登出</el-button>
-        <div class="notice">
-            <el-divider>⚠️警告</el-divider>
-			<p>为了炫猿长久地发展，请勿上传涉政涉黄涉黑等违法犯罪网站。</p>
-			<p style="color:red;font-weight:bolder;">发现一条永久封号。</p>
-			<p>排行榜可任意查看用户数据。</p>
-			<p>举报者可获得邀请码奖励。</p>
-            <el-divider></el-divider>
-		</div>
+        <p>建议只在个人电脑登录本控制台,公共场所登录请记得点这<el-button type="" @click="logout">登出</el-button></p>
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="公告">
                 <Notice></Notice>
@@ -36,6 +26,16 @@
                 <Other></Other>
             </el-tab-pane>
         </el-tabs>
+
+         <div class="notice">
+            <el-divider>⚠️警告</el-divider>
+			<p>为了炫猿长久地发展，请勿上传涉政涉黄涉黑等违法犯罪网站。</p>
+			<p style="color:red;font-weight:bolder;">发现一条永久封号。</p>
+			<p>排行榜可任意查看用户数据。</p>
+			<p>举报者可获得邀请码奖励。</p>
+            <el-divider></el-divider>
+		</div>
+
     </div>
 </template>
 

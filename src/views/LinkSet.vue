@@ -5,7 +5,6 @@
             <el-collapse-item :name="Folder.id">
 				<!-- 这是文件夹名字 -->
                 <template slot="title">
-                {{ Folder.id }}
                 {{ Folder.name }}
                 </template>
 				<!-- 这是文件夹里的内容 -->
@@ -27,10 +26,11 @@
 						<el-col :span="6"><el-input type="text" v-model="linkform.info"		minlength="0" maxlength="30" placeholder="鼠标放上时的提示语(可为空)"></el-input></el-col>
 						<el-col :span="3"><P>{{ Folder.name }}</P></el-col>
 						<el-col :span="3">
-							<el-button type="success" icon="el-icon-plus" @click="createLink(Folder.id)" circle></el-button>
+							<el-button size="small" type="success" icon="el-icon-plus" @click="createLink(Folder.id)" circle></el-button>
 						</el-col>
 					</el-row>
 					<!-- 更删 -->
+					<el-divider></el-divider>
 					<el-row v-for="link in links" :key="link.id" :gutter="1">
 						<el-col :span="2"><el-input type="text" v-model="link.icon"></el-input></el-col>
 						<el-col :span="4"><el-input type="text" v-model="link.name"></el-input></el-col>
@@ -47,8 +47,10 @@
 							</el-select>
 						</el-col>
 						<el-col :span="3">
-							<el-button type="info" icon="el-icon-edit" @click="updateLink(Folder.id,link)" circle></el-button>
-							<el-button type="danger" icon="el-icon-delete" @click="deleteLink(Folder.id,link)" circle></el-button>
+							<el-button-group>
+								<el-button size="small" type="primary" icon="el-icon-edit" @click="updateLink(Folder.id,link)" ></el-button>
+								<el-button size="small" type="danger" icon="el-icon-delete" @click="deleteLink(Folder.id,link)" ></el-button>
+							</el-button-group>
 						</el-col>
 					</el-row>
 				</div>
@@ -90,11 +92,10 @@ export default {
 		},
 		getLinksin(fid){
 			// 这样只在折页打开时执行
-			// this.loading = true;
-			// setTimeout(() => {
-			// 	console.log("2s")
-			// 	this.loading = false;
-			// }, 1000);
+			this.loading = true;
+			setTimeout(() => {
+				this.loading = false;
+			}, 1000);
 			if(fid){
 				LinkAPI.getLinksbyFolderID(fid).then((res) =>{
 					this.links = res.data

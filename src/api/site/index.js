@@ -5,8 +5,11 @@ const getSitebyID = id => axios.get(`/api/v1/sitebyid/${id}`).then(res => res.da
 
 const updateSite = form => axios.put('/api/v1/site/', form).then(res => res.data)
 
+const getAll = id => axios.get(`/api/v1/all/${id}`).then(res => res.data)
+
 export {
     getSite,
     getSitebyID,
     updateSite,
+    getAll,
 }

@@ -4,7 +4,7 @@
 		<el-row type="flex" justify="center">
 			<el-col :span="6">名称</el-col>
 			
-			<el-col :span="6">图标</el-col>
+			<el-col :span="3">图标</el-col>
 		
 			<el-col :span="3">排序</el-col>
 			<el-col :span="3">操作</el-col>
@@ -12,23 +12,28 @@
 		<el-row :model="Folderform" :gutter="1" type="flex" justify="center">
 			<el-col :span="6"><el-input type="text" v-model="Folderform.name" 	minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
 			
-			<el-col :span="6"><el-input type="text" v-model="Folderform.icon"		minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
+			<el-col :span="3"><el-input type="text" v-model="Folderform.icon"		minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
 			
 			<el-col :span="3"><el-input type="text" v-model="Folderform.weight" 	placeholder="还没开发🙄" disabled></el-input></el-col>
 			<el-col :span="3">
-				<el-button type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button>
+				<el-button size="small" type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button>
 			</el-col>
 		</el-row>
+		<el-divider></el-divider>
 		<el-row v-for="Folder in Folders" :key="Folder.id" :gutter="1" type="flex" justify="center">
-			<el-col :span="6"><el-input type="text" v-model="Folder.name"	></el-input></el-col>
-		
-			<el-col :span="6"><el-input type="text" v-model="Folder.icon"	></el-input></el-col>
+				<el-col :span="6"><el-input type="text" v-model="Folder.name"	></el-input></el-col>
 			
-			<el-col :span="3"><el-input type="text" v-model="Folder.weight" 	disabled></el-input></el-col>
-			<el-col :span="3">
-				<el-button type="info" icon="el-icon-edit" @click="updateFolder(Folder)" circle></el-button>
-				<el-button type="danger" icon="el-icon-delete" @click="deleteFolder(Folder)" circle></el-button>
-			</el-col>
+				<el-col :span="3"><el-input type="text" v-model="Folder.icon"	></el-input></el-col>
+				
+				<el-col :span="3"><el-input type="text" v-model="Folder.weight" 	disabled></el-input></el-col>
+				<el-col :span="3">
+					<el-button-group>
+						<el-button size="small" type="primary" icon="el-icon-edit" @click="updateFolder(Folder)" ></el-button>
+						<el-button size="small" type="danger" icon="el-icon-delete" @click="deleteFolder(Folder)" ></el-button>
+					</el-button-group>
+
+					
+				</el-col>
 		</el-row>
 	</div>
 </template>
@@ -155,5 +160,7 @@ export default {
 </script>
 
 <style scoped>
-
+/* .folders{
+	margin: 2px auto;
+} */
 </style>

@@ -6,11 +6,9 @@
                 <template slot="title">
                 正在开发<el-badge :value="8" class="item"></el-badge>
                 </template>
-                <li><el-checkbox>下拉选择文件夹</el-checkbox></li>
                 <li><el-checkbox>排序</el-checkbox></li>
                 <li><el-checkbox>小图标</el-checkbox></li>
-                <li><el-checkbox>聚合搜索框</el-checkbox></li>
-                <li><el-checkbox>天气模块</el-checkbox></li>
+                <li><el-checkbox>音乐模块</el-checkbox></li>
                 <li><el-checkbox>讨论模块</el-checkbox></li>
                 <li><el-checkbox>线报模块</el-checkbox></li>
                 <li><el-checkbox>书签导入</el-checkbox></li>
@@ -33,8 +31,11 @@
     data() {
       return {
         Notice: [
-          {"name":"v0.2 特性 -2020.03.14","list":[{"li":"文件夹功能上线"}],},
-          {"name":"v0.1 特性 -2020.03.10","list":[{"li":"站点基本信息修改"},{"li":"书签增删改"}],},
+        {
+            "name":"v0.1 特性 -2020.03.10",
+            "list":
+            [{"li":"站点基本信息自定义"},{"li":"书签自定义"},{"li":"文件夹自定义"},{"li":"聚合搜索框"},{"li":"天气模块"},]
+        },
         ],
       };
     },

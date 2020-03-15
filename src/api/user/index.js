@@ -14,10 +14,13 @@ const UserLogout = () => axios.delete('/api/v1/user/logout/').then(res => res.da
 
 const UserMe = () => axios.get('/api/v1/user/me').then(res => res.data)
 
+const UserID = username => axios.get(`/api/v1/getuserid/${username}`).then(res => res.data)
+
 export {
     UserRegister,
     UserLogin,
     UserUpdate,
     UserLogout,
     UserMe,
+    UserID,
 }

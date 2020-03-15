@@ -2,7 +2,7 @@
   <div>
     <router-view></router-view>
     <RightBar></RightBar>
-    <Xianbao></Xianbao>
+    <!-- <Xianbao></Xianbao> -->
     <Footer></Footer>
     <el-backtop></el-backtop>
   </div>  
@@ -13,7 +13,7 @@
 
 //   import Header from './components/Header'
   import RightBar from './components/RightBar'
-  import Xianbao from './components/Xianbao'
+  // import Xianbao from './components/Xianbao'
   import Footer from './components/Footer'
   import 'element-ui/lib/theme-chalk/display.css';
 
@@ -21,7 +21,7 @@
     name: 'App',
     components: {
       RightBar,
-      Xianbao,
+      // Xianbao,
       Footer,
     }
   }

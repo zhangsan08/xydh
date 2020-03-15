@@ -1,26 +1,13 @@
 <template>
     <footer class="footer">
-        <el-row type="flex" justify="space-around">
-            <el-col :span="6" class="hidden-md-and-down">
-                1
-            </el-col>
-            <el-col :span="6">
-                2
-            </el-col>
-            <el-col :span="6">
-                3
-            </el-col>
-            <el-col :span="6">
-                4
-            </el-col>
-        </el-row>
+        <li>2020 炫猿导航</li>
     </footer>
 </template>
 
 <style scoped>
     footer {
-        margin: 10px auto;
+        margin: 80px auto 0;
         text-align: center;
-        color: coral;
+        color: white;
     }
 </style>
