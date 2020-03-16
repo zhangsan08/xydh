@@ -20,8 +20,8 @@
 				<div>
 					<el-col :span="8">
 						<div class="link tooltip">
-							<span class="tooltiptext">提示文本提示文本提示文本提示文本</span>
-								<p>1</p>
+							<span class="tooltiptext">还记得那个经典的炫猿吗？</span>
+								<p>炫猿旧版</p>
 						</div>
 					</el-col>
 				</div>
@@ -37,7 +37,7 @@
 					</div>
 					<div v-for="link in Folder.links" :key="link.id" @click="go(link.url)">
 						<el-col :span="8">
-							<div class="link tooltip">
+							<div class="link">
 								<span v-if="link.info" class="tooltiptext">{{ link.info }}</span>
 								<p v-if="link.icon"><i :class="'fa fa-'+link.icon"></i>&#160;{{ link.name }}</p>
 								<p v-else>{{ link.name }}</p>
@@ -179,7 +179,7 @@ body {
 .folder {
 	background: rgba(0, 0, 0, 0.1);
 	height: 160px;
-	margin: 10px 10px;
+	margin: 10px 20px;
 	padding: 10px;
 	overflow: auto;
 	border-radius: 20px;
@@ -198,22 +198,22 @@ body {
 }
 .link {
 	font-size: 12.6px;
-	margin: 6px 20px;
+	margin: 6px 10px;
 	cursor: pointer;
 }
 /* Tooltip 文本 */
-.tooltip .tooltiptext {
+.link .tooltiptext {
     visibility: hidden;
     /* background-color: black; */
     color: yellow;
 	font-size: 16px;
     /* 定位 */
 	bottom: 20px;
-	left: 0;
+	left: 20px;
     position: fixed;
     z-index: 1;
 }
-.tooltip:hover .tooltiptext {
+.link:hover .tooltiptext {
     visibility: visible;
 }
 </style>
