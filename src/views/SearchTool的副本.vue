@@ -3,42 +3,36 @@
         <el-row type="flex" justify="center">
             <!-- 搜索框改变大小 -->
             <el-col :xs="24" :sm="18" :md="12">
-                <el-col :span="21">
+                <el-dropdown placement="bottom" @command="selectClass">
+                    <span class="el-dropdown-link">
+                        更多<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command=0><i class="fa fa-paw"></i>常用</el-dropdown-item>
+                        <el-dropdown-item command=1><i class="fa fa-skyatlas"></i>资源</el-dropdown-item>
+                        <el-dropdown-item command=2><i class="fa fa-youtube-play"></i>电影</el-dropdown-item>
+                        <el-dropdown-item command=3><i class="fa fa-music"></i>音乐</el-dropdown-item>
+                        <el-dropdown-item command=4><i class="fa fa-book"></i>书籍</el-dropdown-item>
+                        <el-dropdown-item command=5><i class="fa fa-mortar-board"></i>学术</el-dropdown-item>
+                        <el-dropdown-item command=6><i class="fa fa-weixin"></i>社交</el-dropdown-item>
+                        <el-dropdown-item command=7><i class="fa fa-shopping-cart"></i>购物</el-dropdown-item>
+                        <el-dropdown-item command=8><i class="fa fa-wrench"></i>工具</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
                 <el-tabs stretch v-model="selected">
-                <el-tab-pane v-for="item in engines" :key="item.id" :name="item.id" lazy>
-                    <span slot="label">{{ item.name }}</span>
-                        <el-col :span="21">
-                            <el-input type="text" v-model="txt" :placeholder="item.text" @keyup.enter.native="Sou(item.url+txt)"></el-input>
-                        </el-col>
-                        <el-col :span="3">
-                            <el-button type="primary" icon="el-icon-search"  @click="Sou(item.url+txt)" circle=""></el-button>
-                        </el-col>
-                    </el-tab-pane>
-                                        <el-tab-pane name="999" disabled="">
-                            <span slot="label">
-                            <el-dropdown placement="bottom" @command="selectClass">
-                                <span class="el-dropdown-link">
-                                    <el-button size="" type="text" icon="el-icon-arrow-down" circle=""></el-button>
-                                </span>
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item command=0><i class="fa fa-paw"></i>常用</el-dropdown-item>
-                                    <el-dropdown-item command=1><i class="fa fa-skyatlas"></i>资源</el-dropdown-item>
-                                    <el-dropdown-item command=2><i class="fa fa-youtube-play"></i>电影</el-dropdown-item>
-                                    <el-dropdown-item command=3><i class="fa fa-music"></i>音乐</el-dropdown-item>
-                                    <el-dropdown-item command=4><i class="fa fa-book"></i>书籍</el-dropdown-item>
-                                    <el-dropdown-item command=5><i class="fa fa-mortar-board"></i>学术</el-dropdown-item>
-                                    <el-dropdown-item command=6><i class="fa fa-weixin"></i>社交</el-dropdown-item>
-                                    <el-dropdown-item command=7><i class="fa fa-shopping-cart"></i>购物</el-dropdown-item>
-                                    <el-dropdown-item command=8><i class="fa fa-wrench"></i>工具</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>                                
-                            </span>
-                    </el-tab-pane>
+                        <el-tab-pane v-for="item in engines" :key="item.id" :name="item.id" lazy>
+                            <span slot="label">{{ item.name }}</span>
+                            <el-row  type="flex" justify="space-between">
+                                <el-col :span="21">
+                                    <el-input type="text" v-model="txt" :placeholder="item.text" @keyup.enter.native="Sou(item.url+txt)"></el-input>
+                                </el-col>
+                                <el-col :span="3">
+                                    <el-button type="primary" icon="el-icon-search"  @click="Sou(item.url+txt)" circle=""></el-button>
+                                    <!-- <i class="el-icon-search"></i> -->
+                                </el-col>
+                            </el-row>
+                         </el-tab-pane>
                 </el-tabs>
-                </el-col>
-                <el-col :span="3">
-                
-                </el-col>
             </el-col>
         </el-row>
     </div>
@@ -51,12 +45,11 @@ export default {
             txt: "",
             selected: "0",
             engines: [
-                {"id":"0","name":"百度","text":"百度一下,你就知道","url":"https://www.baidu.com/s?wd="},
-                {"id":"1","name":"谷歌","text":"请自备工具","url":"https://www.google.com/search?q="},
-                {"id":"2","name":"查快递","text":"请直接输入单号","url":"https://m.kuaidi100.com/result.jsp?nu="},
-                {"id":"3","name":"B站","text":"干杯","url":"https://search.bilibili.com/all?keyword="},
-                {"id":"6","name":"音乐","text":"周杰伦","url":"http://music.migu.cn/v3/search?keyword="},
-                {"id":"7","name":"翻译","text":"","url":"https://cn.bing.com/dict/search?q="},
+               {"id":"0","name":"百度","text":"百度一下,你就知道","url":"https://www.baidu.com/s?wd="},
+               {"id":"1","name":"谷歌","text":"请自备工具","url":"https://www.google.com/search?q="},
+               {"id":"2","name":"查快递","text":"请直接输入单号","url":"https://m.kuaidi100.com/result.jsp?nu="},
+               {"id":"3","name":"B站","text":"干杯","url":"https://search.bilibili.com/all?keyword="},
+               {"id":"4","name":"Github","text":"全球最大男性社交平台","url":"https://github.com/search?q="},
             ],
             x: [
                 // 常用
@@ -65,8 +58,7 @@ export default {
                     {"id":"1","name":"谷歌","text":"请自备工具","url":"https://www.google.com/search?q="},
                     {"id":"2","name":"查快递","text":"请直接输入单号","url":"https://m.kuaidi100.com/result.jsp?nu="},
                     {"id":"3","name":"B站","text":"干杯","url":"https://search.bilibili.com/all?keyword="},
-                    {"id":"6","name":"音乐","text":"周杰伦","url":"http://music.migu.cn/v3/search?keyword="},
-                    {"id":"7","name":"翻译","text":"","url":"https://cn.bing.com/dict/search?q="},
+                    {"id":"6","name":"Github","text":"全球最大男性社交平台","url":"https://github.com/search?q="},
                 ],
                 //  资源
                 [
@@ -100,7 +92,6 @@ export default {
                     {"id":"0","name":"公众号","text":"","url":"https://weixin.sogou.com/weixin?type=2&query="},
                     {"id":"1","name":"微博","text":"","url":"https://s.weibo.com/weibo/"},
                     {"id":"4","name":"知乎","text":"","url":"https://www.zhihu.com/search?type=content&q="},
-                    {"id":"4","name":"Github","text":"全球最大男性社交平台","url":"https://github.com/search?q="},
                 ],
                 //  购物
                 [
@@ -141,19 +132,14 @@ export default {
 }
 /* 搜索框 */
 .el-input__inner {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: transparent;
   color: white;
   font-size: 11px;
   border-radius: 25px;
-  border-width: 0;
-  /* border-color: rgba(0, 0, 0, 0.5); */
+  border-color: rgba(0, 0, 0, 0.5);
 }
 .serach {
     color: white;
     margin: 100px auto 150px;
-}
-.searchBtn {
-    position: relative;
-    /* left: 400px; */
 }
 </style>

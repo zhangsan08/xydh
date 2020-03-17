@@ -84,7 +84,7 @@ export default {
           } else {
             this.$alert('', '注册成功', {
               confirmButtonText: '点击登录',
-              message: '您的小站链接为 https://xydh.fun/'+this.registerForm.name+"  访问此链接无需登录, 方便您查看、分享",
+              message: '您的小站链接为 xydh.fun/'+this.registerForm.name+"  访问此链接无需登录, 方便您查看、分享",
               type: 'success',
               callback: () => {
                 this.$router.push({name:'ULogin'})

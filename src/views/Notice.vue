@@ -6,8 +6,6 @@
                 <template slot="title">
                 正在开发<el-badge :value="8" class="item"></el-badge>
                 </template>
-                <li><el-checkbox>排序</el-checkbox></li>
-                <li><el-checkbox>小图标</el-checkbox></li>
                 <li><el-checkbox>音乐模块</el-checkbox></li>
                 <li><el-checkbox>讨论模块</el-checkbox></li>
                 <li><el-checkbox>线报模块</el-checkbox></li>
@@ -31,6 +29,11 @@
     data() {
       return {
         Notice: [
+        {
+            "name":"v0.2 特性 -2020.03.16",
+            "list":
+            [{"li":"聚合搜索框新增更多选项"},{"li":"分类和书签前都可增加小图标"},]
+        },
         {
             "name":"v0.1 特性 -2020.03.10",
             "list":

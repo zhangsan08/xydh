@@ -38,7 +38,7 @@
 					<div v-for="link in Folder.links" :key="link.id" @click="go(link.url)">
 						<el-col :span="8">
 							<div class="link">
-								<span v-if="link.info" class="tooltiptext">{{ link.info }}</span>
+								<span v-if="link.info" class="tooltiptext"><i class="fa fa-info-circle">{{ link.info }}</i></span>
 								<p v-if="link.icon"><i :class="'fa fa-'+link.icon"></i>&#160;{{ link.name }}</p>
 								<p v-else>{{ link.name }}</p>
 							</div>
@@ -204,12 +204,16 @@ body {
 /* Tooltip 文本 */
 .link .tooltiptext {
     visibility: hidden;
-    /* background-color: black; */
+    /* background-color: yellow; */
+	background: rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 5px #666;
     color: yellow;
 	font-size: 16px;
+	border-radius: 5px;
     /* 定位 */
 	bottom: 20px;
 	left: 20px;
+	padding: 5px 5px;
     position: fixed;
     z-index: 1;
 }

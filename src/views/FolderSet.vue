@@ -1,12 +1,19 @@
 <template>
     <div>
         <p>请以一条为单位更新 因为每次更新后会刷新列表</p>
+		<el-collapse>
+			<el-collapse-item title="添加图标的方法" name="1">
+				<div><p>打开<el-link target='_blank' rel='nofollow' href='https://fontawesome.dashgame.com/'>https://fontawesome.dashgame.com/</el-link>后下拉，找到想用的图标，图标后的英文就是图标代码</p>
+		<img src="https://i.loli.net/2020/03/17/ODYsLrRKwcjmTqx.png" width="400px"/>
+		</div>
+			</el-collapse-item>
+		</el-collapse>
+		<el-divider></el-divider>
 		<el-row type="flex" justify="center">
 			<el-col :span="6">名称</el-col>
 			
 			<el-col :span="3">图标</el-col>
-		
-			<el-col :span="3">排序</el-col>
+	
 			<el-col :span="3">操作</el-col>
 		</el-row>
 		<el-row :model="Folderform" :gutter="1" type="flex" justify="center">
@@ -14,7 +21,6 @@
 			
 			<el-col :span="3"><el-input type="text" v-model="Folderform.icon"		minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
 			
-			<el-col :span="3"><el-input type="text" v-model="Folderform.weight" 	placeholder="还没开发🙄" disabled></el-input></el-col>
 			<el-col :span="3">
 				<el-button size="small" type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button>
 			</el-col>
@@ -25,7 +31,6 @@
 			
 				<el-col :span="3"><el-input type="text" v-model="Folder.icon"	></el-input></el-col>
 				
-				<el-col :span="3"><el-input type="text" v-model="Folder.weight" 	disabled></el-input></el-col>
 				<el-col :span="3">
 					<el-button-group>
 						<el-button size="small" type="primary" icon="el-icon-edit" @click="updateFolder(Folder)" ></el-button>
@@ -159,8 +164,6 @@ export default {
 
 </script>
 
-<style scoped>
-/* .folders{
-	margin: 2px auto;
-} */
+<style>
+
 </style>
