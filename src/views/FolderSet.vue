@@ -1,15 +1,22 @@
 <template>
     <div>
 		<div class="tips">
-        <p>请以一条为单位更新 因为每次更新后会刷新列表</p>
-		<el-collapse>
-			<el-collapse-item title="添加图标的方法" name="1">
-				<div>
-					<p>打开<el-link target='_blank' rel='nofollow' href='https://fontawesome.dashgame.com/'>https://fontawesome.dashgame.com/</el-link>后下拉，找到想用的图标，图标后的英文就是图标代码</p>
-					<img src="https://i.loli.net/2020/03/17/ODYsLrRKwcjmTqx.png" width="400px"/>
-				</div>
-			</el-collapse-item>
-		</el-collapse>
+			<el-collapse>
+				<el-collapse-item title="使用注意事项[必读]" name="tips">
+					<div>
+						以下原则同样适用于书签的操作
+						<li><b>1. 以一条为单位更新</b> <span>因为每次更新后会刷新列表</span></li>
+						<li><b>2. 设计好文件夹顺序</b> <span>因为后续炫猿不准备推出排序功能(使用一段时间后你会发现, 顺序并没有那么重要，首页九宫格的布局会让你通过记忆快速定位到想去的网站)</span></li>
+					</div>
+				</el-collapse-item>
+				<el-collapse-item title="添加图标的方法" name="icon">
+					<div>
+						<p>打开<el-link target='_blank' rel='nofollow' href='https://fontawesome.dashgame.com/'>https://fontawesome.dashgame.com/</el-link>后下拉，</p>
+						<p>找到想用的图标，图标后的英文就是图标代码</p>
+						<img src="https://i.loli.net/2020/03/17/ODYsLrRKwcjmTqx.png" width="400px"/>
+					</div>
+				</el-collapse-item>
+			</el-collapse>
 		</div>
 
 		<el-divider></el-divider>
@@ -176,6 +183,7 @@ export default {
 .tips {
 	margin: 0 auto;
 	max-width: 500px;
+	text-align: left;
 }
 
 </style>
