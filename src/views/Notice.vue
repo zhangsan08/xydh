@@ -6,10 +6,9 @@
                 <template slot="title">
                 正在开发<el-badge :value="8" class="item"></el-badge>
                 </template>
-                <li><el-checkbox>音乐模块</el-checkbox></li>
                 <li><el-checkbox>讨论模块</el-checkbox></li>
                 <li><el-checkbox>线报模块</el-checkbox></li>
-                <li><el-checkbox>书签导入</el-checkbox></li>
+                <li><el-checkbox>密码访问</el-checkbox></li>
             </el-collapse-item>
             <div v-for="n in Notice" :key="n.name">
                 <el-collapse-item>

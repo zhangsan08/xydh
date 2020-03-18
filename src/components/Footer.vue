@@ -12,13 +12,6 @@
 </template>
 
 <style>
-.el-carousel__item h3 {
-    color: white;
-    font-size: 18px;
-    line-height: 200px;
-    margin: 0;
-}
-
   /* 奇偶页颜色不同
   .el-carousel__item:nth-child(2n) {
     background-color: #99a9bf;

@@ -62,8 +62,8 @@
 	<el-col :span="24">
 		<div class="paomadeng">
 			<el-carousel :interval="6000" autoplay="false" height="200px" arrow="always">
-				<el-carousel-item v-for="item in 10" :key="item">
-				<h3>炫猿推荐{{ item }}</h3>
+				<el-carousel-item v-for="item in 6" :key="item">
+				炫猿推荐{{ item }}
 				</el-carousel-item>
 			</el-carousel>
 		</div>
@@ -149,7 +149,7 @@ export default {
 				}else{
 					this.sitename = res.data.name
 					this.siteinfo = res.data.info
-
+					document.title = this.sitename
 				}
 			})
 		},
@@ -259,8 +259,16 @@ body {
 .link:hover .tooltiptext {
     visibility: visible;
 }
+
+.el-carousel__item {
+    color: white;
+    font-size: 13px;
+    line-height: 200px;
+    margin: 0;
+}
 .paomadeng {
 	margin: 0 auto;
+	/* line-height: 200px; */
 	max-width: 800px;
 }
 </style>

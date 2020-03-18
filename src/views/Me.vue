@@ -92,6 +92,7 @@ export default {
         Other,
     },
     beforeMount() {
+        document.title = "炫猿控制台"
         this.getUser()
     }
 }
