@@ -20,6 +20,7 @@
 	
 			<el-col :span="3">操作</el-col>
 		</el-row>
+		<!-- 添加 -->
 		<el-row :model="Folderform" :gutter="1" type="flex" justify="center">
 			<el-col :span="6"><el-input type="text" v-model="Folderform.name" 	minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
 			
@@ -29,6 +30,7 @@
 				<el-button size="small" type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button>
 			</el-col>
 		</el-row>
+		<!-- 修改 -->
 		<el-divider></el-divider>
 		<el-row v-for="Folder in Folders" :key="Folder.id" :gutter="1" type="flex" justify="center">
 				<el-col :span="6"><el-input type="text" v-model="Folder.name"	></el-input></el-col>

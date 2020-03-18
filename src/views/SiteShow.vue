@@ -58,6 +58,16 @@
 		</el-col>
 	</div>
 
+	<!-- 跑马灯 -->
+	<el-col :span="24">
+		<div class="paomadeng">
+			<el-carousel :interval="6000" autoplay="false" height="200px" arrow="always">
+				<el-carousel-item v-for="item in 10" :key="item">
+				<h3>炫猿推荐{{ item }}</h3>
+				</el-carousel-item>
+			</el-carousel>
+		</div>
+	</el-col>
 </div>
 </template>
 
@@ -248,5 +258,9 @@ body {
 }
 .link:hover .tooltiptext {
     visibility: visible;
+}
+.paomadeng {
+	margin: 0 auto;
+	max-width: 800px;
 }
 </style>

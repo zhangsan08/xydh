@@ -3,8 +3,8 @@
     <!-- <el-backtop target="#app" :visibility-height="100"></el-backtop> -->
     
     <div class="nav">
-          <a href="/"><i class="el-icon-s-home"></i></a>
-          <a href="/Me"><i class="el-icon-user"></i></a>
+          <a href="/"   target="_blank"><i class="el-icon-s-home"></i></a>
+          <a href="/Me" target="_blank"><i class="el-icon-user"></i></a>
     </div>
     <!-- <div class="btn">
       <el-popover
