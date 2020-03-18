@@ -1,53 +1,62 @@
 <template>
 <div>
+	<!-- <div class="img1 note" :style ="note">
+      123123
+	</div> -->
 	<div class="header">
 		<div id="tp-weather-widget"></div>
 		公告: 新炫猿上线啦 系兄弟就来砍我
 	</div>
+
+	<!-- 名称简介 -->
 	<div>
 		<p class="siteName">{{ sitename }}</p>
 		<p class="siteInfo">{{ siteinfo }}</p>
 	</div>
+
+	<!-- 搜索框 -->
 	<div>
 		<SearchTool></SearchTool>
 	</div>
 
-	<el-row>
+	<!-- 猿选 -->
+	<el-col :xs="24" :sm="12" :md="8">
+		<div class="folder">
+			<div class="foldername">
+				<p>猿选</p>
+			</div>
+			<div v-for="link in yuanxuan" :key="link.id" @click="go(link.url)">
+				<el-col :span="8">
+					<div class="link">
+						<span v-if="link.info" class="tooltiptext"><i class="fa fa-info-circle">{{ link.info }}</i></span>
+						<p v-if="link.icon"><i :class="'fa fa-'+link.icon"></i>&#160;{{ link.name }}</p>
+						<p v-else>{{ link.name }}</p>
+					</div>
+				</el-col>
+			</div>
+		</div>
+	</el-col>
 
+	<!-- 用户自定义内容 -->
+	<div  v-for="Folder in Folders" :key="Folder.id">
 		<el-col :xs="24" :sm="12" :md="8">
 			<div class="folder">
-				<div class="foldername"><p>猿选</p></div>
-				<div>
+				<div class="foldername">
+					<p v-if="Folder.icon"><i :class="'fa fa-'+Folder.icon"></i>{{Folder.name}}</p>
+					<p v-else>{{Folder.name}}</p>
+				</div>
+				<div v-for="link in Folder.links" :key="link.id" @click="go(link.url)">
 					<el-col :span="8">
-						<div class="link tooltip">
-							<span class="tooltiptext">还记得那个经典的炫猿吗？</span>
-								<p>炫猿旧版</p>
+						<div class="link">
+							<span v-if="link.info" class="tooltiptext"><i class="fa fa-info-circle">{{ link.info }}</i></span>
+							<p v-if="link.icon"><i :class="'fa fa-'+link.icon"></i>&#160;{{ link.name }}</p>
+							<p v-else>{{ link.name }}</p>
 						</div>
 					</el-col>
 				</div>
 			</div>
 		</el-col>
-
-		<div  v-for="Folder in Folders" :key="Folder.id">
-			<el-col :xs="24" :sm="12" :md="8">
-				<div class="folder">
-					<div class="foldername">
-						<p v-if="Folder.icon"><i :class="'fa fa-'+Folder.icon"></i>{{Folder.name}}</p>
-						<p v-else>{{Folder.name}}</p>
-					</div>
-					<div v-for="link in Folder.links" :key="link.id" @click="go(link.url)">
-						<el-col :span="8">
-							<div class="link">
-								<span v-if="link.info" class="tooltiptext"><i class="fa fa-info-circle">{{ link.info }}</i></span>
-								<p v-if="link.icon"><i :class="'fa fa-'+link.icon"></i>&#160;{{ link.name }}</p>
-								<p v-else>{{ link.name }}</p>
-							</div>
-						</el-col>
-					</div>
-				</div>
-			</el-col>
-		</div>		
-	</el-row>
+	</div>
 
 </div>
 </template>
@@ -63,11 +72,23 @@ export default {
 	props:["userName"],
 	data(){
 		return{
+			baseImg: "url(../assets/bg.jpg)",
+			bg: "https://www.baidu.com/img/baidu_resultlogo@2.png",
+			note: {
+				backgroundImage: "url(" + require("../assets/bg.jpg") + ") ",
+				backgroundPosition: "center center",
+				backgroundRepeat: "no-repeat",
+				backgroundSize: "cover",
+			},
 			userid: "",
 			username: "",
 			sitename: "",
 			siteinfo: "",
 			Folders: [],
+			yuanxuan: [
+				{"icon":"","name":"🙉炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
+				{"icon":"windows","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},
+			],
 		}
 	},
 	methods: {
@@ -99,9 +120,12 @@ export default {
 					this.userid = res.data.id
 					this.getSite(this.userid)
 					this.getAll(this.userid)
+					// 改变背景图片
+					// document.getElementsByTagName("body")[0].setAttribute("style","background-image: url(https://bing.ioliu.cn/v1/rand)");
 				}
 			})
 		},
+		// 取小站信息[名称、简介]
 		getSite(userid){
 			SiteAPI.getSitebyID(userid).then((res) => {
 				if (res.code > 0 ){
@@ -119,6 +143,7 @@ export default {
 				}
 			})
 		},
+		// 取所有书签[文件夹、书签]
 		getAll(userid){
 			SiteAPI.getAll(userid).then((res) => {
 				if (res.code > 0 ){
@@ -134,6 +159,7 @@ export default {
 				}
 			})
 		},
+		// 打开url
 		go(url){
 			window.open(url,"target")
 		}
@@ -148,24 +174,25 @@ export default {
 		}
 		this.getWeather()
 	},
-	watch: {
-        userName: function() {
-			console.log("watch")
-            this.load(this.username)
-        },
-    }
+	// watch: {
+    //     userName: function() {
+	// 		console.log("watch")
+    //         this.load(this.username)
+    //     },
+    // }
 }
 </script>
 
 <style>
 body {
 	background-image: url(../assets/bg.jpg);
+	background-color: black;
 	background-repeat: no-repeat;
 	background-size: 100%;
 	background-size: cover;
 	text-align:center;
 	font-size: 13px;
-	color: white;
+	color: rgb(255, 255, 255);
 }
 .header {
 	height: 50px;
@@ -177,12 +204,13 @@ body {
 	font-weight: bold;
 }
 .folder {
-	background: rgba(0, 0, 0, 0.1);
+	background: rgba(0, 0, 0, 0.3);
 	height: 160px;
 	margin: 10px 20px;
 	padding: 10px;
 	overflow: auto;
 	border-radius: 20px;
+	/* box-shadow: 1 1 1 white; */
 	/* 滚动条 */
 	scrollbar-width: none; /* Firefox */
 	-ms-overflow-style: none; /* IE 10+ */
@@ -195,6 +223,7 @@ body {
 	letter-spacing:10px;
 	font-size: 14px;
 	font-weight: bolder;
+	margin: 0 auto 6px;
 }
 .link {
 	font-size: 12.6px;

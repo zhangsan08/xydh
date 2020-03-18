@@ -55,8 +55,8 @@ import * as API from '@/api/user/'
         text-align: center;
         padding: 5px 0px;
         /* 位置 */
-        top: 20px;
-        right:30px;
+        top: 10px;
+        right:10px;
         border-radius: 5px;
         /* border: 2px solid yellow; */
         box-shadow: 0 0 5px #666;

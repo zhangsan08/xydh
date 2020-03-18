@@ -3,18 +3,21 @@
         <el-row type="flex" justify="center">
             <!-- 搜索框改变大小 -->
             <el-col :xs="24" :sm="18" :md="12">
-                <el-col :span="21">
                 <el-tabs stretch v-model="selected">
-                <el-tab-pane v-for="item in engines" :key="item.id" :name="item.id" lazy>
-                    <span slot="label">{{ item.name }}</span>
-                        <el-col :span="21">
-                            <el-input type="text" v-model="txt" :placeholder="item.text" @keyup.enter.native="Sou(item.url+txt)"></el-input>
+                    <!-- 搜索标签 -->
+                    <el-tab-pane v-for="item in engines" :key="item.id" :name="item.id" lazy>
+                        <span slot="label">{{ item.name }}</span>
+                        <el-col :span="23">
+                            <el-input type="text" v-model="txt" :placeholder="item.text" @keyup.enter.native="Sou(item.url+txt)">
+                                <span slot="append" type="text" @click="Sou(item.url+txt)"><i class="el-icon-search"></i></span>
+                            </el-input>
                         </el-col>
-                        <el-col :span="3">
+                        <!-- <el-col :span="3">
                             <el-button type="primary" icon="el-icon-search"  @click="Sou(item.url+txt)" circle=""></el-button>
-                        </el-col>
+                        </el-col> -->
                     </el-tab-pane>
-                                        <el-tab-pane name="999" disabled="">
+                    <!-- 下拉菜单 -->
+                    <el-tab-pane name="999" disabled="">
                             <span slot="label">
                             <el-dropdown placement="bottom" @command="selectClass">
                                 <span class="el-dropdown-link">
@@ -35,10 +38,6 @@
                             </span>
                     </el-tab-pane>
                 </el-tabs>
-                </el-col>
-                <el-col :span="3">
-                
-                </el-col>
             </el-col>
         </el-row>
     </div>
@@ -148,9 +147,19 @@ export default {
   border-width: 0;
   /* border-color: rgba(0, 0, 0, 0.5); */
 }
+/* 搜索按钮 */
+.el-input-group__append {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: gold;
+    font-size: 15px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-width: 0;
+    cursor: pointer;
+}
 .serach {
     color: white;
-    margin: 100px auto 150px;
+    margin: 100px 10px 150px;
 }
 .searchBtn {
     position: relative;

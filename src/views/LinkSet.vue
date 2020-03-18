@@ -120,6 +120,7 @@ export default {
 						message: "刷新列表",
 						duration: "800"
 					});
+					this.linkform = {id: "",fid: "",icon: "",name: "",url: "",info: "",}
 					this.getLinksin(fid)
 				}
 				})
