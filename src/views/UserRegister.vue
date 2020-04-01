@@ -1,7 +1,8 @@
 <template>
 <div class="regForm">
-  <p>内测期间 功能仅供测试 账号可能删档[待定]</p>
-  <p>正式上线之后 内测人员享受第一批邀请码注册</p>
+  <p>为了永久地为用户提供服务 炫猿采用邀请码注册制</p>
+  <p>邀请码的获取方式 目前考虑使用公众号合作的模式</p>
+  <p>如果你是自媒体号主。欢迎联系并注明来意xuanyuandaohang@126.com</p>
   
     <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px">
         <el-form-item label="邀请码" prop="yuankey">
@@ -9,7 +10,7 @@
         </el-form-item>
 
         <el-form-item label="用户名" prop="name">
-            <p class="tips">tips: 用户名将决定您的专属访问链接<br>如用户{{registerForm.name}}的链接为 http://xydh.fun/{{registerForm.name}}</p>
+            <p class="tips">tips: 用户名将决定您的专属访问链接<br>如用户{{registerForm.name}}的链接为 http://{{registerForm.name}}.xydh.fun/</p>
             <el-input type="text" placeholder="5~15字符 建议使用简短好记的字母组合" v-model="registerForm.name" minlength="5" maxlength="15" show-word-limit></el-input>
         </el-form-item>
         
@@ -131,7 +132,7 @@ export default {
           } else {
             this.$alert('', '注册成功', {
               confirmButtonText: '点击登录',
-              message: '您的小站链接为 xydh.fun/'+this.registerForm.name+"  访问此链接无需登录, 方便您查看、分享",
+              message: '您的小站链接为http://'+this.registerForm.name+'.xydh.fun'+'访问此链接无需登录, 方便您查看、分享',
               type: 'success',
               callback: () => {
                 this.$router.push({name:'ULogin'})
@@ -167,7 +168,7 @@ export default {
 .regForm { 
   min-width: 400px;
   max-width: 400px;
-  margin: 100px auto;
+  margin: 100px auto 200px;
   min-height: 400px;
 }
 .tips{

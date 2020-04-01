@@ -95,7 +95,7 @@ export default {
 			this.loading = true;
 			setTimeout(() => {
 				this.loading = false;
-			}, 1000);
+			}, 500);
 			if(fid){
 				LinkAPI.getLinksbyFolderID(fid).then((res) =>{
 					this.links = res.data
@@ -148,12 +148,12 @@ export default {
 					message: res.msg
 					});
 				} else {
-					this.$notify({
-					title: "更新成功!",
-					type: "success",
-					duration: "800"
-					});
 					this.getLinksin(fid)
+					this.$notify({
+						title: "更新成功!",
+						type: "success",
+						duration: "800"
+					});
 				}
 				})
 				.catch(error => {

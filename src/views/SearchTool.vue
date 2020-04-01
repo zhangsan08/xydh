@@ -54,7 +54,7 @@ export default {
                 {"id":"1","name":"谷歌","text":"请自备工具","url":"https://www.google.com/search?q="},
                 {"id":"2","name":"查快递","text":"请直接输入单号","url":"https://m.kuaidi100.com/result.jsp?nu="},
                 {"id":"3","name":"B站","text":"干杯","url":"https://search.bilibili.com/all?keyword="},
-                {"id":"6","name":"音乐","text":"周杰伦","url":"http://music.migu.cn/v3/search?keyword="},
+                {"id":"4","name":"网络流行语","text":"爷爷再也不用担心听不懂","url":"https://jikipedia.com/search?phrase="},
                 {"id":"7","name":"翻译","text":"","url":"https://cn.bing.com/dict/search?q="},
             ],
             x: [
@@ -64,14 +64,14 @@ export default {
                     {"id":"1","name":"谷歌","text":"请自备工具","url":"https://www.google.com/search?q="},
                     {"id":"2","name":"查快递","text":"请直接输入单号","url":"https://m.kuaidi100.com/result.jsp?nu="},
                     {"id":"3","name":"B站","text":"干杯","url":"https://search.bilibili.com/all?keyword="},
-                    {"id":"6","name":"音乐","text":"周杰伦","url":"http://music.migu.cn/v3/search?keyword="},
+                    {"id":"4","name":"网络流行语","text":"爷爷再也不用担心听不懂","url":"https://jikipedia.com/search?phrase="},
                     {"id":"7","name":"翻译","text":"","url":"https://cn.bing.com/dict/search?q="},
                 ],
                 //  资源
                 [
                     {"id":"0","name":"网盘","text":"","url":"http://www.rufengso.net/s/name/"},
                     {"id":"1","name":"福利吧","text":"","url":"https://fulibus.net/?s="},
-                    {"id":"1","name":"花瓣","text":"","url":"https://huaban.com/search/?q="},
+                    {"id":"2","name":"花瓣","text":"","url":"https://huaban.com/search/?q="},
                 ],
                 //  视频
                 [
@@ -79,7 +79,7 @@ export default {
                 ],
                 //  音乐
                 [
-                    {"id":"0","name":"咪咕音乐","text":"因为它可以听周杰伦","url":"http://music.migu.cn/v3/search?keyword="},
+                    {"id":"0","name":"咪咕音乐","text":"因为它可以听周杰伦","url":"http://music.taihe.com/search?key="},
                     {"id":"1","name":"MV下载","text":"灯社","url":"http://www.dengshe.com/?s="},
                 ],
                 //  书籍
@@ -89,7 +89,7 @@ export default {
                 ],
                 //  学术
                 [
-                    {"id":"0","name":"SCI-Hub","text":"请直接输入SCI文章地址","url":"https://sci-hub.shop/"},
+                    {"id":"0","name":"SCI-Hub","text":"请直接输入SCI/DOI文章地址 如https://doi.org/10.1094/MPMI-08-19-0239-IA","url":"https://sci-hub.shop/"},
                     {"id":"1","name":"百度学术","text":"","url":"https://xueshu.baidu.com/s?wd="},
                     {"id":"2","name":"知网","text":"","url":"http://kns.cnki.net/kns/brief/Default_Result.aspx?code=SCDB&kw="},
                     {"id":"3","name":"小木虫","text":"","url":"http://muchong.com/bbs/search.php?wd="},
@@ -98,8 +98,8 @@ export default {
                 [
                     {"id":"0","name":"公众号","text":"","url":"https://weixin.sogou.com/weixin?type=2&query="},
                     {"id":"1","name":"微博","text":"","url":"https://s.weibo.com/weibo/"},
-                    {"id":"4","name":"知乎","text":"","url":"https://www.zhihu.com/search?type=content&q="},
-                    {"id":"4","name":"Github","text":"全球最大男性社交平台","url":"https://github.com/search?q="},
+                    {"id":"2","name":"知乎","text":"","url":"https://www.zhihu.com/search?type=content&q="},
+                    {"id":"3","name":"Github","text":"全球最大男性社交平台","url":"https://github.com/search?q="},
                 ],
                 //  购物
                 [
@@ -112,7 +112,8 @@ export default {
                     {"id":"0","name":"地图","text":"","url":"https://ditu.amap.com/search?query="},
                     {"id":"1","name":"查快递","text":"请直接输入单号","url":"https://m.kuaidi100.com/result.jsp?nu="},
                     {"id":"2","name":"学做菜","text":"输入菜名","url":"http://www.xiachufang.com/search/?keyword="},
-                    {"id":"2","name":"翻译","text":"","url":"https://cn.bing.com/dict/search?q="},
+                    {"id":"3","name":"翻译","text":"","url":"https://cn.bing.com/dict/search?q="},
+                    {"id":"4","name":"网络流行语","text":"爷爷再也不用担心听不懂","url":"https://jikipedia.com/search?phrase="},
                 ],
             ]
         }
@@ -135,6 +136,10 @@ export default {
     color: white;
     font-size: 12.6px;
 }
+/* 选中的tab颜色 */
+.el-tabs__item.is-active {
+    color: white;
+}
 .el-tabs__nav-wrap::after {
     background-color: transparent;
 }
@@ -147,10 +152,14 @@ export default {
   border-width: 0;
   /* border-color: rgba(0, 0, 0, 0.5); */
 }
+/* placeholder颜色 */
+.el-input__inner::placeholder{
+    color:white;
+}
 /* 搜索按钮 */
 .el-input-group__append {
     background-color: rgba(255, 255, 255, 0.05);
-    color: gold;
+    color: white;
     font-size: 15px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;

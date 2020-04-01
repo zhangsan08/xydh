@@ -2,7 +2,7 @@
   <div class="right">
     <!-- <el-backtop target="#app" :visibility-height="100"></el-backtop> -->
     
-    <div class="nav">
+    <div class="nav yellow">
           <a href="/"   target="_blank"><i class="el-icon-s-home"></i></a>
           <a href="/Me" target="_blank"><i class="el-icon-user"></i></a>
     </div>
@@ -61,4 +61,8 @@ import * as API from '@/api/user/'
         /* border: 2px solid yellow; */
         box-shadow: 0 0 5px #666;
     }
+    .yellow a:link {color: yellow}
+    .yellow a:visited {color: yellow}
+    .yellow a:hover {color: blanchedalmond}
+    .yellow a:active {color: red}
 </style>

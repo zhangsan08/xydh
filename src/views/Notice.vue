@@ -1,13 +1,14 @@
 <template>
     <div class="notice">
-        <p>欢迎体验炫猿导航内测版</p>
+        <p>欢迎您使用炫猿导航 更多功能氪命开发中 敬请期待</p>
         <el-collapse accordion>
             <el-collapse-item>
                 <template slot="title">
-                正在开发<el-badge :value="8" class="item"></el-badge>
+                正在开发<el-badge :value="4" class="item"></el-badge>
                 </template>
                 <li><el-checkbox>讨论模块</el-checkbox></li>
                 <li><el-checkbox>线报模块</el-checkbox></li>
+                <li><el-checkbox>个性化背景</el-checkbox></li>
                 <li><el-checkbox>密码访问</el-checkbox></li>
             </el-collapse-item>
             <div v-for="n in Notice" :key="n.name">

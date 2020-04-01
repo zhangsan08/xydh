@@ -13,7 +13,7 @@
             
             <el-form-item>
                     <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
-                    <el-button @click.native="reg()">注册</el-button>
+                    <el-button @click.native="reg()">注册并定制自己的导航</el-button>
             </el-form-item>
             
         </el-form>
@@ -91,6 +91,6 @@ export default {
     min-width: 200px;
     max-width: 400px;
     min-height: 400px;
-    margin: 100px auto;
+    margin: 120px auto 300px;
   }
 </style>

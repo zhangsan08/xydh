@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+// import Home from './views/Home.vue'
+// import ShowSite from './views/SiteShow.vue'
 
 Vue.use(Router)
 
@@ -10,7 +11,8 @@ export default new Router({
         {
             path: '/',
             name: 'Home',
-            component: Home,
+            // component: Home,
+            component: () => import('./views/SiteShow.vue')
         },
         {
             path: '/Me',
@@ -20,6 +22,7 @@ export default new Router({
         {
             path: '/:username',
             name: 'ShowSite',
+            // component: ShowSite,
             component: () => import('./views/SiteShow.vue')
         },
         {
@@ -32,17 +35,5 @@ export default new Router({
             name: 'ULogin',
             component: () => import('./views/UserLogin.vue')
         },
-        
-        {
-            path: '/set/site',
-            name: 'SetSite',
-            component: () => import('./views/SiteSet.vue')
-        },
-        {
-            path: '/set/link',
-            name: 'SetLink',
-            component: () => import('./views/LinkSet.vue')
-        },
-        
     ]
 })

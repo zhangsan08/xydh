@@ -1,8 +1,11 @@
 <template>
     <div class="me">
-        <p>您的专属链接:<i class="fa fa-link"></i><el-link type="primary" target="_blank" :href="'/'+username">xydh.fun/{{username}}</el-link></p>
-        <p>访问此链接无需登录</p>
-        <p>建议只在个人电脑登录本控制台,公共场所登录请记得点这<el-button type="" @click="logout">登出</el-button></p>
+        <p>您的专属链接</p>
+        <div>
+             <i class="fa fa-link"></i>&#160;<el-link style="font-size:24px" type="primary" target="_blank" :href="'/'+username">{{username}}.xydh.fun</el-link>
+        </div>
+        <p>访问此链接无需登录，欢迎分享给你的朋友</p>
+        <p>请在个人电脑登录本控制台,否则请<el-button type="" @click="logout" round="">登出</el-button></p>
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="公告">
                 <Notice></Notice>
@@ -35,6 +38,10 @@
 			<p>举报者可获得邀请码奖励。</p>
             <el-divider></el-divider>
 		</div>
+        <!-- 跑马灯 -->
+        <el-col :span="24">
+            <Paomadeng></Paomadeng>
+        </el-col>
 
     </div>
 </template>
@@ -47,6 +54,7 @@ import SiteSet from './SiteSet'
 import FolderSet from './FolderSet'
 import LinkSet from './LinkSet'
 import Other from './Other'
+import Paomadeng from './Paomadeng.vue'
 
 export default {
     data() {
@@ -90,6 +98,7 @@ export default {
         FolderSet,
         LinkSet,
         Other,
+        Paomadeng,
     },
     beforeMount() {
         document.title = "炫猿控制台"
@@ -107,9 +116,4 @@ export default {
     margin: 0 auto;
     text-align: center;
 }
-a:link {color: black}
-a:visited {color: black}
-a:hover {color: red}
-a:active {color: red}
-
 </style>

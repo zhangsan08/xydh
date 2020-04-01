@@ -5,7 +5,7 @@
 	</div> -->
 	<div class="header">
 		<div id="tp-weather-widget"></div>
-		公告: 新炫猿上线啦 系兄弟就来砍我
+		公告: 新炫猿上线啦 高度可定制化 快来建一个你的个人导航吧
 	</div>
 
 	<!-- 名称简介 -->
@@ -60,14 +60,12 @@
 
 	<!-- 跑马灯 -->
 	<el-col :span="24">
-		<div class="paomadeng">
-			<el-carousel :interval="6000" autoplay="false" height="200px" arrow="always">
-				<el-carousel-item v-for="item in 6" :key="item">
-				炫猿推荐{{ item }}
-				</el-carousel-item>
-			</el-carousel>
+		<div class="yellow">
+			<Paomadeng></Paomadeng>
+			<Footer></Footer>
 		</div>
 	</el-col>
+	
 </div>
 </template>
 
@@ -76,6 +74,8 @@
 import * as UserAPI from '@/api/user/'
 import * as SiteAPI from '@/api/site/'
 import SearchTool from './SearchTool.vue'
+import Paomadeng from './Paomadeng.vue'
+import Footer from './Footer.vue'
 
 export default {
 	name: 'ShowSite',
@@ -96,8 +96,10 @@ export default {
 			siteinfo: "",
 			Folders: [],
 			yuanxuan: [
-				{"icon":"","name":"🙉炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
-				{"icon":"windows","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},
+				{"icon":"","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
+				{"icon":"windows","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
+				{"icon":"apple","name":"大白软件站","url":"https://o--o.win","info":"新Mac的第一站",},	
+				{"icon":"star","name":"优秀用户作品","url":"https://xydh.fun/xiaonian","info":"欢迎自荐你的导航页",},	
 			],
 		}
 	},
@@ -117,12 +119,14 @@ export default {
 			})
 		},
 		load(uname){
+			// 改变背景图片
+			// document.getElementsByTagName("body")[0].setAttribute("style","background-image: url(https://bing.ioliu.cn/v1/rand)");
 			UserAPI.UserID(uname).then((res) => {
 				if (res.code > 0 ){
 						this.$alert('', '走迷路了', {
 						confirmButtonText: '回主页',
 						callback: () => {
-							this.$router.push({name:'Home'}).catch(() => { })
+							window.location.href="https://xydh.fun"
 						}
 					});
 					return
@@ -130,8 +134,6 @@ export default {
 					this.userid = res.data.id
 					this.getSite(this.userid)
 					this.getAll(this.userid)
-					// 改变背景图片
-					// document.getElementsByTagName("body")[0].setAttribute("style","background-image: url(https://bing.ioliu.cn/v1/rand)");
 				}
 			})
 		},
@@ -171,14 +173,18 @@ export default {
 		},
 		// 打开url
 		go(url){
-			window.open(url,"target")
+			window.open(url,"_blank")
 		}
 	},
 	components:{
 		SearchTool,
+		Paomadeng,
+		Footer,
 	},
 	beforeMount() {
 		this.username = this.$route.params.username
+		if(!this.username)
+			this.username = "admin"
 		if(this.username){
 			this.load(this.username)
 		}
@@ -195,10 +201,12 @@ export default {
 
 <style>
 body {
-	background-image: url(../assets/bg.jpg);
+	background-image: url(../assets/bg2.jpg);
 	background-color: black;
 	background-repeat: no-repeat;
-	background-size: 100%;
+	background-size: 100% 100%;
+	background-position-x: center;
+	background-attachment:fixed;
 	background-size: cover;
 	text-align:center;
 	font-size: 13px;
@@ -214,7 +222,7 @@ body {
 	font-weight: bold;
 }
 .folder {
-	background: rgba(0, 0, 0, 0.3);
+	background: rgba(0, 0, 0, 0.2);
 	height: 160px;
 	margin: 10px 20px;
 	padding: 10px;
@@ -237,7 +245,7 @@ body {
 }
 .link {
 	font-size: 12.6px;
-	margin: 6px 10px;
+	min-height: 28px;
 	cursor: pointer;
 }
 /* Tooltip 文本 */
@@ -258,17 +266,5 @@ body {
 }
 .link:hover .tooltiptext {
     visibility: visible;
-}
-
-.el-carousel__item {
-    color: white;
-    font-size: 13px;
-    line-height: 200px;
-    margin: 0;
-}
-.paomadeng {
-	margin: 0 auto;
-	/* line-height: 200px; */
-	max-width: 800px;
 }
 </style>

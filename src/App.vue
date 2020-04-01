@@ -3,7 +3,7 @@
     <router-view></router-view>
     <RightBar></RightBar>
     <!-- <Xianbao></Xianbao> -->
-    <Footer></Footer>
+    <!-- <Footer></Footer> -->
     <el-backtop></el-backtop>
   </div>  
 </template>
@@ -14,7 +14,7 @@
 //   import Header from './components/Header'
   import RightBar from './components/RightBar'
   // import Xianbao from './components/Xianbao'
-  import Footer from './components/Footer'
+  // import Footer from './components/Footer'
   import 'element-ui/lib/theme-chalk/display.css';
 
   export default {
@@ -22,7 +22,7 @@
     components: {
       RightBar,
       // Xianbao,
-      Footer,
+      // Footer,
     }
   }
 </script>
@@ -41,8 +41,8 @@ li{list-style-type:none;}
 a {
   text-decoration: none;
 }
-a:link {color: yellow}
-a:visited {color: yellow}
+/* a:link {color: white}
+a:visited {color: white}
 a:hover {color: blanchedalmond}
-a:active {color: red}
+a:active {color: red} */
 </style>
