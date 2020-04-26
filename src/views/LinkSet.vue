@@ -1,5 +1,7 @@
 <template>
     <div>
+		<p><a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62830'>添加小图标的方法</a></p>
+		
         <el-collapse accordion v-model="FolderID" @change="getLinksin(FolderID)" v-loading="loading">
 			<div  v-for="Folder in Folders" :key="Folder.id">
             <el-collapse-item :name="Folder.id">
@@ -19,10 +21,12 @@
 						<el-col :span="3">操作</el-col>
 					</el-row>
 					<!-- 添加 -->
+					<el-divider>添加书签</el-divider>
+					隐私与法律免责声明: 炫猿会记录你的信息, 你所添加的每一个链接都将负法律责任
 					<el-row :model="linkform" :gutter="1" type="flex" justify="center">
 						<el-col :span="2"><el-input type="text" v-model="linkform.icon" 	placeholder="可为空"></el-input></el-col>
-						<el-col :span="4"><el-input type="text" v-model="linkform.name" 	minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
-						<el-col :span="6"><el-input type="text" v-model="linkform.url"		minlength="0" maxlength="50" placeholder="http开头" ></el-input></el-col>
+						<el-col :span="4"><el-input type="text" v-model="linkform.name" 	minlength="0" maxlength="12"  placeholder="0-8字/过长不好看"></el-input></el-col>
+						<el-col :span="6"><el-input type="text" v-model="linkform.url"		minlength="0" maxlength="100" placeholder="http开头" ></el-input></el-col>
 						<el-col :span="6"><el-input type="text" v-model="linkform.info"		minlength="0" maxlength="30" placeholder="鼠标放上时的提示语(可为空)"></el-input></el-col>
 						<el-col :span="3"><P>{{ Folder.name }}</P></el-col>
 						<el-col :span="3">
@@ -30,8 +34,8 @@
 						</el-col>
 					</el-row>
 					<!-- 更删 -->
-					<el-divider></el-divider>
-					<el-row v-for="link in links" :key="link.id" :gutter="1">
+					<el-divider>更新书签</el-divider>
+					<el-row v-for="link in links" :key="link.id" :gutter="1" class="onerow">
 						<el-col :span="2"><el-input type="text" v-model="link.icon"></el-input></el-col>
 						<el-col :span="4"><el-input type="text" v-model="link.name"></el-input></el-col>
 						<el-col :span="6"><el-input type="text" v-model="link.url" ></el-input></el-col>

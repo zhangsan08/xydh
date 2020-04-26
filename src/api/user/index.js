@@ -16,6 +16,8 @@ const UserMe = () => axios.get('/api/v1/user/me').then(res => res.data)
 
 const UserID = username => axios.get(`/api/v1/getuserid/${username}`).then(res => res.data)
 
+const UserVip = form => axios.post('/api/v1/user/vip', form).then(res => res.data)
+
 export {
     UserRegister,
     UserLogin,
@@ -23,4 +25,5 @@ export {
     UserLogout,
     UserMe,
     UserID,
+    UserVip,
 }

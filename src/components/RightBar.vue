@@ -6,19 +6,6 @@
           <a href="/"   target="_blank"><i class="el-icon-s-home"></i></a>
           <a href="/Me" target="_blank"><i class="el-icon-user"></i></a>
     </div>
-    <!-- <div class="btn">
-      <el-popover
-        placement="top-start"
-        title="实时线报爬虫"
-        width="150"
-        visible-arrow="false"
-        trigger="click">
-        <div>开发ing</div>
-        <p slot="reference" class="xianbao">
-          实时线报
-        </p>
-      </el-popover>
-    </div> -->
   </div>
 </template>
 
@@ -48,18 +35,21 @@ import * as API from '@/api/user/'
     .nav{
         position:fixed;
         /* min-height: 1080px; */
-        background: rgba(0, 0, 0, 0.5);
-        max-width: 26px;
-        font-size: 20px;
+        background: rgba(0, 0, 0, 1);
+        width: 65px;
+        height: 20px;
+        font-size: 18px;
+        letter-spacing:3px;
         color: white;
         text-align: center;
-        padding: 5px 0px;
+        padding: 5px 0;
         /* 位置 */
         top: 10px;
         right:10px;
-        border-radius: 5px;
+        border-radius: 15px;
         /* border: 2px solid yellow; */
         box-shadow: 0 0 5px #666;
+        z-index: 99;
     }
     .yellow a:link {color: yellow}
     .yellow a:visited {color: yellow}

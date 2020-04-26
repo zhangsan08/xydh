@@ -11,6 +11,7 @@
         size="40%"
         :withHeader="false"
     >
+        <!-- 线报内容 -->
         <div class="">
             <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
                 <li v-for="i in count" :key="i" class="infinite-list-item">线报{{ i }}</li>

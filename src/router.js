@@ -35,5 +35,15 @@ export default new Router({
             name: 'ULogin',
             component: () => import('./views/UserLogin.vue')
         },
+        {
+            path: '/u/export',
+            name: 'UExport',
+            component: () => import('./views/UserExport.vue')
+        },
+        {
+            path: '/u/vip',
+            name: 'vip',
+            component: () => import('./views/UserVip.vue')
+        },
     ]
 })

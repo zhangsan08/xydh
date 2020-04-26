@@ -70,7 +70,10 @@ export default {
           });
         });
     },
-  }
+  },
+  beforeMount(){
+      console.log("加载Others")
+  },
 };
 </script>
 

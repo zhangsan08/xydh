@@ -1,57 +1,41 @@
 <template>
     <div>
 		<div class="tips">
-			<el-collapse>
-				<el-collapse-item title="使用注意事项[必读]" name="tips">
-					<div>
-						以下原则同样适用于书签的操作
-						<li><b>1. 以一条为单位更新</b> <span>因为每次更新后会刷新列表</span></li>
-						<li><b>2. 设计好文件夹顺序</b> <span>因为后续炫猿不准备推出排序功能(使用一段时间后你会发现, 顺序并没有那么重要，首页九宫格的布局会让你通过记忆快速定位到想去的网站)</span></li>
-					</div>
-				</el-collapse-item>
-				<el-collapse-item title="添加图标的方法" name="icon">
-					<div>
-						<p>打开<el-link target='_blank' rel='nofollow' href='https://fontawesome.dashgame.com/'>https://fontawesome.dashgame.com/</el-link>后下拉，</p>
-						<p>找到想用的图标，图标后的英文就是图标代码</p>
-						<img src="https://i.loli.net/2020/03/17/ODYsLrRKwcjmTqx.png" width="400px"/>
-					</div>
-				</el-collapse-item>
-			</el-collapse>
+			<p>请以一条为单位更新 因为每次更新后会刷新列表</p>
+			<a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62830'>添加小图标的方法</a>
 		</div>
 
 		<el-divider></el-divider>
 		<el-row type="flex" justify="center">
-			<el-col :span="6">名称</el-col>
-			
 			<el-col :span="3">图标</el-col>
-	
+			<el-col :span="6">名称</el-col>
+			<el-col :span="3">排序</el-col>	
 			<el-col :span="3">操作</el-col>
 		</el-row>
 		<!-- 添加 -->
+		<el-divider>添加文件夹</el-divider>
 		<el-row :model="Folderform" :gutter="1" type="flex" justify="center">
-			<el-col :span="6"><el-input type="text" v-model="Folderform.name" 	minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
-			
 			<el-col :span="3"><el-input type="text" v-model="Folderform.icon"		minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
-			
+			<el-col :span="6"><el-input type="text" v-model="Folderform.name" 	minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
 			<el-col :span="3">
-				<el-button size="small" type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button>
+				<el-input-number size="mini" style="width:100px" v-model="Folderform.weight" :min="0" :max="10" label="越大越靠后"></el-input-number>
 			</el-col>
+			<el-col :span="3"><el-button size="small" type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button></el-col>
 		</el-row>
 		<!-- 修改 -->
-		<el-divider></el-divider>
-		<el-row v-for="Folder in Folders" :key="Folder.id" :gutter="1" type="flex" justify="center">
-				<el-col :span="6"><el-input type="text" v-model="Folder.name"	></el-input></el-col>
-			
-				<el-col :span="3"><el-input type="text" v-model="Folder.icon"	></el-input></el-col>
-				
-				<el-col :span="3">
-					<el-button-group>
-						<el-button size="small" type="primary" icon="el-icon-edit" @click="updateFolder(Folder)" ></el-button>
-						<el-button size="small" type="danger" icon="el-icon-delete" @click="deleteFolder(Folder)" ></el-button>
-					</el-button-group>
-
-					
-				</el-col>
+		<el-divider>更新文件夹</el-divider>
+		<el-row class="onerow" v-for="Folder in Folders" :key="Folder.id" :gutter="1" type="flex" justify="center">
+			<el-col :span="3"><el-input type="text" v-model="Folder.icon"></el-input></el-col>
+			<el-col :span="6"><el-input type="text" v-model="Folder.name"></el-input></el-col>
+			<el-col :span="3">
+				<el-input-number size="mini" style="width:100px" v-model="Folder.weight" :min="0" :max="10" label="越大越靠后"></el-input-number>
+			</el-col>
+			<el-col :span="3">
+				<el-button-group>
+					<el-button size="small" type="primary" icon="el-icon-edit" @click="updateFolder(Folder)" ></el-button>
+					<el-button size="small" type="danger" icon="el-icon-delete" @click="deleteFolder(Folder)" ></el-button>
+				</el-button-group>
+			</el-col>
 		</el-row>
 	</div>
 </template>
@@ -71,6 +55,7 @@ export default {
 				id: "",
 				name: "",
 				icon: "",
+				weight: 0,
 			}
 		}
 	},
@@ -79,6 +64,9 @@ export default {
 			this.uid = this.userID,
 			FolderAPI.getFoldersbyID(this.uid).then((res) =>{
 				this.Folders = res.data
+				this.Folders.sort(function(f1,f2){
+					return f1.weight-f2.weight//weight
+				})
 			})
 		},
 		createFolder(){
@@ -109,8 +97,8 @@ export default {
 			var form = {
 				id: Folder.id,
 				name: Folder.name,
-				url: Folder.url,
-				icon: Folder.icon
+				icon: Folder.icon,
+				weight: Folder.weight,
 			}
 			FolderAPI.updateFolder(form).then((res) => {
 				if (res.code > 0) {
@@ -184,6 +172,12 @@ export default {
 	margin: 0 auto;
 	max-width: 500px;
 	text-align: left;
+}
+.onerow {
+	margin: 5px auto 0;
+}
+.onerow:hover{
+	margin: 5px auto 20px;
 }
 
 </style>
