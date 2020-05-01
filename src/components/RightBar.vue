@@ -1,10 +1,10 @@
 <template>
-  <div class="right">
-    <!-- <el-backtop target="#app" :visibility-height="100"></el-backtop> -->
-    
-    <div class="nav yellow">
-          <a href="/"   target="_blank"><i class="el-icon-s-home"></i></a>
-          <a href="/Me" target="_blank"><i class="el-icon-user"></i></a>
+  <div>
+    <div class="nav">
+          <!-- <a href="/"   target="_blank" style="color:yellow">Home</a> -->
+          <!-- <a href="/Me" target="_blank" style="color:yellow">定制 | 登录</a> -->
+          <a href="/"   target="_blank" style="color:yellow"><i class="el-icon-s-home"></i></a>
+          <a href="/Me" target="_blank" style="color:yellow"><i class="el-icon-user"></i></a>
     </div>
   </div>
 </template>
@@ -33,6 +33,7 @@ import * as API from '@/api/user/'
 
 <style>
     .nav{
+
         position:fixed;
         /* min-height: 1080px; */
         background: rgba(0, 0, 0, 1);
@@ -47,12 +48,6 @@ import * as API from '@/api/user/'
         top: 10px;
         right:10px;
         border-radius: 15px;
-        /* border: 2px solid yellow; */
-        box-shadow: 0 0 5px #666;
         z-index: 99;
     }
-    .yellow a:link {color: yellow}
-    .yellow a:visited {color: yellow}
-    .yellow a:hover {color: blanchedalmond}
-    .yellow a:active {color: red}
 </style>

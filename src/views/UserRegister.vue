@@ -1,19 +1,22 @@
 <template>
 <div class="reg">
+
+  
   <p>为了永久地为用户提供服务,炫猿采用邀请码注册制。如果你是自媒体号主,可以联系我获得一部分邀请码进行合作推广:xuanyuandaohang@126.com 请在邮件内容中注明来意</p><p>个人用户请勿联系 邮件太多完全没有时间回复</p>
-  <h4>合作预告</h4>
-  公众号 极简源码 2020年4月26号18点30分发码 欢迎蹲点<br>
-  公众号 喵喵软件屋 2020年4月26号20点20分发码 欢迎蹲点<br>
-  <b>公众号 虚拟精华 2020年4月28号18点30分发码 欢迎蹲点（大佬号，量大易抢）</b><br>
-  <h4>注册</h4>
+  <!-- <h4>合作预告</h4>
+  公众号 网罗灯下黑 2020年5月1号8点发码 欢迎蹲点<b>(大佬号)</b><br> -->
+  <div class="ad">
+    <!-- <el-divider></el-divider> -->
+    <div style="text-align:right;font-size:10px">广告</div>
+    <img height="200px" src='https://i.loli.net/2020/05/01/JcOQlLtpYXr7DZf.png' alt='JcOQlLtpYXr7DZf'/>
+  </div>
+  <el-divider>注册</el-divider>
     <div class="regform">
       <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px">
           <el-form-item label="邀请码" prop="yuankey">
             <a target='_blank' rel='nofollow' href='http://vip.x-jq.cn/product/4.html'>购买邀请码</a>
               <el-input v-model="registerForm.yuankey" ></el-input>
           </el-form-item>
-          
-
           <el-form-item label="用户名" prop="name">
               <p class="tips">tips: 用户名将决定您的专属访问链接<br>如用户{{registerForm.name}}的链接为 http://{{registerForm.name}}.xydh.fun/</p>
               <el-input type="text" placeholder="5~15字符 建议使用简短好记的字母组合" v-model="registerForm.name" minlength="5" maxlength="15" show-word-limit></el-input>
@@ -34,7 +37,7 @@
           </el-form-item>
       </el-form> 
     </div>
-    
+    <el-divider></el-divider>
     <h3>感谢以下科技榜优质自媒体 也欢迎大家关注他们</h3>
     <p>如果你在他们的文章中领取到了邀请码, 也回去给他们留个言、点点在看、或者点点广告都是对他们的支持了!</p>
     <h4>第一梯队</h4>
@@ -132,8 +135,15 @@ export default {
         { date: '2020-04-09', name: '搜罗软件', address: 'https://mp.weixin.qq.com/s/Wy45xiUudv9xBpZwNbHh9Q'},
         { date: '2020-04-15', name: '迅哥(每日送码)', address: 'https://mp.weixin.qq.com/s/ogKgQJQdaLegLEd3hY4poA'},
         { date: '2020-04-18', name: '黑白鲨(每日送码)', address: 'https://mp.weixin.qq.com/s/1GUY-3scqG9L3sf9D9nIDA'},
+        { date: '2020-04-28', name: '虚拟精华', address: 'https://mp.weixin.qq.com/s/EtIHPsIKd_21ZRCfSaectA'},
+        { date: '2020-05-01', name: '网罗灯下黑', address: 'https://mp.weixin.qq.com/s/qBcVAyEp2NdD1IQ_rQ8OqA'},
       ],
       tableData2: [
+        
+        { date: '2020-04-29', name: '阿雷课堂', address: 'https://mp.weixin.qq.com/s/UCQW4wTPNugyxJjZs-pQVw'},
+        { date: '2020-04-28', name: '助手小伙伴', address: 'https://mp.weixin.qq.com/s/l32SsGkV6GfJteQuMB5eNg'},
+        { date: '2020-04-26', name: '极简源码', address: 'https://mp.weixin.qq.com/s/oMjfK42h1-dRrv6sNHIVzA'},
+        { date: '2020-04-26', name: '喵喵软件屋', address: 'https://mp.weixin.qq.com/s/Q5O3tPhlZ4qL3cJmqfGvwQ'},
         { date: '2020-04-25', name: '科技蒙太奇', address: 'https://mp.weixin.qq.com/s/d_iLDoVt_w6tF8-9I-QQ8A'},
         { date: '2020-04-24', name: '拾光小黑屋', address: 'https://mp.weixin.qq.com/s/NsNZFaeYHphUufGOQCtWoQ'},
         { date: '2020-04-24', name: 'APP喵', address: 'https://mp.weixin.qq.com/s/a6UQ0UVowy6nlaMKzDNacg'},
@@ -143,6 +153,7 @@ export default {
         { date: '2020-04-21', name: '软件收藏家', address: 'https://mp.weixin.qq.com/s/FUTrNpN4WnnjUW8ArGEjWg'},
         { date: '2020-04-21', name: 'APP资源君', address: 'https://mp.weixin.qq.com/s/1xel1xgq5TYEZvzBQCsVgQ'},
         { date: '2020-04-20', name: '山猫黑科技', address: 'https://mp.weixin.qq.com/s/LyMrvEeaqsxJLWlV6YOFOA'},
+        { date: '2020-04-20', name: '我是小金鱼', address: 'https://mp.weixin.qq.com/s/_K4Zb-Bf58MKWwpLfTFPMA'},
         { date: '2020-04-19', name: '极光玩机', address: 'https://mp.weixin.qq.com/s/Gp07o65VllqVa7fbJ5ySqw'},
         { date: '2020-04-16', name: '软件趣谈', address: 'https://mp.weixin.qq.com/s/dCFcVaHMTfvP1m54FmseTA'},
         { date: '2020-04-13', name: '软件资源共享', address: 'https://mp.weixin.qq.com/s/bEe8RyhEz4V81M_1tEpBOw'},
@@ -202,12 +213,40 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-    }
+    },
+    getUser(){
+        // 判断登录状态,若登录则取出当前userID和userName
+        API.UserMe().then((res) => {
+            this.LoginCode = res.code
+            if (this.LoginCode > 0) {
+                console.log("未登录")
+            }else{
+                this.$message({
+                    message: '您可能是注册用户,个人开发者不易,希望您能合理地使用炫猿的资源!',
+                    center: true,
+                    showClose: true,
+                    type: 'warning'
+                });
+            }
+        })
+    },
+  },
+  beforeMount() {
+        document.title = "注册炫猿 | 优雅的浏览器第一站从此开始"
+        this.getUser()
   }
 };
 </script>
 
 <style scoped>
+.ad {
+  display: none;
+  /* text-align: center; */
+  margin: -15px;
+  /* border:black;
+  border-width: 10px;
+  background-color: black; */
+}
 .reg { 
   min-width: 400px;
   max-width: 800px;

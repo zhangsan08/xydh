@@ -2,7 +2,7 @@
     <div class="me">
         <el-divider>最新通知</el-divider>
         <div class="note">
-          <li>书签的名称最大长度改为12</li>
+          <li>千呼万唤始出来 书签排序上线 请进实验室体验</li>
         为所有的去除广告用户增加了一个文件夹, 感谢你们的支持了!<br>
         也感谢所有购买了扩容服务的用户，炫猿会全力为用户打造最好用的浏览器第一站!
         </div>
@@ -15,8 +15,8 @@
         <p><a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/63457'>关于如何让你的页面被搜索引擎收录</a></p>
         <p>请在个人电脑登录本控制台,否则请<el-button type="" @click="logout" round="">登出</el-button></p>
         <el-tabs type="border-card" :stretch="true">
-            <el-tab-pane label="公告" v-if="userID!=7163">
-                <Notice></Notice>
+            <el-tab-pane label="公告">
+                <Notice  v-if="userID!=7163"></Notice><div v-else>该账号为测试账号。仅用于展示后台功能。使用上有多处限制。</div>
             </el-tab-pane>
 
             <el-tab-pane label="小站配置">
@@ -41,10 +41,11 @@
         </el-tabs>
 
         <el-divider>⚠️警告</el-divider>
-			<p>为了炫猿长久地发展，请勿上传涉政涉黄涉黑等违法犯罪网站。</p>
-			<p style="color:red;font-weight:bolder;">发现一条永久封号。</p>
+			<p style="color:red;font-weight:bolder;">为了炫猿长久地发展，请勿上传涉政涉黄涉黑等违法犯罪网站。发现一条永久封号。</p>
+            使用本站的服务即同意<a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/blog/11015'>法律与免责声明</a>
+<!-- 			
 			<p>排行榜可任意查看用户数据。</p>
-			<p>举报者可获得邀请码奖励。</p>
+			<p>举报者可获得邀请码奖励。</p> -->
         <el-divider></el-divider>
         <!-- 跑马灯 -->
         <el-col :span="24">

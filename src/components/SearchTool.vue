@@ -10,7 +10,7 @@
      </el-row>
     <el-row type="flex" justify="center">
         <el-col :xs="23" :sm="18" :md="10">
-        <el-input type="text" v-model="txt" :placeholder="text" clearable @keyup.enter.native="Sou(url+txt)">
+        <el-input autofocus='autofocus' type="text" v-model="txt" :placeholder="text" clearable @keyup.enter.native="Sou(url+txt)">
             <span slot="append" type="text" @click="Sou(url+txt)"><i class="el-icon-search"></i></span>
         </el-input>
         </el-col>
@@ -164,7 +164,7 @@ export default {
 .el-input__inner {
   background-color: rgba(0, 0, 0, 0.1);
   /* color: white; */
-  font-size: 14px;
+  font-size: 15px;
   border-radius: 25px;
   border: 0px;
   color: wheat;
@@ -173,13 +173,13 @@ export default {
 .el-input__inner::placeholder{
     color:rgba(255, 255, 255, 0.5);
 }
-.el-input__suffix {
+/* .el-input__suffix {
     color: yellow;
-}
+} */
 /* 搜索按钮 */
 .el-input-group__append {
     background-color: rgba(0, 0, 0, 0.2);
-    color: yellow;
+    color: gold;
     font-size: 18px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;

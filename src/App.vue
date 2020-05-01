@@ -1,8 +1,6 @@
 <template>
   <div>
     <router-view></router-view>
-    <!-- <Xianbao></Xianbao> -->
-    <!-- <Footer></Footer> -->
     <el-backtop></el-backtop>
   </div>  
 </template>

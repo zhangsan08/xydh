@@ -3,12 +3,12 @@
 	<div v-if="bglizi>0">
 		<Particle :bglizi="bglizi"></Particle>
 	</div>
-
-	<div class="header totop" v-if="btn_switch">
-		<!-- 天气 -->
-		<div class="weather" id="he-plugin-simple"></div>
-		<Paomadeng0></Paomadeng0>
-		<RightBar></RightBar>
+	<!-- <div class="">
+		
+	</div> -->
+	<div class="totop" v-if="btn_switch">
+		<Header></Header>
+		<!-- <RightBar></RightBar> -->
 	</div>
 
 	<!-- 名称简介 -->
@@ -23,8 +23,8 @@
 	<div class="hidden-xs-only" style="height:50px;"></div>
 
 	<!-- 手机端快捷导航 -->
-	<div class="hidden-sm-and-up totop">
-		<a class="zhida" v-for="Folder in Folders" :key="Folder.id" :href="'#'+Folder.name">
+	<div class="hidden-sm-and-up totop yellow">
+		<a class="zhida" v-for="Folder in Folders" :key="Folder.id" :href="'#'+Folder.name" style="margin:10px">
 			{{Folder.name}}
 		</a>
 	</div>
@@ -72,7 +72,7 @@
 
 	<!-- 跑马灯 -->
 	<el-col :span="24">
-		<div class="yellow totop">
+		<div class="totop">
 			<Paomadeng v-if="ad"></Paomadeng>
 			<div v-else style="height:100px"></div>
 			<Footer></Footer>
@@ -87,10 +87,10 @@
 import * as UserAPI from '@/api/user/'
 import * as SiteAPI from '@/api/site/'
 
-import RightBar from '@/components/RightBar'
+// import RightBar from '@/components/RightBar'
 import SearchTool from '@/components/SearchTool.vue'
 import Paomadeng from '@/components/Paomadeng.vue'
-import Paomadeng0 from '@/components/Paomadeng0.vue'
+import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 // import Talk from '@/components/Talk.vue'
 import Particle from '@/components/particle.vue'
@@ -118,6 +118,7 @@ export default {
 				{"icon":"","name":"极品广告位","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
 				{"icon":"","name":"虚位以待","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
 			],
+			f_color: "white",
 		}
 	},
 	methods: {
@@ -188,6 +189,11 @@ export default {
 					this.Folders.sort(function(f1,f2){
 						return f1.weight-f2.weight//weight
 					})
+					for(var i=0;i<this.Folders.length;i++){
+						this.Folders[i].links.sort(function(l1,l2){
+							return l2.weight-l1.weight//weight
+						})
+					}
 				}
 			})
 		},
@@ -220,10 +226,10 @@ export default {
 	components:{
 		SearchTool,
 		Paomadeng,
-		Paomadeng0,
+		Header,
 		Footer,
 		// Talk,
-		RightBar,
+		// RightBar,
 		Particle,
 	},
 	beforeMount() {
@@ -237,7 +243,7 @@ export default {
 		// 动态调整folder高度
 		window.onresize = () => {
 			this.screenWidth = document.body.clientWidth
-			if(this.screenWidth<768){
+			if(this.screenWidth<=768){
 				this.unfolder(0)
 			}else{
 				this.enfolder(0)
@@ -248,30 +254,22 @@ export default {
 </script>
 
 <style>
-
-
 body {
 	background-color: black;
 	background-repeat: no-repeat;
-	/* background-size: 50% 50%; */
 	background-position-x: center;
 	background-attachment:fixed;
+	/* background-position: 0px 0px;
+    background-size: 100% 100%; */
 	background-size: cover;
+	/* background-size: contain; */
 	text-align:center;
 	font-size: 13px;
 	color: white;
 }
-
-.header {
-	height: 50px;
-}
 .siteName {
 	font-size: 25px;
 	font-weight: bold;
-}
-.zhida {
-	color: yellow;
-	margin: 10px;
 }
 .folder {
 	background: rgba(0, 0, 0, 0.06);
@@ -310,7 +308,6 @@ body {
 /* Tooltip 文本 */
 .link .tooltiptext {
     visibility: hidden;
-    /* background-color: yellow; */
 	background: rgba(0, 0, 0, 0.5);
 	box-shadow: 0 0 5px #666;
     color: yellow;
@@ -321,7 +318,7 @@ body {
 	left: 20px;
 	padding: 5px 5px;
     position: fixed;
-    z-index: 1;
+    z-index: 99;
 }
 .link:hover .tooltiptext {
     visibility: visible;
@@ -330,4 +327,11 @@ body {
 	z-index: 1;
 	position: relative;
 }
+a {
+	color: inherit;
+}
+/* .yellow a:link {color: yellow}
+.yellow a:visited {color: yellow}
+.yellow a:hover {color: blanchedalmond}
+.yellow a:active {color: red} */
 </style>

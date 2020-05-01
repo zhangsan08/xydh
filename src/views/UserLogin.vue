@@ -34,6 +34,7 @@ export default {
       }
     };
     return {
+      LoginCode: 0,
       loginForm: {
         name: "",
         password: "",
@@ -80,7 +81,29 @@ export default {
     },
     reg(){
       this.$router.push('/u/register')
-    }
+    },
+    getUser(){
+        // 判断登录状态,若登录则取出当前userID和userName
+        API.UserMe().then((res) => {
+            this.LoginCode = res.code
+            if (this.LoginCode > 0) {
+                console.log("未登录")
+            }else{
+              
+                this.$message({
+                    message: '您已登录[多账号请先登出]',
+                    center: true,
+                    showClose: true,
+                    type: 'warning'
+                });
+                this.$router.push('/me')
+            }
+        })
+    },
+  },
+  beforeMount() {
+        document.title = "登录炫猿控制台"
+        this.getUser()
   }
 };
 </script>

@@ -8,42 +8,29 @@ Vue.use(Router)
 export default new Router({
     mode: 'history',  // 加入这一句即可
     routes: [
-        {
-            path: '/',
+        {   path: '/',
             name: 'Home',
-            // component: Home,
-            component: () => import('./views/SiteShow.vue')
-        },
-        {
-            path: '/Me',
+            component: () => import('./views/SiteShow.vue')},
+        {   path: '/Me',
             name: 'Me',
-            component: () => import('./views/Me.vue')
-        },
-        {
-            path: '/:username',
+            component: () => import('./views/Me.vue')},
+        {   path: '/:username',
             name: 'ShowSite',
-            // component: ShowSite,
-            component: () => import('./views/SiteShow.vue')
-        },
-        {
-            path: '/u/register',
+            component: () => import('./views/SiteShow.vue')},
+        {   path: '/u/register',
             name: 'URegiser',
-            component: () => import('./views/UserRegister.vue')
-        },
-        {
-            path: '/u/login',
+            component: () => import('./views/UserRegister.vue')},
+        {   path: '/u/login',
             name: 'ULogin',
-            component: () => import('./views/UserLogin.vue')
-        },
-        {
-            path: '/u/export',
+            component: () => import('./views/UserLogin.vue')},
+        {   path: '/u/export',
             name: 'UExport',
-            component: () => import('./views/UserExport.vue')
-        },
-        {
-            path: '/u/vip',
+            component: () => import('./views/UserExport.vue')},
+        {   path: '/u/vip',
             name: 'vip',
-            component: () => import('./views/UserVip.vue')
-        },
+            component: () => import('./views/UserVip.vue')},
+        {   path: '/l/sort',
+            name: 'sort',
+            component: () => import('./views/LinkSort.vue')},
     ]
 })

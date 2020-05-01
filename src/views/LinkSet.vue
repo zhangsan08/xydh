@@ -92,6 +92,9 @@ export default {
 			this.uid = this.userID,
 			FolderAPI.getFoldersbyID(this.uid).then((res) =>{
 				this.Folders = res.data
+				this.Folders.sort(function(f1,f2){
+					return f1.weight-f2.weight//weight
+				})
 			})
 		},
 		getLinksin(fid){
@@ -103,6 +106,9 @@ export default {
 			if(fid){
 				LinkAPI.getLinksbyFolderID(fid).then((res) =>{
 					this.links = res.data
+					this.links.sort(function(l1,l2){
+                        return l2.weight-l1.weight//weight
+                    })
 				})
 			}
 			else{
@@ -152,6 +158,7 @@ export default {
 					message: res.msg
 					});
 				} else {
+					// 刷新列表
 					this.getLinksin(fid)
 					this.$notify({
 						title: "更新成功!",
