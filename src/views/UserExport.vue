@@ -25,8 +25,10 @@
 </template>
 
 <script>
-import * as UserAPI from '@/api/user/'
-import * as SiteAPI from '@/api/site/'
+import { userService,siteService } from '@/common/api'
+
+// import * as UserAPI from '@/api/user/'
+// import * as SiteAPI from '@/api/site/'
 
 export default {
     data(){
@@ -39,7 +41,7 @@ export default {
     methods: {
 		load(uname){
 			// userName取ID
-			UserAPI.UserID(uname).then((res) => {
+			userService.UserID(uname).then((res) => {
 				if (res.code > 0 ){
 						this.$alert('', '无此用户', {
 						confirmButtonText: '回主页',
@@ -56,7 +58,7 @@ export default {
 		},
 		// 取所有书签[文件夹、书签]
 		getAll(userid){
-			SiteAPI.getAll(userid).then((res) => {
+			siteService.getAll(userid).then((res) => {
 				if (res.code > 0 ){
 						this.$alert('', '请勿滥用此功能', {
 						confirmButtonText: '回主页',

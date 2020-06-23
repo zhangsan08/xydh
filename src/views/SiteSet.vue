@@ -61,7 +61,8 @@
 <script>
 
 // import * as UserAPI from '@/api/user/'
-import * as SiteAPI from '@/api/site/'
+// import * as SiteAPI from '@/api/site/'
+import { siteService } from '@/common/api'
 
 export default {
     props:["userID"],
@@ -92,7 +93,7 @@ export default {
     methods: {
         getSite(){
             this.uid = this.userID,
-            SiteAPI.getSitebyID(this.uid).then((res) =>{
+            siteService.getSitebyID(this.uid).then((res) =>{
                 this.SiteForm.name = res.data.name
                 this.SiteForm.info = res.data.info
                 this.SiteForm.bg = res.data.bg
@@ -105,7 +106,7 @@ export default {
             })
         },
         updateSite(){
-            SiteAPI.updateSite(this.SiteForm).then((res) =>{
+            siteService.updateSite(this.SiteForm).then((res) =>{
                 if (res.code > 0) {
                     this.$notify.error({
                     title: "更新失败",

@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import * as API from "@/api/user/";
+// import * as API from "@/api/user/";
+import { userService } from '@/common/api'
 
 export default {
   data() {
@@ -49,7 +50,7 @@ export default {
   },
   methods: {
     SubmitLogin() {
-        API.UserLogin(this.loginForm).then((res) => {
+        userService.UserLogin(this.loginForm).then((res) => {
           if (res.code > 0) {
             this.$notify.error({
               title: "登录失败",
@@ -86,7 +87,7 @@ export default {
     },
     getUser(){
         // 判断登录状态,若登录则取出当前userID和userName
-        API.UserMe().then((res) => {
+        userService.UserMe().then((res) => {
             this.LoginCode = res.code
             if (this.LoginCode > 0) {
                 console.log("未登录")

@@ -35,7 +35,8 @@
 </template>
 
 <script>
-import * as API from "@/api/user/";
+import { userService } from '@/common/api'
+// import * as API from "@/api/user/";
 
 export default {
   data() {
@@ -48,7 +49,7 @@ export default {
   },
   methods: {
     updatePWD() {
-        API.UserUpdate(this.pwdForm).then((res) => {
+        userService.UserUpdate(this.pwdForm).then((res) => {
           if (res.code > 0) {
             this.$notify.error({
               title: "更改失败",

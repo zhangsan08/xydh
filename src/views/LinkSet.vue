@@ -65,8 +65,11 @@
 </template>
 <script>
 
-import * as FolderAPI from '@/api/folder/'
-import * as LinkAPI from '@/api/link/'
+// import * as FolderAPI from '@/api/folder/'
+// import * as LinkAPI from '@/api/link/'
+
+import { folderService,linkService } from '@/common/api'
+
 
 export default {
 	props:["userID"],
@@ -90,7 +93,7 @@ export default {
 	methods: {
 		getFolder(){
 			this.uid = this.userID,
-			FolderAPI.getFoldersbyID(this.uid).then((res) =>{
+			folderService.getFoldersbyID(this.uid).then((res) =>{
 				this.Folders = res.data
 				this.Folders.sort(function(f1,f2){
 					return f1.weight-f2.weight//weight
@@ -104,11 +107,15 @@ export default {
 				this.loading = false;
 			}, 500);
 			if(fid){
-				LinkAPI.getLinksbyFolderID(fid).then((res) =>{
-					this.links = res.data
-					this.links.sort(function(l1,l2){
-                        return l2.weight-l1.weight//weight
-                    })
+				linkService.getLinksbyFolderID(fid).then((res) =>{
+					if(res.data){
+						this.links = res.data
+						this.links.sort(function(l1,l2){
+							return l2.weight-l1.weight//weight
+						})
+					}else{
+						this.links = []
+					}
 				})
 			}
 			else{
@@ -117,7 +124,7 @@ export default {
 		},
 		createLink(fid){
 			this.linkform.fid = fid
-			LinkAPI.createLink(this.linkform).then((res) => {
+			linkService.createLink(this.linkform).then((res) => {
 				if (res.code > 0) {
 					this.$notify.error({
 					title: "添加失败",
@@ -151,7 +158,7 @@ export default {
 				url: link.url,
 				info: link.info
 			}
-			LinkAPI.updateLink(form).then((res) => {
+			linkService.updateLink(form).then((res) => {
 				if (res.code > 0) {
 					this.$notify.error({
 					title: "更新失败",
@@ -179,7 +186,7 @@ export default {
 			var form = {
 				data:{id: link.id}
 			}
-			LinkAPI.deleteLink(form).then((res) => {
+			linkService.deleteLink(form).then((res) => {
 				if (res.code > 0) {
 					this.$notify.error({
 					title: "删除失败",

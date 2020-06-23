@@ -102,8 +102,9 @@
 
 <script>
 
-import * as UserAPI from '@/api/user/'
-import * as SiteAPI from '@/api/site/'
+// import * as UserAPI from '@/api/user/'
+// import * as SiteAPI from '@/api/site/'
+import { userService,siteService } from '@/common/api'
 
 import IndexLab from '@/views/IndexLab.vue'
 
@@ -144,7 +145,7 @@ export default {
 	methods: {
 		load(uname){
 			// userName取ID
-			UserAPI.UserID(uname).then((res) => {
+			userService.UserID(uname).then((res) => {
 				if (res.code > 0 ){
 					this.$alert('', '走迷路了', {
 						confirmButtonText: '回主页',
@@ -177,7 +178,7 @@ export default {
 		},
 		// 取小站信息[名称、简介]
 		getSite(userid){
-			SiteAPI.getSitebyID(userid).then((res) => {
+			siteService.getSitebyID(userid).then((res) => {
 				if (res.code > 0 ){
 						this.$alert('', '走迷路了', {
 						confirmButtonText: '回主页',
@@ -209,7 +210,7 @@ export default {
 		},
 		// 取所有书签[文件夹、书签]
 		getAll(userid){
-			SiteAPI.getAll(userid).then((res) => {
+			siteService.getAll(userid).then((res) => {
 				if (res.code > 0 ){
 						this.$alert('', '走迷路了', {
 						confirmButtonText: '回主页',

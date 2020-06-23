@@ -28,9 +28,12 @@
 </template>
 
 <script>
-import * as UserAPI from '@/api/user/'
-import * as FolderAPI from '@/api/folder/'
-import * as LinkAPI from '@/api/link/'
+
+import { userService,folderService,linkService } from '@/common/api'
+
+// import * as UserAPI from '@/api/user/'
+// import * as FolderAPI from '@/api/folder/'
+// import * as LinkAPI from '@/api/link/'
 
 export default {
     data() {
@@ -48,7 +51,7 @@ export default {
     methods: {
         getUser(){
             // 判断登录状态,若登录则取出当前userID和userName
-            UserAPI.UserMe().then((res) => {
+            userService.UserMe().then((res) => {
                 this.LoginCode = res.code
                 if (this.LoginCode > 0) {
                     this.$message({
@@ -60,7 +63,7 @@ export default {
                     this.$router.push({name:'ULogin'})
                 }else{  
                     this.uid = res.data.id
-                    FolderAPI.getFoldersbyID(this.uid).then((res) =>{
+                    folderService.getFoldersbyID(this.uid).then((res) =>{
                         this.Folders = res.data
                         this.Folders.sort(function(f1,f2){
                             return f1.weight-f2.weight//weight
@@ -76,7 +79,7 @@ export default {
 				this.loading = false;
 			}, 500);
 			if(fid){
-				LinkAPI.getLinksbyFolderID(fid).then((res) =>{
+				linkService.getLinksbyFolderID(fid).then((res) =>{
                     this.links = res.data
                     this.links.sort(function(l1,l2){
                         return l2.weight-l1.weight//weight
@@ -95,7 +98,7 @@ export default {
             var json = {
                 list: this.links
             }
-			LinkAPI.sortLink(json).then((res) => {
+			linkService.sortLink(json).then((res) => {
 				if (res.code > 0) {
 					this.$notify.error({
 					title: "保存失败",

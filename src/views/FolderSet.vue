@@ -43,7 +43,8 @@
 
 <script>
 
-import * as FolderAPI from '@/api/folder/'
+// import * as FolderAPI from '@/api/folder/'
+import { folderService } from '@/common/api'
 
 export default {
 	props:["userID"],
@@ -62,7 +63,7 @@ export default {
 	methods: {
 		getFolder(){
 			this.uid = this.userID,
-			FolderAPI.getFoldersbyID(this.uid).then((res) =>{
+			folderService.getFoldersbyID(this.uid).then((res) =>{
 				this.Folders = res.data
 				this.Folders.sort(function(f1,f2){
 					return f1.weight-f2.weight//weight
@@ -70,7 +71,7 @@ export default {
 			})
 		},
 		createFolder(){
-			FolderAPI.createFolder(this.Folderform).then((res) => {
+			folderService.createFolder(this.Folderform).then((res) => {
 				if (res.code > 0) {
 					this.$notify.error({
 					title: "添加失败",
@@ -100,7 +101,7 @@ export default {
 				icon: Folder.icon,
 				weight: Folder.weight,
 			}
-			FolderAPI.updateFolder(form).then((res) => {
+			folderService.updateFolder(form).then((res) => {
 				if (res.code > 0) {
 					this.$notify.error({
 					title: "更新失败",
@@ -126,7 +127,7 @@ export default {
 			var form = {
 				data:{id: Folder.id}
 			}
-			FolderAPI.deleteFolder(form).then((res) => {
+			folderService.deleteFolder(form).then((res) => {
 				if (res.code > 0) {
 					this.$notify.error({
 					title: "删除失败",

@@ -57,8 +57,8 @@
 </template>
 
 <script>
-
-import * as UserAPI from '@/api/user/'
+import { userService } from '@/common/api'
+// import * as UserAPI from '@/api/user/'
 import Notice from './Notice'
 import SiteSet from './SiteSet'
 import FolderSet from './FolderSet'
@@ -78,9 +78,11 @@ export default {
     methods: {
         getUser(){
             // 判断登录状态,若登录则取出当前userID和userName
-            UserAPI.UserMe().then((res) => {
+            userService.UserMe().then((res) => {
+                console.log(res)
                 this.LoginCode = res.code
                 if (this.LoginCode > 0) {
+                    
                     this.$message({
                         message: '请登录',
                         center: true,
@@ -113,7 +115,7 @@ export default {
             })
         },
         logout(){
-            UserAPI.UserLogout()
+            userService.UserLogout()
             this.$alert('', '注销成功', {
               type: 'success',
               callback: () => {

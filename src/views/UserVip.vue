@@ -19,7 +19,9 @@
 </template>
 
 <script>
-import * as UserAPI from '@/api/user/'
+// import * as UserAPI from '@/api/user/'
+
+import { userService } from '@/common/api'
 
 export default {
     data() {
@@ -38,7 +40,7 @@ export default {
     methods: {
         getUser(){
             // 判断登录状态,若登录则取出当前userID和userName
-            UserAPI.UserMe().then((res) => {
+            userService.UserMe().then((res) => {
                 this.LoginCode = res.code
                 if (this.LoginCode > 0) {
                     this.$message({
@@ -58,7 +60,7 @@ export default {
             })
         },
         Use(){
-            UserAPI.UserVip(this.VipForm).then((res) => {
+            userService.UserVip(this.VipForm).then((res) => {
                 if (res.code > 0) {
                     this.$notify.error({
                     title: "兑换失败",

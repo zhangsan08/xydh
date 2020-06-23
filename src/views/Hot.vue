@@ -42,7 +42,9 @@
 
 <script>
 
-import * as API from '@/api/site/'
+// import * as API from '@/api/site/'
+// import { siteService } from '@/common/api'
+import axios from 'axios'
 
 export default {
     data() {
@@ -76,15 +78,24 @@ export default {
     },
     methods: {
         getHotSite(classid,siteid){
-            console.log(classid,siteid)
+            // console.log(classid,siteid)
             // this.selectedSite = siteid     
-            API.getHot(siteid).then((res) => {
-                if(!res.Code){
-                    this.data[classid] = res.Data
+            // siteService.getHot(siteid).then((res) => {
+            //     if(!res.Code){
+            //         this.data[classid] = res.Data
+            //     }
+            //     alert("更新data"+classid)
+            // })
+
+            axios.get('https://www.tophub.fun:8888/GetAllInfoGzip?id='+siteid).then((res) => {
+                if(!res.data.Code){
+                    this.data[classid] = res.data.Data
                 }
                 alert("更新data"+classid)
             })
-        },
+        }
+
+        
     },
     beforeMount(){
         for(var i=0;i<this.siteClasses.length;i++){

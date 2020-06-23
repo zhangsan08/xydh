@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import * as UserAPI from '@/api/user/'
+import { userService } from '@/common/api'
 
 export default {
     data() {
@@ -21,7 +21,7 @@ export default {
     methods: {
         getRandomUser(){
             // 判断登录状态,若登录则取出当前userID和userName
-            UserAPI.UserRandom().then((res) => {
+            userService.UserRandom().then((res) => {
                 this.retCode = res.code
                 if (this.retCode > 0) {
                     this.$alert('', '有猿无分', {

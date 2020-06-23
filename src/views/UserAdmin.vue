@@ -28,7 +28,8 @@
 </template>
 
 <script>
-import * as UserAPI from '@/api/user/'
+import { userService } from '@/common/api'
+// import * as UserAPI from '@/api/user/'
 
 export default {
     data() {
@@ -44,7 +45,7 @@ export default {
     methods: {
         getUser(){
             // 判断是不是管理员
-            UserAPI.UserMe().then((res) => {
+            userService.UserMe().then((res) => {
                 this.LoginCode = res.code
                 if (this.LoginCode > 0 || res.data.level<10) {
                     this.$message({
@@ -58,7 +59,7 @@ export default {
             })
         },
         resetUser(){
-            UserAPI.UserReset(this.resetForm).then((res) => {
+            userService.UserReset(this.resetForm).then((res) => {
                 if (res.code > 0) {
                     this.$notify.error({
                         title: "重置失败",

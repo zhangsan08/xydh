@@ -6,13 +6,13 @@ const devNeedCdn = true
 
 module.exports = {
   devServer: {
-    proxy: {
-        //zhengze zhiyaoshi /api kaitou
-      '^/api': {
-        target: 'http://localhost:3000',
-        ws: true,
-      }
-    }
+    // proxy: {
+    //     //zhengze zhiyaoshi /api kaitou
+    //   '^/api': {
+    //     target: 'https://xydh.fun',
+    //     ws: true,
+    //   }
+    // }
   },
   configureWebpack: (config) => {
     //  引入uglifyjs-webpack-plugin

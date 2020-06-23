@@ -10,13 +10,15 @@
 </template>
 
 <script>
-import * as API from '@/api/user/'
+// import * as API from '@/api/user/'
+
+import { userService } from '@/common/api'
 
   export default {
     name: 'RightBar',
     methods: {
         logout(){
-            API.UserLogout()
+            userService.UserLogout()
             this.$alert('即将回到主页', '注销成功', {
               // confirmButtonText: '点击进入控制台',
               type: 'success',
