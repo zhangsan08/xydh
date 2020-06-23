@@ -16,14 +16,14 @@ module.exports = {
   },
   configureWebpack: (config) => {
     //  引入uglifyjs-webpack-plugin
-    let UglifyPlugin = require('uglifyjs-webpack-plugin');
+    let UglifyPlugin = require('terser-webpack-plugin');
     if (process.env.NODE_ENV == 'production') {
       // 为生产环境修改配置
       config.mode = 'production'
       // 将每个依赖包打包成单独的js文件
       let optimization = {
         minimizer: [new UglifyPlugin({
-            uglifyOptions: {
+            terserOptions: {
                 warnings: false,
                 compress: {
                   drop_console: true, 
