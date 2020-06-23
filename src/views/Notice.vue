@@ -9,11 +9,13 @@
                      {{ l.li }}
             </div>
         </div>
+        <el-divider>进官方群交流</el-divider>
         <div>
-            <p>入QQ群请报自己的炫猿id</p>
+            <p>入QQ群请报自己的炫猿id。进群后昵称改成id.xydh.fun。</p>
+            <b>定期清理未改名的用户。(防止无账号的人混入)</b>
             <p>猿友们在群里互相帮助哈, 我基本不看群</p>
             <p>产品建议和Bug反馈优先从<a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426'>https://support.qq.com/products/106426</a>发布。</p>
-            <img width="300px" src='https://i.loli.net/2020/04/06/BJtIxrK6MzFbiqf.jpg' alt='BJtIxrK6MzFbiqf'/>
+            <img width="200px" src='https://i.loli.net/2020/04/06/BJtIxrK6MzFbiqf.jpg' alt='BJtIxrK6MzFbiqf'/>
 		</div>
     </div>
 </template>
@@ -22,6 +24,11 @@
     data() {
       return {
         Notice: [
+        {"name":"v0.7.6 特性 -2020.06.22","list":[{"li":"实验室全新UI上线,感谢 AHANA.xydh.fun 的布局设计!"}]},
+        {"name":"v0.7.5 特性 -2020.06.04","list":[{"li":"热榜新增两款爬虫 未来几天会增加更多 如果你有特别推荐的网站需要爬取可以给我提意见"}]},
+        {"name":"v0.7.4 特性 -2020.06.01","list":[{"li":"热榜预览版上线"}]},
+        {"name":"v0.7.3 特性 -2020.05.28","list":[{"li":"优化了宽度大于1920的高分辨率显示器的布局(改为一行4个文件夹)"},{"li":"UI布局优化"}]},
+        {"name":"v0.7.2 特性 -2020.05.06","list":[{"li":"任意门上线"},{"li":"正在憋一个大招(遇到问题了)"},]},
         {"name":"v0.7.1 特性 -2020.04.26","list":[{"li":"书签排序上线"},{"li":"细节优化:打开首页光标自动聚焦到搜索框"},{"li":"正在憋一个大招"},]},
         {"name":"v0.7.0 特性 -2020.04.23","list":[{"li":"扩容卡上线"},{"li":"去广告服务上线"},]},
         {"name":"v0.6.3 特性 -2020.04.20","list":[{"li":"增加了更多背景颜色和字体颜色的选择"},]},

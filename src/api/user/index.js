@@ -18,6 +18,10 @@ const UserID = username => axios.get(`/api/v1/getuserid/${username}`).then(res =
 
 const UserVip = form => axios.post('/api/v1/user/vip', form).then(res => res.data)
 
+const UserRandom = () => axios.get('/api/v1/getrandomuser').then(res => res.data)
+
+const UserReset = form => axios.post('/api/v1/user/reset', form).then(res => res.data)
+
 export {
     UserRegister,
     UserLogin,
@@ -26,4 +30,6 @@ export {
     UserMe,
     UserID,
     UserVip,
+    UserRandom,
+    UserReset,
 }

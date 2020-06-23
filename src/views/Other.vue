@@ -1,6 +1,6 @@
 <template>
 <div>
-    <el-divider content-position="center">书签导入</el-divider>
+    <!-- <el-divider content-position="center">书签导入</el-divider>
     <el-divider content-position="center">开发ing</el-divider>
     <el-upload
         class="upload"
@@ -10,7 +10,7 @@
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">导入书签，将Chrome浏览器导出的html文件拖到此处，或<em>点击上传</em></div>
         <div class="el-upload__tip" slot="tip">仅限赞助用户</div>
-    </el-upload>
+    </el-upload> -->
     <el-divider content-position="center">密码修改</el-divider>
     <div class="pwdForm">
         <el-form :model="pwdForm" status-icon ref="pwdForm" label-width="100px">

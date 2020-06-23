@@ -2,23 +2,26 @@
 <div class="reg">
 
   
-  <p>为了永久地为用户提供服务,炫猿采用邀请码注册制。如果你是自媒体号主,可以联系我获得一部分邀请码进行合作推广:xuanyuandaohang@126.com 请在邮件内容中注明来意</p><p>个人用户请勿联系 邮件太多完全没有时间回复</p>
+  <!-- <p>为了永久地为用户提供服务,炫猿采用邀请码注册制。如果你是自媒体号主,可以联系我获得一部分邀请码进行合作推广:xuanyuandaohang@126.com 请在邮件内容中注明来意</p><p>个人用户请勿联系 邮件太多完全没有时间回复</p> -->
   <!-- <h4>合作预告</h4>
   公众号 网罗灯下黑 2020年5月1号8点发码 欢迎蹲点<b>(大佬号)</b><br> -->
+  <el-divider></el-divider>
   <div class="ad">
     <!-- <el-divider></el-divider> -->
-    <div style="text-align:right;font-size:10px">广告</div>
-    <img height="200px" src='https://i.loli.net/2020/05/01/JcOQlLtpYXr7DZf.png' alt='JcOQlLtpYXr7DZf'/>
+    <div style="text-align:right;font-size:10px">广告 <a target='_blank' rel='nofollow' href=''>投放</a></div>
+    导航站最新资讯，每日送码，就关注官方公众号【炫技巧】
+    <p><img width="120px" src="https://pic.downk.cc/item/5ecfb96ac2a9a83be569795b.png"></p>
+    <!-- <img height="200px" src='https://i.loli.net/2020/05/01/JcOQlLtpYXr7DZf.png' alt='JcOQlLtpYXr7DZf'/> -->
   </div>
   <el-divider>注册</el-divider>
     <div class="regform">
       <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px">
+        <div style="text-align:right;"><a target='_blank' rel='nofollow' href='http://vip.x-jq.cn/product/4.html'>购买邀请码</a></div>
           <el-form-item label="邀请码" prop="yuankey">
-            <a target='_blank' rel='nofollow' href='http://vip.x-jq.cn/product/4.html'>购买邀请码</a>
               <el-input v-model="registerForm.yuankey" ></el-input>
           </el-form-item>
+          <p class="tips">tips: 用户名将决定您的专属访问链接<br>如用户{{registerForm.name}}的链接为 http://{{registerForm.name}}.xydh.fun/</p>
           <el-form-item label="用户名" prop="name">
-              <p class="tips">tips: 用户名将决定您的专属访问链接<br>如用户{{registerForm.name}}的链接为 http://{{registerForm.name}}.xydh.fun/</p>
               <el-input type="text" placeholder="5~15字符 建议使用简短好记的字母组合" v-model="registerForm.name" minlength="5" maxlength="15" show-word-limit></el-input>
           </el-form-item>
           
@@ -28,13 +31,13 @@
           <el-form-item label="确认密码" prop="checkPass">
               <el-input type="password" v-model="registerForm.password_confirm" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item>
+          <div style="padding:10px 50px">
             <el-link type="primary"   @click="agreeVisible = true" >请点击阅读用户注册协议</el-link>
-          </el-form-item>
-          <el-form-item>
+          </div>
+          <div style="padding:10px 50px">
               <el-button type="primary"   @click="submitForm('registerForm')" >同意用户注册协议并注册</el-button>
               <el-button type="danger"    @click="resetForm('registerForm')"  >重置</el-button>
-          </el-form-item>
+          </div>
       </el-form> 
     </div>
     <el-divider></el-divider>
@@ -138,8 +141,7 @@ export default {
         { date: '2020-04-28', name: '虚拟精华', address: 'https://mp.weixin.qq.com/s/EtIHPsIKd_21ZRCfSaectA'},
         { date: '2020-05-01', name: '网罗灯下黑', address: 'https://mp.weixin.qq.com/s/qBcVAyEp2NdD1IQ_rQ8OqA'},
       ],
-      tableData2: [
-        
+      tableData2: [  
         { date: '2020-04-29', name: '阿雷课堂', address: 'https://mp.weixin.qq.com/s/UCQW4wTPNugyxJjZs-pQVw'},
         { date: '2020-04-28', name: '助手小伙伴', address: 'https://mp.weixin.qq.com/s/l32SsGkV6GfJteQuMB5eNg'},
         { date: '2020-04-26', name: '极简源码', address: 'https://mp.weixin.qq.com/s/oMjfK42h1-dRrv6sNHIVzA'},
@@ -240,7 +242,7 @@ export default {
 
 <style scoped>
 .ad {
-  display: none;
+  /* display: none; */
   /* text-align: center; */
   margin: -15px;
   /* border:black;

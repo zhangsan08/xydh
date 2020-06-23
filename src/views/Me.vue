@@ -2,9 +2,10 @@
     <div class="me">
         <el-divider>最新通知</el-divider>
         <div class="note">
-          <li>千呼万唤始出来 书签排序上线 请进实验室体验</li>
-        为所有的去除广告用户增加了一个文件夹, 感谢你们的支持了!<br>
-        也感谢所有购买了扩容服务的用户，炫猿会全力为用户打造最好用的浏览器第一站!
+            <h3>净网行动</h3>
+            <li>任意门的上线收到大量举报。对于举报者有奖励。</li> 
+          <b>请严查你的书签中是否有违法网站。涉黄涉黑涉政。外网VPN一律禁止。</b>
+          <li>很多东西你自己找个地方存好就行了 分享已经构成了违法犯罪<br>炫猿的很多用户都很年轻 希望你们有基础的法制观念</li>
         </div>
         <el-divider></el-divider>
         <h2>您的专属链接</h2>
@@ -16,7 +17,7 @@
         <p>请在个人电脑登录本控制台,否则请<el-button type="" @click="logout" round="">登出</el-button></p>
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="公告">
-                <Notice  v-if="userID!=7163"></Notice><div v-else>该账号为测试账号。仅用于展示后台功能。使用上有多处限制。</div>
+                <Notice v-if="userID!=7163"></Notice><div v-else>该账号为测试账号。仅用于展示后台功能。使用上有多处限制。</div>
             </el-tab-pane>
 
             <el-tab-pane label="小站配置">
@@ -62,7 +63,7 @@ import Notice from './Notice'
 import SiteSet from './SiteSet'
 import FolderSet from './FolderSet'
 import LinkSet from './LinkSet'
-import Lab from './Lab'
+import Lab from './ConsoleLab'
 import Other from './Other'
 import Paomadeng from '@/components/Paomadeng.vue'
 
@@ -87,7 +88,25 @@ export default {
                         type: 'warning'
                     });
                     this.$router.push({name:'ULogin'})
-                }else{  
+                }else{
+                    if (res.data.level < 0){
+						this.$alert('网络不是不法之地！请珍惜您的账号,账号申诉请联系邮箱 xuanyuandaohang@126.com 上传了非法网站的就不要申诉了', '该账号传播违法信息已被封禁', {
+							confirmButtonText: '回主页',
+							callback: () => {
+                                this.logout()
+                                window.location.href="https://xydh.fun"
+							}
+                        });
+						return
+					}
+                    if (res.data.level == 0){
+						this.$alert('请在删除违规书签后联系邮箱 xuanyuandaohang@126.com 申请解封', '你的书签存在违规', {
+							// confirmButtonText: '回主页',
+							callback: () => {
+                                
+							}
+                        });
+					}
                     this.userID = res.data.id
                     this.username = res.data.name
                 }

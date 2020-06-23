@@ -1,12 +1,22 @@
 <template>
 <div class="header">
-    <div style="text-align:right;">
-        <a href="/Me" target="_blank">定制 | 登录</a>
-    </div>
     <!-- 天气 -->
     <div class="weather" id="he-plugin-simple"></div>
+    <div style="text-align:right;" class="headerbtn">
+        <!-- <div class="btn">
+            <span class="tooltip">猿分啊</span>
+            <a href="/u/rand" target="_blank">任意门</a>
+            </div>
+        <div class="btn"><a href="/Me" target="_blank">自定义|登录</a></div> -->
+        <!-- <span class="tooltip">123123</span> -->
+        <a href="/u/rand" target="_blank">任意门</a>
+        <a href="/Me" target="_blank">自定义</a>
+    </div>  
     <div class="paomadeng">
         <el-carousel  indicator-position="none" arrow="always" direction="vertical" height="25px">
+            <!-- <el-carousel-item>
+                公告
+            </el-carousel-item> -->
             <el-carousel-item v-for="item in data" :key="item.name">
                 {{ item.name }}
             </el-carousel-item>
@@ -21,7 +31,7 @@ export default {
     data(){
         return{
             data: [
-                {"name":"欢迎网罗灯下黑的粉丝!"},
+                // {"name":"520邀请码打折中"},
             ]
         }
     },
@@ -29,19 +39,20 @@ export default {
 </script>
 
 <style scoped>
-/* .header {
-    background-color: black;
-    left: -10px;
-    margin: -10px -10px 0 -10px;
-} */
+.header {
+    margin: 10px 10px;
+}
+.headerbtn a{
+    margin: 5px;
+}
 /* 跑马灯内容 */
 .el-carousel__item {
     font-size: 13px;
-    line-height: 13px;
 }
 .paomadeng {
     /* background-color: black; */
-    margin: -13px auto;
+    margin: 0 auto;
 	max-width: 300px;
+    /* height: 100px; */
 }
 </style>

@@ -11,10 +11,12 @@
             <el-input type="password" v-model="loginForm.password" autocomplete="off" @keyup.enter.native="submitForm('loginForm')"></el-input>
             </el-form-item>
             
-            <el-form-item>
-                <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+            <div style="padding:10px 50px">
+               <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
                 <el-button @click.native="reg()">注册并定制自己的导航</el-button>
-            </el-form-item>
+            </div>
+               
+            
             
         </el-form>
 

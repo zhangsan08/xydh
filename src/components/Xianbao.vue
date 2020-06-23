@@ -8,7 +8,7 @@
         title="实时线报"
         :visible.sync="drawer"
         direction="ltr"
-        size="40%"
+        size="90%"
         :withHeader="false"
     >
         <!-- 线报内容 -->

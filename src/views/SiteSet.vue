@@ -146,7 +146,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
 .siteForm {
     min-width: 400px;
     max-width: 400px;
