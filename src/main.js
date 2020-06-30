@@ -2,8 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.css';
+import { Message } from 'element-ui';
+Vue.use(Antd);
 
 Vue.config.productionTip = false
+Vue.prototype.$message = Message;
 
 new Vue({
   router,

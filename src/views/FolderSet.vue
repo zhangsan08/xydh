@@ -124,9 +124,8 @@ export default {
 			});
 		},
 		deleteFolder(Folder){
-			var form = {
-				data:{id: Folder.id}
-			}
+			var form = {id: Folder.id}
+			
 			folderService.deleteFolder(form).then((res) => {
 				if (res.code > 0) {
 					this.$notify.error({

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { cookieGet } from '@/common/cookie'
 // import router from '@/router'
 import { isPlainObject } from 'lodash'
-import qs from 'qs'
+// import qs from 'qs'
 import { message } from 'ant-design-vue';
 
 // 记录和显示错误
@@ -35,7 +35,7 @@ service.interceptors.request.use(config => {
   var defaults = {}
   
   // 防止缓存，GET请求默认带_t参数
-  if (config.method === 'get' || config.method === 'delete' || config.data.noQs) {
+  if (config.method === 'get'  || config.data.noQs) {
     
     config.params = {
       ...config.params,
@@ -46,7 +46,6 @@ service.interceptors.request.use(config => {
       config.params.token = token
     }
   }else{
-    
     config.data = {
       ...config.data
     }
@@ -69,10 +68,15 @@ service.interceptors.request.use(config => {
     }
     // if (/^application\/x-www-form-urlencoded/.test(config.headers['content-type'])) {
       if (!config.data.noQs){
-         config.data = qs.stringify(config.data)
+        //  config.data = qs.stringify(config.data)
       }
     // }
   }
+
+  if(config.method === 'delete'){
+    config.headers['Content-type'] = 'application/json'
+  }
+  
   return config
 }, error => {
   return Promise.reject(error)

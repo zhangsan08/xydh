@@ -183,9 +183,8 @@ export default {
 		},
 		deleteLink(fid,link){
 			this.linkform.fid = fid
-			var form = {
-				data:{id: link.id}
-			}
+			var form = {id: link.id}
+			
 			linkService.deleteLink(form).then((res) => {
 				if (res.code > 0) {
 					this.$notify.error({
