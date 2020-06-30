@@ -25,7 +25,7 @@
 	<div class="Lab totop" v-if="labSwitch">
 		<div class="hidden-sm-and-up" style="height:50px;"></div>
 		<transition name="el-zoom-in-left">
-			<IndexLab></IndexLab>
+			<IndexLab :lybID=lybID></IndexLab>
 		</transition>
 	</div>
 	<div class="bookmark" v-else>
@@ -79,7 +79,6 @@
 								<p v-else>{{ link.name }}</p>
 							</a>
 							</div>
-							
 						</el-col>
 					</div>
 				</div>
@@ -129,6 +128,7 @@ export default {
 			siteinfo: "",
 			btn_switch: true,
 			bglizi: 0,
+			lybID: "",
 			Folders: [],
 			yuanxuan: [
 				{"icon":"","name":"华为云羊毛【独家】","url":"https://www.yuque.com/xydh/partner/huawei","info":"独家合作",},
@@ -192,6 +192,7 @@ export default {
 					this.siteinfo = res.data.info
 					this.btn_switch = res.data.btn_switch
 					this.bglizi = res.data.bglizi
+					this.lybID = res.data.lyb_id
 					document.title = this.sitename+" | 炫猿"
 					// var obj = document.getElementsByClassName("bg")[0]
 					var obj = document.getElementsByTagName("body")[0]

@@ -31,7 +31,7 @@ export default {
     data(){
         return{
             data: [
-                // {"name":"520邀请码打折中"},
+                {"name":"留言板添加方法见上午8点炫技巧推文"},
             ]
         }
     },

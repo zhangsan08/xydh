@@ -31,8 +31,6 @@
                 </div>
             </el-form-item>
             
-           
-
             <el-form-item label="字体颜色">
                 <el-color-picker v-model="SiteForm.font_color" :predefine="predefineColors"></el-color-picker>
             </el-form-item>
@@ -46,6 +44,10 @@
                     :value="item.value">
                     </el-option>
                 </el-select>
+            </el-form-item>
+
+            <el-form-item label="留言板">
+                <el-input type="text" v-model="SiteForm.lyb_id" minlength="24" maxlength="24" placeholder=""></el-input>
             </el-form-item>
             
             <el-popconfirm v-if="uid!=7163" confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更新站点信息吗" @onConfirm="updateSite()">
@@ -79,6 +81,7 @@ export default {
                 bg_color: "123123",
                 font_color: "",
                 bglizi: 0,
+                lyb_id: "",
             },
             texiao: [
                 {value: 0,label: '关闭'}, 
@@ -102,6 +105,7 @@ export default {
                 this.SiteForm.bg_color = res.data.bg_color
                 this.SiteForm.font_color = res.data.font_color
                 this.SiteForm.bglizi = res.data.bglizi
+                this.SiteForm.lyb_id = res.data.lyb_id
                 this.userview = res.data.view
             })
         },

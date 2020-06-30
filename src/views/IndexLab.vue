@@ -5,16 +5,16 @@
         <!-- 实验室内容 -->
         <div class="labTabs">
         <el-tabs type="card">
+            <el-tab-pane label="留言板">
+                <div id="lv-container" data-id="city" :data-uid="lybID"></div>
+            </el-tab-pane>
             <el-tab-pane label="热榜">
                 优化后回归
-                <Hot></Hot>
+                <!-- <Hot></Hot> -->
             </el-tab-pane>
             <el-tab-pane label="公告">
                 <br>导航站最新资讯，每日送码，就关注官方公众号【炫技巧】
                 <p><img width="150px" src="https://pic.downk.cc/item/5ecfb96ac2a9a83be569795b.png"></p>
-            </el-tab-pane>
-            <el-tab-pane label="留言板">
-                开发中
             </el-tab-pane>
         </el-tabs>
         </div>
@@ -22,14 +22,24 @@
 </template>
 
 <script>
+
 export default {
+    props:["lybID"],
     methods:{
         switchLab(){
             this.$parent.switchLab()
         }
     },
-    beforeMount(){
-        // alert("123")
+    mounted(){
+        let lyb=document.getElementById("lv-container")
+        if(this.lybID==""){
+            lyb.innerHTML = "该用户未开启留言板"
+        }else{
+            let script=document.createElement("script");
+            script.src="https://cdn-city.livere.com/js/embed.dist.js";
+            lyb.appendChild(script);
+        }
+
     }
 }
 </script>
@@ -55,5 +65,10 @@ export default {
 }
 .labTabs {
     margin: 20px 0px;
+}
+
+#lv-container {
+    margin: 0 auto;
+    max-width: 800px;
 }
 </style>

@@ -168,19 +168,19 @@ export default {
 .li-tab {
     float:left;
     cursor: pointer;
-    line-height: 20px;
+    line-height: 18px;
 }
 .active .trangle{
     /* position: absolute; */
     width: 0px;
-    height: 5px;
-    border-right: 5px solid transparent;
-    border-left: 5px solid transparent;
-    border-top: 5px solid #ffffff;
+    height: 2px;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    border-top: 6px solid #ffffff;
     z-index: 99;
     bottom: 0px;
     /* left: 50%; */
-    margin-left: 7px;
+    margin-left: 8px;
 }
 
 .activeEngine {
