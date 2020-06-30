@@ -31,7 +31,7 @@ export default {
     data(){
         return{
             data: [
-                {"name":"留言板添加方法见上午8点炫技巧推文"},
+                // {"name":"留言板添加方法见上午8点炫技巧推文"},
             ]
         }
     },

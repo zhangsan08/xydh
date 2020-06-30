@@ -323,7 +323,7 @@ body {
 	font-weight: bold;
 }
 .folder {
-	background: rgba(0, 0, 0, 0.06);
+	background: rgba(0, 0, 0, 0.03);
 	/* background: rgba(255, 255, 255, 0.06); */
 	/* height: 180px; */
 	margin: 12px 20px;
@@ -339,6 +339,10 @@ body {
 ::-webkit-scrollbar {
 	display: none; /* Chrome Safari */
 }
+.folder:hover{
+    background: rgba(0, 0, 0, 0.6);
+	color: white;
+}
 
 .foldername p{
 	font-size: 16px;
@@ -352,8 +356,8 @@ body {
 }
 /* 每个书签 */
 .link {
-	min-height: 20px;
-	max-height: 20px;
+	min-height: 30px;
+	max-height: 30px;
 }
 .link:hover{
     color: gold;
