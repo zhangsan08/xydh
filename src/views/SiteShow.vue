@@ -20,15 +20,15 @@
 	<!-- 搜索框 -->
 	<div class="search"><SearchTool></SearchTool></div>
 
-	<div  class="link-tags" style="width:100%;height:100px;padding-top:14px;height:50px;position: relative;">
-		
+	<!-- 历史足迹 -->
+	<!-- <div  class="link-tags" style="width:100%;height:100px;padding-top:14px;height:50px;position: relative;">
 		<el-tag
 		:style="'border-color:'+ autoColor + ';cursor:pointer'"
 		v-for="tag in cacheList"
 		@click="goToUrl(tag)"
 		:key="tag.id"
 		size="mini"
-		v-show="openTags == true"
+		v-show="historySwitch == true"
 		effect="plain">
 			<span :style="'color:'+autoColor">
 				{{tag.name}}
@@ -36,13 +36,44 @@
 		</el-tag>
 		
 		<el-switch
-			v-model="openTags"
+			v-model="historySwitch"
 			:active-color="autoColor"
 			inactive-color="#999"
 			@change="onChange()">
 		</el-switch>
-	</div>
+	</div> -->
+		<el-switch
+			v-model="historySwitch"
+			:active-color="autoCojklor"
+			inactive-color="#999"
+			@change="onChange()">
+		</el-switch>
 
+	<el-row>
+	<div  class="historyLinks" v-if="historySwitch">
+		<!-- <el-row > -->
+		<div class="historyLink" v-for="link in cacheList"
+			@click="goToUrl(link)" :key="link.id">
+			<el-tooltip effect="dark" :content="link.name" placement="bottom">
+			<el-col :xs="6" :sm="4" :md="2">
+				<div class="historyPic">
+					<!-- https://www.yxt521.com/favicon/get.php?url= -->
+					<el-img :src="link.url+'/favicon.ico'" :alt="link.name[0]">
+						<div slot="error" class="image-slot">{{link.name[0]}}</div>
+					</el-img>
+				</div>
+				<!-- <span :style="'color:'+autoColor">
+					{{link.name}}
+				</span> -->
+			</el-col>
+			</el-tooltip>
+		</div>
+		<!-- </el-row> -->
+	</div>
+	</el-row>
+
+
+	<!-- 点击实验室按钮会打开实验室页面 -->
 	<div class="Lab totop" v-if="labSwitch">
 		<div class="hidden-sm-and-up" style="height:50px;"></div>
 		<transition name="el-zoom-in-left">
@@ -50,6 +81,7 @@
 		</transition>
 	</div>
 
+	<!-- 不显示实验室则显示导航 -->
 	<div class="bookmark" v-else>
 		<!-- 手机端快捷导航 -->
 		<div class="hidden-sm-and-up totop yellow">
@@ -87,7 +119,7 @@
 		<!-- 用户自定义内容 -->
 		<div v-for="Folder in Folders" :key="Folder.id">
 			<el-col :xs="24" :sm="12" :md="8" :xl="6">
-				<div class="folder totop" :style="{height:(screenWidth>768?'180px':'auto')}" :id="Folder.id" @dblclick="unfolder(Folder.id)" @click="enfolder(Folder.id)" onselectstart="return false;">
+				<div class="folder totop" :style="{height:(screenWidth>768?'180px':'auto')}" :id="Folder.id"  onselectstart="return false;">
 					<div class="foldername" :id="Folder.name">
 						<p v-if="Folder.icon"><i :class="'fa fa-'+Folder.icon"></i>{{Folder.name}}</p>
 						<p v-else>{{Folder.name}}</p>
@@ -109,7 +141,7 @@
 	</div>
 	
 
-	<!-- 跑马灯 -->
+	<!-- 跑马灯（暂时去掉了 本想留作广告位。发现接不到 -->
 	<el-col :span="24">
 		<div class="totop">
 			<!-- <Paomadeng v-if="ad"></Paomadeng>
@@ -164,13 +196,13 @@ export default {
 			f_color: "white",
 			autoColor:'#000',
 			autoBgColor:'#fff',
-			openTags: false,
+			historySwitch: false,
 			cacheList:[]
 		}
 	},
 	methods: {
 		onChange(){
-			cookieSet("openTags", this.openTags)
+			cookieSet("historySwitch", this.historySwitch)
 		},
 		load(uname){
 			// userName取ID
@@ -364,20 +396,21 @@ export default {
 			}
 		}
 
+		// 取“足迹”
 		let cache = cookieGet("cacheLinkList")
 		if(cache){
 			this.cacheList = []
 			let tempList = this.compare(JSON.parse(cache),'count')
-			let showNum = tempList.length >= 5 ? 5 : tempList.length
+			let showNum = tempList.length >= 12 ? 12 : tempList.length
 			for (let i = 0; i < showNum; i++) {
 				this.cacheList.push(tempList[i])
 			}
 		}
 
-		let open = cookieGet("openTags")
-		
+		// 取“足迹开关状态”
+		let open = cookieGet("historySwitch")
 		if(open != undefined){
-			this.openTags = open == "true" ? true:false
+			this.historySwitch = open == "true" ? true:false
 		}
 	},
 }
@@ -436,8 +469,8 @@ body {
 }
 /* 每个书签 */
 .link {
-	min-height: 30px;
-	max-height: 30px;
+	min-height: 33px;
+	max-height: 33px;
 }
 .link:hover{
     color: gold;
@@ -469,9 +502,25 @@ a {
 	color: inherit;
 }
 
-.link-tags .el-tag{
-	margin: 5px;
-	background-color:rgba(0,0,0,0);
+.historyLinks {
+	margin: 50px 30px 150px;
+}
+.historyPic {
+	width:30px;
+	height:30px;
+	border: #666;
+	border-width: 5px;
+}
+.image-slot {
+	text-align:center;
+	background-color: black;
+	width:50px;
+	height:50px;
+	line-height: 50px;
+	border-radius: 25px;
+}
+.historyLink {
+	cursor: pointer;
 }
 /* .yellow a:link {color: yellow}
 .yellow a:visited {color: yellow}
