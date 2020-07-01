@@ -20,14 +20,36 @@
 	<!-- 搜索框 -->
 	<div class="search"><SearchTool></SearchTool></div>
 
-	<div class="hidden-xs-only" style="height:50px;"></div>
-	
+	<div  class="link-tags" style="width:100%;height:100px;padding-top:14px;height:50px;position: relative;">
+		
+		<el-tag
+		:style="'border-color:'+ autoColor + ';cursor:pointer'"
+		v-for="tag in cacheList"
+		@click="goToUrl(tag)"
+		:key="tag.id"
+		size="mini"
+		v-show="openTags == true"
+		effect="plain">
+			<span :style="'color:'+autoColor">
+				{{tag.name}}
+			</span>
+		</el-tag>
+		
+		<el-switch
+			v-model="openTags"
+			:active-color="autoColor"
+			inactive-color="#999"
+			@change="onChange()">
+		</el-switch>
+	</div>
+
 	<div class="Lab totop" v-if="labSwitch">
 		<div class="hidden-sm-and-up" style="height:50px;"></div>
 		<transition name="el-zoom-in-left">
 			<IndexLab :lybID=lybID></IndexLab>
 		</transition>
 	</div>
+
 	<div class="bookmark" v-else>
 		<!-- 手机端快捷导航 -->
 		<div class="hidden-sm-and-up totop yellow">
@@ -52,7 +74,7 @@
 				<div v-for="link in yuanxuan" :key="link.id">
 					<el-col :span="8">
 						<div class="link">
-							<a :href="link.url" target="_blank" rel="nofollow">
+							<a @click="goToUrl(link)" target="_blank" rel="nofollow">
 							<span v-if="link.info" class="tooltiptext"><i class="fa fa-info-circle">{{ link.info }}</i></span>
 							<p v-if="link.icon"><i :class="'fa fa-'+link.icon"></i>&#160;{{ link.name }}</p>
 							<p v-else>{{ link.name }}</p>
@@ -73,7 +95,7 @@
 					<div class="links" v-for="link in Folder.links" :key="link.id">
 						<el-col :span="8">
 							<div class="link">
-							<a :href="link.url" target="_blank" rel="nofollow">
+							<a @click="goToUrl(link)" target="_blank" rel="nofollow">
 								<span v-if="link.info" class="tooltiptext"><i class="fa fa-info-circle">{{ link.info }}</i></span>
 								<p v-if="link.icon"><i :class="'fa fa-'+link.icon"></i>&#160;{{ link.name }}</p>
 								<p v-else>{{ link.name }}</p>
@@ -104,7 +126,7 @@
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
 import { userService,siteService } from '@/common/api'
-
+import { cookieGet,cookieSet} from '@/common/cookie'
 import IndexLab from '@/views/IndexLab.vue'
 
 // import RightBar from '@/components/RightBar'
@@ -131,18 +153,25 @@ export default {
 			lybID: "",
 			Folders: [],
 			yuanxuan: [
-				{"icon":"","name":"华为云羊毛【独家】","url":"https://www.yuque.com/xydh/partner/huawei","info":"独家合作",},
-				{"icon":"star","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
-				{"icon":"windows","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
-				{"icon":"apple","name":"大白软件站","url":"https://o--o.win","info":"新Mac的第一站",},	
-				{"icon":"","name":"自定义背景","url":"https://support.qq.com/products/106426/faqs/62946","info":"",},
-				{"icon":"","name":"极品广告位","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
-				{"icon":"","name":"虚位以待","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
+				{"icon":"","id":"poiuytre1","name":"华为云羊毛【独家】","url":"https://www.yuque.com/xydh/partner/huawei","info":"独家合作",},
+				{"icon":"star","id":"poiuytre2","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
+				{"icon":"windows","id":"poiuytre3","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
+				{"icon":"apple","id":"poiuytre4","name":"大白软件站","url":"https://o--o.win","info":"新Mac的第一站",},	
+				{"icon":"","id":"poiuytre5","name":"自定义背景","url":"https://support.qq.com/products/106426/faqs/62946","info":"",},
+				{"icon":"","id":"poiuytre6","name":"极品广告位","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
+				{"icon":"","id":"poiuytre7","name":"虚位以待","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
 			],
 			f_color: "white",
+			autoColor:'#000',
+			autoBgColor:'#fff',
+			openTags: false,
+			cacheList:[]
 		}
 	},
 	methods: {
+		onChange(){
+			cookieSet("openTags", this.openTags)
+		},
 		load(uname){
 			// userName取ID
 			userService.UserID(uname).then((res) => {
@@ -197,6 +226,7 @@ export default {
 					// var obj = document.getElementsByClassName("bg")[0]
 					var obj = document.getElementsByTagName("body")[0]
 					obj.style.color = res.data.font_color
+					this.autoColor = res.data.font_color
 					if(res.data.bg_switch){
 						// document.getElementsByTagName("body")[0].setAttribute("style","background-image: url("+res.data.bg+")"+";color:"+res.data.font_color);
 						obj.style.backgroundImage = "url("+res.data.bg+")"
@@ -239,6 +269,40 @@ export default {
 		go(url){
 			window.open(url,"_blank")
 		},
+		goToUrl(linkInfo){
+			console.log(linkInfo)
+			let cache = cookieGet("cacheLinkList")
+			let existKey = false
+			if(cache){
+				let cacheExist = JSON.parse(cache)
+				cacheExist.filter((d)=>{
+					if(d.id == linkInfo.id){
+						existKey = true
+						d.count +=1
+					}
+				})
+
+				if(!existKey){
+					linkInfo['count'] = 1
+					cacheExist.push(linkInfo)
+				}
+				cookieSet("cacheLinkList",JSON.stringify(cacheExist))
+			}else{
+				let array = []
+				linkInfo['count'] = 1
+				array.push(linkInfo)
+				cookieSet("cacheLinkList",JSON.stringify(array))
+			}
+
+			window.open(linkInfo.url,"_blank")
+		},
+		compare(array,key){
+			return array.sort(function(a,b){
+				var x = a[key];
+				var y = b[key];
+				return ((y<x)?-1:(x>y)?1:0)
+			})
+		},
 		// 展开folder
 		unfolder(id){
 			if(id==0){
@@ -275,7 +339,7 @@ export default {
 		Footer,
 		IndexLab,
 		// RightBar,
-		Particle,
+		Particle
 	},
 	beforeMount() {
 		// this.$message({
@@ -298,6 +362,22 @@ export default {
 			}else{
 				this.enfolder(0)
 			}
+		}
+
+		let cache = cookieGet("cacheLinkList")
+		if(cache){
+			this.cacheList = []
+			let tempList = this.compare(JSON.parse(cache),'count')
+			let showNum = tempList.length >= 5 ? 5 : tempList.length
+			for (let i = 0; i < showNum; i++) {
+				this.cacheList.push(tempList[i])
+			}
+		}
+
+		let open = cookieGet("openTags")
+		
+		if(open != undefined){
+			this.openTags = open == "true" ? true:false
 		}
 	},
 }
@@ -387,6 +467,11 @@ body {
 }
 a {
 	color: inherit;
+}
+
+.link-tags .el-tag{
+	margin: 5px;
+	background-color:rgba(0,0,0,0);
 }
 /* .yellow a:link {color: yellow}
 .yellow a:visited {color: yellow}
