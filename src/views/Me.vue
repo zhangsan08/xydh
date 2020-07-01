@@ -115,7 +115,7 @@ export default {
             })
         },
         logout(){
-            userService.UserLogout()
+            userService.UserLogout({noQs: false})
             this.$alert('', '注销成功', {
               type: 'success',
               callback: () => {
