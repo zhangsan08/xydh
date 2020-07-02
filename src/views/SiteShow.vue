@@ -39,7 +39,8 @@
 						<el-col :xs="6" :sm="4" :md="2">
 							<div class="historyPic">
 								<!-- https://www.yxt521.com/favicon/get.php?url= -->
-								<el-image :src="link.url | getDomain" :alt="link.name" style="border-radius: 25px;">
+								<el-image :src="link.url | getDomain" :alt="link.name" 
+								style="border-radius:15px;width:50px;height:50px;">
 									<div slot="error" class="image-slot">{{link.name[0]}}</div>
 								</el-image>
 							</div>
@@ -483,19 +484,18 @@ a {
 	background: rgba(0, 0, 0, 0.3);
 	width:50px;
 	height:50px;
-	border-radius: 25px;
+	border-radius: 15px;
 	margin: 5px 20px;
+	display: table-cell;
+	vertical-align: middle;
 }
 .historyPic {
-	width:50px;
-	height:50px;
+
 }
 .image-slot {
-	text-align:center;
 	width:50px;
 	height:50px;
 	line-height: 50px;
-	/* border-radius: 25px; */
 	font-size: 18px;
 	font-weight: bolder;
 }
