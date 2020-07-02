@@ -161,7 +161,7 @@ export default {
 
 <style>
 .serach {
-    margin: 30px auto 0;
+    margin: 30px auto 30px;
     text-align: center;
     z-index:-999;
 }

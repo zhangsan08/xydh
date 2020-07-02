@@ -5,7 +5,7 @@
 	</div>
 
 	<div class="totop" v-if="btn_switch">
-		<Header></Header>
+		<Header :historySwitch=historySwitch></Header>
 		<!-- <RightBar></RightBar> -->
 	</div>
 
@@ -20,59 +20,6 @@
 	<!-- 搜索框 -->
 	<div class="search"><SearchTool></SearchTool></div>
 
-	<!-- 历史足迹 -->
-	<!-- <div  class="link-tags" style="width:100%;height:100px;padding-top:14px;height:50px;position: relative;">
-		<el-tag
-		:style="'border-color:'+ autoColor + ';cursor:pointer'"
-		v-for="tag in cacheList"
-		@click="goToUrl(tag)"
-		:key="tag.id"
-		size="mini"
-		v-show="historySwitch == true"
-		effect="plain">
-			<span :style="'color:'+autoColor">
-				{{tag.name}}
-			</span>
-		</el-tag>
-		
-		<el-switch
-			v-model="historySwitch"
-			:active-color="autoColor"
-			inactive-color="#999"
-			@change="onChange()">
-		</el-switch>
-	</div> -->
-		<el-switch
-			v-model="historySwitch"
-			:active-color="autoColor"
-			inactive-color="#999"
-			@change="onChange()">
-		</el-switch>
-
-	<el-row>
-	<div  class="historyLinks" v-if="historySwitch">
-		<!-- <el-row > -->
-		<div class="historyLink" v-for="link in cacheList"
-			@click="goToUrl(link)" :key="link.id">
-			<el-tooltip effect="dark" :content="link.name" placement="bottom">
-			<el-col :xs="6" :sm="4" :md="2">
-				<div class="historyPic">
-					<!-- https://www.yxt521.com/favicon/get.php?url= -->
-					<el-image :src="link.url | getDomain" :alt="link.name[0]">
-						<div slot="error" class="image-slot">{{link.name[0]}}</div>
-					</el-image>
-				</div>
-				<!-- <span :style="'color:'+autoColor">
-					{{link.name}}
-				</span> -->
-			</el-col>
-			</el-tooltip>
-		</div>
-		<!-- </el-row> -->
-	</div>
-	</el-row>
-
-
 	<!-- 点击实验室按钮会打开实验室页面 -->
 	<div class="Lab totop" v-if="labSwitch">
 		<div class="hidden-sm-and-up" style="height:50px;"></div>
@@ -83,6 +30,24 @@
 
 	<!-- 不显示实验室则显示导航 -->
 	<div class="bookmark" v-else>
+		<!-- 历史足迹 -->
+		<el-row>
+			<div  class="historyLinks" v-if="historySwitch">
+				<div class="historyLink" v-for="link in cacheList"
+					@click="goToUrl(link)" :key="link.id">
+					<el-tooltip effect="dark" :content="link.name" placement="bottom">
+						<el-col :xs="6" :sm="4" :md="2">
+							<div class="historyPic">
+								<!-- https://www.yxt521.com/favicon/get.php?url= -->
+								<el-image :src="link.url | getDomain" :alt="link.name" style="border-radius: 25px;">
+									<div slot="error" class="image-slot">{{link.name[0]}}</div>
+								</el-image>
+							</div>
+						</el-col>
+					</el-tooltip>
+				</div>
+			</div>
+		</el-row>
 		<!-- 手机端快捷导航 -->
 		<div class="hidden-sm-and-up totop yellow">
 			<el-divider>快捷导航</el-divider>
@@ -200,14 +165,15 @@ export default {
 				{"icon":"","id":"poiuytre7","name":"虚位以待","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
 			],
 			f_color: "white",
-			autoColor:'#000',
 			autoBgColor:'#fff',
 			historySwitch: false,
 			cacheList:[]
 		}
 	},
 	methods: {
-		onChange(){
+		switchHistory(){
+			if(this.historySwitch){this.historySwitch = false}
+			else{this.historySwitch = true}
 			cookieSet("historySwitch", this.historySwitch)
 		},
 		load(uname){
@@ -264,7 +230,6 @@ export default {
 					// var obj = document.getElementsByClassName("bg")[0]
 					var obj = document.getElementsByTagName("body")[0]
 					obj.style.color = res.data.font_color
-					this.autoColor = res.data.font_color
 					if(res.data.bg_switch){
 						// document.getElementsByTagName("body")[0].setAttribute("style","background-image: url("+res.data.bg+")"+";color:"+res.data.font_color);
 						obj.style.backgroundImage = "url("+res.data.bg+")"
@@ -509,24 +474,30 @@ a {
 }
 
 .historyLinks {
-	margin: 50px 30px 150px;
-}
-.historyPic {
-	width:30px;
-	height:30px;
-	border: #666;
-	border-width: 5px;
-}
-.image-slot {
-	text-align:center;
-	background-color: black;
-	width:50px;
-	height:50px;
-	line-height: 50px;
-	border-radius: 25px;
+	margin: 10px auto 100px;
+	max-width: 1080px;
 }
 .historyLink {
 	cursor: pointer;
+	float: left;
+	background: rgba(0, 0, 0, 0.3);
+	width:50px;
+	height:50px;
+	border-radius: 25px;
+	margin: 5px 20px;
+}
+.historyPic {
+	width:50px;
+	height:50px;
+}
+.image-slot {
+	text-align:center;
+	width:50px;
+	height:50px;
+	line-height: 50px;
+	/* border-radius: 25px; */
+	font-size: 18px;
+	font-weight: bolder;
 }
 /* .yellow a:link {color: yellow}
 .yellow a:visited {color: yellow}

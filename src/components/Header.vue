@@ -3,6 +3,7 @@
     <!-- 天气 -->
     <div class="weather" id="he-plugin-simple"></div>
     <div style="text-align:right;" class="headerbtn">
+            <span @click="onChange()" style="cursor:pointer;">足迹开关  |</span>
         <!-- <div class="btn">
             <span class="tooltip">猿分啊</span>
             <a href="/u/rand" target="_blank">任意门</a>
@@ -10,7 +11,7 @@
         <div class="btn"><a href="/Me" target="_blank">自定义|登录</a></div> -->
         <!-- <span class="tooltip">123123</span> -->
         <a href="/u/rand" target="_blank">任意门</a>
-        <a href="/Me" target="_blank">自定义</a>
+        <a href="/Me" target="_blank">自定义<i class="fa fa-user-circle-o"></i> </a>
     </div>  
     <div class="paomadeng">
         <el-carousel  indicator-position="none" arrow="always" direction="vertical" height="25px">
@@ -28,6 +29,7 @@
 
 <script>
 export default {
+    props:["historySwitch"],
     data(){
         return{
             data: [
@@ -35,6 +37,11 @@ export default {
             ]
         }
     },
+    methods:{
+        onChange(){
+            this.$parent.switchHistory()
+        },
+    }
 }
 </script>
 
