@@ -44,7 +44,7 @@
 	</div> -->
 		<el-switch
 			v-model="historySwitch"
-			:active-color="autoCojklor"
+			:active-color="autoColor"
 			inactive-color="#999"
 			@change="onChange()">
 		</el-switch>
@@ -58,9 +58,9 @@
 			<el-col :xs="6" :sm="4" :md="2">
 				<div class="historyPic">
 					<!-- https://www.yxt521.com/favicon/get.php?url= -->
-					<el-img :src="link.url+'/favicon.ico'" :alt="link.name[0]">
+					<el-image :src="link.url | getDomain" :alt="link.name[0]">
 						<div slot="error" class="image-slot">{{link.name[0]}}</div>
-					</el-img>
+					</el-image>
 				</div>
 				<!-- <span :style="'color:'+autoColor">
 					{{link.name}}
@@ -160,6 +160,7 @@
 import { userService,siteService } from '@/common/api'
 import { cookieGet,cookieSet} from '@/common/cookie'
 import IndexLab from '@/views/IndexLab.vue'
+import { getUrl } from '@/common/pickup'
 
 // import RightBar from '@/components/RightBar'
 import SearchTool from '@/components/SearchTool.vue'
@@ -171,6 +172,11 @@ import Particle from '@/components/particle.vue'
 export default {
 	name: 'ShowSite',
 	props:["userName"],
+	filters: {
+		getDomain(url){
+			return getUrl(url)
+		}
+	},
 	data(){
 		return{
 			ad: 1,
