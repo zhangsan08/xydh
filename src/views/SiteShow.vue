@@ -158,6 +158,7 @@ export default {
 			Folders: [],
 			yuanxuan: [
 				{"icon":"","id":"poiuytre1","name":"华为云羊毛【独家】","url":"https://www.yuque.com/xydh/partner/huawei","info":"独家合作",},
+				{"icon":"","id":"poiuytre1","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
 				{"icon":"star","id":"poiuytre2","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
 				{"icon":"windows","id":"poiuytre3","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
 				{"icon":"apple","id":"poiuytre4","name":"大白软件站","url":"https://o--o.win","info":"新Mac的第一站",},	
@@ -227,7 +228,7 @@ export default {
 					this.btn_switch = res.data.btn_switch
 					this.bglizi = res.data.bglizi
 					this.lybID = res.data.lyb_id
-					document.title = this.sitename+" | 炫猿"
+					document.title = this.sitename
 					// var obj = document.getElementsByClassName("bg")[0]
 					var obj = document.getElementsByTagName("body")[0]
 					obj.style.color = res.data.font_color
@@ -394,7 +395,7 @@ body {
 
 	background-attachment:fixed;
 	background-size: cover;
-	background-position: center;
+	background-position: center center;
 	background-repeat: no-repeat;
 
 	text-align:center;
