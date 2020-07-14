@@ -2,15 +2,17 @@
 <div>
         <el-col :span="24">
             <div class="copyright">
-            <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426'>意见反馈|产品交流</a>&#160;
-            <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/blog/11015'>法律声明|不良信息举报</a>&#160;
-            <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/blog/10953'>请作者喝杯咖啡</a>
+            <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426'>意见反馈</a>&#160;
+            <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/blog/11015'>免责声明</a>&#160;
+            <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/blog/10953'>请作者吃辣条</a>
             <div style="height:10px"></div>
             友情链接
             <a target='_blank' rel='follow' href='https://oo1.win'>炫猿</a>&#160;
             <a target='_blank' rel='follow' href='https://www.runningcheese.com/'>奔跑中的奶酪</a>&#160;
-            <a target='_blank' rel='follow' href='http://lackk.com/'>兰客</a>&#160;
+            <a target='_blank' rel='follow' href='http://lackk.com/'>兰客导航</a>&#160;
             <a target='_blank' rel='follow' href='https://met.red/'>遇见数据仓库</a>&#160;
+            <a target='_blank' rel='follow' href='https://www.24kdh.com/'>24k导航</a>&#160;
+            <a target='_blank' rel='follow' href='https://creatorsdaily.com/'>创造者日报</a>&#160;
                 <li>2020 炫猿导航</li>
                 <li><a style="color: grey;" target='_blank' rel='nofollow' href='http://www.beian.miit.gov.cn/'>京ICP备19043213号</a></li>
             </div>
