@@ -31,24 +31,26 @@
 
 	<!-- 历史足迹 -->
 	<el-row>
-		<div class="historyLinks" v-if="historySwitch && cacheList.length >0">
-			<div class="historyLink" v-for="link in cacheList"
-				@click="goToUrl(link)" :key="link.id">
-				<el-tooltip effect="dark" :content="link.name" placement="right" offset="100" :visible-arrow="false">
-					<el-col :xs="6" :sm="4" :md="2">
-						<div class="historyPic">
-							<!-- https://www.yxt521.com/favicon/get.php?url= -->
-							<!-- <el-image :src="link.url | getDomain" :alt="link.name" 
-							style="border-radius:15px;width:50px;height:50px;"> -->
-								<div slot="error" class="image-slot">{{link.name[0]}}</div>
-							<!-- </el-image> -->
-						</div>
-					</el-col>
-				</el-tooltip>
+		<div class="historyLinks" v-if="historySwitch">
+			<div v-if="cacheList.length > 0">
+				<div class="historyLink" v-for="link in cacheList"
+					@click="goToUrl(link)" :key="link.id">
+					<el-tooltip effect="dark" :content="link.name" placement="right" offset="100" :visible-arrow="false">
+						<el-col :xs="6" :sm="4" :md="2">
+							<div class="historyPic">
+								<!-- https://www.yxt521.com/favicon/get.php?url= -->
+								<!-- <el-image :src="link.url | getDomain" :alt="link.name" 
+								style="border-radius:15px;width:50px;height:50px;"> -->
+									<div slot="error" class="image-slot">{{link.name[0]}}</div>
+								<!-- </el-image> -->
+							</div>
+						</el-col>
+					</el-tooltip>
+				</div>
 			</div>
-		</div>
-		<div v-else>
-			<el-divider>暂无访问足迹，正常使用导航后会根据访问次数进行本地足迹记录</el-divider>
+			<div v-else>
+				<el-divider>暂无访问足迹，正常使用导航后会根据访问次数进行本地足迹记录</el-divider>
+			</div>
 		</div>
 	</el-row>
 
