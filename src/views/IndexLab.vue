@@ -1,6 +1,6 @@
 <template>
     <div class="indexLab">
-        <el-page-header @back="switchLab" content="炫猿实验室" title="返回导航">
+        <el-page-header @back="switchLab" content="炫猿实验室" title="我的导航">
         </el-page-header>
         <!-- 实验室内容 -->
         <div class="labTabs">

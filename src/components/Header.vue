@@ -3,7 +3,8 @@
     <!-- 天气 -->
     <div class="weather" id="he-plugin-simple"></div>
     <div style="text-align:right;" class="headerbtns">
-        <span class="headerbtn" @click="onChange()" style="cursor:pointer;"><i class="fa fa-reply-all"></i> 足迹开关</span>
+        <span class="headerbtn" @click="onChangeHis()" style="cursor:pointer;"><i class="fa fa-reply-all"></i> 足迹开关</span>
+        <span class="headerbtn" @click="onChangeNav()" style="cursor:pointer;"><i class="fa fa-anchor"></i> 书签开关</span>
         <!-- <div class="btn">
             <span class="tooltip">猿分啊</span>
             <a href="/u/rand" target="_blank">任意门</a>
@@ -29,7 +30,7 @@
 
 <script>
 export default {
-    props:["historySwitch"],
+    props:["historySwitch","navSwitch"],
     data(){
         return{
             data: [
@@ -38,8 +39,11 @@ export default {
         }
     },
     methods:{
-        onChange(){
+        onChangeHis(){
             this.$parent.switchHistory()
+        },
+        onChangeNav(){
+            this.$parent.switchNav()
         },
     }
 }

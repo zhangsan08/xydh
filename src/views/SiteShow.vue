@@ -5,18 +5,19 @@
 	</div>
 
 	<div class="totop" v-if="btn_switch">
-		<Header :historySwitch=historySwitch></Header>
+		<Header :historySwitch=historySwitch :navSwitch=navSwitch></Header>
 		<!-- <RightBar></RightBar> -->
 	</div>
 
 	<!-- 名称简介 -->
-	<div style="margin:20px auto 0px;">
+	<div style="margin:0px auto 0px;">
 		<span class="siteName">{{ sitename }}</span>
 		<div style="margin:10px auto"></div>
 		<!-- <p class="siteInfo">{{ siteinfo }}</p> -->
 		{{ siteinfo }}
 	</div>
 
+	<div style="height:80px" v-if="!navSwitch && !labSwitch"></div>
 	<!-- 搜索框 -->
 	<div class="search"><SearchTool></SearchTool></div>
 
@@ -28,29 +29,32 @@
 		</transition>
 	</div>
 
-	<!-- 不显示实验室则显示导航 -->
-	<div class="bookmark" v-else>
-		<!-- 历史足迹 -->
-		<el-row>
-			<div  class="historyLinks" v-if="historySwitch">
-				<div class="historyLink" v-for="link in cacheList"
-					@click="goToUrl(link)" :key="link.id">
-					<el-tooltip effect="dark" :content="link.name" placement="bottom">
-						<el-col :xs="6" :sm="4" :md="2">
-							<div class="historyPic">
-								<!-- https://www.yxt521.com/favicon/get.php?url= -->
-								<el-image :src="link.url | getDomain" :alt="link.name" 
-								style="border-radius:15px;width:50px;height:50px;">
-									<div slot="error" class="image-slot">{{link.name[0]}}</div>
-								</el-image>
-							</div>
-						</el-col>
-					</el-tooltip>
-				</div>
+	<!-- 历史足迹 -->
+	<el-row>
+		<div class="historyLinks" v-if="historySwitch && cacheList.length >0">
+			<div class="historyLink" v-for="link in cacheList"
+				@click="goToUrl(link)" :key="link.id">
+				<el-tooltip effect="dark" :content="link.name" placement="right" offset="100" :visible-arrow="false">
+					<el-col :xs="6" :sm="4" :md="2">
+						<div class="historyPic">
+							<!-- https://www.yxt521.com/favicon/get.php?url= -->
+							<!-- <el-image :src="link.url | getDomain" :alt="link.name" 
+							style="border-radius:15px;width:50px;height:50px;"> -->
+								<div slot="error" class="image-slot">{{link.name[0]}}</div>
+							<!-- </el-image> -->
+						</div>
+					</el-col>
+				</el-tooltip>
 			</div>
-		</el-row>
+		</div>
+		<div v-else>
+			<el-divider>暂无访问足迹，正常使用导航后会根据访问次数进行本地足迹记录</el-divider>
+		</div>
+	</el-row>
+
+	<div class="bookmark" v-if="!labSwitch&&navSwitch">	
 		<!-- 手机端快捷导航 -->
-		<div class="hidden-sm-and-up totop yellow">
+		<div class="hidden-sm-and-up totop">
 			<el-divider>快捷导航</el-divider>
 			<div style="padding:10px 10px;">
 				<el-col :span="6" v-for="Folder in Folders" :key="Folder.id">
@@ -63,6 +67,13 @@
 			
 			</div>
 		</div>
+		<!-- 手机端快捷导航 -->
+		<!-- <div class="totop">
+			<el-divider>快捷导航</el-divider>
+			<el-tabs v-model="activeName" @tab-click="handleClick" v-for="Folder in Folders" :key="Folder.id">
+				<el-tab-pane :label="Folder.name" name="first"></el-tab-pane>
+			</el-tabs>
+		</div> -->
 		<!-- 猿选 -->
 		<el-col v-if="ad" :xs="24" :sm="12" :md="8" :xl="6" >
 			<div class="folder totop" :style="{height:(screenWidth>768?'180px':'auto')}">
@@ -112,10 +123,12 @@
 		<div class="totop">
 			<!-- <Paomadeng v-if="ad"></Paomadeng>
 			<div v-else style="height:100px"></div> -->
+			<div style="height:200px" v-if="!navSwitch && !labSwitch" ></div>
 			<Footer></Footer>
 		</div>
 	</el-col>
 	
+
 </div>
 </template>
 
@@ -147,6 +160,8 @@ export default {
 		return{
 			ad: 1,
 			labSwitch: false,
+			historySwitch: false,
+			navSwitch: true,
 			screenWidth: "",
 			userid: "",
 			username: "",
@@ -157,26 +172,32 @@ export default {
 			lybID: "",
 			Folders: [],
 			yuanxuan: [
-				{"icon":"","id":"poiuytre1","name":"华为云羊毛【独家】","url":"https://www.yuque.com/xydh/partner/huawei","info":"独家合作",},
-				{"icon":"","id":"poiuytre1","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
-				{"icon":"star","id":"poiuytre2","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
-				{"icon":"windows","id":"poiuytre3","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
-				{"icon":"apple","id":"poiuytre4","name":"大白软件站","url":"https://o--o.win","info":"新Mac的第一站",},	
-				{"icon":"","id":"poiuytre5","name":"自定义背景","url":"https://support.qq.com/products/106426/faqs/62946","info":"",},
-				{"icon":"","id":"poiuytre6","name":"极品广告位","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
-				{"icon":"","id":"poiuytre7","name":"虚位以待","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
+				{"icon":"","id":"1","name":"华为云羊毛【独家】","url":"https://www.yuque.com/xydh/partner/huawei","info":"独家合作",},
+				{"icon":"","id":"10","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
+				{"icon":"star","id":"2","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
+				{"icon":"windows","id":"3","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
+				{"icon":"apple","id":"4","name":"大白软件站","url":"https://o--o.win","info":"新Mac的第一站",},	
+				{"icon":"","id":"5","name":"自定义背景","url":"https://support.qq.com/products/106426/faqs/62946","info":"",},
+				{"icon":"","id":"6","name":"极品广告位","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
+				{"icon":"","id":"7","name":"虚位以待","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
 			],
 			f_color: "white",
 			autoBgColor:'#fff',
-			historySwitch: false,
 			cacheList:[]
 		}
 	},
 	methods: {
 		switchHistory(){
-			if(this.historySwitch){this.historySwitch = false}
-			else{this.historySwitch = true}
+			this.historySwitch = !this.historySwitch
 			cookieSet("historySwitch", this.historySwitch)
+		},
+		switchLab(){
+			this.labSwitch = !this.labSwitch
+			cookieSet("labSwitch", this.labSwitch)
+		},
+		switchNav(){
+			this.navSwitch = !this.navSwitch
+			cookieSet("navSwitch", this.navSwitch)
 		},
 		load(uname){
 			// userName取ID
@@ -329,13 +350,7 @@ export default {
 				document.getElementById(id).setAttribute("style","height:180px;");
 			}
 		},
-		switchLab(){
-			if(this.labSwitch){
-				this.labSwitch = false
-			}else{
-				this.labSwitch = true
-			}
-		}
+		
 	},
 	components:{
 		SearchTool,
@@ -381,9 +396,19 @@ export default {
 		}
 
 		// 取“足迹开关状态”
-		let open = cookieGet("historySwitch")
-		if(open != undefined){
-			this.historySwitch = open == "true" ? true:false
+		let open1 = cookieGet("historySwitch")
+		if(open1 != undefined){
+			this.historySwitch = (open1 == "true")
+		}
+		// 取“实验室开关状态”
+		let open2 = cookieGet("labSwitch")
+		if(open2 != undefined){
+			this.labSwitch = (open2 == "true")
+		}
+		// 取“导航开关状态”
+		let open3 = cookieGet("navSwitch")
+		if(open3 != undefined){
+			this.navSwitch = (open3 == "true")
 		}
 	},
 }
@@ -500,8 +525,4 @@ a {
 	font-size: 18px;
 	font-weight: bolder;
 }
-/* .yellow a:link {color: yellow}
-.yellow a:visited {color: yellow}
-.yellow a:hover {color: blanchedalmond}
-.yellow a:active {color: red} */
 </style>

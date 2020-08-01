@@ -137,7 +137,7 @@ export default {
         { date: '2020-04-01', name: '飞雪科技园', address: 'https://mp.weixin.qq.com/s/smnGrN1LC9TCelMEfBTwXQ'}, 
         { date: '2020-04-06', name: '迅哥儿的猹(每日送码)', address: 'https://mp.weixin.qq.com/s/mx9yegGlTmAeIk7V0u_bxA'},
         { date: '2020-04-09', name: '搜罗软件', address: 'https://mp.weixin.qq.com/s/Wy45xiUudv9xBpZwNbHh9Q'},
-        { date: '2020-04-15', name: '迅哥(每日送码)', address: 'https://mp.weixin.qq.com/s/ogKgQJQdaLegLEd3hY4poA'},
+        { date: '2020-04-15', name: '零点软件分享(每日送码)', address: 'https://mp.weixin.qq.com/s/ogKgQJQdaLegLEd3hY4poA'},
         { date: '2020-04-18', name: '黑白鲨(每日送码)', address: 'https://mp.weixin.qq.com/s/1GUY-3scqG9L3sf9D9nIDA'},
         { date: '2020-04-28', name: '虚拟精华', address: 'https://mp.weixin.qq.com/s/EtIHPsIKd_21ZRCfSaectA'},
         { date: '2020-05-01', name: '网罗灯下黑', address: 'https://mp.weixin.qq.com/s/qBcVAyEp2NdD1IQ_rQ8OqA'},
