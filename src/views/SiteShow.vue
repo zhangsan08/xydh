@@ -49,7 +49,7 @@
 				</div>
 			</div>
 			<div v-else>
-				<el-divider>暂无访问足迹，正常使用导航后会根据访问次数进行本地足迹记录</el-divider>
+				<el-divider>正常使用导航后此处将显示本地最常访问的书签哦</el-divider>
 			</div>
 		</div>
 	</el-row>
@@ -174,8 +174,9 @@ export default {
 			lybID: "",
 			Folders: [],
 			yuanxuan: [
+				{"icon":"","id":"8","name":"白嫖一年腾讯视频VIP","url":"https://www.yuque.com/xydh/partner/suning","info":"8月5号截止，好车",},
 				{"icon":"","id":"1","name":"华为云羊毛【独家】","url":"https://www.yuque.com/xydh/partner/huawei","info":"独家合作",},
-				{"icon":"","id":"10","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
+				{"icon":"","id":"9","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
 				{"icon":"star","id":"2","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
 				{"icon":"windows","id":"3","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
 				{"icon":"apple","id":"4","name":"大白软件站","url":"https://o--o.win","info":"新Mac的第一站",},	
