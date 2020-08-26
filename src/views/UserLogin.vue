@@ -60,7 +60,8 @@ export default {
             this.$router.push({name:'Me'})
             this.$notify({
               title: "登录成功!",
-              message: `${res.data.name}您好,欢迎进入控制台`,
+              message: `${res.data.user.name} 您好,欢迎进入控制台`,
+             
               type: "success",
             });
           }

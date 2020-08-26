@@ -174,7 +174,6 @@ export default {
 			lybID: "",
 			Folders: [],
 			yuanxuan: [
-				{"icon":"","id":"8","name":"白嫖一年腾讯视频VIP","url":"https://www.yuque.com/xydh/partner/suning","info":"8月5号截止，好车",},
 				{"icon":"","id":"1","name":"华为云羊毛【独家】","url":"https://www.yuque.com/xydh/partner/huawei","info":"独家合作",},
 				{"icon":"","id":"9","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
 				{"icon":"star","id":"2","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},

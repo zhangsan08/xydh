@@ -134,7 +134,6 @@ export default {
     //     // this.getSite()
     // },
     beforeMount(){
-      console.log("加载Site")
       console.log(this.uid)
     },
     // mounted() {
