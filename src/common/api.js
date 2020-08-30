@@ -54,8 +54,6 @@ export const linkService = {
   },  
 }
 
-
-
 export const folderService = {
 
   getFoldersbyID(id){
@@ -189,4 +187,35 @@ export const userService = {
   },
 }
 
+export const sldLinkService = {
 
+  getLinks(){
+    return request({
+      url: '/api/v1/sldlinks/',
+    })
+  },
+
+  createLink(data){
+    return request({
+      url: '/api/v1/sldlink',      
+      method: 'post',
+      data
+    })
+  },  
+
+  updateLink(data){
+    return request({
+      url: '/api/v1/sldlink',      
+      method: 'put',
+      data
+    })
+  },   
+
+  deleteLink(data){
+    return request({
+      url: '/api/v1/sldlink',      
+      method: 'delete',
+      data
+    })
+  },  
+}

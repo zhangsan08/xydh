@@ -17,9 +17,7 @@ export default new Router({
         {   path: '/Hot',
             name: 'Hot',
             component: () => import('./views/Hot.vue')},
-        {   path: '/:username',
-            name: 'ShowSite',
-            component: () => import('./views/SiteShow.vue')},
+        
         {   path: '/u/register',
             name: 'URegiser',
             component: () => import('./views/UserRegister.vue')},
@@ -41,5 +39,11 @@ export default new Router({
         {   path: '/l/sort',
             name: 'sort',
             component: () => import('./views/LinkSort.vue')},
+        {   path: '/sldt',
+            name: 'sldt',
+            component: () => import('./views/SLDT.vue')},
+        {   path: '/:username',
+            name: 'ShowSite',
+            component: () => import('./views/SiteShow.vue')},
     ]
 })
