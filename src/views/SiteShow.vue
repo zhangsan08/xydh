@@ -140,6 +140,7 @@
 // import * as SiteAPI from '@/api/site/'
 import { userService,siteService } from '@/common/api'
 import { cookieGet,cookieSet} from '@/common/cookie'
+import IndexLab from '@/views/IndexLab.vue'
 import { getUrl } from '@/common/pickup'
 
 // import RightBar from '@/components/RightBar'
@@ -148,7 +149,6 @@ import SearchTool from '@/components/SearchTool.vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import Particle from '@/components/particle.vue'
-import IndexLab from '@/views/IndexLab.vue'
 
 export default {
 	name: 'ShowSite',

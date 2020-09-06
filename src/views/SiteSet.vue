@@ -157,16 +157,16 @@ export default {
     margin: 0 auto;
     text-align: center;
 }
-.el-form-item {
+.el-form-item :hover{
     background-color: rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
+    /* border-radius: 10px; */
     /* padding: 3px 3px; */
 }
 /* 搜索框 */
 .el-input__inner {
   border-radius: 10px;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
+  /* border-top-left-radius: 0px; */
+  /* border-bottom-left-radius: 0px; */
 }
 .el-color-dropdown__main-wrapper {
     display:none;

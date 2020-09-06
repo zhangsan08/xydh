@@ -11,8 +11,10 @@
             </div>
         <div class="btn"><a href="/Me" target="_blank">自定义|登录</a></div> -->
         <!-- <span class="tooltip">123123</span> -->
-        <a class="headerbtn" href="/u/rand" target="_blank">任意门 <i class="fa fa-random"></i></a>
-        <a class="headerbtn" href="/Me" target="_blank">自定义 <i class="fa fa-user-circle-o"></i></a>
+        <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
+        <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
+        <a class="headerbtn" href="/u/rand" target="_blank">月光宝盒 <i class="fa fa-random"></i></a>
+        <a class="headerbtn" href="/me" target="_blank">自定义 <i class="fa fa-user-circle-o"></i></a>
     </div>  
     <div class="paomadeng">
         <el-carousel  indicator-position="none" arrow="always" direction="vertical" height="25px">

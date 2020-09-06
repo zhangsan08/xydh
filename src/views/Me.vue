@@ -1,23 +1,167 @@
 <template>
-    <div class="me">
-        <el-divider>最新通知</el-divider>
-        <div class="note">
-            <h3>净网行动</h3>
-            <li>任意门的上线收到大量举报。对于举报者有奖励。</li> 
-          <b>请严查你的书签中是否有违法网站。涉黄涉黑涉政。外网VPN一律禁止。</b>
-          <li>很多东西你自己找个地方存好就行了 分享已经构成了违法犯罪<br>炫猿的很多用户都很年轻 希望你们有基础的法制观念</li>
-        </div>
-        <el-divider></el-divider>
-        <h2>您的专属链接</h2>
-        <div>
-             <i class="fa fa-link"></i>&#160;<el-link style="font-size:24px" type="primary" target="_blank" :href="'/'+username">{{username}}.xydh.fun</el-link>
-        </div>
-        <p>直接在浏览器地址栏输入，<b>不要加https的前缀</b>。<br>可以加http前缀，如http://{{username}}.xydh.fun<br>访问此链接无需登录，欢迎分享给你的朋友</p>
-        <p><a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/63457'>关于如何让你的页面被搜索引擎收录</a></p>
-        <p>请在个人电脑登录本控制台,否则请<el-button type="" @click="logout" round="">登出</el-button></p>
+    <div class="me">  
         <el-tabs type="border-card" :stretch="true">
-            <el-tab-pane label="公告">
-                <Notice v-if="userID!=7163"></Notice><div v-else>该账号为测试账号。仅用于展示后台功能。使用上有多处限制。</div>
+            <el-tab-pane label="欢迎">
+                <el-card shadow="hover" class="card">
+                    临时书签 放入文件夹后才可展示到导航站
+                    <el-table class="" :data="tempLinks" stripe>
+                    <el-table-column
+                        label="名称"
+                        align="center"
+                        width="180">
+                        <template slot-scope="scope">
+                            <el-input type="text" v-model="scope.row.name"></el-input>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        label="链接">
+                        <template slot-scope="scope">
+                            <el-input type="text" v-model="scope.row.url"></el-input>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        label="文件夹">
+                        <template slot-scope="scope">
+                            <el-select v-model="scope.row.fid">
+                                    <el-option
+                                    v-for="Folder in Folders"
+                                    :key="Folder.id"
+                                    :label="Folder.name"
+                                    :value="Folder.id"
+                                    ></el-option>
+                        </el-select>
+                        </template>
+                    </el-table-column>
+                        <el-table-column
+                            label="图标" width="80">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.icon"></el-input>
+                            </template>
+                        </el-table-column>                    
+                    <el-table-column
+                        label="简介">
+                        <template slot-scope="scope">
+                            <el-input type="textarea" v-model="scope.row.info" placeholder="鼠标放上时的提示语(可为空)"></el-input>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        fixed="right"
+                        label="操作"
+                        align="center"
+                        width="180">
+                        <template slot-scope="scope">
+                            <el-button-group>
+                                    <el-button size="small" type="primary" icon="el-icon-edit" @click="updateLink(scope.row)" ></el-button>
+                                    <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteLink(scope.row)" ></el-button>
+                            </el-button-group>                            
+                        </template>
+
+                    </el-table-column>
+                    </el-table>
+                </el-card>
+                <el-row>
+                    <el-col :span="12">
+                        <el-card header="您的专属链接" shadow="hover" class="card">
+                            <i class="fa fa-link"></i>&#160;
+                            <el-link
+                                style="font-size:24px"
+                                type="primary"
+                                target="_blank"
+                                :href="'https://xydh.fun/'+username"
+                            >{{username}}.xydh.fun</el-link>
+                            <div style="font-size:17px;">
+                                <p>
+                                直接在浏览器地址栏输入，
+                                <b>无需加http的前缀</b>
+                                <br />访问此链接无需登录，欢迎分享给你的朋友
+                                </p>
+                                <p><a target="_blank" rel="nofollow" href="https://support.qq.com/products/106426/faqs/63457">关于如何让你的页面被搜索引擎收录</a>
+                                </p><p>请关注官方公众号 炫技巧 获取最新导航站资讯</p>
+                                <el-button type="" @click="logout" round="">登出</el-button>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-card header="炫技巧(一定要学!)" shadow="hover" class="card">
+                            <el-button type="" round="" @click="getJsToken()">点击生成快捷添加书签秘钥</el-button>
+                            <div style="height:20px"></div>
+                            <el-input type="textarea" rows="5" v-model="jscode"></el-input>
+                            <div style="height:10px"></div>
+                            <el-link target='_blank' rel='nofollow' href='https://www.yuque.com/xydh/start/ky664n'>代码使用方法</el-link> 
+                        </el-card>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <el-card header="快捷添加书签" shadow="hover" class="card" >
+                            <el-row type="flex" justify="center" >
+                                <el-col :span="8">名称</el-col>
+                                <el-col :span="16">链接</el-col>
+                            </el-row>
+                            <el-row :gutter="1" type="flex" justify="center">
+                                <el-col :span="8">
+                                <el-input
+                                    type="text"
+                                    v-model="linkform.name"
+                                    minlength="0"
+                                    maxlength="12"
+                                    placeholder="0-8字/过长不好看"
+                                ></el-input>
+                                </el-col>
+                                <el-col :span="16">
+                                <el-input
+                                    type="text"
+                                    v-model="linkform.url"
+                                    minlength="0"
+                                    maxlength="100"
+                                    placeholder="http开头"
+                                ></el-input>
+                                </el-col>
+                            </el-row>
+                            <el-row :gutter="1" type="flex" justify="center">
+                                <el-col :span="4">图标</el-col>
+                                <el-col :span="12">介绍</el-col>
+                                <el-col :span="4">文件夹</el-col>
+                                <el-col :span="4"></el-col>
+                            </el-row>
+                            <el-row :gutter="1" type="flex" justify="center">
+                                <el-col :span="4">
+                                <el-input type="text" v-model="linkform.icon" placeholder="可为空"></el-input>
+                                </el-col>
+                                <el-col :span="12">
+                                <el-input
+                                    type="text"
+                                    v-model="linkform.info"
+                                    minlength="0"
+                                    maxlength="30"
+                                    placeholder="鼠标放上时的提示语(可为空)"
+                                ></el-input>
+                                </el-col>
+                                <el-col :span="4">
+                                <el-select v-model="linkform.fid">
+                                    <el-option
+                                    v-for="Folder in Folders"
+                                    :key="Folder.id"
+                                    :label="Folder.name"
+                                    :value="Folder.id"
+                                    ></el-option>
+                                </el-select>
+                                </el-col>
+                                <el-col :span="4">
+                                <el-button
+                                    size="small"
+                                    type="success"
+                                    icon="el-icon-plus"
+                                    @click="createLink()"
+                                    circle
+                                ></el-button>
+                                </el-col>
+                            </el-row>
+                        </el-card>
+                    </el-col>
+                </el-row>
+                
+                <Notice :username=username v-if="userID!=7163"></Notice><div v-else>该账号为测试账号。仅用于展示后台功能。使用上有多处限制。</div>
             </el-tab-pane>
 
             <el-tab-pane label="小站配置">
@@ -57,7 +201,7 @@
 </template>
 
 <script>
-import { userService } from '@/common/api'
+import { userService, folderService, linkService} from '@/common/api'
 // import * as UserAPI from '@/api/user/'
 import Notice from './Notice'
 import SiteSet from './SiteSet'
@@ -73,16 +217,25 @@ export default {
             userID: 0,
             username: "未登录",
             LoginCode: -1,
+            JsToken: "xxxxxxxx",
+            jscode: "***** 秘钥关联用户 请勿外传",
+            Folders: [],
+            linkform: {
+                fid: "",
+                icon: "",
+                name: "",
+                url: "",
+                info: "",
+            },
+            tempLinks:[],
         }
     },
     methods: {
         getUser(){
             // 判断登录状态,若登录则取出当前userID和userName
             userService.UserMe().then((res) => {
-                console.log(res)
                 this.LoginCode = res.code
                 if (this.LoginCode > 0) {
-                    
                     this.$message({
                         message: '请登录',
                         center: true,
@@ -110,7 +263,9 @@ export default {
                         });
 					}
                     this.userID = res.data.id
+                    console.log(this.userID)
                     this.username = res.data.name
+                    this.getFolder()
                 }
             })
         },
@@ -122,7 +277,101 @@ export default {
                 this.$router.push({name:'Home'})
               }
             });
-        }
+        },
+        getFolder(){
+            folderService.getFoldersbyID(this.userID).then((res) =>{
+                this.Folders = res.data
+            })
+        },
+        createLink(){
+            linkService.createLink(this.linkform).then((res) => {
+            if (res.code > 0) {
+                this.$notify.error({
+                title: "添加失败",
+                message: res.msg
+                });
+            } else {
+                this.$notify({
+                title: "添加成功!",
+                type: "success",
+                duration: "800"
+                });
+            }
+        }).catch(error => {
+                this.$notify.error({
+                    title: "错误 请检查",
+                    message: error
+				});
+            });
+        },
+        getJsToken(){
+            userService.JsToken().then((res) =>{
+                this.JsToken = res.data
+                this.jscode = "javascript:window.open('http://xydh.fun/api/v1/jsadd?token=" + this.JsToken + "&name='+document.title+'&url='+decodeURIComponent(location.href));void(0);"
+            })
+        },
+        getTempLinks(){
+            linkService.getTempLinks().then((res) =>{
+                this.tempLinks = res.data
+            })
+        },
+        updateLink(link){
+            //传入folderID仅仅是为了更新后刷新列表
+			var form = {
+				id: link.id,
+				fid: link.fid,
+				icon: link.icon,
+				name: link.name,
+				url: link.url,
+				info: link.info
+			}
+			linkService.updateLink(form).then((res) => {
+				if (res.code > 0) {
+					this.$notify.error({
+					title: "更新失败",
+					message: res.msg
+					});
+				} else {
+					// 刷新列表
+					this.getTempLinks()
+					this.$notify({
+						title: "更新成功!",
+						type: "success",
+						duration: "800"
+					});
+				}
+				})
+				.catch(error => {
+				this.$notify.error({
+					title: "错误 请检查",
+					message: error
+				});
+			});
+        },
+        deleteLink(link){
+			var form = {id: link.id}
+			linkService.deleteLink(form).then((res) => {
+				if (res.code > 0) {
+					this.$notify.error({
+					title: "删除失败",
+					message: res.msg
+					});
+				} else {
+					this.$notify({
+					title: "删除成功!",
+					type: "success",
+					duration: "800"
+					});
+					this.getTempLinks()
+				}
+				})
+				.catch(error => {
+				this.$notify.error({
+					title: "错误 请检查",
+					message: error
+				});
+			});
+		}
     },
     components:{
         Notice,
@@ -136,23 +385,21 @@ export default {
     beforeMount() {
         document.title = "炫猿控制台"
         this.getUser()
+        this.getTempLinks()
     }
 }
 
 </script>
 
 <style scoped>
-.note {
-    background-color:wheat;
-    margin: 0 auto;
-    padding: 10px;
-    border-radius: 20px;
-    max-width: 800px;
-}
 .me { 
     min-width: 800px;
     max-width: 1680px;
     margin: 0 auto;
     text-align: center;
+    font-size: 17px;
+}
+.card {
+    margin: 10px 10px;
 }
 </style>

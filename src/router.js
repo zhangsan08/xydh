@@ -17,7 +17,6 @@ export default new Router({
         {   path: '/Hot',
             name: 'Hot',
             component: () => import('./views/Hot.vue')},
-        
         {   path: '/u/register',
             name: 'URegiser',
             component: () => import('./views/UserRegister.vue')},
@@ -42,6 +41,9 @@ export default new Router({
         {   path: '/sldt',
             name: 'sldt',
             component: () => import('./views/SLDT.vue')},
+        {   path: '/hgs',
+            name: 'hgs',
+            component: () => import('./views/HGS.vue')},
         {   path: '/:username',
             name: 'ShowSite',
             component: () => import('./views/SiteShow.vue')},

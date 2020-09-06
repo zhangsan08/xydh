@@ -14,6 +14,12 @@ export const linkService = {
       url: '/api/v1/linksbyid/'+ id,
     })
   },
+  
+  getTempLinks(){
+    return request({
+      url: '/api/v1/templinks',
+    })
+  },
 
   getLinksbyFolderID(fid){
     return request({
@@ -160,7 +166,7 @@ export const userService = {
 
   UserID(username){
     return request({
-      url: '/api/v1/getuserid/'+ username,
+      url: '/api/v1/getuserid/' + username,
     })
   },
 
@@ -172,9 +178,21 @@ export const userService = {
     })
   },
 
+  JsToken(){
+    return request({
+      url: '/api/v1/user/jstoken',
+    })
+  },
+  
   UserRandom(){
     return request({
       url: '/api/v1/getrandomuser',
+    })
+  },
+
+  UserRank(t){
+    return request({
+      url: '/api/v1/userrank/' + t,
     })
   },
   
@@ -191,7 +209,7 @@ export const sldLinkService = {
 
   getLinks(){
     return request({
-      url: '/api/v1/sldlinks/',
+      url: '/api/v1/sldlinks',
     })
   },
 
