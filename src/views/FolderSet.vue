@@ -13,30 +13,51 @@
 			<el-col :span="3">操作</el-col>
 		</el-row>
 		<!-- 添加 -->
-		<el-divider>添加文件夹</el-divider>
-		<el-row :model="Folderform" :gutter="1" type="flex" justify="center">
-			<el-col :span="3"><el-input type="text" v-model="Folderform.icon"		minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
-			<el-col :span="6"><el-input type="text" v-model="Folderform.name" 	minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
-			<el-col :span="3">
-				<el-input-number size="mini" style="width:100px" v-model="Folderform.weight" :min="0" :max="10" label="越大越靠后"></el-input-number>
+		<el-row>
+			<el-col :span="24">
+				<el-card header="添加文件夹" shadow="hover" class="card" >
+					<el-row :model="Folderform" gutter="1" type="flex" justify="center">
+						<el-col :xs="3" :sm="3"><el-input type="text" v-model="Folderform.icon" minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
+						<el-col :xs="9" :sm="6"><el-input type="text" v-model="Folderform.name" minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
+						<el-col :xs="6" :sm="3">
+							<el-input-number size="mini" style="width:100px" v-model="Folderform.weight" :min="0" :max="10" label="越大越靠后"></el-input-number>
+						</el-col>
+						<el-col :xs="6" :sm="3"><el-button  type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button></el-col>
+					</el-row>
+				</el-card>
 			</el-col>
-			<el-col :span="3"><el-button size="small" type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button></el-col>
 		</el-row>
+
 		<!-- 修改 -->
 		<el-divider>更新文件夹</el-divider>
-		<el-row class="onerow" v-for="Folder in Folders" :key="Folder.id" :gutter="1" type="flex" justify="center">
-			<el-col :span="3"><el-input type="text" v-model="Folder.icon"></el-input></el-col>
-			<el-col :span="6"><el-input type="text" v-model="Folder.name"></el-input></el-col>
-			<el-col :span="3">
-				<el-input-number size="mini" style="width:100px" v-model="Folder.weight" :min="0" :max="10" label="越大越靠后"></el-input-number>
-			</el-col>
-			<el-col :span="3">
-				<el-button-group>
-					<el-button size="small" type="primary" icon="el-icon-edit" @click="updateFolder(Folder)" ></el-button>
-					<el-button size="small" type="danger" icon="el-icon-delete" @click="deleteFolder(Folder)" ></el-button>
-				</el-button-group>
-			</el-col>
-		</el-row>
+		<el-table :data="Folders" stripe>
+			<el-table-column label="图标" width="80">
+				<template slot-scope="scope">
+					<el-input type="text" v-model="scope.row.icon"></el-input>
+				</template>
+			</el-table-column>
+			<el-table-column label="名称" min-width="200">
+				<template slot-scope="scope">
+					<el-input type="text" v-model="scope.row.name"></el-input>
+				</template>
+			</el-table-column>
+			<el-table-column label="排序" align="center" width="120">
+				<template slot-scope="scope">
+					<el-input-number size="mini" style="width:100px" v-model="scope.row.weight" :min="0" :max="15" label="越大越靠后"></el-input-number>
+				</template>
+			</el-table-column>
+			<el-table-column
+				fixed="right"
+				label="操作"
+				width="120">
+				<template slot-scope="scope">
+					<el-button-group>
+							<el-button size="small" type="primary" icon="el-icon-edit" @click="updateFolder(scope.row)" ></el-button>
+							<el-button size="small" type="danger" icon="el-icon-delete" @click="deleteFolder(scope.row)" ></el-button>
+					</el-button-group>                            
+				</template>
+			</el-table-column>
+		</el-table>
 	</div>
 </template>
 

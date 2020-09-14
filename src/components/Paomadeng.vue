@@ -13,8 +13,7 @@ export default {
     data(){
         return{
             data: [
-                {"name":"公益BT手游私服","url":"http://app.milu.com/2?a=s2p1"},
-                {"name":"炫猿导航 王者归来","url":""},
+                {"name":"炫猿导航 王者归来","url":"https://xydh.fun"},
                 {"name":"虚位以待","url":"https://support.qq.com/products/106426/blog/10114"},
             ]
         }

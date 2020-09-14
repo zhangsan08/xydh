@@ -1,26 +1,19 @@
 <template>
-    <div class="me">  
+    <div class="me"> 
+        <h2>请所有新老用户务必体验快捷添加书签功能 </h2> 
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="欢迎">
                 <el-card shadow="hover" class="card">
                     临时书签 放入文件夹后才可展示到导航站
-                    <el-table class="" :data="tempLinks" stripe>
+                    <el-table :data="tempLinks" stripe>
                     <el-table-column
-                        label="名称"
-                        align="center"
-                        width="180">
+                        label="名称" min-width="160">
                         <template slot-scope="scope">
                             <el-input type="text" v-model="scope.row.name"></el-input>
                         </template>
                     </el-table-column>
                     <el-table-column
-                        label="链接">
-                        <template slot-scope="scope">
-                            <el-input type="text" v-model="scope.row.url"></el-input>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                        label="文件夹">
+                        label="文件夹" min-width="100">
                         <template slot-scope="scope">
                             <el-select v-model="scope.row.fid">
                                     <el-option
@@ -32,14 +25,20 @@
                         </el-select>
                         </template>
                     </el-table-column>
-                        <el-table-column
+                    <el-table-column
+                        label="链接" min-width="160">
+                        <template slot-scope="scope">
+                            <el-input type="text" v-model="scope.row.url"></el-input>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
                             label="图标" width="80">
                             <template slot-scope="scope">
                                 <el-input type="text" v-model="scope.row.icon"></el-input>
                             </template>
                         </el-table-column>                    
                     <el-table-column
-                        label="简介">
+                        label="简介" min-width="180">
                         <template slot-scope="scope">
                             <el-input type="textarea" v-model="scope.row.info" placeholder="鼠标放上时的提示语(可为空)"></el-input>
                         </template>
@@ -48,19 +47,18 @@
                         fixed="right"
                         label="操作"
                         align="center"
-                        width="180">
+                        width="120">
                         <template slot-scope="scope">
                             <el-button-group>
                                     <el-button size="small" type="primary" icon="el-icon-edit" @click="updateLink(scope.row)" ></el-button>
                                     <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteLink(scope.row)" ></el-button>
                             </el-button-group>                            
                         </template>
-
                     </el-table-column>
                     </el-table>
                 </el-card>
                 <el-row>
-                    <el-col :span="12">
+                    <el-col :xs="24" :sm="12">
                         <el-card header="您的专属链接" shadow="hover" class="card">
                             <i class="fa fa-link"></i>&#160;
                             <el-link
@@ -81,19 +79,33 @@
                             </div>
                         </el-card>
                     </el-col>
-                    <el-col :span="12">
-                        <el-card header="炫技巧(一定要学!)" shadow="hover" class="card">
-                            <el-button type="" round="" @click="getJsToken()">点击生成快捷添加书签秘钥</el-button>
-                            <div style="height:20px"></div>
-                            <el-input type="textarea" rows="5" v-model="jscode"></el-input>
-                            <div style="height:10px"></div>
-                            <el-link target='_blank' rel='nofollow' href='https://www.yuque.com/xydh/start/ky664n'>代码使用方法</el-link> 
+                    <el-col :xs="24" :sm="12">
+                        <el-card header="快捷添加书签" shadow="hover" class="card">
+                            <div v-if="showjscode">
+                                <div style="height:10px"></div>
+                                使用方法一：<a :href="jscode">快捷添加书签</a> 拖住左边这几蓝字放到你的浏览器书签栏<br>
+                                <el-popover
+                                    placement="left"
+                                    width="400"
+                                    trigger="click">
+                                    <img src="https://pic.downk.cc/item/5f5cd8e3160a154a67336afe.gif" alt="">
+                                    <el-button slot="reference">如图所示</el-button>
+                                </el-popover>
+                                然后看到你想收藏的网站时，只需要点击它
+                                <div style="height:10px"></div>
+                                方法二：手动复制下面这个代码到你的书签栏
+                                <el-input type="textarea" rows="2" v-model="jscode"></el-input>                             
+                                <div style="height:10px"></div>
+                                <el-link target='_blank' rel='nofollow' href='https://www.yuque.com/xydh/start/ky664n'>方法二详细说明请点我查看</el-link><br>
+                                <el-link target='_blank' rel='nofollow' href='https://www.yuque.com/xydh/start/qgztd3'>手机端玩法(iOS安卓均支持)</el-link> 
+                            </div>
+                            <div v-else><el-button type="" round="" @click="getJsToken()">点击生成快捷添加书签秘钥</el-button></div>
                         </el-card>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="24">
-                        <el-card header="快捷添加书签" shadow="hover" class="card" >
+                        <el-card header="添加书签" shadow="hover" class="card" >
                             <el-row type="flex" justify="center" >
                                 <el-col :span="8">名称</el-col>
                                 <el-col :span="16">链接</el-col>
@@ -219,6 +231,7 @@ export default {
             LoginCode: -1,
             JsToken: "xxxxxxxx",
             jscode: "***** 秘钥关联用户 请勿外传",
+            showjscode: false,
             Folders: [],
             linkform: {
                 fid: "",
@@ -309,6 +322,7 @@ export default {
                 this.JsToken = res.data
                 this.jscode = "javascript:window.open('http://xydh.fun/api/v1/jsadd?token=" + this.JsToken + "&name='+document.title+'&url='+decodeURIComponent(location.href));void(0);"
             })
+            this.showjscode = true
         },
         getTempLinks(){
             linkService.getTempLinks().then((res) =>{
@@ -393,7 +407,7 @@ export default {
 
 <style scoped>
 .me { 
-    min-width: 800px;
+    /* min-width: 800px; */
     max-width: 1680px;
     margin: 0 auto;
     text-align: center;

@@ -3,8 +3,8 @@
     <!-- 天气 -->
     <div class="weather" id="he-plugin-simple"></div>
     <div style="text-align:right;" class="headerbtns">
-        <span class="headerbtn" @click="onChangeHis()" style="cursor:pointer;"><i class="fa fa-reply-all"></i> 足迹开关</span>
-        <span class="headerbtn" @click="onChangeNav()" style="cursor:pointer;"><i class="fa fa-anchor"></i> 书签开关</span>
+        <!-- <span class="headerbtn" @click="onChangeHis()"><i class="fa fa-reply-all"></i> 足迹开关</span>
+        <span class="headerbtn" @click="onChangeNav()"><i class="fa fa-anchor"></i> 书签开关</span> -->
         <!-- <div class="btn">
             <span class="tooltip">猿分啊</span>
             <a href="/u/rand" target="_blank">任意门</a>
@@ -14,7 +14,17 @@
         <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
         <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
         <a class="headerbtn" href="/u/rand" target="_blank">月光宝盒 <i class="fa fa-random"></i></a>
-        <a class="headerbtn" href="/me" target="_blank">自定义 <i class="fa fa-user-circle-o"></i></a>
+        <el-dropdown>
+            <span style="color:inherit;">
+                自定义<i class="fa fa-cog"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item> <i class="fa fa-user-circle-o"></i><a class="headerbtn" href="/me" target="_blank">登录后台</a></el-dropdown-item>
+                <el-dropdown-item><span class="headerbtn" @click="onChangeHis()"><i class="fa fa-reply-all"></i> 足迹开关</span></el-dropdown-item>
+                <el-dropdown-item><span class="headerbtn" @click="onChangeNav()"><i class="fa fa-anchor"></i> 书签开关</span></el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+        
     </div>  
     <div class="paomadeng">
         <el-carousel  indicator-position="none" arrow="always" direction="vertical" height="25px">
@@ -57,15 +67,10 @@ export default {
 }
 .headerbtn{
     margin: 5px;
+    cursor: pointer;
 }
-/* 跑马灯内容 */
-.el-carousel__item {
-    font-size: 13px;
-}
-.paomadeng {
-    /* background-color: black; */
-    margin: 0 auto;
-	max-width: 300px;
-    /* height: 100px; */
+.el-dropdown {
+    color: inherit;
+    cursor: pointer;
 }
 </style>

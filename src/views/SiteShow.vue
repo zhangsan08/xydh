@@ -5,7 +5,7 @@
 	</div>
 
 	<div class="totop" v-if="btn_switch">
-		<Header :historySwitch=historySwitch :navSwitch=navSwitch></Header>
+		<Header :historySwitch=historySwitch :navSwitch=navSwitch :Folders=Folders></Header>
 		<!-- <RightBar></RightBar> -->
 	</div>
 
@@ -61,7 +61,7 @@
 			<div style="padding:10px 10px;">
 				<el-col :span="6" v-for="Folder in Folders" :key="Folder.id">
 					<div style="margin:5px auto">
-						<a class="zhida"  :href="'#'+Folder.name" style="font-size:16px">
+						<a :href="'#'+Folder.name" style="font-size:16px">
 						{{Folder.name}}
 						</a>
 					</div>
