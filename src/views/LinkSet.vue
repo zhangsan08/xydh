@@ -102,10 +102,10 @@ export default {
 		},
 		getLinksin(fid){
 			// 这样只在折页打开时执行
-			this.loading = true;
-			setTimeout(() => {
-				this.loading = false;
-			}, 500);
+			// this.loading = true;
+			// setTimeout(() => {
+			// 	this.loading = false;
+			// }, 500);
 			if(fid){
 				linkService.getLinksbyFolderID(fid).then((res) =>{
 					if(res.data){

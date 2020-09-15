@@ -176,7 +176,7 @@
                 <Notice :username=username v-if="userID!=7163"></Notice><div v-else>该账号为测试账号。仅用于展示后台功能。使用上有多处限制。</div>
             </el-tab-pane>
 
-            <el-tab-pane label="小站配置">
+            <el-tab-pane label="导航配置">
                 <SiteSet :userID=userID></SiteSet>
             </el-tab-pane>
 
@@ -188,7 +188,7 @@
                 <LinkSet :userID=userID></LinkSet>
             </el-tab-pane>
 
-            <el-tab-pane label="实验室" lazy>
+            <el-tab-pane label="进阶功能" lazy>
                 <Lab></Lab>
             </el-tab-pane>
             
@@ -198,11 +198,8 @@
         </el-tabs>
 
         <el-divider>⚠️警告</el-divider>
-			<p style="color:red;font-weight:bolder;">为了炫猿长久地发展，请勿上传涉政涉黄涉黑等违法犯罪网站。发现一条永久封号。</p>
+			<!-- <p style="color:red;font-weight:bolder;">为了炫猿长久地发展，请勿上传涉政涉黄涉黑等违法犯罪网站。发现一条永久封号。</p> -->
             使用本站的服务即同意<a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/blog/11015'>法律与免责声明</a>
-<!-- 			
-			<p>排行榜可任意查看用户数据。</p>
-			<p>举报者可获得邀请码奖励。</p> -->
         <el-divider></el-divider>
         <!-- 跑马灯 -->
         <el-col :span="24">
