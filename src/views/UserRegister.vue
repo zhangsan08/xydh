@@ -34,6 +34,20 @@
           <div style="padding:10px 50px">
             <el-link type="primary"   @click="agreeVisible = true" >请点击阅读用户注册协议</el-link>
           </div>
+
+          <!-- 点击式按钮建议高度介于36px与46px  -->
+          <!-- <div ref="vaptcha" id="vaptchaContainer" style="height: 36px;">
+            
+            <div class="vaptcha-init-main">
+              <div class="vaptcha-init-loading">
+                <a href="/" target="_blank">
+                  <img src="https://r.vaptcha.net/public/img/vaptcha-loading.gif" />
+                </a>
+                <span class="vaptcha-text">Vaptcha启动中...</span>
+              </div>
+            </div>
+          </div> -->
+
           <div style="padding:10px 50px">
               <el-button type="primary"   @click="submitForm('registerForm')" >同意用户注册协议并注册</el-button>
               <el-button type="danger"    @click="resetForm('registerForm')"  >重置</el-button>
@@ -104,8 +118,39 @@
 // import * as API from "@/api/user/";
 import { userService } from '@/common/api'
 
+const extend = function(to, _from) {
+  for (const key in _from) {
+    to[key] = _from[key]
+  }
+  return to
+}
+
 export default {
+  name:'register',
+  props: {
+    type: {
+      type: String,
+      default: 'invisible'
+    },
+    scene: {
+      type: [String,Number],
+      default: 0
+    },
+    vpStyle: {
+      type: String,
+      default: 'dark'
+    },
+    color: {
+      type: String,
+      color: '#3C8AFF'
+    },
+    lang: {
+      type: String,
+      default:'auto'
+    },
+  },
   data() {
+    
     var checkyuankeya = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("邀请码不能为空"));
@@ -180,12 +225,14 @@ export default {
   },
   methods: {
     SubmitRegister() {
+        // window.vaptchaObj.validate();
         userService.UserRegister(this.registerForm).then((res) => {
           if (res.code > 0) {
             this.$notify.error({
               title: "注册失败 请核对",
               message: res.msg
             });
+            window.vaptchaObj.reset();
           } else {
             this.$alert('', '注册成功', {
               confirmButtonText: '点击登录',
@@ -202,12 +249,14 @@ export default {
             title: "错误 请检查",
             message: error
           });
+          window.vaptchaObj.reset();
         });
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.SubmitRegister();
+          // this.SubmitRegister();
+          window.vaptchaObj.validate();
         } else {
           console.log("error submit!!");
           return false;
@@ -233,13 +282,91 @@ export default {
             }
         })
     },
+    loadV2Script() {
+      if (typeof window.vaptcha === 'function') { //如果已经加载就直接放回
+        return Promise.resolve()
+      } else {
+        return new Promise(resolve => {
+          var script = document.createElement('script')
+          script.src = 'https://v.vaptcha.com/v3.js'
+          script.async = true
+          script.onload = script.onreadystatechange = function() {
+            if (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete') {
+              resolve()
+              script.onload = script.onreadystatechange = null
+            }
+          }
+          document.getElementsByTagName("head")[0].appendChild(script)
+        })
+      }
+    },
   },
   beforeMount() {
         document.title = "注册炫猿 | 优雅的浏览器第一站从此开始"
         this.getUser()
-  }
+  },
+  mounted() {
+    let self = this
+    var config = extend({
+      vid: '5ed51bb4187d2bfd159c033d',
+      // container: this.$refs.vaptcha,
+      style: self.vpStyle
+    }, self.$props)
+    self.loadV2Script().then(() => {
+      window.vaptcha(config).then(vaptchaObj => {
+        window['vaptchaObj'] = vaptchaObj
+        console.log(window)
+        this.obj = vaptchaObj
+        self.$emit('input', vaptchaObj)
+        console.log(vaptchaObj)
+
+        vaptchaObj.listen("pass", function () {
+          // 验证成功进行后续操作
+          self.registerForm.token = vaptchaObj.getToken()
+          self.SubmitRegister()
+        });
+        //关闭验证弹窗时触发
+        vaptchaObj.listen("close", function () {
+          vaptchaObj.reset();
+        });
+        // obj.render()
+      })
+    })
+  },
 };
 </script>
+
+<style scoped>
+  .vaptcha-init-main {
+    display: table;
+    width: 100%;
+    height: 100%;
+    background-color: #999999;
+  }
+  .vaptcha-init-loading {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .vaptcha-init-loading > a {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: none;
+  }
+
+  .vaptcha-init-loading > a img {
+    vertical-align: middle;
+  }
+
+  .vaptcha-init-loading .vaptcha-text {
+    font-family: sans-serif;
+    font-size: 12px;
+    color: #cccccc;
+    vertical-align: middle;
+  }
+</style>
 
 <style scoped>
 .ad {
