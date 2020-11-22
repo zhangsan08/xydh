@@ -28,11 +28,11 @@
         <div class="header">
           <a href="/">
             <img src="~@/assets/logo.png" class="logo" alt="logo">
-            <span class="title">炫猿导航管理平台</span>
+            <span class="title">炫猿控制台</span>
           </a>
         </div>
         <div class="desc">
-          后PC时代,用炫猿就对了!
+          后PC时代的玩法
         </div>
       </div>
 

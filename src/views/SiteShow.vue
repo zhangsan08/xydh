@@ -33,19 +33,8 @@
 	<el-row>
 		<div class="historyLinks" v-if="historySwitch">
 			<div v-if="cacheList.length > 0">
-				<div class="historyLink" v-for="link in cacheList"
-					@click="goToUrl(link)" :key="link.id">
-					<el-tooltip effect="dark" :content="link.name" placement="right" offset="100" :visible-arrow="false">
-						<el-col :xs="6" :sm="4" :md="2">
-							<div class="historyPic">
-								<!-- https://www.yxt521.com/favicon/get.php?url= -->
-								<!-- <el-image :src="link.url | getDomain" :alt="link.name" 
-								style="border-radius:15px;width:50px;height:50px;"> -->
-									<div slot="error" class="image-slot">{{link.name[0]}}</div>
-								<!-- </el-image> -->
-							</div>
-						</el-col>
-					</el-tooltip>
+				<div class="historyLink" v-for="link in cacheList" @click="goToUrl(link)" :key="link.id">
+					<p>{{ link.name }}</p>
 				</div>
 			</div>
 			<div v-else>
@@ -174,7 +163,7 @@ export default {
 			lybID: "",
 			Folders: [],
 			yuanxuan: [
-				{"icon":"","id":"1","name":"华为云羊毛【独家】","url":"https://www.yuque.com/xydh/partner/huawei","info":"独家合作",},
+				{"icon":"","id":"1","name":"薅羊毛捡垃圾群","url":"https://www.yuque.com/xydh/partner/grf3qg","info":"独家合作",},
 				{"icon":"","id":"9","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
 				{"icon":"star","id":"2","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
 				{"icon":"windows","id":"3","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
@@ -509,22 +498,15 @@ a {
 .historyLink {
 	cursor: pointer;
 	float: left;
-	background: rgba(0, 0, 0, 0.3);
-	width:50px;
-	height:50px;
-	border-radius: 15px;
-	margin: 5px 20px;
+	background: rgba(0, 0, 0, 1);
+	max-width:300px;
+	height:40px;
+	border-radius: 10px;
+	margin: 5px 10px;
+	padding: 10px 15px;
 	display: table-cell;
 	vertical-align: middle;
-}
-.historyPic {
-
-}
-.image-slot {
-	width:50px;
-	height:50px;
-	line-height: 50px;
-	font-size: 18px;
-	font-weight: bolder;
+	font-size: 20px;
+	line-height: 20px;
 }
 </style>
