@@ -194,14 +194,14 @@ export default {
   font-size: 15px;
   border-radius: 25px;
   border: 0px;
-  color: wheat;
+  color: inherit;
 }
 .el-input__inner:hover {
     background-color: rgba(0, 0, 0, 0.5);
 }
 /* placeholder颜色 */
 .el-input__inner::placeholder{
-    color:rgba(255, 255, 255, 0.8);
+    color:inherit;
 }
 /* .el-input__suffix {
     color: yellow;
@@ -209,7 +209,7 @@ export default {
 /* 搜索按钮 */
 .el-input-group__append {
     background-color: rgba(0, 0, 0, 0.2);
-    color: gold;
+    color: inherit;
     font-size: 18px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;

@@ -178,6 +178,14 @@ export const userService = {
     })
   },
 
+  UserRename(data){
+    return request({
+      url: '/api/v1/user/rename',      
+      method: 'post',
+      data
+    })
+  },  
+
   JsToken(){
     return request({
       url: '/api/v1/user/jstoken',

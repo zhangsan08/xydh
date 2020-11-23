@@ -14,7 +14,7 @@
         <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
         <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
         <a class="headerbtn" href="/u/rand" target="_blank">月光宝盒 <i class="fa fa-random"></i></a>
-        <el-dropdown>
+        <el-dropdown :hide-on-click="false">
             <span style="color:inherit;">
                 自定义<i class="fa fa-cog"></i>
             </span>

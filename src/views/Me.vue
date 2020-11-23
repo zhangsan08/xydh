@@ -1,6 +1,8 @@
 <template>
     <div class="me"> 
         <h2>请所有新老用户务必体验快捷添加书签功能 </h2> 
+        同志们，我回来了！新功能陆续安排中！改名已上线。
+        <p>近期规划:1.文件夹加密;2.VIP自定义底部文字</p>
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="欢迎">
                 <el-card shadow="hover" class="card">
@@ -13,7 +15,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                        label="文件夹" min-width="100">
+                        label="文件夹" min-width="130">
                         <template slot-scope="scope">
                             <el-select v-model="scope.row.fid">
                                     <el-option
@@ -22,7 +24,7 @@
                                     :label="Folder.name"
                                     :value="Folder.id"
                                     ></el-option>
-                        </el-select>
+                            </el-select>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -47,9 +49,10 @@
                         fixed="right"
                         label="操作"
                         align="center"
-                        width="120">
+                        width="150">
                         <template slot-scope="scope">
                             <el-button-group>
+                                    <el-button size="small" type="success" icon="el-icon-view" @click="openLink(scope.row.url)" ></el-button>
                                     <el-button size="small" type="primary" icon="el-icon-edit" @click="updateLink(scope.row)" ></el-button>
                                     <el-button size="small" type="danger" icon="el-icon-delete" @click="deleteLink(scope.row)" ></el-button>
                             </el-button-group>                            
@@ -273,7 +276,6 @@ export default {
                         });
 					}
                     this.userID = res.data.id
-                    console.log(this.userID)
                     this.username = res.data.name
                     this.getFolder()
                 }
@@ -291,6 +293,12 @@ export default {
         getFolder(){
             folderService.getFoldersbyID(this.userID).then((res) =>{
                 this.Folders = res.data
+                console.log(this.Folders)
+                var x = {
+                    "id": 0,
+                    "name": "选择文件夹",
+                }
+                this.Folders.push(x)
             })
         },
         createLink(){
@@ -325,6 +333,9 @@ export default {
             linkService.getTempLinks().then((res) =>{
                 this.tempLinks = res.data
             })
+        },
+        openLink(link){
+            window.open(link,"_blank")
         },
         updateLink(link){
             //传入folderID仅仅是为了更新后刷新列表

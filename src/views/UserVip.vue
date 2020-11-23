@@ -1,6 +1,8 @@
 <template>
 
 <div class="vip">
+    <h2>您要充值的账号id为: {{ username }}</h2>
+    <el-link style="font-size:20px" target='_blank' rel='nofollow' :href='"https:\/\/xydh.fun/"+username' >{{ username }}.xydh.fun</el-link>
     <h3>卡密兑换</h3>
     <el-form :model="VipForm" status-icon  label-width="100px">
         <el-form-item>
@@ -8,10 +10,22 @@
         </el-form-item>
         <el-form-item >当前最大文件夹容量: {{ maxf }}</el-form-item>
         <el-form-item>当前最大书签容量: {{ maxl }}</el-form-item>
-        <el-form-item>是否去除猿选文件夹: {{ rmad }}</el-form-item>
+        <el-form-item>是否开通VIP: <span v-if="rmad">是</span><span v-else>否</span></el-form-item>
         <el-form-item label="输入兑换卡密">
             <el-col span="18"><el-input type="text" placeholder="" v-model="VipForm.key"></el-input></el-col>
-            <el-col span="4"><el-button type="primary" @click="Use()">兑换</el-button></el-col>
+        </el-form-item>
+        <el-form-item><el-col span="4"><el-button type="primary" @click="Use()">兑换</el-button></el-col></el-form-item>
+    </el-form>
+    <h3>改名</h3>
+    <el-form :model="renameForm" status-icon  label-width="100px">
+        <el-form-item label="新ID">
+            <el-col span="18"><el-input type="text" placeholder="" v-model="renameForm.name"></el-input></el-col>
+        </el-form-item>
+        <el-form-item label="卡密">
+            <el-col span="18"><el-input type="text" placeholder="" v-model="renameForm.key"></el-input></el-col>
+        </el-form-item>
+        <el-form-item label="">
+            <el-col span="4"><el-button type="primary" @click="Rename()">兑换</el-button></el-col>
         </el-form-item>
     </el-form>
 </div>
@@ -31,6 +45,10 @@ export default {
             LoginCode: -1,
             VipForm:{
                 key: "",
+            },
+            renameForm:{
+                key:"",
+                name:"",
             },
             maxf: 0,
             maxl: 0,
@@ -76,6 +94,23 @@ export default {
                     this.maxf = res.data.max_folder
                     this.maxl = res.data.max_link
                     this.rmad = res.data.rm_ad
+                }
+            })
+        },
+        Rename(){
+            userService.UserRename(this.renameForm).then((res) => {
+                if (res.code > 0) {
+                    this.$notify.error({
+                    title: "兑换失败",
+                    message: res.msg
+                    });
+                }else{  
+                    this.$notify({
+                        title: "兑换成功!",
+                        message: `新名字很霸气！`,
+                        type: "success",
+                    });
+                    this.username = res.data.name
                 }
             })
         },

@@ -508,5 +508,6 @@ a {
 	vertical-align: middle;
 	font-size: 20px;
 	line-height: 20px;
+	color: white;
 }
 </style>
