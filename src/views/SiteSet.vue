@@ -48,9 +48,9 @@
 
             <el-form-item label="留言板">
                 <el-input type="text" v-model="SiteForm.lyb_id" minlength="24" maxlength="24" placeholder=""></el-input>
-            </el-form-item>
-            
-            <el-popconfirm v-if="uid!=7163" confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更新站点信息吗" @onConfirm="updateSite()">
+            </el-form-item>            
+           
+            <el-popconfirm v-if="uid!=7163" confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更新站点信息吗" @confirm="updateSite()">
                 <el-button slot="reference" type="primary">更新站点信息</el-button>
             </el-popconfirm>
         </el-form>
