@@ -1,7 +1,8 @@
 <template>
     <div class="me">
-
-        <ICON></ICON>
+        <el-dialog :visible.sync="dialogIconVisible" title="选择Icon" append-to-body>
+            <ICON @callback="chooseCallback"></ICON>
+        </el-dialog>
         <h2>请所有新老用户务必体验快捷添加书签功能 </h2> 
         同志们，我回来了！新功能陆续安排中！改名已上线。
         <p>近期规划:1.文件夹加密;2.VIP自定义底部文字</p>
@@ -155,6 +156,7 @@
                             <el-row :gutter="1" type="flex" justify="center">
                                 <el-col :span="4">
                                 <el-input type="text" v-model="linkform.icon" placeholder="可为空"></el-input>
+                                <el-button @click="iconHandle()" type="primary" icon="el-icon-edit" circle></el-button>
                                 </el-col>
                                 <el-col :span="12">
                                 <el-input
@@ -163,7 +165,9 @@
                                     minlength="0"
                                     maxlength="30"
                                     placeholder="鼠标放上时的提示语(可为空)"
-                                ></el-input>
+                                >
+                                </el-input>
+                                
                                 </el-col>
                                 <el-col :span="4">
                                 <!-- <el-select v-model="linkform.fid">
@@ -236,8 +240,10 @@ import Lab from './ConsoleLab'
 import Other from './Other'
 import Paomadeng from '@/components/Paomadeng.vue'
 import ICON from '@/components/icon.vue'
+import iconModule from '@/plugins/icon'
 
 export default {
+    mixins: [iconModule],
     data() {
         return {
             userID: 0,
@@ -254,7 +260,7 @@ export default {
                 url: "",
                 info: "",
             },
-            tempLinks:[],
+            tempLinks:[]
         }
     },
     methods: {

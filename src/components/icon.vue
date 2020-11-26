@@ -6,7 +6,9 @@
             </el-row>
             <el-row>
                 <div class="icon-item" v-for="icon in iconclass.icons" :key="icon.id">
-                <i :class="'fa fa-'+icon"></i>
+                    <div @click="choose(icon)">
+                        <i :class="'fa fa-'+icon"></i>
+                    </div>
                 </div>
             </el-row>
         </div>
@@ -56,6 +58,12 @@ export default {
             ],
         }
     },
+    methods: {
+        choose(iconName){
+            //回调引用组件的callback的方法
+            this.$emit('callback',iconName)
+        }
+    }
 }
 </script>
 
