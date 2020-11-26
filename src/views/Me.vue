@@ -1,5 +1,7 @@
 <template>
-    <div class="me"> 
+    <div class="me">
+
+        <ICON></ICON>
         <h2>请所有新老用户务必体验快捷添加书签功能 </h2> 
         同志们，我回来了！新功能陆续安排中！改名已上线。
         <p>近期规划:1.文件夹加密;2.VIP自定义底部文字</p>
@@ -36,9 +38,20 @@
                     <el-table-column
                             label="图标" width="80">
                             <template slot-scope="scope">
-                                <el-input type="text" v-model="scope.row.icon"></el-input>
+                                <el-row>
+                                    <el-input type="text" v-model="scope.row.icon"></el-input>
+                                </el-row>
                             </template>
-                        </el-table-column>                    
+                    </el-table-column>                    
+                    <el-table-column
+                            label="" width="30">
+                            <template slot-scope="scope">
+                                <el-row>
+                                    <i :class="'fa fa-'+scope.row.icon"></i>
+                                </el-row>
+                                
+                            </template>
+                    </el-table-column>                    
                     <el-table-column
                         label="简介" min-width="180">
                         <template slot-scope="scope">
@@ -153,14 +166,14 @@
                                 ></el-input>
                                 </el-col>
                                 <el-col :span="4">
-                                <el-select v-model="linkform.fid">
+                                <!-- <el-select v-model="linkform.fid">
                                     <el-option
                                     v-for="Folder in Folders"
                                     :key="Folder.id"
                                     :label="Folder.name"
                                     :value="Folder.id"
                                     ></el-option>
-                                </el-select>
+                                </el-select> -->
                                 </el-col>
                                 <el-col :span="4">
                                 <el-button
@@ -222,6 +235,7 @@ import LinkSet from './LinkSet'
 import Lab from './ConsoleLab'
 import Other from './Other'
 import Paomadeng from '@/components/Paomadeng.vue'
+import ICON from '@/components/icon.vue'
 
 export default {
     data() {
@@ -293,7 +307,6 @@ export default {
         getFolder(){
             folderService.getFoldersbyID(this.userID).then((res) =>{
                 this.Folders = res.data
-                console.log(this.Folders)
                 var x = {
                     "id": 0,
                     "name": "选择文件夹",
@@ -403,6 +416,7 @@ export default {
         Lab,
         Other,
         Paomadeng,
+        ICON,
     },
     beforeMount() {
         document.title = "炫猿控制台"

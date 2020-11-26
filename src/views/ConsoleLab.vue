@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-row gutter="20" justify="center">
+        <el-row :gutter="20" justify="center">
         <el-col :xs="24" :sm="24">
             <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
