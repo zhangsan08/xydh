@@ -5,7 +5,7 @@
 	</div>
 
 	<div class="totop" v-if="btn_switch">
-		<Header :historySwitch=historySwitch :navSwitch=navSwitch :Folders=Folders></Header>
+		<Header :historySwitch=historySwitch :navSwitch=navSwitch :Folders=Folders :myname=myname></Header>
 		<!-- <RightBar></RightBar> -->
 	</div>
 
@@ -132,7 +132,7 @@
 
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
-import { userService,siteService } from '@/common/api'
+import { siteService } from '@/common/api'
 import { cookieGet,cookieSet} from '@/common/cookie'
 import IndexLab from '@/views/IndexLab.vue'
 import { getUrl } from '@/common/pickup'
@@ -161,6 +161,7 @@ export default {
 			screenWidth: "",
 			userid: "",
 			username: "",
+			myname: "",
 			sitename: "",
 			siteinfo: "",
 			btn_switch: true,
@@ -197,8 +198,7 @@ export default {
 			cookieSet("navSwitch", this.navSwitch)
 		},
 		load(uname){
-			// userName取ID
-			userService.UserID(uname).then((res) => {
+			siteService.getAllsiteandlinks(uname).then((res) => {
 				if (res.code > 0 ){
 					this.$alert('', '走迷路了', {
 						confirmButtonText: '回主页',
@@ -209,12 +209,12 @@ export default {
 					return
 				} else {
 					// 加载用户
-					this.userid = res.data.id
-					if(res.data.rm_ad){
+					this.userid = res.data.target.id
+					if(res.data.target.rm_ad){
 						this.ad = 0
 					}
 					// 违规用户
-					if (res.data.level <= 0){
+					if (res.data.target.level <= 0){
 						this.$alert('网络不是不法之地！请珍惜您的账号,账号申诉请联系邮箱 xuanyuandaohang@126.com 上传了非法网站的就不要申诉了', '该账号传播违法信息已被封禁', {
 							confirmButtonText: '回主页',
 							callback: () => {
@@ -223,61 +223,29 @@ export default {
 						});
 						return
 					}
-					// 正常用户 加载数据
-					this.getSite(this.userid)
-					this.getAll(this.userid)
-				}
-			})
-		},
-		// 取小站信息[名称、简介]
-		getSite(userid){
-			siteService.getSitebyID(userid).then((res) => {
-				if (res.code > 0 ){
-						this.$alert('', '走迷路了', {
-						confirmButtonText: '回主页',
-						callback: () => {
-							this.$router.push({name:'Home'}).catch(() => { })
-						}
-					});
-					return
-				}else{
-					this.sitename = res.data.name
-					this.siteinfo = res.data.info
-					this.btn_switch = res.data.btn_switch
-					this.bglizi = res.data.bglizi
-					this.lybID = res.data.lyb_id
+					// 加载 Site
+					this.sitename = res.data.site_info.name
+					this.siteinfo = res.data.site_info.info
+					this.btn_switch = res.data.site_info.btn_switch
+					this.bglizi = res.data.site_info.bglizi
+					this.lybID = res.data.site_info.lyb_id
 					document.title = this.sitename
-					// var obj = document.getElementsByClassName("bg")[0]
+					// 改背景颜色或图片
 					var obj = document.getElementsByTagName("body")[0]
-					obj.style.color = res.data.font_color
-					if(res.data.bg_switch){
-						// document.getElementsByTagName("body")[0].setAttribute("style","background-image: url("+res.data.bg+")"+";color:"+res.data.font_color);
-						obj.style.backgroundImage = "url("+res.data.bg+")"
-						obj.style.color = res.data.font_color
+					obj.style.color = res.data.site_info.font_color
+					if(res.data.site_info.bg_switch){
+						obj.style.backgroundImage = "url("+res.data.site_info.bg+")"
+						obj.style.color = res.data.site_info.font_color
 					}else{
-						// var obj2 = document.getElementsByTagName("body")[0]
-						obj.style.backgroundColor = res.data.bg_color
-						// obj2.style.color = res.data.font_color
+						obj.style.backgroundColor = res.data.site_info.bg_color
 					}
-				}
-			})
-		},
-		// 取所有书签[文件夹、书签]
-		getAll(userid){
-			siteService.getAll(userid).then((res) => {
-				if (res.code > 0 ){
-						this.$alert('', '走迷路了', {
-						confirmButtonText: '回主页',
-						callback: () => {
-							this.$router.push({name:'Home'}).catch(() => { })
-						}
-					});
-					return
-				}else{
-					this.Folders = res.data
+					// 取文件夹和书签
+					this.Folders = res.data.folderwith_links
+					// 文件夹排序
 					this.Folders.sort(function(f1,f2){
 						return f1.weight-f2.weight//weight
 					})
+					// 文件夹里的每个书签排序
 					for(var i=0;i<this.Folders.length;i++){
 						if(!this.Folders[i].links)
 							continue
@@ -285,6 +253,8 @@ export default {
 							return l2.weight-l1.weight//weight
 						})
 					}
+					// 取当前登录的用户名
+					this.myname = res.data.me.name
 				}
 			})
 		},
@@ -301,9 +271,6 @@ export default {
 			})
 		},
 		// 打开url
-		go(url){
-			window.open(url,"_blank")
-		},
 		goToUrl(linkInfo){
 			console.log(linkInfo)
 			let cache = cookieGet("cacheLinkList")

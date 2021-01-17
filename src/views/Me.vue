@@ -291,7 +291,7 @@ export default {
             });
         },
         getFolder(){
-            folderService.getFoldersbyID(this.userID).then((res) =>{
+            folderService.getMyFolders().then((res) =>{
                 this.Folders = res.data
                 var x = {
                     "id": 0,
