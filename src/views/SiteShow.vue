@@ -85,14 +85,19 @@
 			</div>
 		</el-col>
 		<!-- 用户自定义内容 -->
-		<div v-for="Folder in Folders" :key="Folder.id">
+		<div v-for="(Folder,index) in Folders" :key="Folder.id">
 			<el-col :xs="24" :sm="12" :md="8" :xl="6">
 				<div class="folder totop" :style="{height:(screenWidth>768?'180px':'auto')}" :id="Folder.id"  onselectstart="return false;">
 					<div class="foldername" :id="Folder.name">
 						<p v-if="Folder.icon"><i :class="'fa fa-'+Folder.icon"></i>{{Folder.name}}</p>
 						<p v-else>{{Folder.name}}</p>
 					</div>
-					<div class="links" v-for="link in Folder.links" :key="link.id">
+					<div class="inputPWD" v-if="Folder.need_password">
+							<el-input type="text" v-model="passwords[index]" placeholder="请输入密码" clearable @keyup.enter.native="Sou(url+txt)">
+								<span slot="append" type="text" @click="GetPWDFolder(index,Folder.id,passwords[index])">确定</span>
+							</el-input>
+					</div>
+					<div class="links" v-else v-for="link in Folder.links" :key="link.id">
 						<el-col :span="8">
 							<div class="link">
 							<a @click="goToUrl(link)" target="_blank" rel="nofollow">
@@ -174,7 +179,8 @@ export default {
 			],
 			f_color: "white",
 			autoBgColor:'#fff',
-			cacheList:[]
+			cacheList:[],
+			passwords: [],
 		}
 	},
 	methods: {
@@ -279,6 +285,18 @@ export default {
 							return l2.weight-l1.weight//weight
 						})
 					}
+				}
+			})
+		},
+		GetPWDFolder(index, id, password){
+			siteService.getLinksbyfolderid(id, password).then((res) => {
+				if (res.code > 0){
+						this.$alert('请重试', '密码错误', {
+					});
+					return
+				}else{
+					this.Folders[index].need_password = false;
+					this.Folders[index].links = res.data;
 				}
 			})
 		},
@@ -509,5 +527,22 @@ a {
 	font-size: 20px;
 	line-height: 20px;
 	color: white;
+}
+
+.inputPWD {
+	padding: 10%;
+}
+
+.inputPWD .el-input__inner {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0px;
+  color: inherit;
+}
+
+.inputPWD .el-input-group__append {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: inherit;
+	border-radius: 0px;
+    cursor: pointer;
 }
 </style>

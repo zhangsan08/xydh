@@ -30,6 +30,7 @@
 
 		<!-- 修改 -->
 		<el-divider>更新文件夹</el-divider>
+		关于文件夹密码: 1.本人登录状态下无需密码。2.密码为空则无需密码即可查看
 		<el-table :data="Folders" stripe>
 			<el-table-column label="图标" width="80">
 				<template slot-scope="scope">
@@ -39,6 +40,11 @@
 			<el-table-column label="名称" min-width="200">
 				<template slot-scope="scope">
 					<el-input type="text" v-model="scope.row.name"></el-input>
+				</template>
+			</el-table-column>
+			<el-table-column label="密码" min-width="100">
+				<template slot-scope="scope">
+					<el-input type="text" v-model="scope.row.password"></el-input>
 				</template>
 			</el-table-column>
 			<el-table-column label="排序" align="center" width="120">
@@ -115,12 +121,13 @@ export default {
 				});
 			});
 		},
-		updateFolder(Folder){
+		updateFolder(FolderRow){
 			var form = {
-				id: Folder.id,
-				name: Folder.name,
-				icon: Folder.icon,
-				weight: Folder.weight,
+				id: FolderRow.id,
+				name: FolderRow.name,
+				icon: FolderRow.icon,
+				weight: FolderRow.weight,
+				password: FolderRow.password,
 			}
 			folderService.updateFolder(form).then((res) => {
 				if (res.code > 0) {

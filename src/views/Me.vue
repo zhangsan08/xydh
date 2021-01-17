@@ -293,7 +293,6 @@ export default {
         getFolder(){
             folderService.getFoldersbyID(this.userID).then((res) =>{
                 this.Folders = res.data
-                console.log(this.Folders)
                 var x = {
                     "id": 0,
                     "name": "选择文件夹",

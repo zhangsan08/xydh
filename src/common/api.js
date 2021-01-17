@@ -122,6 +122,12 @@ export const siteService = {
       url: '/api/v1/all/'+ id,
     })
   },
+
+  getLinksbyfolderid(id,pwd){
+    return request({
+      url: '/api/v1/linksbyfolderid/'+ id + '?password=' + pwd,
+    })
+  },
 }
 
 export const userService = {
