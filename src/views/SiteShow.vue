@@ -58,13 +58,6 @@
 			
 			</div>
 		</div>
-		<!-- 手机端快捷导航 -->
-		<!-- <div class="totop">
-			<el-divider>快捷导航</el-divider>
-			<el-tabs v-model="activeName" @tab-click="handleClick" v-for="Folder in Folders" :key="Folder.id">
-				<el-tab-pane :label="Folder.name" name="first"></el-tab-pane>
-			</el-tabs>
-		</div> -->
 		<!-- 猿选 -->
 		<el-col v-if="ad" :xs="24" :sm="12" :md="8" :xl="6" >
 			<div class="folder totop" :style="{height:(screenWidth>768?'180px':'auto')}">
@@ -92,8 +85,8 @@
 						<p v-if="Folder.icon"><i :class="'fa fa-'+Folder.icon"></i>{{Folder.name}}</p>
 						<p v-else>{{Folder.name}}</p>
 					</div>
-					<div class="inputPWD" v-if="Folder.need_password">
-							<el-input type="text" v-model="passwords[index]" placeholder="请输入密码" clearable @keyup.enter.native="Sou(url+txt)">
+					<div class="inputPWD" v-if="Folder.need_password"> <!-- 如果文件夹需要密码 -->
+							<el-input type="text" autosize v-model="passwords[index]" :placeholder="Folder.info" clearable @keyup.enter.native="Sou(url+txt)">
 								<span slot="append" type="text" @click="GetPWDFolder(index,Folder.id,passwords[index])">确定</span>
 							</el-input>
 					</div>
@@ -170,7 +163,7 @@ export default {
 			Folders: [],
 			yuanxuan: [
 				{"icon":"","id":"1","name":"薅羊毛捡垃圾群","url":"https://www.yuque.com/xydh/partner/grf3qg","info":"独家合作",},
-				{"icon":"","id":"9","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
+				// {"icon":"","id":"9","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
 				{"icon":"star","id":"2","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
 				{"icon":"windows","id":"3","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
 				{"icon":"apple","id":"4","name":"大白软件站","url":"https://o--o.win","info":"新Mac的第一站",},	
@@ -497,19 +490,24 @@ a {
 }
 
 .inputPWD {
-	padding: 10%;
+	padding: 10% 2%;
 }
 
 .inputPWD .el-input__inner {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 0px;
   color: inherit;
+  font-size: 0.33vmax;
+  border: 0px;
 }
-
+.inputPWD .el-input__inner::placeholder{
+    color:inherit;
+}
 .inputPWD .el-input-group__append {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.15);
     color: inherit;
 	border-radius: 0px;
     cursor: pointer;
+	border: 0px;
 }
 </style>

@@ -47,6 +47,11 @@
 					<el-input type="text" v-model="scope.row.password"></el-input>
 				</template>
 			</el-table-column>
+			<el-table-column label="引导语" min-width="100">
+				<template slot-scope="scope">
+					<el-input type="text" v-model="scope.row.info" maxlength="30" show-word-limit></el-input>
+				</template>
+			</el-table-column>
 			<el-table-column label="排序" align="center" width="120">
 				<template slot-scope="scope">
 					<el-input-number size="mini" style="width:100px" v-model="scope.row.weight" :min="0" :max="15" label="越大越靠后"></el-input-number>
@@ -127,6 +132,7 @@ export default {
 				icon: FolderRow.icon,
 				weight: FolderRow.weight,
 				password: FolderRow.password,
+				info: FolderRow.info,
 			}
 			folderService.updateFolder(form).then((res) => {
 				if (res.code > 0) {
@@ -195,11 +201,11 @@ export default {
 
 <style>
 
-.tips {
+/* .tips {
 	margin: 0 auto;
 	max-width: 500px;
 	text-align: left;
-}
+} */
 .onerow {
 	margin: 5px auto 0;
 }

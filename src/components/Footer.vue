@@ -8,9 +8,9 @@
             <div style="height:10px"></div>
             友情链接
             <a target='_blank' rel='follow' href='https://oo1.win'>炫猿</a>&#160;
-            <a target='_blank' rel='follow' href='https://yinyue.qugeek.com/'>墨灵音乐</a>&#160;
+            <!-- <a target='_blank' rel='follow' href='https://yinyue.qugeek.com/'>墨灵音乐</a>&#160; -->
             <a target='_blank' rel='follow' href='https://www.runningcheese.com/'>奔跑中的奶酪</a>&#160;
-            <a target='_blank' rel='follow' href='http://lackk.com/'>兰客导航</a>&#160;
+            <!-- <a target='_blank' rel='follow' href='http://lackk.com/'>兰客导航</a>&#160; -->
             <a target='_blank' rel='follow' href='https://met.red/'>遇见数据仓库</a>&#160;
             <a target='_blank' rel='follow' href='https://www.24kdh.com/'>24k导航</a>&#160;
             <a target='_blank' rel='follow' href='https://creatorsdaily.com/'>创造者日报</a>&#160;
