@@ -4,25 +4,36 @@
 			<p>请以一条为单位更新 因为每次更新后会刷新列表</p>
 			<a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62830'>添加小图标的方法</a>
 		</div>
-
-		<el-divider></el-divider>
-		<el-row type="flex" justify="center">
-			<el-col :span="3">图标</el-col>
-			<el-col :span="6">名称</el-col>
-			<el-col :span="3">排序</el-col>	
-			<el-col :span="3">操作</el-col>
-		</el-row>
 		<!-- 添加 -->
 		<el-row>
 			<el-col :span="24">
 				<el-card header="添加文件夹" shadow="hover" class="card" >
+					<el-row gutter="1" type="flex" justify="center">
+						<el-col :span="8">图标</el-col>
+						<el-col :span="16">名称</el-col>
+						<el-col :span="8">排序</el-col>	
+					</el-row>
 					<el-row :model="Folderform" gutter="1" type="flex" justify="center">
-						<el-col :xs="3" :sm="3"><el-input type="text" v-model="Folderform.icon" minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
-						<el-col :xs="9" :sm="6"><el-input type="text" v-model="Folderform.name" minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
-						<el-col :xs="6" :sm="3">
-							<el-input-number size="mini" style="width:100px" v-model="Folderform.weight" :min="0" :max="10" label="越大越靠后"></el-input-number>
+						<el-col :span="8"><el-input type="text" v-model="Folderform.icon" minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
+						<el-col :span="16"><el-input type="text" v-model="Folderform.name" minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
+						<el-col :span="8">
+							<el-input-number style="width:120px" v-model="Folderform.weight" :min="0" :max="10" label="越大越靠后"></el-input-number>
 						</el-col>
-						<el-col :xs="6" :sm="3"><el-button  type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button></el-col>
+						
+					</el-row>
+					<el-row gutter="1" type="flex" justify="center">
+						<el-col :span="8">密码</el-col>
+						<el-col :span="16">引导语</el-col>
+						<el-col :span="8">添加文件夹</el-col>
+					</el-row>
+					<el-row gutter="1" type="flex" justify="center">
+						<el-col :span="8">
+							<el-input type="text" v-model="Folderform.password" show-password></el-input>
+						</el-col>
+						<el-col :span="16">
+							<el-input type="text" v-model="Folderform.info" maxlength="30" placeholder="设置了密码后的文字提示" show-word-limit></el-input>
+						</el-col>
+						<el-col :span="8"><el-button  type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button></el-col>
 					</el-row>
 				</el-card>
 			</el-col>
@@ -201,11 +212,6 @@ export default {
 
 <style>
 
-/* .tips {
-	margin: 0 auto;
-	max-width: 500px;
-	text-align: left;
-} */
 .onerow {
 	margin: 5px auto 0;
 }

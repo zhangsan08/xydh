@@ -11,52 +11,87 @@
                 </template>
 				<!-- 这是文件夹里的内容 -->
 				<div class="links">
-					<!-- 标题 -->
-					<el-row type="flex" justify="center">
-						<el-col :span="2">图标</el-col>
-						<el-col :span="4">名称</el-col>
-						<el-col :span="6">链接</el-col>
-						<el-col :span="6">介绍</el-col>
-						<el-col :span="3">文件夹</el-col>
-						<el-col :span="3">操作</el-col>
-					</el-row>
 					<!-- 添加 -->
-					<el-divider>添加书签</el-divider>
 					隐私与法律免责声明: 炫猿会记录你的信息, 你所添加的每一个链接都将负法律责任
-					<el-row :model="linkform" :gutter="1" type="flex" justify="center">
-						<el-col :span="2"><el-input type="text" v-model="linkform.icon" 	placeholder="可为空"></el-input></el-col>
-						<el-col :span="4"><el-input type="text" v-model="linkform.name" 	minlength="0" maxlength="12"  placeholder="0-8字/过长不好看"></el-input></el-col>
-						<el-col :span="6"><el-input type="text" v-model="linkform.url"		minlength="0" maxlength="100" placeholder="http开头" ></el-input></el-col>
-						<el-col :span="6"><el-input type="text" v-model="linkform.info"		minlength="0" maxlength="30" placeholder="鼠标放上时的提示语(可为空)"></el-input></el-col>
-						<el-col :span="3"><P>{{ Folder.name }}</P></el-col>
-						<el-col :span="3">
-							<el-button size="small" type="success" icon="el-icon-plus" @click="createLink(Folder.id)" circle></el-button>
-						</el-col>
-					</el-row>
+					<el-card header="添加书签" shadow="hover" class="card" :model="linkform">
+						<el-row type="flex" justify="center">
+							<el-col :span="8">名称</el-col>
+							<el-col :span="16">链接</el-col>
+						</el-row>
+						<el-row :gutter="1" type="flex" justify="center">
+							<el-col :span="8"><el-input type="text" v-model="linkform.name" 	minlength="0" maxlength="12"  placeholder="0-8字/过长不好看"></el-input></el-col>
+							<el-col :span="16"><el-input type="text" v-model="linkform.url"		minlength="0" maxlength="100" placeholder="http开头" ></el-input></el-col>
+						</el-row>
+						<el-row :gutter="1" type="flex" justify="center">
+							<el-col :span="4">图标</el-col>
+							<el-col :span="12">介绍</el-col>
+							<el-col :span="4">文件夹</el-col>
+							<el-col :span="4">添加</el-col>
+						</el-row>
+						<el-row :gutter="1" type="flex" justify="center">
+							<el-col :span="4"><el-input type="text" v-model="linkform.icon" 	placeholder="可为空"></el-input></el-col>
+							<el-col :span="12"><el-input type="text" v-model="linkform.info"		minlength="0" maxlength="30" placeholder="鼠标放上时的提示语(可为空)"></el-input></el-col>
+							<el-col :span="4"><P>{{ Folder.name }}</P></el-col>
+							<el-col :span="4">
+								<el-button size="small" type="success" icon="el-icon-plus" @click="createLink(Folder.id)" circle></el-button>
+							</el-col>
+						</el-row>
+					</el-card>
 					<!-- 更删 -->
 					<el-divider>更新书签</el-divider>
-					<el-row v-for="link in links" :key="link.id" :gutter="1" class="onerow">
-						<el-col :span="2"><el-input type="text" v-model="link.icon"></el-input></el-col>
-						<el-col :span="4"><el-input type="text" v-model="link.name"></el-input></el-col>
-						<el-col :span="6"><el-input type="text" v-model="link.url" ></el-input></el-col>
-						<el-col :span="6"><el-input type="text" v-model="link.info"></el-input></el-col>
-						<el-col :span="3">
-							<el-select v-model="link.fid">
-								<el-option
-								v-for="Folder in Folders"
-								:key="Folder.id"
-								:label="Folder.name"
-								:value="Folder.id">
-								</el-option>
-							</el-select>
-						</el-col>
-						<el-col :span="3">
-							<el-button-group>
-								<el-button size="small" type="primary" icon="el-icon-edit" @click="updateLink(Folder.id,link)" ></el-button>
-								<el-button size="small" type="danger" icon="el-icon-delete" @click="deleteLink(Folder.id,link)" ></el-button>
-							</el-button-group>
-						</el-col>
-					</el-row>
+					<el-table :data="links" stripe>
+						<el-table-column
+                            label="图标" width="80">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.icon"></el-input>
+                            </template>
+						</el-table-column>
+						<el-table-column
+							label="名称" min-width="160">
+							<template slot-scope="scope">
+								<el-input type="text" v-model="scope.row.name"></el-input>
+							</template>
+						</el-table-column>
+
+						<el-table-column
+							label="链接" min-width="160">
+							<template slot-scope="scope">
+								<el-input type="text" v-model="scope.row.url"></el-input>
+							</template>
+						</el-table-column>                    
+						<el-table-column
+							label="简介" min-width="180">
+							<template slot-scope="scope">
+								<el-input type="textarea" v-model="scope.row.info" placeholder="鼠标放上时的提示语(可为空)"></el-input>
+							</template>
+						</el-table-column>
+						<el-table-column
+							label="文件夹" min-width="130">
+							<template slot-scope="scope">
+								<el-select v-model="scope.row.fid">
+									<el-option
+										v-for="Folder in Folders"
+										:key="Folder.id"
+										:label="Folder.name"
+										:value="Folder.id"
+									></el-option>
+								</el-select>
+							</template>
+						</el-table-column>
+						<el-table-column
+							fixed="right"
+							label="操作"
+							align="center"
+							width="150">
+							<template slot-scope="scope">
+								<el-button-group>
+										<el-button size="small" type="success" icon="el-icon-view" @click="openLink(scope.row.url)" ></el-button>
+										<el-button size="small" type="primary" icon="el-icon-edit" @click="updateLink(Folder.id, scope.row)" ></el-button>
+										<el-button size="small" type="danger" icon="el-icon-delete" @click="deleteLink(Folder.id, scope.row)" ></el-button>
+								</el-button-group>                            
+							</template>
+						</el-table-column>
+                    </el-table>
 				</div>
             </el-collapse-item>
 			</div>
@@ -205,7 +240,10 @@ export default {
 					message: error
 				});
 			});
-		}
+		},
+		openLink(link){
+            window.open(link,"_blank")
+        },
 	},
 	components:{
 
