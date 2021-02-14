@@ -10,11 +10,11 @@
                 <el-input type="text" v-model="SiteForm.info" minlength="0" maxlength="100" placeholder="可为空"></el-input>
             </el-form-item>
 
-            <el-form-item label="顶部开关">
+            <!-- <el-form-item label="顶部开关">
                 <el-switch v-model="SiteForm.btn_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="显示" inactive-text="隐藏">
                 </el-switch>
                 <div style="font-size:12px">关闭后可从主站进入控制台</div> 
-            </el-form-item>
+            </el-form-item> -->
 
             <el-form-item label="自定义背景">
                 <el-switch
@@ -157,21 +157,8 @@ export default {
     margin: 0 auto;
     text-align: center;
 }
-.el-form-item :hover{
-    background-color: rgba(0, 0, 0, 0.05);
-    /* border-radius: 10px; */
-    /* padding: 3px 3px; */
-}
-/* 搜索框 */
-.el-input__inner {
-  border-radius: 10px;
-  /* border-top-left-radius: 0px; */
-  /* border-bottom-left-radius: 0px; */
-}
-.el-color-dropdown__main-wrapper {
-    display:none;
-}
-.el-color-dropdown__value {
-    display: none;
+
+.siteForm .el-input__inner {
+  border-radius: 20px;
 }
 </style>

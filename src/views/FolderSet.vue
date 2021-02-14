@@ -44,7 +44,7 @@
 			</el-table-column>
 			<el-table-column label="密码" min-width="100">
 				<template slot-scope="scope">
-					<el-input type="text" v-model="scope.row.password"></el-input>
+					<el-input type="text" v-model="scope.row.password" show-password></el-input>
 				</template>
 			</el-table-column>
 			<el-table-column label="引导语" min-width="100">

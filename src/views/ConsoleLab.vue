@@ -5,7 +5,7 @@
             <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
                 <span>扩容 | 改名 | 开通VIP</span>
-                <el-button style="float: right; padding: 13px 15px" type="danger" @click="go('http://vip.x-jq.cn')">购买卡密</el-button>
+                <el-button style="float: right; padding: 13px 15px" type="danger" @click="go('https://vip.xydh.fun')">购买卡密</el-button>
                 <el-button style="float: right; padding: 13px 15px" type="text" @click="go2()">兑换卡密</el-button>
             </div>
             <div>

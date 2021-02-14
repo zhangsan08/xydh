@@ -24,6 +24,12 @@
         </el-carousel-item>
     </el-carousel> -->
 <!-- {{top100}} -->
+
+<div class="amusic">
+    <aplayer autoplay :music="audio[0]" :list="audio" :narrow=false float theme="#fff">
+    </aplayer>
+</div>
+
 <div>
     <el-table class="top100table" highlight-current-row stripe
         :data="topSite.filter(data => !topSearch || data.name.includes(topSearch) || data.uName.includes(topSearch))" >
@@ -57,6 +63,7 @@
         </el-table-column>
     </el-table>
 </div>
+
 </div>
 </template>
 
@@ -64,16 +71,34 @@
 
 import Header from '@/components/Header.vue'
 import { userService } from '@/common/api'
+import Aplayer from 'vue-aplayer'
 
 export default {
     components:{
         Header,
+        Aplayer,
     },
     data() {
         return {
             topUname: [],
             topSite: [],
             topSearch: "",
+            // 音频列表
+            audio:  [
+                {
+                    title:'夜的第七章',
+                    artist: '杰伦',
+                    url: 'https://cdn.jsdelivr.net/gh/ixsim/upload/yddqz.m4a',
+                    pic: 'http://img.mp.itc.cn/upload/20160717/89429f4074754a20996ec74d6bcf0304_th.jpg',
+        
+                },
+                {
+                    title:'花果山',
+                    artist: '球哥',
+                    url: 'https://cdn.jsdelivr.net/gh/ixsim/upload/xyj.mp3',
+                },
+
+            ],
         }
     },
     methods: {
@@ -108,6 +133,13 @@ export default {
 .top100table {
     margin: 20px auto;
     max-width: 1080px;
+}
+
+.amusic {
+    position:fixed;
+    max-width: 500px;
+    left: 10px;
+    bottom: 10px;
 }
 
 </style>

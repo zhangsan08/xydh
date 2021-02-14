@@ -8,7 +8,7 @@
   <el-divider>注册</el-divider>
     <div class="regform">
       <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px">
-        <!-- <div style="text-align:right;"><a target='_blank' rel='nofollow' href='http://vip.x-jq.cn/product/4.html'>购买邀请码</a></div> -->
+        <div style="text-align:right;"><a target='_blank' href='http://vip.xydh.fun'>购买邀请码</a></div>
           <el-form-item label="邀请码" prop="yuankey">
               <el-input v-model="registerForm.yuankey" ></el-input>
           </el-form-item>

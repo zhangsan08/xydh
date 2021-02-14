@@ -328,7 +328,7 @@ export default {
 		Footer,
 		IndexLab,
 		// RightBar,
-		Particle
+		Particle,
 	},
 	beforeMount() {
 		// this.$message({
