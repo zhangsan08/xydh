@@ -95,7 +95,8 @@ export default {
                     this.username = res.data.name
                     this.maxf = res.data.max_folder
                     this.maxl = res.data.max_link
-                    this.rmad = res.data.rm_ad
+                    this.is_vip = res.data.is_vip
+                    this.vip_time = res.data.vip_time
                 }
             })
         },
