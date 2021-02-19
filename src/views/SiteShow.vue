@@ -59,7 +59,7 @@
 			</div>
 		</div>
 		<!-- 猿选 -->
-		<el-col v-if="ad" :xs="24" :sm="12" :md="8" :xl="6" >
+		<el-col v-if="!is_vip" :xs="24" :sm="12" :md="8" :xl="6" >
 			<div class="folder totop" :style="{height:(screenWidth>768?'180px':'auto')}">
 				<div class="foldername">
 					<p>猿选</p>
@@ -125,7 +125,7 @@
 
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
-import { siteService } from '@/common/api'
+import { siteService,linkService } from '@/common/api'
 import { cookieGet,cookieSet} from '@/common/cookie'
 import IndexLab from '@/views/IndexLab.vue'
 import { getUrl } from '@/common/pickup'
@@ -147,7 +147,7 @@ export default {
 	},
 	data(){
 		return{
-			ad: 1,
+			is_vip: 0,
 			labSwitch: false,
 			historySwitch: false,
 			navSwitch: true,
@@ -161,16 +161,7 @@ export default {
 			bglizi: 0,
 			lybID: "",
 			Folders: [],
-			yuanxuan: [
-				{"icon":"","id":"1","name":"薅羊毛捡垃圾群","url":"https://www.yuque.com/xydh/partner/grf3qg","info":"独家合作",},
-				// {"icon":"","id":"9","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
-				{"icon":"star","id":"2","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
-				{"icon":"windows","id":"3","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
-				{"icon":"apple","id":"4","name":"大白软件站","url":"https://o--o.win","info":"新Mac的第一站",},	
-				{"icon":"","id":"5","name":"自定义背景","url":"https://support.qq.com/products/106426/faqs/62946","info":"",},
-				{"icon":"","id":"6","name":"极品广告位","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
-				{"icon":"","id":"7","name":"虚位以待","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
-			],
+			yuanxuan: [],
 			f_color: "white",
 			autoBgColor:'#fff',
 			cacheList:[],
@@ -203,9 +194,7 @@ export default {
 				} else {
 					// 加载用户
 					this.userid = res.data.target.id
-					if(res.data.target.rm_ad){
-						this.ad = 0
-					}
+					this.is_vip = res.data.target.is_vip
 					// 违规用户
 					if (res.data.target.level <= 0){
 						this.$alert('网络不是不法之地！请珍惜您的账号,账号申诉请联系邮箱 xuanyuandaohang@126.com 上传了非法网站的就不要申诉了', '该账号传播违法信息已被封禁', {
@@ -248,6 +237,16 @@ export default {
 					}
 					// 取当前登录的用户名
 					this.myname = res.data.me.name
+				}
+			})
+			linkService.getLinksbyFolderID(35413).then((res) =>{
+				if(res.data){
+					this.yuanxuan = res.data
+					this.yuanxuan.sort(function(l1,l2){
+						return l2.weight-l1.weight//weight
+					})
+				}else{
+					this.yuanxuan = []
 				}
 			})
 		},
