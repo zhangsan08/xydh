@@ -26,7 +26,7 @@
 <!-- {{top100}} -->
 
 <div class="amusic">
-    <aplayer autoplay :music="audio[0]" :list="audio" :narrow=false float theme="#fff">
+    <aplayer :music="audio[0]" :list="audio" :narrow=false float theme="#fff">
     </aplayer>
 </div>
 
@@ -86,18 +86,17 @@ export default {
             // 音频列表
             audio:  [
                 {
+                    title:'花果山',
+                    artist: '球哥',
+                    url: 'https://cdn.jsdelivr.net/gh/ixsim/upload/xyj.mp3',
+                },
+                {
                     title:'夜的第七章',
                     artist: '杰伦',
                     url: 'https://cdn.jsdelivr.net/gh/ixsim/upload/yddqz.m4a',
                     pic: 'http://img.mp.itc.cn/upload/20160717/89429f4074754a20996ec74d6bcf0304_th.jpg',
         
                 },
-                {
-                    title:'花果山',
-                    artist: '球哥',
-                    url: 'https://cdn.jsdelivr.net/gh/ixsim/upload/xyj.mp3',
-                },
-
             ],
         }
     },
@@ -138,8 +137,9 @@ export default {
 .amusic {
     position:fixed;
     max-width: 500px;
-    left: 10px;
-    bottom: 10px;
+    left: 0px;
+    bottom: 0px;
+    z-index: 999;
 }
 
 </style>

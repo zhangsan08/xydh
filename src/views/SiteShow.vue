@@ -214,13 +214,12 @@ export default {
 					document.title = this.sitename
 					// 改背景颜色或图片
 					var obj = document.getElementsByTagName("body")[0]
-					obj.style.color = res.data.site_info.font_color
 					if(res.data.site_info.bg_switch){
 						obj.style.backgroundImage = "url("+res.data.site_info.bg+")"
-						obj.style.color = res.data.site_info.font_color
-					}else{
+					} else {
 						obj.style.backgroundColor = res.data.site_info.bg_color
 					}
+					obj.style.color = res.data.site_info.font_color
 					// 取文件夹和书签
 					this.Folders = res.data.folderwith_links
 					// 文件夹排序
@@ -239,6 +238,7 @@ export default {
 					this.myname = res.data.me.name
 				}
 			})
+			// 取猿选、排序
 			linkService.getLinksbyFolderID(35413).then((res) =>{
 				if(res.data){
 					this.yuanxuan = res.data
@@ -250,6 +250,7 @@ export default {
 				}
 			})
 		},
+		// 输入密码
 		GetPWDFolder(index, id, password){
 			siteService.getLinksbyfolderid(id, password).then((res) => {
 				if (res.code > 0){
@@ -259,6 +260,9 @@ export default {
 				}else{
 					this.Folders[index].need_password = false;
 					this.Folders[index].links = res.data;
+					this.Folders[index].links.sort(function(l1,l2){
+						return l2.weight-l1.weight//weight
+					})
 				}
 			})
 		},
@@ -390,7 +394,7 @@ body {
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
-
+	background-color: black;
 	text-align:center;
 	font-size: 13px;
 	color: white;

@@ -5,7 +5,7 @@
             <el-tab-pane label="欢迎">
                 <el-card shadow="hover" class="card">
                     临时书签 放入文件夹后才可展示到导航站
-                    <el-table :data="tempLinks" stripe>
+                    <el-table :data="tempLinks" height="360" stripe>
                     <el-table-column
                         label="名称" min-width="160">
                         <template slot-scope="scope">
