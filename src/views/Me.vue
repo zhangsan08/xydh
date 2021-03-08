@@ -1,6 +1,6 @@
 <template>
     <div class="me"> 
-        <p>近期规划:1.BGM ;2.VIP自定义底部文字</p>
+        <p>背景音乐功能第一版试运行。近期规划:1、VIP自定义底部 2、长文件夹一键展开</p>
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="欢迎">
                 <el-card shadow="hover" class="card">
@@ -111,7 +111,7 @@
                                 <el-col :span="8">名称</el-col>
                                 <el-col :span="16">链接</el-col>
                             </el-row>
-                            <el-row :gutter="1" type="flex" justify="center">
+                            <el-row  type="flex" justify="center">
                                 <el-col :span="8">
                                 <el-input
                                     type="text"
@@ -131,13 +131,13 @@
                                 ></el-input>
                                 </el-col>
                             </el-row>
-                            <el-row :gutter="1" type="flex" justify="center">
+                            <el-row  type="flex" justify="center">
                                 <el-col :span="4">图标</el-col>
                                 <el-col :span="12">介绍</el-col>
                                 <el-col :span="4">文件夹</el-col>
                                 <el-col :span="4"></el-col>
                             </el-row>
-                            <el-row :gutter="1" type="flex" justify="center">
+                            <el-row  type="flex" justify="center">
                                 <el-col :span="4">
                                 <el-input type="text" v-model="linkform.icon" placeholder="可为空"></el-input>
                                 </el-col>

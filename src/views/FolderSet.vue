@@ -8,12 +8,12 @@
 		<el-row>
 			<el-col :span="24">
 				<el-card header="添加文件夹" shadow="hover" class="card" >
-					<el-row gutter="1" type="flex" justify="center">
+					<el-row type="flex" justify="center">
 						<el-col :span="8">图标</el-col>
 						<el-col :span="16">名称</el-col>
 						<el-col :span="8">排序</el-col>	
 					</el-row>
-					<el-row :model="Folderform" gutter="1" type="flex" justify="center">
+					<el-row :model="Folderform" type="flex" justify="center">
 						<el-col :span="8"><el-input type="text" v-model="Folderform.icon" minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
 						<el-col :span="16"><el-input type="text" v-model="Folderform.name" minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
 						<el-col :span="8">
@@ -21,19 +21,19 @@
 						</el-col>
 						
 					</el-row>
-					<el-row gutter="1" type="flex" justify="center">
+					<el-row type="flex" justify="center">
 						<el-col :span="8">密码</el-col>
 						<el-col :span="16">引导语</el-col>
-						<el-col :span="8">添加文件夹</el-col>
+						<el-col :span="8">操作</el-col>
 					</el-row>
-					<el-row gutter="1" type="flex" justify="center">
+					<el-row type="flex" justify="center">
 						<el-col :span="8">
 							<el-input type="text" v-model="Folderform.password" show-password></el-input>
 						</el-col>
 						<el-col :span="16">
 							<el-input type="text" v-model="Folderform.info" maxlength="30" placeholder="设置了密码后的文字提示" show-word-limit></el-input>
 						</el-col>
-						<el-col :span="8"><el-button  type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button></el-col>
+						<el-col :span="8"><el-button  type="success" @click="createFolder()">添加</el-button></el-col>
 					</el-row>
 				</el-card>
 			</el-col>
@@ -71,11 +71,11 @@
 			<el-table-column
 				fixed="right"
 				label="操作"
-				width="120">
+				width="150">
 				<template slot-scope="scope">
 					<el-button-group>
-							<el-button size="small" type="primary" icon="el-icon-edit" @click="updateFolder(scope.row)" ></el-button>
-							<el-button size="small" type="danger" icon="el-icon-delete" @click="deleteFolder(scope.row)" ></el-button>
+							<el-button size="mini" type="primary" @click="updateFolder(scope.row)" >更新</el-button>
+							<el-button size="mini" type="danger" @click="deleteFolder(scope.row)" >删除</el-button>
 					</el-button-group>                            
 				</template>
 			</el-table-column>

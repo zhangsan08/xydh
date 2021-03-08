@@ -106,6 +106,10 @@
 		</div>
 	</div>
 	
+	<div class="amusic" v-if="music.open">
+		<aplayer :music="music.list[0]" :list="music.list" :narrow=false float :listFolded=true theme="#fff">
+		</aplayer>
+	</div>
 
 	<!-- 跑马灯（暂时去掉了 本想留作广告位。发现接不到 -->
 	<el-col :span="24">
@@ -136,6 +140,7 @@ import SearchTool from '@/components/SearchTool.vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import Particle from '@/components/particle.vue'
+import Aplayer from 'vue-aplayer'
 
 export default {
 	name: 'ShowSite',
@@ -166,6 +171,10 @@ export default {
 			autoBgColor:'#fff',
 			cacheList:[],
 			passwords: [],
+			music: {
+				open: false,
+				list: [],
+			}
 		}
 	},
 	methods: {
@@ -236,6 +245,10 @@ export default {
 					}
 					// 取当前登录的用户名
 					this.myname = res.data.me.name
+					this.music = JSON.parse(res.data.site_info.music)
+					if (!this.is_vip) {
+						this.music.list.splice(1)
+					}
 				}
 			})
 			// 取猿选、排序
@@ -332,6 +345,7 @@ export default {
 		IndexLab,
 		// RightBar,
 		Particle,
+		Aplayer,
 	},
 	beforeMount() {
 		// this.$message({
@@ -512,5 +526,13 @@ a {
 	border-radius: 0px;
     cursor: pointer;
 	border: 0px;
+}
+
+.amusic {
+    position:fixed;
+    max-width: 500px;
+    left: -5px;
+    bottom: 10px;
+    z-index: 999;
 }
 </style>

@@ -21,10 +21,8 @@
                 v-model="SiteForm.bg_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="图片背景" inactive-text="纯色背景">
                 </el-switch>
                  <div v-if="SiteForm.bg_switch">
-                    <span style="color:red;font-size:12px;line-height:13px">推荐使用炫猿首页中的"聚合图床" 速度较快</span>
                     <el-input type="text" v-model="SiteForm.bg" minlength="0" maxlength="100" placeholder="请自行选择图床上传背景图片 不填则是默认"></el-input>
-                    <!-- <el-button disabled="">背景图拉伸方式</el-button> -->
-                    <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62946'>怎么自定义背景图片?</a>
+                    <!-- <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62946'>怎么自定义背景图片?</a> -->
                 </div>
                 <div v-else>
                     <el-color-picker v-model="SiteForm.bg_color" :predefine="predefineColors"></el-color-picker>
@@ -48,14 +46,67 @@
 
             <el-form-item label="留言板">
                 <el-input type="text" v-model="SiteForm.lyb_id" minlength="24" maxlength="24" placeholder=""></el-input>
-            </el-form-item>            
-           
+            </el-form-item>
+
+            <el-form-item label="音乐">
+                <el-switch
+                    v-model="music.open" active-color="#13ce66" inactive-color="#ff4949" active-text="开启" inactive-text="关闭">
+                </el-switch>
+                <div v-if="music.open">
+                    <p>普通用户添加音乐后只能加载一首，VIP用户可无限添加</p>
+                    <el-form :inline="true" :model="newMusic">
+                        <el-form-item label="歌曲名">
+                            <el-input v-model="newMusic.title"></el-input>
+                        </el-form-item>
+                        <el-form-item label="歌手">
+                            <el-input v-model="newMusic.artist"></el-input>
+                        </el-form-item>
+                        <el-form-item label="外链">
+                            <el-input v-model="newMusic.url"></el-input>
+                        </el-form-item>
+                        <el-form-item label="封面图片">
+                            <el-input v-model="newMusic.pic" placeholder="图片外链,可为空"></el-input>
+                        </el-form-item>
+                            <el-button type="success" @click="addMusic()">添加</el-button>
+                    </el-form>
+                    <el-table :data="music.list" stripe>
+                        <el-table-column label="歌曲名" width="200">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.title"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="歌手名" width="200">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.artist"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="音乐外链">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.url"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="封面图片">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.pic"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                            fixed="right"
+                            label="操作"
+                            width="80">
+                            <template slot-scope="scope">
+                                <el-button size="mini" type="danger" @click="deleteMusic(scope.row)" > 删除</el-button>                         
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+            </el-form-item>
+           <el-divider content-position="center">
             <el-popconfirm v-if="uid!=7163" confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更新站点信息吗" @confirm="updateSite()">
                 <el-button slot="reference" type="primary">更新站点信息</el-button>
             </el-popconfirm>
+           </el-divider>
         </el-form>
-        <el-divider content-position="center">更多定制化功能开发ing</el-divider>
-        <el-divider content-position="center">欢迎提出你的意见</el-divider>
     </div>
     
 </template>
@@ -78,10 +129,11 @@ export default {
                 bg: "",
                 btn_switch: "",
                 bg_switch: "",
-                bg_color: "123123",
+                bg_color: "",
                 font_color: "",
                 bglizi: 0,
                 lyb_id: "",
+                music: "",
             },
             texiao: [
                 {value: 0,label: '关闭'}, 
@@ -91,6 +143,15 @@ export default {
                 {value: 4,label: '吹气泡(点击生成气泡)'},
             ],
             predefineColors: ['#000000','#ffffff','#ff4500','#ff8c00','#ffd700','#90ee90','#00ced1','#1e90ff','#c71585',],
+            music: {
+                open: false,
+                list: [],
+            },
+            newMusic:{
+                title: "",
+                artist: "",
+                url: "",
+            }
         }
     },
     methods: {
@@ -106,10 +167,12 @@ export default {
                 this.SiteForm.font_color = res.data.font_color
                 this.SiteForm.bglizi = res.data.bglizi
                 this.SiteForm.lyb_id = res.data.lyb_id
+                this.music = JSON.parse(res.data.music);
                 this.userview = res.data.view
             })
         },
         updateSite(){
+            this.SiteForm.music = JSON.stringify(this.music)
             siteService.updateSite(this.SiteForm).then((res) =>{
                 if (res.code > 0) {
                     this.$notify.error({
@@ -124,22 +187,28 @@ export default {
                     });
                 }
             })
+        },
+        addMusic(){
+            this.music.list.push(this.newMusic)
+            this.newMusic ={
+                title: "",
+                artist: "",
+                url: "",
+            }
+        },
+        deleteMusic(item){
+            var index = this.music.list.indexOf(item)
+            if (index !== -1) {
+                this.music.list.splice(index, 1)
+            }
         }
     },
     components:{
 
     },
-    // created(){
-    //     console.log("创建完成：");
-    //     // this.getSite()
-    // },
     beforeMount(){
       console.log(this.uid)
     },
-    // mounted() {
-    //     console.log("挂载完成：");
-    //     // this.getSite()
-    // },
     watch: {
         userID: function() {
             this.uid = this.userID,
@@ -153,11 +222,14 @@ export default {
 <style>
 .siteForm {
     min-width: 400px;
-    max-width: 400px;
+    /* max-width: 400px; */
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
 }
 
+.siteForm .el-input {
+  max-width: 400px;
+}
 .siteForm .el-input__inner {
   border-radius: 20px;
 }

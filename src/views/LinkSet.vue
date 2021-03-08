@@ -18,17 +18,17 @@
 							<el-col :span="8">名称</el-col>
 							<el-col :span="16">链接</el-col>
 						</el-row>
-						<el-row :gutter="1" type="flex" justify="center">
+						<el-row type="flex" justify="center">
 							<el-col :span="8"><el-input type="text" v-model="linkform.name" 	minlength="0" maxlength="12"  placeholder="0-8字/过长不好看"></el-input></el-col>
 							<el-col :span="16"><el-input type="text" v-model="linkform.url"		minlength="0" maxlength="100" placeholder="http开头" ></el-input></el-col>
 						</el-row>
-						<el-row :gutter="1" type="flex" justify="center">
+						<el-row type="flex" justify="center">
 							<el-col :span="4">图标</el-col>
 							<el-col :span="12">介绍</el-col>
 							<el-col :span="4">文件夹</el-col>
 							<el-col :span="4">添加</el-col>
 						</el-row>
-						<el-row :gutter="1" type="flex" justify="center">
+						<el-row type="flex" justify="center">
 							<el-col :span="4"><el-input type="text" v-model="linkform.icon" 	placeholder="可为空"></el-input></el-col>
 							<el-col :span="12"><el-input type="text" v-model="linkform.info"		minlength="0" maxlength="30" placeholder="鼠标放上时的提示语(可为空)"></el-input></el-col>
 							<el-col :span="4"><P>{{ Folder.name }}</P></el-col>
