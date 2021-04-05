@@ -118,7 +118,7 @@
                             label="操作"
                             width="80">
                             <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="deleteFromList(this.top_bottom.bottom_list, scope.row)" > 删除</el-button>                         
+                                <el-button size="mini" type="danger" @click="deleteFromList(top_bottom.bottom_list, scope.row)" > 删除</el-button>                         
                             </template>
                         </el-table-column>
                     </el-table>
@@ -233,7 +233,7 @@ export default {
                     break;
             }
         },
-        deleteMusic(list, item){
+        deleteFromList(list, item){
             var index = list.indexOf(item)
             if (index !== -1) {
                 list.splice(index, 1)

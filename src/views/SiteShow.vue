@@ -121,7 +121,7 @@
 			<div v-if="!is_vip || userid==1">
 				<Footer></Footer>
 			</div>
-			<div v-else style="width:768px;margin: 30px auto 30px;text-align:center;">
+			<div v-else style="max-width:768px;margin: 30px auto 30px;text-align:center;">
 				<div style="height:100px"></div>
 				<li style="float:left;"  v-for="link in top_bottom.bottom_list" :key="link.title">
 					<a @click="goToUrl(link)" target="_blank" rel="nofollow">
@@ -476,21 +476,24 @@ body {
 }
 /* Tooltip 文本 */
 .link .tooltiptext {
+	text-align: left;
     visibility: hidden;
 	background: rgba(0, 0, 0, 1);
-	box-shadow: 0 0 5px #666;
+	max-width: 400px;
+	/* box-shadow: 0 0 5px #666; */
     /* color: gold; */
 	font-size: 16px;
-	border-radius: 5px;
     /* 定位 */
-	bottom: 20px;
-	left: 20px;
-	padding: 5px 5px;
+	top: 30px;
+	left: 0px;
+	padding: 10px 20px;
     position: fixed;
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
 }
 .link:hover .tooltiptext {
     visibility: visible;
-	/* z-index: 999; */
+	color: white;
 }
 .totop {
 	z-index: 1;
