@@ -4,7 +4,7 @@
 		<Particle :bglizi="bglizi"></Particle>
 	</div>
 
-	<div class="totop" v-if="btn_switch">
+	<div class="totop" v-if="top_bottom.top_switch">
 		<Header :historySwitch=historySwitch :navSwitch=navSwitch :Folders=Folders :myname=myname></Header>
 		<!-- <RightBar></RightBar> -->
 	</div>
@@ -116,8 +116,19 @@
 		<div class="totop">
 			<!-- <Paomadeng v-if="ad"></Paomadeng>
 			<div v-else style="height:100px"></div> -->
+			<!-- 这里是200px 高的占位符。不然不好看 -->
 			<div style="height:200px" v-if="!navSwitch && !labSwitch" ></div>
-			<Footer></Footer>
+			<div v-if="!is_vip || userid==1">
+				<Footer></Footer>
+			</div>
+			<div v-else style="width:768px;margin: 30px auto 30px;text-align:center;">
+				<div style="height:100px"></div>
+				<li style="float:left;"  v-for="link in top_bottom.bottom_list" :key="link.title">
+					<a @click="goToUrl(link)" target="_blank" rel="nofollow">
+						{{ link.title }}
+					</a>
+				</li>
+			</div>			
 		</div>
 	</el-col>
 	
@@ -157,12 +168,11 @@ export default {
 			historySwitch: false,
 			navSwitch: true,
 			screenWidth: "",
-			userid: "",
+			userid: 0,
 			username: "",
 			myname: "",
 			sitename: "",
 			siteinfo: "",
-			btn_switch: true,
 			bglizi: 0,
 			lybID: "",
 			Folders: [],
@@ -174,6 +184,10 @@ export default {
 			music: {
 				open: false,
 				list: [],
+			},
+			top_bottom: {
+				top_switch: true,
+				bottom_list: [],
 			}
 		}
 	},
@@ -217,7 +231,6 @@ export default {
 					// 加载 Site
 					this.sitename = res.data.site_info.name
 					this.siteinfo = res.data.site_info.info
-					this.btn_switch = res.data.site_info.btn_switch
 					this.bglizi = res.data.site_info.bglizi
 					this.lybID = res.data.site_info.lyb_id
 					document.title = this.sitename
@@ -249,6 +262,7 @@ export default {
 					if (!this.is_vip) {
 						this.music.list.splice(1)
 					}
+					this.top_bottom = JSON.parse(res.data.site_info.top_bottom)
 				}
 			})
 			// 取猿选、排序

@@ -178,7 +178,7 @@
             </el-tab-pane>
 
             <el-tab-pane label="导航配置">
-                <SiteSet :userID=userID></SiteSet>
+                <SiteSet :userID=userID :isVIP=isVIP></SiteSet>
             </el-tab-pane>
 
             <el-tab-pane label="文件夹" :lazy="false">
@@ -226,6 +226,7 @@ export default {
         return {
             userID: 0,
             username: "未登录",
+            isVIP: false,
             LoginCode: -1,
             JsToken: "xxxxxxxx",
             jscode: "***** 秘钥关联用户 请勿外传",
@@ -275,6 +276,7 @@ export default {
 					}
                     this.userID = res.data.id
                     this.username = res.data.name
+                    this.isVIP = res.data.is_vip
                     this.getFolder()
                 }
             })

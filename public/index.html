@@ -1,63 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="keywords" content="炫猿,炫猿导航,网址导航,自定义网址导航,定制网址导航,炫猿邀请码" />
-		<meta name="description"
-				content="炫猿是一款高度可定制化的网址导航，可为每个用户提供个性化域名访问的导航页面。独一无二的定制化功能注定成为导航届的一批黑马，你的专属主页。" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width,initial-scale=1.0">
-		<meta name="baidu_union_verify" content="6205508d44c10962cda3c47d998c7ef2">
-		<link rel="icon" href="<%= BASE_URL %>favicon.ico">
-		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-		<!-- <title><%= htmlWebpackPlugin.options.title %></title> -->
-		<title>炫猿导航</title>
-	</head>
-	<body>
-		<noscript>
-			<strong>新炫猿来袭 请使用Chrome或Firefox浏览器访问</strong>
-		</noscript>
-		<div id="app"></div>
-		<!-- built files will be auto injected -->
-	</body>
-	
-	<script>
-        WIDGET = {
-            CONFIG: {
-                "modules": "02",
-                "background": 1,
-                "tmpColor": "FFFFFF",
-                "tmpSize": 13,
-                "cityColor": "FFFFFF",
-                "citySize": 13,
-                "aqiSize": 13,
-                "weatherIconSize": 16,
-                "alertIconSize": 18,
-                "padding": "0px 0px 0px 0px",
-                "shadow": "1",
-                "language": "auto",
-                "borderRadius": 5,
-                "fixed": "true",
-                "vertical": "middle",
-                "horizontal": "center",
-                "left": "10",
-                "top": "5",
-                "key": "848677647f8443cc93edcac7c77f3fa7"
-            }
-        }
-    </script>
-		
-		<!--天气  -->
-    <script src="https://widget.heweather.net/simple/static/js/he-simple-common.js?v=1.1"></script>
-	
-        <!--百度统计  -->
-	<script>
-		var _hmt = _hmt || [];
-		(function() {
-			var hm = document.createElement("script");
-			hm.src = "https://hm.baidu.com/hm.js?3fa01c5890a47e7fcc2c397d8c9ff47e";
-			var s = document.getElementsByTagName("script")[0]; 
-			s.parentNode.insertBefore(hm, s);
-		})();
-    </script>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="keywords" content="炫猿,炫猿导航,网址导航,自定义网址导航,定制网址导航,炫猿邀请码" />
+	<meta name="description" content="炫猿是一款高度可定制化的网址导航，可为每个用户提供个性化域名访问的导航页面。独一无二的定制化功能注定成为导航届的一批黑马，你的专属主页。" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="baidu_union_verify" content="6205508d44c10962cda3c47d998c7ef2">
+	<link rel="icon" href="<%= BASE_URL %>favicon.ico">
+	<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+	<!-- <title><%= htmlWebpackPlugin.options.title %></title> -->
+	<title>炫猿导航</title>
+</head>
+
+<body>
+	<noscript>
+		<strong>新炫猿来袭 请使用Chrome或Firefox浏览器访问</strong>
+	</noscript>
+	<div id="app"></div>
+	<!-- built files will be auto injected -->
+</body>
+
+<script>
+	WIDGET = {
+		CONFIG: {
+			"modules": "02",
+			"background": 1,
+			"tmpColor": "FFFFFF",
+			"tmpSize": 13,
+			"cityColor": "FFFFFF",
+			"citySize": 13,
+			"aqiSize": 13,
+			"weatherIconSize": 16,
+			"alertIconSize": 18,
+			"padding": "0px 0px 0px 0px",
+			"shadow": "1",
+			"language": "auto",
+			"borderRadius": 5,
+			"fixed": "true",
+			"vertical": "middle",
+			"horizontal": "center",
+			"left": "10",
+			"top": "5",
+			"key": "848677647f8443cc93edcac7c77f3fa7"
+		}
+	}
+</script>
+
+<!--天气  -->
+<script src="https://widget.heweather.net/simple/static/js/he-simple-common.js?v=1.1"></script>
+
+<!--百度统计  -->
+<script>
+	var _hmt = _hmt || [];
+	(function () {
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?3fa01c5890a47e7fcc2c397d8c9ff47e";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hm, s);
+	})();
+	//禁止鼠标右击
+	document.oncontextmenu = function () {
+		event.returnValue = false;
+	};
+	//禁用开发者工具F12
+	document.onkeydown = document.onkeyup = document.onkeypress = function (event) {
+		let e = event || window.event || arguments.callee.caller.arguments[0];
+		if (e && e.keyCode == 123) {
+			e.returnValue = false;
+			return false;
+		}
+	};
+	let userAgent = navigator.userAgent;
+	if (userAgent.indexOf("Firefox") > -1) {
+		let checkStatus;
+		let devtools = /./;
+		devtools.toString = function () {
+			checkStatus = "on";
+		};
+		setInterval(function () {
+			checkStatus = "off";
+			console.log(devtools);
+			console.log(checkStatus);
+			console.clear();
+			if (checkStatus === "on") {
+				let target = "";
+				try {
+					window.open("about:blank", (target = "_self"));
+				} catch (err) {
+					let a = document.createElement("button");
+					a.onclick = function () {
+						window.open("about:blank", (target = "_self"));
+					};
+					a.click();
+				}
+			}
+		}, 200);
+	} else {
+		//禁用控制台
+		let ConsoleManager = {
+			onOpen: function () {
+				alert("Console is opened");
+			},
+			onClose: function () {
+				alert("Console is closed");
+			},
+			init: function () {
+				let self = this;
+				let x = document.createElement("div");
+				let isOpening = false,
+					isOpened = false;
+				Object.defineProperty(x, "id", {
+					get: function () {
+						if (!isOpening) {
+							self.onOpen();
+							isOpening = true;
+						}
+						isOpened = true;
+						return true;
+					}
+				});
+				setInterval(function () {
+					isOpened = false;
+					console.info(x);
+					console.clear();
+					if (!isOpened && isOpening) {
+						self.onClose();
+						isOpening = false;
+					}
+				}, 200);
+			}
+		};
+		ConsoleManager.onOpen = function () {
+			//打开控制台，跳转
+			let target = "";
+			try {
+				window.open("about:blank", (target = "_self"));
+			} catch (err) {
+				let a = document.createElement("button");
+				a.onclick = function () {
+					window.open("about:blank", (target = "_self"));
+				};
+				a.click();
+			}
+		};
+		ConsoleManager.onClose = function () {
+			alert("Console is closed!!!!!");
+		};
+		ConsoleManager.init();
+	}
+</script>
+
 </html>
