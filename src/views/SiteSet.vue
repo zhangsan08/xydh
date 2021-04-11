@@ -54,9 +54,9 @@
                 </el-switch>
                 <div v-if="music.open">
                     <p>普通用户添加音乐后只能加载2首，VIP用户可添加更多</p>
-                    <el-form :inline="true" :model="newMusic">
-                        <el-button type="success" @click="addToList(music.list,1)" :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表头</el-button>
-                        <el-button type="success" @click="addToList(music.list,2)" :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表尾</el-button>
+                    <el-form :inline="true">
+                        <el-button type="success" @click="addToList(music.list,1,1)" :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表头</el-button>
+                        <el-button type="success" @click="addToList(music.list,1,2)" :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表尾</el-button>
                     </el-form>
                     <el-table :data="music.list" stripe>
                         <el-table-column label="歌曲名" width="200">
@@ -99,9 +99,9 @@
             </el-form-item>
             <el-form-item label="自定义友链" :disabled="!isVIP">
                 <div>
-                    <el-form :inline="true" :model="newMusic">
-                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 1)" :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表头</el-button>
-                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2)" :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表尾</el-button>
+                    <el-form :inline="true">
+                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2, 1)" :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表头</el-button>
+                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2, 2)" :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表尾</el-button>
                     </el-form>
                     <el-table :data="top_bottom.bottom_list" stripe>
                         <el-table-column label="文字" width="300">
@@ -175,11 +175,6 @@ export default {
                 top_switch: true,
                 bottom_list: [],
             },
-            newMusic:{
-                title: "",
-                artist: "",
-                url: "",
-            }
         }
     },
     methods: {
@@ -221,13 +216,18 @@ export default {
                 }
             })
         },
-        addToList(list, where){
+        addToList(list, x, where){
+            if (x==1) {
+                var item ={title: "",artist: "",url: ""}              
+            } else if (x==2){
+                item = {title: "",url: ""}
+            }
             switch (where) {
                 case 1:
-                    list.unshift(this.newMusic)
+                    list.unshift(item)
                     break;
                 case 2:
-                    list.push(this.newMusic)
+                    list.push(item)
                     break;
                 default:
                     break;
