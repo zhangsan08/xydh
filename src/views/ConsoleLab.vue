@@ -5,15 +5,15 @@
             <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
                 <span>扩容 | 改名 | 开通VIP</span>
-                <el-button style="float: right; padding: 13px 15px" type="danger" @click="go('http://vip.x-jq.cn')">购买卡密</el-button>
+                <el-button style="float: right; padding: 13px 15px" type="danger" @click="go('https://vip.xydh.fun')">购买卡密</el-button>
                 <el-button style="float: right; padding: 13px 15px" type="text" @click="go2()">兑换卡密</el-button>
             </div>
             <div>
                 <p><b>介绍</b></p>
-                由于个人开发服务器能力有限，默认账户下最多可添加8个文件夹和120个书签。
-                <li> 使用扩容服务可以永久地增加导航的容量。</li>
-                <li> 开通VIP可以永久去除猿选文件夹和底部信息自定义(待上线)。</li>
-                <li> 使用改名卡可以获得更心仪的ID与域名。</li>
+                <li> 文件夹扩容卡：每次使用增加 10 个</li>
+                <li> 书签扩容卡：每次使用增加 180 个</li>
+                <li> 改名卡：可以获得更心仪的ID与域名。</li>
+                <li> VIP：去除猿选文件夹、顶部开关（开发中）、底部自定义（开发中）、BMG 歌单（开发中）</li>
             </div>
             </el-card>
         </el-col>

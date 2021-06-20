@@ -1,22 +1,14 @@
 <template>
 <div class="reg">
 
-  
-  <!-- <p>为了永久地为用户提供服务,炫猿采用邀请码注册制。如果你是自媒体号主,可以联系我获得一部分邀请码进行合作推广:xuanyuandaohang@126.com 请在邮件内容中注明来意</p><p>个人用户请勿联系 邮件太多完全没有时间回复</p> -->
-  <!-- <h4>合作预告</h4>
-  公众号 网罗灯下黑 2020年5月1号8点发码 欢迎蹲点<b>(大佬号)</b><br> -->
-  <el-divider></el-divider>
   <div class="ad">
     <!-- <el-divider></el-divider> -->
-    <div style="text-align:right;font-size:10px">广告 <a target='_blank' rel='nofollow' href=''>投放</a></div>
-    导航站最新资讯，每日送码，就关注官方公众号【炫技巧】
-    <p><img width="120px" src="https://pic.downk.cc/item/5ecfb96ac2a9a83be569795b.png"></p>
-    <!-- <img height="200px" src='https://i.loli.net/2020/05/01/JcOQlLtpYXr7DZf.png' alt='JcOQlLtpYXr7DZf'/> -->
+    <!-- <div style="text-align:right;font-size:10px">广告 <a target='_blank' rel='nofollow' href=''>投放</a></div> -->
   </div>
   <el-divider>注册</el-divider>
     <div class="regform">
       <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px">
-        <div style="text-align:right;"><a target='_blank' rel='nofollow' href='http://vip.x-jq.cn/product/4.html'>购买邀请码</a></div>
+        <div style="text-align:right;"><a target='_blank' href='http://vip.xydh.fun'>购买邀请码</a></div>
           <el-form-item label="邀请码" prop="yuankey">
               <el-input v-model="registerForm.yuankey" ></el-input>
           </el-form-item>
@@ -54,6 +46,10 @@
           </div>
       </el-form> 
     </div>
+    <h4>获取导航站最新资讯，推文送邀请码、送增值服务，欢迎关注官方公众号【炫技巧】</h4> 
+    
+   <center><img width="120px" src="https://pic.downk.cc/item/5ecfb96ac2a9a83be569795b.png"></center>
+   <p>为了永久地为用户提供服务,炫猿采用邀请码注册制。如果你是自媒体号主,可以联系我获得一部分邀请码进行合作推广:xuanyuandaohang@126.com 请在邮件内容中注明来意</p><p>个人用户请勿联系 邮件太多完全没有时间回复</p>
     <el-divider></el-divider>
     <h3>感谢以下科技榜优质自媒体 也欢迎大家关注他们</h3>
     <p>如果你在他们的文章中领取到了邀请码, 也回去给他们留个言、点点在看、或者点点广告都是对他们的支持了!</p>
@@ -180,12 +176,12 @@ export default {
     return {
       tableData: [
         { date: '2020-04-01', name: '飞雪科技园', address: 'https://mp.weixin.qq.com/s/smnGrN1LC9TCelMEfBTwXQ'}, 
-        { date: '2020-04-06', name: '迅哥儿的猹(每日送码)', address: 'https://mp.weixin.qq.com/s/mx9yegGlTmAeIk7V0u_bxA'},
+        { date: '2020-05-01', name: '网罗灯下黑', address: 'https://mp.weixin.qq.com/s/qBcVAyEp2NdD1IQ_rQ8OqA'},
         { date: '2020-04-09', name: '搜罗软件', address: 'https://mp.weixin.qq.com/s/Wy45xiUudv9xBpZwNbHh9Q'},
         { date: '2020-04-15', name: '零点软件分享(每日送码)', address: 'https://mp.weixin.qq.com/s/ogKgQJQdaLegLEd3hY4poA'},
-        { date: '2020-04-18', name: '黑白鲨(每日送码)', address: 'https://mp.weixin.qq.com/s/1GUY-3scqG9L3sf9D9nIDA'},
+        { date: '2020-04-06', name: '迅哥儿科技(每日送码)', address: 'https://mp.weixin.qq.com/s?__biz=MzAxMjk5NzgyOQ==&mid=2247485292&idx=2&sn=ff987efcd8c779f69015ca777778912a&source=41'},
+        { date: '2020-04-18', name: '黑白鲨', address: 'https://mp.weixin.qq.com/s/1GUY-3scqG9L3sf9D9nIDA'},
         { date: '2020-04-28', name: '虚拟精华', address: 'https://mp.weixin.qq.com/s/EtIHPsIKd_21ZRCfSaectA'},
-        { date: '2020-05-01', name: '网罗灯下黑', address: 'https://mp.weixin.qq.com/s/qBcVAyEp2NdD1IQ_rQ8OqA'},
       ],
       tableData2: [  
         { date: '2020-04-29', name: '阿雷课堂', address: 'https://mp.weixin.qq.com/s/UCQW4wTPNugyxJjZs-pQVw'},

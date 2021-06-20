@@ -4,8 +4,8 @@
 		<Particle :bglizi="bglizi"></Particle>
 	</div>
 
-	<div class="totop" v-if="btn_switch">
-		<Header :historySwitch=historySwitch :navSwitch=navSwitch :Folders=Folders></Header>
+	<div class="totop" v-if="top_bottom.top_switch">
+		<Header :historySwitch=historySwitch :navSwitch=navSwitch :Folders=Folders :myname=myname></Header>
 		<!-- <RightBar></RightBar> -->
 	</div>
 
@@ -58,15 +58,8 @@
 			
 			</div>
 		</div>
-		<!-- 手机端快捷导航 -->
-		<!-- <div class="totop">
-			<el-divider>快捷导航</el-divider>
-			<el-tabs v-model="activeName" @tab-click="handleClick" v-for="Folder in Folders" :key="Folder.id">
-				<el-tab-pane :label="Folder.name" name="first"></el-tab-pane>
-			</el-tabs>
-		</div> -->
 		<!-- 猿选 -->
-		<el-col v-if="ad" :xs="24" :sm="12" :md="8" :xl="6" >
+		<el-col v-if="!is_vip" :xs="24" :sm="12" :md="8" :xl="6" >
 			<div class="folder totop" :style="{height:(screenWidth>768?'180px':'auto')}">
 				<div class="foldername">
 					<p>猿选</p>
@@ -85,14 +78,19 @@
 			</div>
 		</el-col>
 		<!-- 用户自定义内容 -->
-		<div v-for="Folder in Folders" :key="Folder.id">
+		<div v-for="(Folder,index) in Folders" :key="Folder.id">
 			<el-col :xs="24" :sm="12" :md="8" :xl="6">
 				<div class="folder totop" :style="{height:(screenWidth>768?'180px':'auto')}" :id="Folder.id"  onselectstart="return false;">
 					<div class="foldername" :id="Folder.name">
 						<p v-if="Folder.icon"><i :class="'fa fa-'+Folder.icon"></i>{{Folder.name}}</p>
 						<p v-else>{{Folder.name}}</p>
 					</div>
-					<div class="links" v-for="link in Folder.links" :key="link.id">
+					<div class="inputPWD" v-if="Folder.need_password"> <!-- 如果文件夹需要密码 -->
+							<el-input type="text" autosize v-model="passwords[index]" :placeholder="Folder.info" clearable @keyup.enter.native="Sou(url+txt)">
+								<span slot="append" type="text" @click="GetPWDFolder(index,Folder.id,passwords[index])">确定</span>
+							</el-input>
+					</div>
+					<div class="links" v-else v-for="link in Folder.links" :key="link.id">
 						<el-col :span="8">
 							<div class="link">
 							<a @click="goToUrl(link)" target="_blank" rel="nofollow">
@@ -108,14 +106,29 @@
 		</div>
 	</div>
 	
+	<div class="amusic" v-if="music.open">
+		<aplayer :music="music.list[0]" :list="music.list" :narrow=false float :listFolded=true theme="#fff">
+		</aplayer>
+	</div>
 
 	<!-- 跑马灯（暂时去掉了 本想留作广告位。发现接不到 -->
 	<el-col :span="24">
 		<div class="totop">
 			<!-- <Paomadeng v-if="ad"></Paomadeng>
 			<div v-else style="height:100px"></div> -->
+			<!-- 这里是200px 高的占位符。不然不好看 -->
 			<div style="height:200px" v-if="!navSwitch && !labSwitch" ></div>
-			<Footer></Footer>
+			<div v-if="!is_vip || userid==1">
+				<Footer></Footer>
+			</div>
+			<div v-else style="max-width:768px;margin: 30px auto 30px;text-align:center;">
+				<div style="height:100px"></div>
+				<li style="float:left;"  v-for="link in top_bottom.bottom_list" :key="link.title">
+					<a @click="goToUrl(link)" target="_blank" rel="nofollow">
+						{{ link.title }}
+					</a>
+				</li>
+			</div>			
 		</div>
 	</el-col>
 	
@@ -127,7 +140,7 @@
 
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
-import { userService,siteService } from '@/common/api'
+import { siteService,linkService } from '@/common/api'
 import { cookieGet,cookieSet} from '@/common/cookie'
 import IndexLab from '@/views/IndexLab.vue'
 import { getUrl } from '@/common/pickup'
@@ -138,6 +151,7 @@ import SearchTool from '@/components/SearchTool.vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import Particle from '@/components/particle.vue'
+import Aplayer from 'vue-aplayer'
 
 export default {
 	name: 'ShowSite',
@@ -149,32 +163,32 @@ export default {
 	},
 	data(){
 		return{
-			ad: 1,
+			is_vip: 0,
 			labSwitch: false,
 			historySwitch: false,
 			navSwitch: true,
 			screenWidth: "",
-			userid: "",
+			userid: 0,
 			username: "",
+			myname: "",
 			sitename: "",
 			siteinfo: "",
-			btn_switch: true,
 			bglizi: 0,
 			lybID: "",
 			Folders: [],
-			yuanxuan: [
-				{"icon":"","id":"1","name":"薅羊毛捡垃圾群","url":"https://www.yuque.com/xydh/partner/grf3qg","info":"独家合作",},
-				{"icon":"","id":"9","name":"付费网课代下","url":"https://www.yuque.com/xydh/partner/wangke","info":"慕课、极客时间等",},
-				{"icon":"star","id":"2","name":"炫猿经典版","url":"https://oo1.win","info":"还记得那个老版的炫猿吗",},
-				{"icon":"windows","id":"3","name":"大白软件站","url":"https://win.o--o.win","info":"重装系统后的第一站",},	
-				{"icon":"apple","id":"4","name":"大白软件站","url":"https://o--o.win","info":"新Mac的第一站",},	
-				{"icon":"","id":"5","name":"自定义背景","url":"https://support.qq.com/products/106426/faqs/62946","info":"",},
-				{"icon":"","id":"6","name":"极品广告位","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
-				{"icon":"","id":"7","name":"虚位以待","url":"https://support.qq.com/products/106426/blog/10114","info":"",},	
-			],
+			yuanxuan: [],
 			f_color: "white",
 			autoBgColor:'#fff',
-			cacheList:[]
+			cacheList:[],
+			passwords: [],
+			music: {
+				open: false,
+				list: [],
+			},
+			top_bottom: {
+				top_switch: true,
+				bottom_list: [],
+			}
 		}
 	},
 	methods: {
@@ -191,8 +205,7 @@ export default {
 			cookieSet("navSwitch", this.navSwitch)
 		},
 		load(uname){
-			// userName取ID
-			userService.UserID(uname).then((res) => {
+			siteService.getAllsiteandlinks(uname).then((res) => {
 				if (res.code > 0 ){
 					this.$alert('', '走迷路了', {
 						confirmButtonText: '回主页',
@@ -203,12 +216,10 @@ export default {
 					return
 				} else {
 					// 加载用户
-					this.userid = res.data.id
-					if(res.data.rm_ad){
-						this.ad = 0
-					}
+					this.userid = res.data.target.id
+					this.is_vip = res.data.target.is_vip
 					// 违规用户
-					if (res.data.level <= 0){
+					if (res.data.target.level <= 0){
 						this.$alert('网络不是不法之地！请珍惜您的账号,账号申诉请联系邮箱 xuanyuandaohang@126.com 上传了非法网站的就不要申诉了', '该账号传播违法信息已被封禁', {
 							confirmButtonText: '回主页',
 							callback: () => {
@@ -217,61 +228,27 @@ export default {
 						});
 						return
 					}
-					// 正常用户 加载数据
-					this.getSite(this.userid)
-					this.getAll(this.userid)
-				}
-			})
-		},
-		// 取小站信息[名称、简介]
-		getSite(userid){
-			siteService.getSitebyID(userid).then((res) => {
-				if (res.code > 0 ){
-						this.$alert('', '走迷路了', {
-						confirmButtonText: '回主页',
-						callback: () => {
-							this.$router.push({name:'Home'}).catch(() => { })
-						}
-					});
-					return
-				}else{
-					this.sitename = res.data.name
-					this.siteinfo = res.data.info
-					this.btn_switch = res.data.btn_switch
-					this.bglizi = res.data.bglizi
-					this.lybID = res.data.lyb_id
+					// 加载 Site
+					this.sitename = res.data.site_info.name
+					this.siteinfo = res.data.site_info.info
+					this.bglizi = res.data.site_info.bglizi
+					this.lybID = res.data.site_info.lyb_id
 					document.title = this.sitename
-					// var obj = document.getElementsByClassName("bg")[0]
+					// 改背景颜色或图片
 					var obj = document.getElementsByTagName("body")[0]
-					obj.style.color = res.data.font_color
-					if(res.data.bg_switch){
-						// document.getElementsByTagName("body")[0].setAttribute("style","background-image: url("+res.data.bg+")"+";color:"+res.data.font_color);
-						obj.style.backgroundImage = "url("+res.data.bg+")"
-						obj.style.color = res.data.font_color
-					}else{
-						// var obj2 = document.getElementsByTagName("body")[0]
-						obj.style.backgroundColor = res.data.bg_color
-						// obj2.style.color = res.data.font_color
+					if(res.data.site_info.bg_switch){
+						obj.style.backgroundImage = "url("+res.data.site_info.bg+")"
+					} else {
+						obj.style.backgroundColor = res.data.site_info.bg_color
 					}
-				}
-			})
-		},
-		// 取所有书签[文件夹、书签]
-		getAll(userid){
-			siteService.getAll(userid).then((res) => {
-				if (res.code > 0 ){
-						this.$alert('', '走迷路了', {
-						confirmButtonText: '回主页',
-						callback: () => {
-							this.$router.push({name:'Home'}).catch(() => { })
-						}
-					});
-					return
-				}else{
-					this.Folders = res.data
+					obj.style.color = res.data.site_info.font_color
+					// 取文件夹和书签
+					this.Folders = res.data.folderwith_links
+					// 文件夹排序
 					this.Folders.sort(function(f1,f2){
 						return f1.weight-f2.weight//weight
 					})
+					// 文件夹里的每个书签排序
 					for(var i=0;i<this.Folders.length;i++){
 						if(!this.Folders[i].links)
 							continue
@@ -279,13 +256,44 @@ export default {
 							return l2.weight-l1.weight//weight
 						})
 					}
+					// 取当前登录的用户名
+					this.myname = res.data.me.name
+					this.music = JSON.parse(res.data.site_info.music)
+					if (!this.is_vip) {
+						this.music.list.splice(1)
+					}
+					this.top_bottom = JSON.parse(res.data.site_info.top_bottom)
+				}
+			})
+			// 取猿选、排序
+			linkService.getLinksbyFolderID(35413).then((res) =>{
+				if(res.data){
+					this.yuanxuan = res.data
+					this.yuanxuan.sort(function(l1,l2){
+						return l2.weight-l1.weight//weight
+					})
+				}else{
+					this.yuanxuan = []
+				}
+			})
+		},
+		// 输入密码
+		GetPWDFolder(index, id, password){
+			siteService.getLinksbyfolderid(id, password).then((res) => {
+				if (res.code > 0){
+						this.$alert('请重试', '密码错误', {
+					});
+					return
+				}else{
+					this.Folders[index].need_password = false;
+					this.Folders[index].links = res.data;
+					this.Folders[index].links.sort(function(l1,l2){
+						return l2.weight-l1.weight//weight
+					})
 				}
 			})
 		},
 		// 打开url
-		go(url){
-			window.open(url,"_blank")
-		},
 		goToUrl(linkInfo){
 			console.log(linkInfo)
 			let cache = cookieGet("cacheLinkList")
@@ -350,7 +358,8 @@ export default {
 		Footer,
 		IndexLab,
 		// RightBar,
-		Particle
+		Particle,
+		Aplayer,
 	},
 	beforeMount() {
 		// this.$message({
@@ -413,7 +422,7 @@ body {
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
-
+	background-color: black;
 	text-align:center;
 	font-size: 13px;
 	color: white;
@@ -467,21 +476,24 @@ body {
 }
 /* Tooltip 文本 */
 .link .tooltiptext {
+	text-align: left;
     visibility: hidden;
 	background: rgba(0, 0, 0, 1);
-	box-shadow: 0 0 5px #666;
+	max-width: 400px;
+	/* box-shadow: 0 0 5px #666; */
     /* color: gold; */
 	font-size: 16px;
-	border-radius: 5px;
     /* 定位 */
-	bottom: 20px;
-	left: 20px;
-	padding: 5px 5px;
+	top: 30px;
+	left: 0px;
+	padding: 10px 20px;
     position: fixed;
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
 }
 .link:hover .tooltiptext {
     visibility: visible;
-	/* z-index: 999; */
+	color: white;
 }
 .totop {
 	z-index: 1;
@@ -509,5 +521,35 @@ a {
 	font-size: 20px;
 	line-height: 20px;
 	color: white;
+}
+
+.inputPWD {
+	padding: 10% 2%;
+}
+
+.inputPWD .el-input__inner {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0px;
+  color: inherit;
+  font-size: 0.33vmax;
+  border: 0px;
+}
+.inputPWD .el-input__inner::placeholder{
+    color:inherit;
+}
+.inputPWD .el-input-group__append {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: inherit;
+	border-radius: 0px;
+    cursor: pointer;
+	border: 0px;
+}
+
+.amusic {
+    position:fixed;
+    max-width: 500px;
+    left: -5px;
+    bottom: 10px;
+    z-index: 999;
 }
 </style>

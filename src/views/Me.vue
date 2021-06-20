@@ -3,14 +3,11 @@
         <el-dialog :visible.sync="dialogIconVisible" title="选择Icon" append-to-body>
             <ICON @callback="chooseCallback"></ICON>
         </el-dialog>
-        <h2>请所有新老用户务必体验快捷添加书签功能 </h2> 
-        同志们，我回来了！新功能陆续安排中！改名已上线。
-        <p>近期规划:1.文件夹加密;2.VIP自定义底部文字</p>
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="欢迎">
                 <el-card shadow="hover" class="card">
                     临时书签 放入文件夹后才可展示到导航站
-                    <el-table :data="tempLinks" stripe>
+                    <el-table :data="tempLinks" height="360" stripe>
                     <el-table-column
                         label="名称" min-width="160">
                         <template slot-scope="scope">
@@ -127,7 +124,7 @@
                                 <el-col :span="8">名称</el-col>
                                 <el-col :span="16">链接</el-col>
                             </el-row>
-                            <el-row :gutter="1" type="flex" justify="center">
+                            <el-row  type="flex" justify="center">
                                 <el-col :span="8">
                                 <el-input
                                     type="text"
@@ -147,13 +144,13 @@
                                 ></el-input>
                                 </el-col>
                             </el-row>
-                            <el-row :gutter="1" type="flex" justify="center">
+                            <el-row  type="flex" justify="center">
                                 <el-col :span="4">图标</el-col>
                                 <el-col :span="12">介绍</el-col>
                                 <el-col :span="4">文件夹</el-col>
                                 <el-col :span="4"></el-col>
                             </el-row>
-                            <el-row :gutter="1" type="flex" justify="center">
+                            <el-row  type="flex" justify="center">
                                 <el-col :span="4">
                                 <el-input type="text" v-model="linkform.icon" placeholder="可为空"></el-input>
                                 <el-button @click="iconHandle()" type="primary" icon="el-icon-edit" circle></el-button>
@@ -197,7 +194,7 @@
             </el-tab-pane>
 
             <el-tab-pane label="导航配置">
-                <SiteSet :userID=userID></SiteSet>
+                <SiteSet :userID=userID :isVIP=isVIP></SiteSet>
             </el-tab-pane>
 
             <el-tab-pane label="文件夹" :lazy="false">
@@ -248,6 +245,7 @@ export default {
         return {
             userID: 0,
             username: "未登录",
+            isVIP: false,
             LoginCode: -1,
             JsToken: "xxxxxxxx",
             jscode: "***** 秘钥关联用户 请勿外传",
@@ -297,6 +295,7 @@ export default {
 					}
                     this.userID = res.data.id
                     this.username = res.data.name
+                    this.isVIP = res.data.is_vip
                     this.getFolder()
                 }
             })
@@ -311,7 +310,7 @@ export default {
             });
         },
         getFolder(){
-            folderService.getFoldersbyID(this.userID).then((res) =>{
+            folderService.getMyFolders().then((res) =>{
                 this.Folders = res.data
                 var x = {
                     "id": 0,

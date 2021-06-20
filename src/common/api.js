@@ -62,9 +62,9 @@ export const linkService = {
 
 export const folderService = {
 
-  getFoldersbyID(id){
+  getMyFolders(){
     return request({
-      url: '/api/v1/foldersbyid/'+ id,
+      url: '/api/v1/myfolders',
     })
   },
 
@@ -120,6 +120,18 @@ export const siteService = {
   getAll(id){
     return request({
       url: '/api/v1/all/'+ id,
+    })
+  },
+
+  getAllsiteandlinks(username){
+    return request({
+      url: '/api/v1/allsiteandlinks/'+ username,
+    })
+  },
+
+  getLinksbyfolderid(id,pwd){
+    return request({
+      url: '/api/v1/linksbyfolderid/'+ id + '?password=' + pwd,
     })
   },
 }

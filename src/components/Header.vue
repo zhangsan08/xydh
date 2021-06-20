@@ -3,14 +3,6 @@
     <!-- 天气 -->
     <div class="weather" id="he-plugin-simple"></div>
     <div style="text-align:right;" class="headerbtns">
-        <!-- <span class="headerbtn" @click="onChangeHis()"><i class="fa fa-reply-all"></i> 足迹开关</span>
-        <span class="headerbtn" @click="onChangeNav()"><i class="fa fa-anchor"></i> 书签开关</span> -->
-        <!-- <div class="btn">
-            <span class="tooltip">猿分啊</span>
-            <a href="/u/rand" target="_blank">任意门</a>
-            </div>
-        <div class="btn"><a href="/Me" target="_blank">自定义|登录</a></div> -->
-        <!-- <span class="tooltip">123123</span> -->
         <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
         <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
         <a class="headerbtn" href="/u/rand" target="_blank">月光宝盒 <i class="fa fa-random"></i></a>
@@ -19,9 +11,10 @@
                 自定义<i class="fa fa-cog"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item> <i class="fa fa-user-circle-o"></i><a class="headerbtn" href="/me" target="_blank">登录后台</a></el-dropdown-item>
+                <el-dropdown-item> <i class="fa fa-user-circle-o"></i><a class="headerbtn" href="/me" target="_blank">打开后台</a></el-dropdown-item>
                 <el-dropdown-item><span class="headerbtn" @click="onChangeHis()"><i class="fa fa-reply-all"></i> 足迹开关</span></el-dropdown-item>
                 <el-dropdown-item><span class="headerbtn" @click="onChangeNav()"><i class="fa fa-anchor"></i> 书签开关</span></el-dropdown-item>
+                <el-dropdown-item><span class="headerbtn" @click="logout()"><i class="fa fa-power-off"></i> 退出登录</span></el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
         
@@ -41,8 +34,10 @@
 </template>
 
 <script>
+import { userService } from '@/common/api'
+
 export default {
-    props:["historySwitch","navSwitch"],
+    props:["historySwitch","navSwitch","myname"],
     data(){
         return{
             data: [
@@ -56,6 +51,10 @@ export default {
         },
         onChangeNav(){
             this.$parent.switchNav()
+        },
+        logout(){
+            userService.UserLogout({noQs: false})
+            location.reload();
         },
     }
 }

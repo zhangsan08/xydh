@@ -1,35 +1,5 @@
 <template>
     <div class="notice">
-    
-    <div>
-      <!--<el-divider>最新通知-净网行动</el-divider>
-          <div class="note">
-              <li>任意门的上线收到大量举报。对于举报者有奖励。</li> 
-            <b>请严查你的书签中是否有违法网站。涉黄涉黑涉政。外网VPN一律禁止。</b>
-            <li>很多东西你自己找个地方存好就行了 分享已经构成了违法犯罪<br>炫猿的很多用户都很年轻 希望你们有基础的法制观念</li>
-      </div>-->
-<!-- 
-      <el-card header="进官方群交流" shadow="hover" style="max-width:1080px; text-align:center; margin:0 auto;" >
-        <div>
-          <p>入QQ群请报自己的炫猿id。进群后昵称改成id.xydh.fun。</p>
-          <b>定期清理未改名的用户。(防止无账号的人混入)</b>
-          <p>猿友们在群里互相帮助哈, 我基本不看群</p>
-          <p>
-            产品建议和Bug反馈优先从
-            <a
-              target="_blank"
-              rel="nofollow"
-              href="https://support.qq.com/products/106426"
-            >https://support.qq.com/products/106426</a>发布。
-          </p>
-          <img
-            width="200px"
-            src="https://i.loli.net/2020/04/06/BJtIxrK6MzFbiqf.jpg"
-            alt="BJtIxrK6MzFbiqf"
-          />
-        </div>
-      </el-card> -->
-    </div>
   <el-card class="devhistory" header="更新历史" shadow="hover">
     <div style="text-align:left">
       <el-timeline>
@@ -53,7 +23,10 @@
     data() {
       return {
         Notice: [
-        { name: "v0.8.3 特性 2020.09.05", list: [{ li: "花果山上线" }] },
+        { name: "v1.1.0 特性", list: [{ li: " 背景音乐上线" }] },
+        { name: "v1.0.1 特性", list: [{ li: "私密文件夹可自定义引导语" }] },
+        { name: "v1.0.0 特性", list: [{ li: "私密文件夹上线" }] },
+        { name: "v0.8.3 特性", list: [{ li: "花果山上线" }] },
         { name: "v0.8.2 特性", list: [{ li: "快捷加书签上线" }] },
         { name: "v0.8.1 特性", list: [{ li: "花果山预览版上线" }] },
         { name: "v0.8.0 特性", list: [{ li: "水帘洞天上线" }] },

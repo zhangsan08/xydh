@@ -4,25 +4,36 @@
 			<p>请以一条为单位更新 因为每次更新后会刷新列表</p>
 			<a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62830'>添加小图标的方法</a>
 		</div>
-
-		<el-divider></el-divider>
-		<el-row type="flex" justify="center">
-			<el-col :span="3">图标</el-col>
-			<el-col :span="6">名称</el-col>
-			<el-col :span="3">排序</el-col>	
-			<el-col :span="3">操作</el-col>
-		</el-row>
 		<!-- 添加 -->
 		<el-row>
 			<el-col :span="24">
 				<el-card header="添加文件夹" shadow="hover" class="card" >
-					<el-row :model="Folderform" gutter="1" type="flex" justify="center">
-						<el-col :xs="3" :sm="3"><el-input type="text" v-model="Folderform.icon" minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
-						<el-col :xs="9" :sm="6"><el-input type="text" v-model="Folderform.name" minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
-						<el-col :xs="6" :sm="3">
-							<el-input-number size="mini" style="width:100px" v-model="Folderform.weight" :min="0" :max="10" label="越大越靠后"></el-input-number>
+					<el-row type="flex" justify="center">
+						<el-col :span="8">图标</el-col>
+						<el-col :span="16">名称</el-col>
+						<el-col :span="8">排序</el-col>	
+					</el-row>
+					<el-row :model="Folderform" type="flex" justify="center">
+						<el-col :span="8"><el-input type="text" v-model="Folderform.icon" minlength="0" maxlength="30" placeholder="icon"></el-input></el-col>
+						<el-col :span="16"><el-input type="text" v-model="Folderform.name" minlength="0" maxlength="8"  placeholder="0-8字/过长不好看"></el-input></el-col>
+						<el-col :span="8">
+							<el-input-number style="width:120px" v-model="Folderform.weight" :min="0" :max="10" label="越大越靠后"></el-input-number>
 						</el-col>
-						<el-col :xs="6" :sm="3"><el-button  type="success" icon="el-icon-plus" @click="createFolder()" circle></el-button></el-col>
+						
+					</el-row>
+					<el-row type="flex" justify="center">
+						<el-col :span="8">密码</el-col>
+						<el-col :span="16">引导语</el-col>
+						<el-col :span="8">操作</el-col>
+					</el-row>
+					<el-row type="flex" justify="center">
+						<el-col :span="8">
+							<el-input type="text" v-model="Folderform.password" show-password></el-input>
+						</el-col>
+						<el-col :span="16">
+							<el-input type="text" v-model="Folderform.info" maxlength="30" placeholder="设置了密码后的文字提示" show-word-limit></el-input>
+						</el-col>
+						<el-col :span="8"><el-button  type="success" @click="createFolder()">添加</el-button></el-col>
 					</el-row>
 				</el-card>
 			</el-col>
@@ -30,6 +41,7 @@
 
 		<!-- 修改 -->
 		<el-divider>更新文件夹</el-divider>
+		关于文件夹密码: 1.本人登录状态下无需密码。2.密码为空则无需密码即可查看
 		<el-table :data="Folders" stripe>
 			<el-table-column label="图标" width="80">
 				<template slot-scope="scope">
@@ -41,6 +53,16 @@
 					<el-input type="text" v-model="scope.row.name"></el-input>
 				</template>
 			</el-table-column>
+			<el-table-column label="密码" min-width="100">
+				<template slot-scope="scope">
+					<el-input type="text" v-model="scope.row.password" show-password></el-input>
+				</template>
+			</el-table-column>
+			<el-table-column label="引导语" min-width="100">
+				<template slot-scope="scope">
+					<el-input type="text" v-model="scope.row.info" maxlength="30" show-word-limit></el-input>
+				</template>
+			</el-table-column>
 			<el-table-column label="排序" align="center" width="120">
 				<template slot-scope="scope">
 					<el-input-number size="mini" style="width:100px" v-model="scope.row.weight" :min="0" :max="15" label="越大越靠后"></el-input-number>
@@ -49,11 +71,11 @@
 			<el-table-column
 				fixed="right"
 				label="操作"
-				width="120">
+				width="150">
 				<template slot-scope="scope">
 					<el-button-group>
-							<el-button size="small" type="primary" icon="el-icon-edit" @click="updateFolder(scope.row)" ></el-button>
-							<el-button size="small" type="danger" icon="el-icon-delete" @click="deleteFolder(scope.row)" ></el-button>
+							<el-button size="mini" type="primary" @click="updateFolder(scope.row)" >更新</el-button>
+							<el-button size="mini" type="danger" @click="deleteFolder(scope.row)" >删除</el-button>
 					</el-button-group>                            
 				</template>
 			</el-table-column>
@@ -83,8 +105,7 @@ export default {
 	},
 	methods: {
 		getFolder(){
-			this.uid = this.userID,
-			folderService.getFoldersbyID(this.uid).then((res) =>{
+			folderService.getMyFolders().then((res) =>{
 				this.Folders = res.data
 				this.Folders.sort(function(f1,f2){
 					return f1.weight-f2.weight//weight
@@ -115,12 +136,14 @@ export default {
 				});
 			});
 		},
-		updateFolder(Folder){
+		updateFolder(FolderRow){
 			var form = {
-				id: Folder.id,
-				name: Folder.name,
-				icon: Folder.icon,
-				weight: Folder.weight,
+				id: FolderRow.id,
+				name: FolderRow.name,
+				icon: FolderRow.icon,
+				weight: FolderRow.weight,
+				password: FolderRow.password,
+				info: FolderRow.info,
 			}
 			folderService.updateFolder(form).then((res) => {
 				if (res.code > 0) {
@@ -189,11 +212,6 @@ export default {
 
 <style>
 
-.tips {
-	margin: 0 auto;
-	max-width: 500px;
-	text-align: left;
-}
 .onerow {
 	margin: 5px auto 0;
 }

@@ -10,7 +10,7 @@
         </el-form-item>
         <el-form-item >当前最大文件夹容量: {{ maxf }}</el-form-item>
         <el-form-item>当前最大书签容量: {{ maxl }}</el-form-item>
-        <el-form-item>是否开通VIP: <span v-if="rmad">是</span><span v-else>否</span></el-form-item>
+        <el-form-item><div v-if="is_vip"><span>VIP到期时间:</span> {{vip_time}}</div><span v-else>未开通 VIP</span></el-form-item>
         <el-form-item label="输入兑换卡密">
             <el-col span="18"><el-input type="text" placeholder="" v-model="VipForm.key"></el-input></el-col>
         </el-form-item>
@@ -52,7 +52,8 @@ export default {
             },
             maxf: 0,
             maxl: 0,
-            rmad: 0,
+            is_vip: 0,
+            vip_time: '',
         }
     },
     methods: {
@@ -73,7 +74,8 @@ export default {
                     this.username = res.data.name
                     this.maxf = res.data.max_folder
                     this.maxl = res.data.max_link
-                    this.rmad = res.data.rm_ad
+                    this.is_vip = res.data.is_vip
+                    this.vip_time = res.data.vip_time
                 }
             })
         },
@@ -93,7 +95,8 @@ export default {
                     this.username = res.data.name
                     this.maxf = res.data.max_folder
                     this.maxl = res.data.max_link
-                    this.rmad = res.data.rm_ad
+                    this.is_vip = res.data.is_vip
+                    this.vip_time = res.data.vip_time
                 }
             })
         },

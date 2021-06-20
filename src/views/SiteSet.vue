@@ -1,7 +1,7 @@
 <template>
     <div class="siteForm">
         <!-- <p>热度: {{ userview }} [后期推出排行榜功能]</p> -->
-        <el-form :model="SiteForm" label-width="100px" label-position="right">
+        <el-form :model="SiteForm" label-width="150px" label-position="right">
             <el-form-item label="站点名">
                 <el-input type="text" v-model="SiteForm.name" minlength="2" maxlength="10" placeholder="2-10字符"></el-input>
             </el-form-item>
@@ -10,21 +10,19 @@
                 <el-input type="text" v-model="SiteForm.info" minlength="0" maxlength="100" placeholder="可为空"></el-input>
             </el-form-item>
 
-            <el-form-item label="顶部开关">
+            <!-- <el-form-item label="顶部开关">
                 <el-switch v-model="SiteForm.btn_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="显示" inactive-text="隐藏">
                 </el-switch>
                 <div style="font-size:12px">关闭后可从主站进入控制台</div> 
-            </el-form-item>
+            </el-form-item> -->
 
             <el-form-item label="自定义背景">
                 <el-switch
                 v-model="SiteForm.bg_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="图片背景" inactive-text="纯色背景">
                 </el-switch>
                  <div v-if="SiteForm.bg_switch">
-                    <span style="color:red;font-size:12px;line-height:13px">推荐使用炫猿首页中的"聚合图床" 速度较快</span>
                     <el-input type="text" v-model="SiteForm.bg" minlength="0" maxlength="100" placeholder="请自行选择图床上传背景图片 不填则是默认"></el-input>
-                    <!-- <el-button disabled="">背景图拉伸方式</el-button> -->
-                    <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62946'>怎么自定义背景图片?</a>
+                    <!-- <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62946'>怎么自定义背景图片?</a> -->
                 </div>
                 <div v-else>
                     <el-color-picker v-model="SiteForm.bg_color" :predefine="predefineColors"></el-color-picker>
@@ -48,14 +46,91 @@
 
             <el-form-item label="留言板">
                 <el-input type="text" v-model="SiteForm.lyb_id" minlength="24" maxlength="24" placeholder=""></el-input>
-            </el-form-item>            
-           
-            <el-popconfirm v-if="uid!=7163" confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更新站点信息吗" @confirm="updateSite()">
+            </el-form-item>
+            <!-- 音乐模块 -->
+            <el-form-item label="音乐">
+                <el-switch
+                    v-model="music.open" active-color="#13ce66" inactive-color="#ff4949" active-text="开启" inactive-text="关闭">
+                </el-switch>
+                <div v-if="music.open">
+                    <p>普通用户添加音乐后只能加载2首，VIP用户可添加更多</p>
+                    <el-form :inline="true">
+                        <el-button type="success" @click="addToList(music.list,1,1)" :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表头</el-button>
+                        <el-button type="success" @click="addToList(music.list,1,2)" :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表尾</el-button>
+                    </el-form>
+                    <el-table :data="music.list" stripe>
+                        <el-table-column label="歌曲名" width="200">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.title"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="歌手名" width="200">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.artist"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="音乐外链">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.url"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="封面图片">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.pic"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                            fixed="right"
+                            label="操作"
+                            width="80">
+                            <template slot-scope="scope">
+                                <el-button size="mini" type="danger" @click="deleteFromList(music.list,scope.row)" > 删除</el-button>                         
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+            </el-form-item>
+            <el-divider content-position="left">VIP 功能</el-divider>
+            <!-- 自定义顶部和底部 -->
+            <el-form-item label="顶部开关">
+                <el-switch
+                    v-model="top_bottom.top_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="开启" inactive-text="关闭" :disabled="!isVIP">
+                </el-switch>
+            </el-form-item>
+            <el-form-item label="自定义友链" :disabled="!isVIP">
+                <div>
+                    <el-form :inline="true">
+                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2, 1)" :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表头</el-button>
+                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2, 2)" :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表尾</el-button>
+                    </el-form>
+                    <el-table :data="top_bottom.bottom_list" stripe>
+                        <el-table-column label="文字" width="300">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.title"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="超链接">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.url"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                            label="操作"
+                            width="80">
+                            <template slot-scope="scope">
+                                <el-button size="mini" type="danger" @click="deleteFromList(top_bottom.bottom_list, scope.row)" > 删除</el-button>                         
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+            </el-form-item>
+
+           <el-divider content-position="center">
+            <el-popconfirm v-if="userID!=7163" confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更新站点信息吗" @confirm="updateSite()">
                 <el-button slot="reference" type="primary">更新站点信息</el-button>
             </el-popconfirm>
+           </el-divider>
         </el-form>
-        <el-divider content-position="center">更多定制化功能开发ing</el-divider>
-        <el-divider content-position="center">欢迎提出你的意见</el-divider>
     </div>
     
 </template>
@@ -67,10 +142,9 @@
 import { siteService } from '@/common/api'
 
 export default {
-    props:["userID"],
+    props:["userID","isVIP"],
     data() {
         return {
-            uid: "",
             userview: 0,
             SiteForm: {
                 name: "",
@@ -78,10 +152,12 @@ export default {
                 bg: "",
                 btn_switch: "",
                 bg_switch: "",
-                bg_color: "123123",
+                bg_color: "",
                 font_color: "",
                 bglizi: 0,
                 lyb_id: "",
+                music: "",
+                top_bottom: "",
             },
             texiao: [
                 {value: 0,label: '关闭'}, 
@@ -91,12 +167,19 @@ export default {
                 {value: 4,label: '吹气泡(点击生成气泡)'},
             ],
             predefineColors: ['#000000','#ffffff','#ff4500','#ff8c00','#ffd700','#90ee90','#00ced1','#1e90ff','#c71585',],
+            music: {
+                open: false,
+                list: [],
+            },
+            top_bottom :{
+                top_switch: true,
+                bottom_list: [],
+            },
         }
     },
     methods: {
         getSite(){
-            this.uid = this.userID,
-            siteService.getSitebyID(this.uid).then((res) =>{
+            siteService.getSitebyID(this.userID).then((res) =>{
                 this.SiteForm.name = res.data.name
                 this.SiteForm.info = res.data.info
                 this.SiteForm.bg = res.data.bg
@@ -106,10 +189,19 @@ export default {
                 this.SiteForm.font_color = res.data.font_color
                 this.SiteForm.bglizi = res.data.bglizi
                 this.SiteForm.lyb_id = res.data.lyb_id
+                if (res.data.music) {
+                    this.music = JSON.parse(res.data.music);
+                }
+                if (res.data.top_bottom) {
+                    this.top_bottom = JSON.parse(res.data.top_bottom);
+                }
+                
                 this.userview = res.data.view
             })
         },
         updateSite(){
+            this.SiteForm.music = JSON.stringify(this.music)
+            this.SiteForm.top_bottom = JSON.stringify(this.top_bottom)
             siteService.updateSite(this.SiteForm).then((res) =>{
                 if (res.code > 0) {
                     this.$notify.error({
@@ -117,32 +209,44 @@ export default {
                     message: res.msg
                     });
                 } else {
-                    this.$router.push({name:'Me'})
                     this.$notify({
                     title: "更新完成😊",
                     type: "success",
                     });
                 }
             })
+        },
+        addToList(list, x, where){
+            if (x==1) {
+                var item ={title: "",artist: "",url: ""}              
+            } else if (x==2){
+                item = {title: "",url: ""}
+            }
+            switch (where) {
+                case 1:
+                    list.unshift(item)
+                    break;
+                case 2:
+                    list.push(item)
+                    break;
+                default:
+                    break;
+            }
+        },
+        deleteFromList(list, item){
+            var index = list.indexOf(item)
+            if (index !== -1) {
+                list.splice(index, 1)
+            }
         }
     },
     components:{
 
     },
-    // created(){
-    //     console.log("创建完成：");
-    //     // this.getSite()
-    // },
     beforeMount(){
-      console.log(this.uid)
     },
-    // mounted() {
-    //     console.log("挂载完成：");
-    //     // this.getSite()
-    // },
     watch: {
         userID: function() {
-            this.uid = this.userID,
             this.getSite()
         },
     }
@@ -153,25 +257,15 @@ export default {
 <style>
 .siteForm {
     min-width: 400px;
-    max-width: 400px;
+    /* max-width: 400px; */
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
 }
-.el-form-item :hover{
-    background-color: rgba(0, 0, 0, 0.05);
-    /* border-radius: 10px; */
-    /* padding: 3px 3px; */
+
+.siteForm .el-input {
+  max-width: 400px;
 }
-/* 搜索框 */
-.el-input__inner {
-  border-radius: 10px;
-  /* border-top-left-radius: 0px; */
-  /* border-bottom-left-radius: 0px; */
-}
-.el-color-dropdown__main-wrapper {
-    display:none;
-}
-.el-color-dropdown__value {
-    display: none;
+.siteForm .el-input__inner {
+  border-radius: 20px;
 }
 </style>

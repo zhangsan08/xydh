@@ -23,7 +23,7 @@
                 <el-input type="password" v-model="pwdForm.password_confirm"    autocomplete="off" minlength="6" maxlength="40"></el-input>
             </el-form-item>
             
-            <el-popconfirm confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更改密码吗" @onConfirm="updatePWD()">
+            <el-popconfirm confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更改密码吗" @confirm="updatePWD()">
                 <el-button slot="reference" type="primary">更改密码</el-button>
             </el-popconfirm>
             
@@ -56,6 +56,7 @@ export default {
               message: res.msg
             });
           } else {
+            userService.UserLogout({noQs: false})
             this.$router.push({name:'ULogin'})
             this.$notify({
               title: "更改成功!",

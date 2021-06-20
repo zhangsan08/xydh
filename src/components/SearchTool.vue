@@ -188,32 +188,25 @@ export default {
 }
 
 /* 搜索框 */
-.el-input__inner {
+.serach .el-input__inner {
   background-color: rgba(0, 0, 0, 0.1);
-  /* color: white; */
-  font-size: 15px;
-  border-radius: 25px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
   border: 0px;
   color: inherit;
 }
-.el-input__inner:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-}
 /* placeholder颜色 */
-.el-input__inner::placeholder{
+.serach .el-input__inner::placeholder{
     color:inherit;
 }
-/* .el-input__suffix {
-    color: yellow;
-} */
 /* 搜索按钮 */
-.el-input-group__append {
+.serach .el-input-group__append {
     background-color: rgba(0, 0, 0, 0.2);
     color: inherit;
     font-size: 18px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
-    border-width: 0;
+    border: 0px;
     cursor: pointer;
 }
 

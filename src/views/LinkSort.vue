@@ -62,8 +62,7 @@ export default {
                     });
                     this.$router.push({name:'ULogin'})
                 }else{  
-                    this.uid = res.data.id
-                    folderService.getFoldersbyID(this.uid).then((res) =>{
+                    folderService.getMyFolders().then((res) =>{
                         this.Folders = res.data
                         this.Folders.sort(function(f1,f2){
                             return f1.weight-f2.weight//weight
