@@ -42,10 +42,16 @@
                 </el-row>
               </template>
             </el-table-column>
-            <el-table-column label="" width="30">
+            <el-table-column label="" width="60">
               <template slot-scope="scope">
                 <el-row>
-                  <i :class="'fa fa-' + scope.row.icon"></i>
+                  <el-button
+                    title="选择图标"
+                    style="max-width: 40px"
+                    @click="iconHandle(scope.row)"
+                  >
+                    <i :class="'fa fa-' + scope.row.icon"></i>
+                  </el-button>
                 </el-row>
               </template>
             </el-table-column>
@@ -67,18 +73,21 @@
               <template slot-scope="scope">
                 <el-button-group>
                   <el-button
+                    title="打开书签"
                     size="small"
                     type="success"
                     icon="el-icon-view"
                     @click="openLink(scope.row.url)"
                   ></el-button>
                   <el-button
+                    title="确认编辑"
                     size="small"
                     type="primary"
                     icon="el-icon-edit"
                     @click="updateLink(scope.row)"
                   ></el-button>
                   <el-button
+                    title="删除书签"
                     size="small"
                     type="danger"
                     icon="el-icon-delete"
@@ -186,8 +195,8 @@
                 </el-col>
               </el-row>
               <el-row type="flex" justify="center">
-                <el-col :span="4">图标</el-col>
-                <el-col :span="12">介绍</el-col>
+                <el-col :span="6">图标</el-col>
+                <el-col :span="10">介绍</el-col>
                 <el-col :span="4">文件夹</el-col>
                 <el-col :span="4"></el-col>
               </el-row>
@@ -198,14 +207,18 @@
                     v-model="linkform.icon"
                     placeholder="可为空"
                   ></el-input>
-                  <el-button
-                    @click="iconHandle()"
-                    type="primary"
-                    icon="el-icon-edit"
-                    circle
-                  ></el-button>
                 </el-col>
-                <el-col :span="12">
+                <el-col :span="2">
+                  <el-button
+                    title="选择图标"
+                    style="width: 40px"
+                    id="bookmarks"
+                    @click="iconHandle(linkform)"
+                  >
+                    <i :class="'fa fa-' + linkform.icon"></i>
+                  </el-button>
+                </el-col>
+                <el-col :span="10">
                   <el-input
                     type="text"
                     v-model="linkform.info"
@@ -227,6 +240,7 @@
                 </el-col>
                 <el-col :span="4">
                   <el-button
+                    title="添加书签"
                     size="small"
                     type="success"
                     icon="el-icon-plus"
@@ -250,11 +264,11 @@
       </el-tab-pane>
 
       <el-tab-pane label="文件夹" :lazy="false">
-        <FolderSet :userID="userID"></FolderSet>
+        <FolderSet :userID="userID" @chooseIcon="iconHandle"></FolderSet>
       </el-tab-pane>
 
       <el-tab-pane label="书签管理" :lazy="false">
-        <LinkSet :userID="userID"></LinkSet>
+        <LinkSet :userID="userID" @chooseIcon="iconHandle"></LinkSet>
       </el-tab-pane>
 
       <el-tab-pane label="进阶功能" lazy>
@@ -484,6 +498,9 @@ export default {
           });
         });
     },
+    testCall() {
+      console.log("hhh");
+    },
   },
   components: {
     Notice,
@@ -513,5 +530,8 @@ export default {
 }
 .card {
   margin: 10px 10px;
+}
+.el-button i {
+  transform: translateX(-6px);
 }
 </style>
