@@ -15,6 +15,7 @@
             <a target='_blank' rel='follow' href='https://www.24kdh.com/'>24k导航</a>&#160;
             <a target='_blank' rel='follow' href='https://creatorsdaily.com/'>创造者日报</a>&#160;
             <a target='_blank' rel='follow' href='http://zyplayer.fun/'>ZY Player</a>&#160;
+            <a target='_blank' rel='follow' href='http://www.qyun.vip/'>Q云</a>&#160;
                 <!-- <li>2020 炫猿导航</li> -->
                 <li><a style="color: grey;" target='_blank' rel='nofollow' href='http://www.beian.miit.gov.cn/'>京ICP备19043213号</a></li>
             </div>
