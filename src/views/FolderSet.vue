@@ -1,14 +1,5 @@
 <template>
   <div>
-    <div class="tips">
-      <p>请以一条为单位更新 因为每次更新后会刷新列表</p>
-      <a
-        target="_blank"
-        rel="nofollow"
-        href="https://support.qq.com/products/106426/faqs/62830"
-        >添加小图标的方法</a
-      >
-    </div>
     <!-- 添加 -->
     <el-row>
       <el-col :span="24">
@@ -90,7 +81,10 @@
 
     <!-- 修改 -->
     <el-divider>更新文件夹</el-divider>
-    关于文件夹密码: 1.本人登录状态下无需密码。2.密码为空则无需密码即可查看
+    <div class="tips">
+      <p>请以一条为单位更新 因为每次更新后会刷新列表</p>
+      <p>文件夹密码: 1、本人登录状态下无需密码；2、密码为空则无需密码</p>
+    </div>
     <el-table :data="Folders" stripe>
       <el-table-column label="图标" width="80">
         <template slot-scope="scope">

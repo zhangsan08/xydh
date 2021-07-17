@@ -1,14 +1,5 @@
 <template>
   <div>
-    <p>
-      <a
-        target="_blank"
-        rel="nofollow"
-        href="https://support.qq.com/products/106426/faqs/62830"
-        >添加小图标的方法
-      </a>
-    </p>
-
     <el-collapse
       accordion
       v-model="FolderID"
