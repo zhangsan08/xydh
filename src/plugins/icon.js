@@ -8,11 +8,11 @@ export default {
   },
   methods: {
     iconHandle(info) {
+      console.log(info)
       this.dialogIconVisible = true
       this.iconObj = info
     },
     chooseCallback(res) {
-      this.linkform.icon = res
       this.iconObj.icon = res
       this.dialogIconVisible = false
     }

@@ -72,7 +72,11 @@
                 ></el-col>
                 <el-col :span="2">
                   <el-button @click="iconHandleLink()" title="选择图标">
-                    <i :class="'fa fa-' + linkform.icon"></i>
+                    <i
+                      :class="'fa fa-' + linkform.icon"
+                      v-if="linkform.icon"
+                    ></i>
+                    <i :class="'fa fa-hand-pointer-o'" v-else></i>
                   </el-button>
                 </el-col>
                 <el-col :span="10"
@@ -106,7 +110,7 @@
                   <el-input type="text" v-model="scope.row.icon"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="" width="60">
+              <el-table-column label="" width="62">
                 <template slot-scope="scope">
                   <el-button
                     style="width: 40px"
@@ -114,7 +118,11 @@
                     id="bookmarks"
                     @click="iconHandleLink(scope.row)"
                   >
-                    <i :class="'fa fa-' + scope.row.icon"></i>
+                    <i
+                      :class="'fa fa-' + scope.row.icon"
+                      v-if="scope.row.icon"
+                    ></i>
+                    <i :class="'fa fa-hand-pointer-o'" v-else></i>
                   </el-button>
                 </template>
               </el-table-column>
@@ -153,7 +161,7 @@
                 fixed="right"
                 label="操作"
                 align="center"
-                width="150"
+                width="160"
               >
                 <template slot-scope="scope">
                   <el-button-group>
@@ -211,7 +219,6 @@ export default {
         url: "",
         info: "",
       },
-      iconObj: {},
     };
   },
   methods: {

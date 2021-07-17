@@ -50,7 +50,11 @@
                     style="max-width: 40px"
                     @click="iconHandle(scope.row)"
                   >
-                    <i :class="'fa fa-' + scope.row.icon"></i>
+                    <i
+                      :class="'fa fa-' + scope.row.icon"
+                      v-if="scope.row.icon"
+                    ></i>
+                    <i :class="'fa fa-hand-pointer-o'" v-else></i>
                   </el-button>
                 </el-row>
               </template>
@@ -215,7 +219,11 @@
                     id="bookmarks"
                     @click="iconHandle(linkform)"
                   >
-                    <i :class="'fa fa-' + linkform.icon"></i>
+                    <i
+                      :class="'fa fa-' + linkform.icon"
+                      v-if="linkform.icon"
+                    ></i>
+                    <i :class="'fa fa-hand-pointer-o'" v-else></i>
                   </el-button>
                 </el-col>
                 <el-col :span="10">
@@ -497,9 +505,6 @@ export default {
             message: error,
           });
         });
-    },
-    testCall() {
-      console.log("hhh");
     },
   },
   components: {

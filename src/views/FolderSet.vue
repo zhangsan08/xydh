@@ -30,7 +30,11 @@
             ></el-col>
             <el-col :span="2">
               <el-button @click="iconHandleFolder()" title="选择图标">
-                <i :class="'fa fa-' + Folderform.icon"></i>
+                <i
+                  :class="'fa fa-' + Folderform.icon"
+                  v-if="Folderform.icon"
+                ></i>
+                <i :class="'fa fa-hand-pointer-o'" v-else></i>
               </el-button>
             </el-col>
             <el-col :span="16"
@@ -93,7 +97,7 @@
           <el-input type="text" v-model="scope.row.icon"></el-input>
         </template>
       </el-table-column>
-      <el-table-column width="60">
+      <el-table-column width="62">
         <template slot-scope="scope">
           <el-button
             title="选择图标"
@@ -101,7 +105,8 @@
             id="bookmarks"
             @click="iconHandleFolder(scope.row)"
           >
-            <i :class="'fa fa-' + scope.row.icon"></i>
+            <i :class="'fa fa-' + scope.row.icon" v-if="scope.row.icon"></i>
+            <i :class="'fa fa-hand-pointer-o'" v-else></i>
           </el-button>
         </template>
       </el-table-column>
