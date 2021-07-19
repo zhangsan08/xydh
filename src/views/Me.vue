@@ -237,14 +237,14 @@
                   </el-input>
                 </el-col>
                 <el-col :span="4">
-                  <!-- <el-select v-model="linkform.fid">
-                                    <el-option
-                                    v-for="Folder in Folders"
-                                    :key="Folder.id"
-                                    :label="Folder.name"
-                                    :value="Folder.id"
-                                    ></el-option>
-                                </el-select> -->
+                  <el-select v-model="linkform.fid">
+                      <el-option
+                      v-for="Folder in Folders"
+                      :key="Folder.id"
+                      :label="Folder.name"
+                      :value="Folder.id"
+                      ></el-option>
+                  </el-select>
                 </el-col>
                 <el-col :span="4">
                   <el-button
