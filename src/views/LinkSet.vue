@@ -394,14 +394,11 @@ export default {
   white-space: nowrap;
 }
 .mainbox div:hover {
-  border: 2px solid #000;
-  background-color: #fff;
-  font-size: 700;
+  border: 0.3px solid #000;
   color: rgb(135, 0, 0);
 }
 .mainbox .aim {
-  border: 2px solid #000;
-  background-color: #fff;
+  border: 0.3px solid #000;
   color: #000;
 }
 .bookmarkcard {
