@@ -77,9 +77,11 @@
         </el-col>
       </el-row>
     </el-card>
+    <!-- 更删 -->
+        <el-divider>更新书签</el-divider>
     <div class="mainbox">
       <div
-        v-for="Folder in showFolders"
+        v-for="Folder in Folders"
         :key="Folder.id"
         :id="Folder.id"
         @click="getLinksin(Folder.id)"
@@ -89,13 +91,9 @@
         </p>
         <p v-else>{{ Folder.name }}</p>
       </div>
-      <span class="leftBtn" @click="changePage(0)">&lt;</span>
-      <span class="rightBtn" @click="changePage(1)">&gt;</span>
     </div>
     <div class="bookmarkcard">
       <div class="marklist">
-        <!-- 更删 -->
-        <el-divider>更新书签</el-divider>
         <el-table :data="links" stripe>
           <el-table-column label="图标" width="80">
             <template slot-scope="scope">
@@ -199,7 +197,6 @@ export default {
       uid: 0,
       Folders: [],
       rigthnowPage: 0,
-      showFolders: [],
       links: [],
       linkform: {
         id: "",
@@ -215,33 +212,23 @@ export default {
     getFolder() {
       folderService.getMyFolders().then((res) => {
         this.Folders = res.data;
-        this.showFolders = this.Folders;
         this.Folders.sort(function (f1, f2) {
           return f1.weight - f2.weight; //weight
         });
       });
     },
     getLinksin(fid) {
-      // 这样只在折页打开时执行
-      // this.loading = true;
-      // setTimeout(() => {
-      // 	this.loading = false;
-      // }, 500);
-      this.aimDiv(fid);
-      if (fid) {
-        linkService.getLinksbyFolderID(fid).then((res) => {
-          if (res.data) {
-            this.links = res.data;
-            this.links.sort(function (l1, l2) {
-              return l2.weight - l1.weight; //weight
-            });
-          } else {
-            this.links = [];
-          }
-        });
-      } else {
-        // 折页关闭
-      }
+      this.ChooseFolder(fid);
+      linkService.getLinksbyFolderID(fid).then((res) => {
+        if (res.data) {
+          this.links = res.data;
+          this.links.sort(function (l1, l2) {
+            return l2.weight - l1.weight; //weight
+          });
+        } else {
+          this.links = [];
+        }
+      });
     },
     createLink() {
       // this.linkform.fid = fid;
@@ -262,7 +249,7 @@ export default {
             });
             this.linkform = {
               id: "",
-              fid: "",
+              fid: this.linkform.fid,
               icon: "",
               name: "",
               url: "",
@@ -350,22 +337,8 @@ export default {
       }
       this.$emit("chooseIcon", this.linkform);
     },
-    changePage(flag) {
-      if (flag == 0) {
-        this.rigthnowPage <= 0 ? "" : this.rigthnowPage--;
-        this.showFolders = this.Folders.slice(
-          this.rigthnowPage,
-          this.rigthnowPage + 9
-        );
-      } else {
-        this.rigthnowPage + 9 >= this.pageCount ? "" : this.rigthnowPage++;
-        this.showFolders = this.Folders.slice(
-          this.rigthnowPage,
-          this.rigthnowPage + 9
-        );
-      }
-    },
-    aimDiv(id) {
+    ChooseFolder(id) {
+      //选中文件夹后样式的变化
       var divs = document.querySelector(".mainbox").querySelectorAll("div");
       Array.from(divs).filter(function (element) {
         element.className = "";
@@ -397,77 +370,39 @@ export default {
   transform: translateX(-6px);
 }
 .mainbox {
-  display: flex;
+  display: table-cell;
   position: relative;
   align-items: center;
-  height: 150px;
+  /* height: 150px; */
 }
 .mainbox div {
+  float: left;
   box-sizing: border-box;
-  min-width: 173px;
-  height: 100px;
-  line-height: 100px;
+  height: 30px;
+  /* line-height: 20px; */
   transform: translate(0, 0);
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 0 5px;
+  border: 0.3px solid #ccc;
+  border-radius: 8px;
+  padding: 0px 10px;
   cursor: pointer;
-  font-size: 20px;
   background-color: #fff;
   color: #ccc;
-  margin: 0 5px;
+  margin: 5px 5px;
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .mainbox div:hover {
-  border: 3px solid #000;
+  border: 2px solid #000;
   background-color: #fff;
   font-size: 700;
-  color: #000;
+  color: rgb(135, 0, 0);
 }
 .mainbox .aim {
-  border: 3px solid #000;
+  border: 2px solid #000;
   background-color: #fff;
   color: #000;
-  font-size: 700;
-}
-.mainbox .leftBtn {
-  position: absolute;
-  left: 0;
-  top: middle;
-  min-width: 40px;
-  height: 100px;
-  line-height: 100px;
-  border-radius: 20px;
-  margin: 0;
-  margin-left: 5px;
-  cursor: pointer;
-  background: rgba(0, 0, 0, 0.1);
-  border: 0;
-}
-.mainbox .leftBtn:hover {
-  background: rgba(0, 0, 0, 0.3);
-  border: 0;
-}
-.mainbox .rightBtn {
-  position: absolute;
-  right: 0;
-  top: middle;
-  min-width: 40px;
-  height: 100px;
-  line-height: 100px;
-  border-radius: 20px;
-  margin: 0;
-  margin-right: 5px;
-  cursor: pointer;
-  background: rgba(0, 0, 0, 0.1);
-  border: 0;
-}
-.mainbox .rightBtn:hover {
-  background: rgba(0, 0, 0, 0.3);
-  border: 0;
 }
 .bookmarkcard {
   display: flex;
