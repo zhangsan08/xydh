@@ -63,6 +63,7 @@
               <template slot-scope="scope">
                 <el-input
                   type="textarea"
+                  resize="none"
                   v-model="scope.row.info"
                   placeholder="鼠标放上时的提示语(可为空)"
                 ></el-input>
@@ -238,12 +239,12 @@
                 </el-col>
                 <el-col :span="4">
                   <el-select v-model="linkform.fid">
-                      <el-option
+                    <el-option
                       v-for="Folder in Folders"
                       :key="Folder.id"
                       :label="Folder.name"
                       :value="Folder.id"
-                      ></el-option>
+                    ></el-option>
                   </el-select>
                 </el-col>
                 <el-col :span="4">

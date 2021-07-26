@@ -8,7 +8,6 @@ export default {
   },
   methods: {
     iconHandle(info) {
-      console.log(info)
       this.dialogIconVisible = true
       this.iconObj = info
     },
