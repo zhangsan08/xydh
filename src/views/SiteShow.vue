@@ -10,7 +10,7 @@
 	</div>
 
 	<!-- 名称简介 -->
-	<div style="margin:0px auto 0px;">
+	<div style="margin:0 auto 0;">
 		<span class="siteName">{{ sitename }}</span>
 		<div style="margin:10px auto"></div>
 		<!-- <p class="siteInfo">{{ siteinfo }}</p> -->
@@ -295,7 +295,6 @@ export default {
 		},
 		// 打开url
 		goToUrl(linkInfo){
-			console.log(linkInfo)
 			let cache = cookieGet("cacheLinkList")
 			let existKey = false
 			if(cache){
