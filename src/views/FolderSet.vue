@@ -1,309 +1,320 @@
 <template>
-  <div>
-    <!-- 添加 -->
-    <el-row>
-      <el-col :span="24">
-        <el-card header="添加文件夹" shadow="hover" class="card">
-          <el-row type="flex" justify="center">
-            <el-col :span="8">图标</el-col>
-            <el-col :span="16">名称</el-col>
-            <el-col :span="8">排序</el-col>
-          </el-row>
-          <el-row :model="Folderform" type="flex" justify="center">
-            <el-col :span="6"
-              ><el-input
-                type="text"
-                v-model="Folderform.icon"
-                minlength="0"
-                maxlength="30"
-                placeholder="icon"
-              ></el-input
-            ></el-col>
-            <el-col :span="2">
-              <el-button @click="iconHandleFolder()" title="选择图标">
-                <i
-                  :class="'fa fa-' + Folderform.icon"
-                  v-if="Folderform.icon"
-                ></i>
-                <i :class="'fa fa-hand-pointer-o'" v-else></i>
-              </el-button>
+    <div>
+        <!-- 添加 -->
+        <el-row>
+            <el-col :span="24">
+                <el-card header="添加文件夹" shadow="hover" class="card">
+                    <el-row type="flex" justify="center">
+                        <el-col :span="8">图标</el-col>
+                        <el-col :span="16">名称</el-col>
+                        <el-col :span="8">排序</el-col>
+                    </el-row>
+                    <el-row :model="Folderform" type="flex" justify="center">
+                        <el-col :span="6"
+                        >
+                            <el-input
+                                type="text"
+                                v-model="Folderform.icon"
+                                minlength="0"
+                                maxlength="30"
+                                placeholder="icon"
+                            ></el-input
+                            >
+                        </el-col>
+                        <el-col :span="2">
+                            <el-button @click="iconHandleFolder()" title="选择图标">
+                                <i
+                                    :class="'fa fa-' + Folderform.icon"
+                                    v-if="Folderform.icon"
+                                ></i>
+                                <i :class="'fa fa-hand-pointer-o'" v-else></i>
+                            </el-button>
+                        </el-col>
+                        <el-col :span="16"
+                        >
+                            <el-input
+                                type="text"
+                                v-model="Folderform.name"
+                                minlength="0"
+                                maxlength="8"
+                                placeholder="0-8字/过长不好看"
+                            ></el-input
+                            >
+                        </el-col>
+                        <el-col :span="8">
+                            <el-input-number
+                                style="width: 120px"
+                                v-model="Folderform.weight"
+                                :min="0"
+                                :max="10"
+                                label="越大越靠后"
+                            ></el-input-number>
+                        </el-col>
+                    </el-row>
+                    <el-row type="flex" justify="center">
+                        <el-col :span="8">密码</el-col>
+                        <el-col :span="16">引导语</el-col>
+                        <el-col :span="8">操作</el-col>
+                    </el-row>
+                    <el-row type="flex" justify="center">
+                        <el-col :span="8">
+                            <el-input
+                                type="text"
+                                v-model="Folderform.password"
+                                show-password
+                            ></el-input>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-input
+                                type="text"
+                                v-model="Folderform.info"
+                                maxlength="30"
+                                placeholder="设置了密码后的文字提示"
+                                show-word-limit
+                            ></el-input>
+                        </el-col>
+                        <el-col :span="8"
+                        >
+                            <el-button type="success" @click="createFolder()"
+                            >添加
+                            </el-button
+                            >
+                        </el-col
+                        >
+                    </el-row>
+                </el-card>
             </el-col>
-            <el-col :span="16"
-              ><el-input
-                type="text"
-                v-model="Folderform.name"
-                minlength="0"
-                maxlength="8"
-                placeholder="0-8字/过长不好看"
-              ></el-input
-            ></el-col>
-            <el-col :span="8">
-              <el-input-number
-                style="width: 120px"
-                v-model="Folderform.weight"
-                :min="0"
-                :max="10"
-                label="越大越靠后"
-              ></el-input-number>
-            </el-col>
-          </el-row>
-          <el-row type="flex" justify="center">
-            <el-col :span="8">密码</el-col>
-            <el-col :span="16">引导语</el-col>
-            <el-col :span="8">操作</el-col>
-          </el-row>
-          <el-row type="flex" justify="center">
-            <el-col :span="8">
-              <el-input
-                type="text"
-                v-model="Folderform.password"
-                show-password
-              ></el-input>
-            </el-col>
-            <el-col :span="16">
-              <el-input
-                type="text"
-                v-model="Folderform.info"
-                maxlength="30"
-                placeholder="设置了密码后的文字提示"
-                show-word-limit
-              ></el-input>
-            </el-col>
-            <el-col :span="8"
-              ><el-button type="success" @click="createFolder()"
-                >添加</el-button
-              ></el-col
-            >
-          </el-row>
-        </el-card>
-      </el-col>
-    </el-row>
+        </el-row>
 
-    <!-- 修改 -->
-    <el-divider>更新文件夹</el-divider>
-    <div class="tips">
-      <p>请以一条为单位更新 因为每次更新后会刷新列表</p>
-      <p>文件夹密码: 1、本人登录状态下无需密码；2、密码为空则无需密码</p>
+        <!-- 修改 -->
+        <el-divider>更新文件夹</el-divider>
+        <div class="tips">
+            <p>请以一条为单位更新 因为每次更新后会刷新列表</p>
+            <p>文件夹密码: 1、本人登录状态下无需密码；2、密码为空则无需密码</p>
+        </div>
+        <el-table :data="Folders" stripe>
+            <el-table-column label="图标" width="80">
+                <template slot-scope="scope">
+                    <el-input type="text" v-model="scope.row.icon"></el-input>
+                </template>
+            </el-table-column>
+            <el-table-column width="62">
+                <template slot-scope="scope">
+                    <el-button
+                        title="选择图标"
+                        style="width: 40px"
+                        id="bookmarks"
+                        @click="iconHandleFolder(scope.row)"
+                    >
+                        <i :class="'fa fa-' + scope.row.icon" v-if="scope.row.icon"></i>
+                        <i :class="'fa fa-hand-pointer-o'" v-else></i>
+                    </el-button>
+                </template>
+            </el-table-column>
+            <el-table-column label="名称" min-width="200">
+                <template slot-scope="scope">
+                    <el-input type="text" v-model="scope.row.name"></el-input>
+                </template>
+            </el-table-column>
+            <el-table-column label="密码" min-width="100">
+                <template slot-scope="scope">
+                    <el-input
+                        type="text"
+                        v-model="scope.row.password"
+                        show-password
+                    ></el-input>
+                </template>
+            </el-table-column>
+            <el-table-column label="引导语" min-width="100">
+                <template slot-scope="scope">
+                    <el-input
+                        type="text"
+                        v-model="scope.row.info"
+                        maxlength="30"
+                        show-word-limit
+                    ></el-input>
+                </template>
+            </el-table-column>
+            <el-table-column label="排序" align="center" width="120">
+                <template slot-scope="scope">
+                    <el-input-number
+                        size="mini"
+                        style="width: 100px"
+                        v-model="scope.row.weight"
+                        :min="0"
+                        :max="15"
+                        label="越大越靠后"
+                    ></el-input-number>
+                </template>
+            </el-table-column>
+            <el-table-column fixed="right" label="操作" width="150">
+                <template slot-scope="scope">
+                    <el-button-group>
+                        <el-button
+                            size="mini"
+                            type="primary"
+                            @click="updateFolder(scope.row)"
+                        >更新
+                        </el-button
+                        >
+                        <el-button
+                            size="mini"
+                            type="danger"
+                            @click="deleteFolder(scope.row)"
+                        >删除
+                        </el-button
+                        >
+                    </el-button-group>
+                </template>
+            </el-table-column>
+        </el-table>
     </div>
-    <el-table :data="Folders" stripe>
-      <el-table-column label="图标" width="80">
-        <template slot-scope="scope">
-          <el-input type="text" v-model="scope.row.icon"></el-input>
-        </template>
-      </el-table-column>
-      <el-table-column width="62">
-        <template slot-scope="scope">
-          <el-button
-            title="选择图标"
-            style="width: 40px"
-            id="bookmarks"
-            @click="iconHandleFolder(scope.row)"
-          >
-            <i :class="'fa fa-' + scope.row.icon" v-if="scope.row.icon"></i>
-            <i :class="'fa fa-hand-pointer-o'" v-else></i>
-          </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column label="名称" min-width="200">
-        <template slot-scope="scope">
-          <el-input type="text" v-model="scope.row.name"></el-input>
-        </template>
-      </el-table-column>
-      <el-table-column label="密码" min-width="100">
-        <template slot-scope="scope">
-          <el-input
-            type="text"
-            v-model="scope.row.password"
-            show-password
-          ></el-input>
-        </template>
-      </el-table-column>
-      <el-table-column label="引导语" min-width="100">
-        <template slot-scope="scope">
-          <el-input
-            type="text"
-            v-model="scope.row.info"
-            maxlength="30"
-            show-word-limit
-          ></el-input>
-        </template>
-      </el-table-column>
-      <el-table-column label="排序" align="center" width="120">
-        <template slot-scope="scope">
-          <el-input-number
-            size="mini"
-            style="width: 100px"
-            v-model="scope.row.weight"
-            :min="0"
-            :max="15"
-            label="越大越靠后"
-          ></el-input-number>
-        </template>
-      </el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
-        <template slot-scope="scope">
-          <el-button-group>
-            <el-button
-              size="mini"
-              type="primary"
-              @click="updateFolder(scope.row)"
-              >更新</el-button
-            >
-            <el-button
-              size="mini"
-              type="danger"
-              @click="deleteFolder(scope.row)"
-              >删除</el-button
-            >
-          </el-button-group>
-        </template>
-      </el-table-column>
-    </el-table>
-  </div>
 </template>
 
 
 <script>
 // import * as FolderAPI from '@/api/folder/'
-import { folderService } from "@/common/api";
+import {folderService} from "@/common/api";
 
 export default {
-  props: ["userID"],
-  data() {
-    return {
-      uid: 0,
-      Folders: [],
-      Folderform: {
-        id: "",
-        name: "",
-        icon: "",
-        weight: 0,
-      },
-    };
-  },
-  methods: {
-    getFolder() {
-      folderService.getMyFolders().then((res) => {
-        this.Folders = res.data;
-        this.Folders.sort(function (f1, f2) {
-          return f1.weight - f2.weight; //weight
-        });
-      });
+    props: ["userID"],
+    data() {
+        return {
+            uid: 0,
+            Folders: [],
+            Folderform: {
+                id: "",
+                name: "",
+                icon: "",
+                weight: 0,
+            },
+        };
     },
-    createFolder() {
-      folderService
-        .createFolder(this.Folderform)
-        .then((res) => {
-          if (res.code > 0) {
-            this.$notify.error({
-              title: "添加失败",
-              message: res.msg,
+    methods: {
+        getFolder() {
+            folderService.getMyFolders().then((res) => {
+                this.Folders = res.data;
+                this.Folders.sort(function (f1, f2) {
+                    return f1.weight - f2.weight; //weight
+                });
             });
-          } else {
-            this.$notify({
-              title: "添加成功!",
-              type: "success",
-              duration: "800",
-            });
-            this.Folderform = { name: "", icon: "" };
-            this.getFolder();
-          }
-        })
-        .catch((error) => {
-          this.$notify.error({
-            title: "错误 请检查",
-            message: error,
-          });
-        });
-    },
-    updateFolder(FolderRow) {
-      var form = {
-        id: FolderRow.id,
-        name: FolderRow.name,
-        icon: FolderRow.icon,
-        weight: FolderRow.weight,
-        password: FolderRow.password,
-        info: FolderRow.info,
-      };
-      folderService
-        .updateFolder(form)
-        .then((res) => {
-          if (res.code > 0) {
-            this.$notify.error({
-              title: "更新失败",
-              message: res.msg,
-            });
-          } else {
-            this.$notify({
-              title: "更新成功!",
-              type: "success",
-              duration: "800",
-            });
-            this.getFolder();
-          }
-        })
-        .catch((error) => {
-          this.$notify.error({
-            title: "错误 请检查",
-            message: error,
-          });
-        });
-    },
-    deleteFolder(Folder) {
-      var form = { id: Folder.id };
+        },
+        createFolder() {
+            folderService
+                .createFolder(this.Folderform)
+                .then((res) => {
+                    if (res.code > 0) {
+                        this.$notify.error({
+                            title: "添加失败",
+                            message: res.msg,
+                        });
+                    } else {
+                        this.$notify({
+                            title: "添加成功!",
+                            type: "success",
+                            duration: "800",
+                        });
+                        this.Folderform = {name: "", icon: ""};
+                        this.getFolder();
+                    }
+                })
+                .catch((error) => {
+                    this.$notify.error({
+                        title: "错误 请检查",
+                        message: error,
+                    });
+                });
+        },
+        updateFolder(FolderRow) {
+            var form = {
+                id: FolderRow.id,
+                name: FolderRow.name,
+                icon: FolderRow.icon,
+                weight: FolderRow.weight,
+                password: FolderRow.password,
+                info: FolderRow.info,
+            };
+            folderService
+                .updateFolder(form)
+                .then((res) => {
+                    if (res.code > 0) {
+                        this.$notify.error({
+                            title: "更新失败",
+                            message: res.msg,
+                        });
+                    } else {
+                        this.$notify({
+                            title: "更新成功!",
+                            type: "success",
+                            duration: "800",
+                        });
+                        this.getFolder();
+                    }
+                })
+                .catch((error) => {
+                    this.$notify.error({
+                        title: "错误 请检查",
+                        message: error,
+                    });
+                });
+        },
+        deleteFolder(Folder) {
+            var form = {id: Folder.id};
 
-      folderService
-        .deleteFolder(form)
-        .then((res) => {
-          if (res.code > 0) {
-            this.$notify.error({
-              title: "删除失败",
-              message: res.msg,
-            });
-          } else {
-            this.$notify({
-              title: "删除成功!",
-              type: "success",
-              duration: "800",
-            });
-            this.getFolder();
-          }
-        })
-        .catch((error) => {
-          this.$notify.error({
-            title: "错误 请检查",
-            message: error,
-          });
-        });
+            folderService
+                .deleteFolder(form)
+                .then((res) => {
+                    if (res.code > 0) {
+                        this.$notify.error({
+                            title: "删除失败",
+                            message: res.msg,
+                        });
+                    } else {
+                        this.$notify({
+                            title: "删除成功!",
+                            type: "success",
+                            duration: "800",
+                        });
+                        this.getFolder();
+                    }
+                })
+                .catch((error) => {
+                    this.$notify.error({
+                        title: "错误 请检查",
+                        message: error,
+                    });
+                });
+        },
+        iconHandleFolder(content) {
+            if (content) {
+                this.$emit("chooseIcon", content);
+                return;
+            }
+            this.$emit("chooseIcon", this.Folderform);
+        },
     },
-    iconHandleFolder(content) {
-      if (content) {
-        this.$emit("chooseIcon", content);
-        return;
-      }
-      this.$emit("chooseIcon", this.Folderform);
+    components: {},
+    // beforeMount() {
+    // 	this.getUser()
+    // },
+    watch: {
+        userID: function () {
+            (this.uid = this.userID), this.getFolder();
+        },
     },
-  },
-  components: {},
-  // beforeMount() {
-  // 	this.getUser()
-  // },
-  watch: {
-    userID: function () {
-      (this.uid = this.userID), this.getFolder();
-    },
-  },
 };
 </script>
 
 <style>
 .onerow {
-  margin: 5px auto 0;
+    margin: 5px auto 0;
 }
+
 .onerow:hover {
-  margin: 5px auto 20px;
+    margin: 5px auto 20px;
 }
+
 #bookmarks i {
-  transform: translateX(-6px);
+    transform: translateX(-6px);
 }
 </style>

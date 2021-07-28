@@ -13,11 +13,11 @@
         <!-- 用户自定义内容 -->
         <br>
         <div v-for="Folder in Folders" :key="Folder.id">
-            # {{Folder.name}}<br><br>
+            # {{ Folder.name }}<br><br>
             | 名称 | 链接 | 介绍 |<br>
             | ---- | ---- | ---- |
             <div v-for="link in Folder.links" :key="link.id">
-                | {{ link.name }} | {{link.url}} | {{link.info}} |        
+                | {{ link.name }} | {{ link.url }} | {{ link.info }} |
             </div>
             <br>
         </div>
@@ -25,55 +25,56 @@
 </template>
 
 <script>
-import { userService,siteService } from '@/common/api'
+import {userService, siteService} from '@/common/api'
 
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
 
 export default {
-    data(){
-		return{
-			userid: "",
-			username: "admin",
-			Folders: [],
-		}
+    data() {
+        return {
+            userid: "",
+            username: "admin",
+            Folders: [],
+        }
     },
     methods: {
-		load(uname){
-			// userName取ID
-			userService.UserID(uname).then((res) => {
-				if (res.code > 0 ){
-						this.$alert('', '无此用户', {
-						confirmButtonText: '回主页',
-						callback: () => {
-							window.location.href="https://xydh.fun"
-						}
-					});
-					return
-				} else {
-					this.userid = res.data.id
-					this.getAll(this.userid)
-				}
-			})
-		},
-		// 取所有书签[文件夹、书签]
-		getAll(userid){
-			siteService.getAll(userid).then((res) => {
-				if (res.code > 0 ){
-						this.$alert('', '请勿滥用此功能', {
-						confirmButtonText: '回主页',
-						callback: () => {
-							this.$router.push({name:'Home'}).catch(() => { })
-						}
-					});
-					return
-				}else{
-					this.Folders = res.data
-					this.Folders.sort(function(f1,f2){
-						return f1.weight-f2.weight//weight
-					})
-				}
-			})
+        load(uname) {
+            // userName取ID
+            userService.UserID(uname).then((res) => {
+                if (res.code > 0) {
+                    this.$alert('', '无此用户', {
+                        confirmButtonText: '回主页',
+                        callback: () => {
+                            window.location.href = "https://xydh.fun"
+                        }
+                    });
+                    return
+                } else {
+                    this.userid = res.data.id
+                    this.getAll(this.userid)
+                }
+            })
+        },
+        // 取所有书签[文件夹、书签]
+        getAll(userid) {
+            siteService.getAll(userid).then((res) => {
+                if (res.code > 0) {
+                    this.$alert('', '请勿滥用此功能', {
+                        confirmButtonText: '回主页',
+                        callback: () => {
+                            this.$router.push({name: 'Home'}).catch(() => {
+                            })
+                        }
+                    });
+                    return
+                } else {
+                    this.Folders = res.data
+                    this.Folders.sort(function (f1, f2) {
+                        return f1.weight - f2.weight//weight
+                    })
+                }
+            })
         },
     },
 }

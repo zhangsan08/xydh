@@ -3,11 +3,13 @@
         <!-- <p>热度: {{ userview }} [后期推出排行榜功能]</p> -->
         <el-form :model="SiteForm" label-width="150px" label-position="right">
             <el-form-item label="站点名">
-                <el-input type="text" v-model="SiteForm.name" minlength="2" maxlength="10" placeholder="2-10字符"></el-input>
+                <el-input type="text" v-model="SiteForm.name" minlength="2" maxlength="10"
+                          placeholder="2-10字符"></el-input>
             </el-form-item>
-            
+
             <el-form-item label="站点简介">
-                <el-input type="text" v-model="SiteForm.info" minlength="0" maxlength="100" placeholder="可为空"></el-input>
+                <el-input type="text" v-model="SiteForm.info" minlength="0" maxlength="100"
+                          placeholder="可为空"></el-input>
             </el-form-item>
 
             <!-- <el-form-item label="顶部开关">
@@ -18,17 +20,19 @@
 
             <el-form-item label="自定义背景">
                 <el-switch
-                v-model="SiteForm.bg_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="图片背景" inactive-text="纯色背景">
+                    v-model="SiteForm.bg_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="图片背景"
+                    inactive-text="纯色背景">
                 </el-switch>
-                 <div v-if="SiteForm.bg_switch">
-                    <el-input type="text" v-model="SiteForm.bg" minlength="0" maxlength="100" placeholder="请自行选择图床上传背景图片 不填则是默认"></el-input>
+                <div v-if="SiteForm.bg_switch">
+                    <el-input type="text" v-model="SiteForm.bg" minlength="0" maxlength="100"
+                              placeholder="请自行选择图床上传背景图片 不填则是默认"></el-input>
                     <!-- <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62946'>怎么自定义背景图片?</a> -->
                 </div>
                 <div v-else>
                     <el-color-picker v-model="SiteForm.bg_color" :predefine="predefineColors"></el-color-picker>
                 </div>
             </el-form-item>
-            
+
             <el-form-item label="字体颜色">
                 <el-color-picker v-model="SiteForm.font_color" :predefine="predefineColors"></el-color-picker>
             </el-form-item>
@@ -36,10 +40,10 @@
             <el-form-item label="背景特效">
                 <el-select v-model="SiteForm.bglizi" placeholder="请选择">
                     <el-option
-                    v-for="item in texiao"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                        v-for="item in texiao"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -50,13 +54,18 @@
             <!-- 音乐模块 -->
             <el-form-item label="音乐">
                 <el-switch
-                    v-model="music.open" active-color="#13ce66" inactive-color="#ff4949" active-text="开启" inactive-text="关闭">
+                    v-model="music.open" active-color="#13ce66" inactive-color="#ff4949" active-text="开启"
+                    inactive-text="关闭">
                 </el-switch>
                 <div v-if="music.open">
                     <p>普通用户添加音乐后只能加载2首，VIP用户可添加更多</p>
                     <el-form :inline="true">
-                        <el-button type="success" @click="addToList(music.list,1,1)" :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表头</el-button>
-                        <el-button type="success" @click="addToList(music.list,1,2)" :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表尾</el-button>
+                        <el-button type="success" @click="addToList(music.list,1,1)"
+                                   :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表头
+                        </el-button>
+                        <el-button type="success" @click="addToList(music.list,1,2)"
+                                   :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表尾
+                        </el-button>
                     </el-form>
                     <el-table :data="music.list" stripe>
                         <el-table-column label="歌曲名" width="200">
@@ -84,7 +93,8 @@
                             label="操作"
                             width="80">
                             <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="deleteFromList(music.list,scope.row)" > 删除</el-button>                         
+                                <el-button size="mini" type="danger" @click="deleteFromList(music.list,scope.row)"> 删除
+                                </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -94,14 +104,19 @@
             <!-- 自定义顶部和底部 -->
             <el-form-item label="顶部开关">
                 <el-switch
-                    v-model="top_bottom.top_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="开启" inactive-text="关闭" :disabled="!isVIP">
+                    v-model="top_bottom.top_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="开启"
+                    inactive-text="关闭" :disabled="!isVIP">
                 </el-switch>
             </el-form-item>
             <el-form-item label="自定义友链" :disabled="!isVIP">
                 <div>
                     <el-form :inline="true">
-                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2, 1)" :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表头</el-button>
-                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2, 2)" :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表尾</el-button>
+                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2, 1)"
+                                   :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表头
+                        </el-button>
+                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2, 2)"
+                                   :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表尾
+                        </el-button>
                     </el-form>
                     <el-table :data="top_bottom.bottom_list" stripe>
                         <el-table-column label="文字" width="300">
@@ -118,31 +133,34 @@
                             label="操作"
                             width="80">
                             <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="deleteFromList(top_bottom.bottom_list, scope.row)" > 删除</el-button>                         
+                                <el-button size="mini" type="danger"
+                                           @click="deleteFromList(top_bottom.bottom_list, scope.row)"> 删除
+                                </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                 </div>
             </el-form-item>
 
-           <el-divider content-position="center">
-            <el-popconfirm v-if="userID!=7163" confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red" title="确定更新站点信息吗" @confirm="updateSite()">
-                <el-button slot="reference" type="primary">更新站点信息</el-button>
-            </el-popconfirm>
-           </el-divider>
+            <el-divider content-position="center">
+                <el-popconfirm v-if="userID!=7163" confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info"
+                               iconColor="red" title="确定更新站点信息吗" @confirm="updateSite()">
+                    <el-button slot="reference" type="primary">更新站点信息</el-button>
+                </el-popconfirm>
+            </el-divider>
         </el-form>
     </div>
-    
+
 </template>
 
 <script>
 
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
-import { siteService } from '@/common/api'
+import {siteService} from '@/common/api'
 
 export default {
-    props:["userID","isVIP"],
+    props: ["userID", "isVIP"],
     data() {
         return {
             userview: 0,
@@ -160,26 +178,26 @@ export default {
                 top_bottom: "",
             },
             texiao: [
-                {value: 0,label: '关闭'}, 
-                {value: 1,label: '繁星点点'},
-                {value: 2,label: '科技线条'},
-                {value: 3,label: '搞怪猫(会使背景图片失效)'},
-                {value: 4,label: '吹气泡(点击生成气泡)'},
+                {value: 0, label: '关闭'},
+                {value: 1, label: '繁星点点'},
+                {value: 2, label: '科技线条'},
+                {value: 3, label: '搞怪猫(会使背景图片失效)'},
+                {value: 4, label: '吹气泡(点击生成气泡)'},
             ],
-            predefineColors: ['#000000','#ffffff','#ff4500','#ff8c00','#ffd700','#90ee90','#00ced1','#1e90ff','#c71585',],
+            predefineColors: ['#000000', '#ffffff', '#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff', '#c71585',],
             music: {
                 open: false,
                 list: [],
             },
-            top_bottom :{
+            top_bottom: {
                 top_switch: true,
                 bottom_list: [],
             },
         }
     },
     methods: {
-        getSite(){
-            siteService.getSitebyID(this.userID).then((res) =>{
+        getSite() {
+            siteService.getSitebyID(this.userID).then((res) => {
                 this.SiteForm.name = res.data.name
                 this.SiteForm.info = res.data.info
                 this.SiteForm.bg = res.data.bg
@@ -195,32 +213,32 @@ export default {
                 if (res.data.top_bottom) {
                     this.top_bottom = JSON.parse(res.data.top_bottom);
                 }
-                
+
                 this.userview = res.data.view
             })
         },
-        updateSite(){
+        updateSite() {
             this.SiteForm.music = JSON.stringify(this.music)
             this.SiteForm.top_bottom = JSON.stringify(this.top_bottom)
-            siteService.updateSite(this.SiteForm).then((res) =>{
+            siteService.updateSite(this.SiteForm).then((res) => {
                 if (res.code > 0) {
                     this.$notify.error({
-                    title: "更新失败",
-                    message: res.msg
+                        title: "更新失败",
+                        message: res.msg
                     });
                 } else {
                     this.$notify({
-                    title: "更新完成😊",
-                    type: "success",
+                        title: "更新完成😊",
+                        type: "success",
                     });
                 }
             })
         },
-        addToList(list, x, where){
-            if (x==1) {
-                var item ={title: "",artist: "",url: ""}              
-            } else if (x==2){
-                item = {title: "",url: ""}
+        addToList(list, x, where) {
+            if (x == 1) {
+                var item = {title: "", artist: "", url: ""}
+            } else if (x == 2) {
+                item = {title: "", url: ""}
             }
             switch (where) {
                 case 1:
@@ -233,20 +251,18 @@ export default {
                     break;
             }
         },
-        deleteFromList(list, item){
+        deleteFromList(list, item) {
             var index = list.indexOf(item)
             if (index !== -1) {
                 list.splice(index, 1)
             }
         }
     },
-    components:{
-
-    },
-    beforeMount(){
+    components: {},
+    beforeMount() {
     },
     watch: {
-        userID: function() {
+        userID: function () {
             this.getSite()
         },
     }
@@ -263,9 +279,10 @@ export default {
 }
 
 .siteForm .el-input {
-  max-width: 400px;
+    max-width: 400px;
 }
+
 .siteForm .el-input__inner {
-  border-radius: 20px;
+    border-radius: 20px;
 }
 </style>
