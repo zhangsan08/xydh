@@ -4,6 +4,7 @@ dist
 docker
 package*.json
 package-lock.json
+.env*
 
 # local env files
 .env.local
