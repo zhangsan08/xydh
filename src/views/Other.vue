@@ -77,7 +77,25 @@ export default {
         },
     },
     beforeMount() {
-
+        var ws = new WebSocket("ws://localhost:3000/api/ws/v1/ping");
+        //连接打开时触发
+        ws.onopen = function() {
+            console.log("Connection open ...");
+            ws.send("Hello WebSockets1!");
+            ws.send("Hello WebSockets2!");
+            ws.send("Hello WebSockets3!");
+            ws.send("Hello WebSockets4!");
+            //如果我们一定时间不通信，TCP就会断开，无论我们是否手动断开
+            //ws.close();
+        };
+        //接收到消息时触发
+        ws.onmessage = function(evt) {
+            console.log("Received Message: " + evt.data);
+        };
+        //连接关闭时触发
+        ws.onclose = function() {
+            console.log("Connection closed.");
+        };
     },
 };
 </script>

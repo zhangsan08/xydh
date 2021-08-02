@@ -86,7 +86,7 @@
             </el-row>
         </el-card>
         <!-- 更删 -->
-        <el-divider>更新书签</el-divider>
+        <el-divider>更新书签-请选择文件夹</el-divider>
         <div class="mainbox">
             <div
                 v-for="Folder in Folders"
