@@ -61,10 +61,15 @@
             </div>
             <!-- 猿选 -->
             <el-col v-if="!is_vip" :xs="24" :sm="12" :md="8" :xl="6">
-                <div class="folder totop" :style="{height: screenWidth > 768 ? '180px' : 'auto'}">
-                    <div class="foldername">
-                        <p>猿选</p>
-                    </div>
+                <div class="foldername">
+                    <p>猿选</p>
+                    <el-tooltip content="展开文件夹" placement="top">
+                        <div id="openFolder" @click="addToTabs(yuanxuan)">
+                            <i class="fa fa-arrows-alt"></i>
+                        </div>
+                    </el-tooltip>
+                </div>
+                <div class="folder totop" :style="{height: screenWidth > 768 ? '140px' : 'auto'}">
                     <div v-for="link in yuanxuan" :key="link.id">
                         <el-col :span="8">
                             <div class="link">
@@ -83,32 +88,36 @@
             <!-- 用户自定义内容 -->
             <div v-for="(Folder, index) in Folders" :key="Folder.id">
                 <el-col :xs="24" :sm="12" :md="8" :xl="6">
-                    <div class="folder totop" :style="{height: screenWidth > 768 ? '180px' : 'auto'}" :id="Folder.id" onselectstart="return false;">
-                        <div class="foldername" :id="Folder.name">
-                            <p v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</p>
-                            <p v-else>{{ Folder.name }}</p>
-                        </div>
-                        <div class="inputPWD" v-if="Folder.need_password">
-                            <!-- 如果文件夹需要密码 -->
-                            <el-input type="text" autosize v-model="passwords[index]" :placeholder="Folder.info" clearable @keyup.enter.native="Sou(url + txt)">
-                                <span slot="append" type="text" @click="GetPWDFolder(index, Folder.id, passwords[index])">确定</span>
-                            </el-input>
-                        </div>
-                        <div class="links" v-else v-for="link in Folder.links" :key="link.id">
-                            <el-col :span="8">
-                                <div class="link">
-                                    <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                                        <span v-if="link.info" class="tooltiptext"
-                                            ><i class="fa fa-info-circle">{{ link.info }}</i></span
-                                        >
-                                        <p v-if="link.icon"><i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}</p>
-                                        <p v-else>{{ link.name }}</p>
-                                    </a>
-                                </div>
-                            </el-col>
-                        </div>
-                        <div id="openFolder" @click="addToTabs(Folder)">
-                            <i class="fa fa-plus"></i>
+                    <div class="foldername" :id="Folder.name">
+                        <p v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</p>
+                        <p v-else>{{ Folder.name }}</p>
+                        <el-tooltip content="展开文件夹" placement="top">
+                            <div id="openFolder" @click="addToTabs(Folder)">
+                                <i class="fa fa-arrows-alt"></i>
+                            </div>
+                        </el-tooltip>
+                    </div>
+                    <div class="folder totop" :style="{height: screenWidth > 768 ? '140px' : 'auto'}" :id="Folder.id" onselectstart="return false;">
+                        <div class="linkbox">
+                            <div class="inputPWD" v-if="Folder.need_password">
+                                <!-- 如果文件夹需要密码 -->
+                                <el-input type="text" autosize v-model="passwords[index]" :placeholder="Folder.info" clearable @keyup.enter.native="Sou(url + txt)">
+                                    <span slot="append" type="text" @click="GetPWDFolder(index, Folder.id, passwords[index])">确定</span>
+                                </el-input>
+                            </div>
+                            <div class="links" v-else v-for="link in Folder.links" :key="link.id">
+                                <el-col :span="8">
+                                    <div class="link">
+                                        <a @click="goToUrl(link)" target="_blank" rel="nofollow">
+                                            <span v-if="link.info" class="tooltiptext"
+                                                ><i class="fa fa-info-circle">{{ link.info }}</i></span
+                                            >
+                                            <p v-if="link.icon"><i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}</p>
+                                            <p v-else>{{ link.name }}</p>
+                                        </a>
+                                    </div>
+                                </el-col>
+                            </div>
                         </div>
                     </div>
                 </el-col>
@@ -448,10 +457,9 @@ body {
 .folder {
     background: rgba(0, 0, 0, 0.03);
     /* background: rgba(255, 255, 255, 0.06); */
-    /* height: 180px; */
+    min-height: 140px;
     margin: 12px 20px;
-    padding: 5px;
-
+    padding: 0 5px 5px;
     border-radius: 20px;
     /* 滚动条 */
     overflow: auto;
@@ -466,9 +474,16 @@ body {
 
 .folder:hover {
     background: rgba(0, 0, 0, 0.6);
+    /* background: rgb(255, 255, 255, 0.8); */
     color: white;
 }
-
+.foldername {
+    position: relative;
+    /* position: sticky; */
+    top: 0;
+    left: 0;
+    padding-top: 6px;
+}
 .foldername p {
     font-size: 16px;
     letter-spacing: 5px;
@@ -578,10 +593,13 @@ a {
 }
 #openFolder {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 1px;
+    top: 14px;
     width: 20px;
     height: 20px;
     cursor: pointer;
+}
+#openFolder:hover {
+    color: gold;
 }
 </style>

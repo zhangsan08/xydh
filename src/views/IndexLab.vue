@@ -16,7 +16,20 @@
                     <p><img width="150px" src="https://pic.downk.cc/item/5ecfb96ac2a9a83be569795b.png" /></p>
                 </el-tab-pane>
                 <el-tab-pane v-for="Folder in Folders" :key="Folder.id" :label="Folder.name" :name="Folder.name" closable class="Folderbox">
-                    <div v-for="link in Folder.links" :key="link.id" @click="openLink(link.url)" class="minlink">{{ link.name }}</div>
+                    <el-card v-for="link in Folder.links" :key="link.id" shadow="hover">
+                        <div class="cardClickBox" @click="openLink(link.url)">
+                            <div class="leftbox">
+                                <div class="linkicon">
+                                    <i :class="'fa fa-' + link.icon" v-if="link.icon"></i>
+                                    <i :class="'fa fa-question-circle-o'" v-else></i>
+                                </div>
+                            </div>
+                            <div class="rightbox">
+                                <div class="linkname">{{ link.name }}</div>
+                                <div class="linkinfo">{{ link.info }}</div>
+                            </div>
+                        </div>
+                    </el-card>
                 </el-tab-pane>
             </el-tabs>
         </div>
@@ -36,12 +49,12 @@ export default {
             this.$parent.switchLab()
         },
         removeTab(targetName) {
-            this.Folders.filter(function (element, index, array) {
-                if (element.name == targetName) array.splice(index, 1)
+            let deletename = this.Folders.filter(function (element, index, array) {
+                if (element.name == targetName) return array.splice(index, 1)
             })
-            if (this.Folders[0]) {
+            if (this.Folders[0] && this.currentTabName == deletename[0].name) {
                 this.currentTabName = this.Folders[this.Folders.length - 1].name
-            } else {
+            } else if (!this.Folders[0]) {
                 this.currentTabName = "留言板"
             }
         },
@@ -96,20 +109,52 @@ export default {
     position: relative;
     align-items: center;
 }
-.minlink {
-    float: left;
+.el-card {
     box-sizing: border-box;
-    height: 30px;
-    /* line-height: 20px; */
-    transform: translate(0, 0);
-    border: 0.3px solid #000;
-    color: #000;
-    border-radius: 8px;
-    padding: 0px 10px;
+    position: relative;
+    float: left;
+    margin: 5px 20px;
+    min-width: 400px;
+    height: 70px;
+    padding: 0;
+}
+.cardClickBox {
+    min-height: 60px;
+    min-width: 350px;
     cursor: pointer;
-    background-color: #fff;
-    margin: 5px 5px;
-    text-align: center;
+}
+.cardClickBox:hover {
+    color: rgb(0, 153, 255);
+}
+.leftbox {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(20px, -50%);
+    width: 50px;
+    height: 50px;
+    line-height: 48px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+}
+.rightbox {
+    position: absolute;
+    top: 50%;
+    left: 85px;
+    max-width: 250px;
+    max-height: 50px;
+    text-align: left;
+    transform: translate(0, -50%);
+}
+.linkicon {
+    font-size: 25px;
+}
+.linkname {
+    font-size: 18px;
+    font-weight: 700;
+}
+.linkinfo {
+    font-size: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
