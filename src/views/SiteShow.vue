@@ -459,7 +459,7 @@ body {
     /* background: rgba(255, 255, 255, 0.06); */
     min-height: 140px;
     margin: 12px 20px;
-    padding: 0 5px 5px;
+    padding: 5px 0px 0px 0px;
     border-radius: 20px;
     /* 滚动条 */
     overflow: auto;
@@ -474,12 +474,10 @@ body {
 
 .folder:hover {
     background: rgba(0, 0, 0, 0.6);
-    /* background: rgb(255, 255, 255, 0.8); */
     color: white;
 }
 .foldername {
     position: relative;
-    /* position: sticky; */
     top: 0;
     left: 0;
     padding-top: 6px;
@@ -489,7 +487,7 @@ body {
     letter-spacing: 5px;
     font-weight: bolder;
     margin: 6px auto 6px;
-    cursor: pointer;
+    cursor: default;
 }
 
 .links {
