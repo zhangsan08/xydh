@@ -64,7 +64,7 @@
                 <div class="foldername">
                     <p>猿选</p>
                     <el-tooltip content="展开文件夹" placement="top">
-                        <div id="openFolder" @click="addToTabs(yuanxuan)">
+                        <div class="openFolder" @click="addToTabs(yuanxuan)">
                             <i class="fa fa-arrows-alt"></i>
                         </div>
                     </el-tooltip>
@@ -92,7 +92,7 @@
                         <p v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</p>
                         <p v-else>{{ Folder.name }}</p>
                         <el-tooltip content="展开文件夹" placement="top">
-                            <div id="openFolder" @click="addToTabs(Folder)">
+                            <div class="openFolder" @click="addToTabs(Folder)">
                                 <i class="fa fa-arrows-alt"></i>
                             </div>
                         </el-tooltip>
@@ -342,24 +342,24 @@ export default {
             })
         },
         // 展开folder
-        unfolder(id) {
-            if (id == 0) {
-                var folders = document.getElementsByClassName("folder")
-                for (var i = 0; i < folders.length; i++) {
-                    folders[i].setAttribute("style", "height:auto;")
-                }
-            } else {
-                document.getElementById(id).setAttribute("style", "height:auto;")
+        unfolder() {
+            var folders = document.getElementsByClassName("folder")
+            for (var i = 0; i < folders.length; i++) {
+                folders[i].setAttribute("style", "height:auto;")
+            }
+            var openFolderBtns = document.getElementsByClassName("openFolder")
+            for (var j = 0; j < openFolderBtns.length; j++) {
+                openFolderBtns[j].setAttribute("style", "display:none;")
             }
         },
-        enfolder(id) {
-            if (id == 0) {
-                var folders = document.getElementsByClassName("folder")
-                for (var i = 0; i < folders.length; i++) {
-                    folders[i].setAttribute("style", "height:180px;")
-                }
-            } else {
-                document.getElementById(id).setAttribute("style", "height:180px;")
+        enfolder() {
+            var folders = document.getElementsByClassName("folder")
+            for (var i = 0; i < folders.length; i++) {
+                folders[i].setAttribute("style", "height:180px;")
+            }
+            var openFolderBtns = document.getElementsByClassName("openFolder")
+            for (var j = 0; j < openFolderBtns.length; j++) {
+                openFolderBtns[j].setAttribute("style", "display:inline;")
             }
         },
         addToTabs(folder) {
@@ -589,7 +589,7 @@ a {
     bottom: 10px;
     z-index: 999;
 }
-#openFolder {
+.openFolder {
     position: absolute;
     right: 1px;
     top: 14px;
@@ -597,7 +597,7 @@ a {
     height: 20px;
     cursor: pointer;
 }
-#openFolder:hover {
+.openFolder:hover {
     color: gold;
 }
 </style>
