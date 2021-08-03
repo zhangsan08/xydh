@@ -27,7 +27,7 @@
         <div class="Lab totop" v-if="labSwitch">
             <div class="hidden-sm-and-up" style="height: 50px"></div>
             <transition name="el-zoom-in-left">
-                <IndexLab :lybID="lybID" :Folders="TabFolders" :AimName="AimFolderName"></IndexLab>
+                <IndexLab :lybID="lybID" :Folders="TabFolders" :AimName="AimFolderName" v-Clickoutside="switchLab"></IndexLab>
             </transition>
         </div>
 
@@ -166,6 +166,7 @@ import Header from "@/components/Header.vue"
 import Footer from "@/components/Footer.vue"
 import Particle from "@/components/particle.vue"
 import Aplayer from "vue-aplayer"
+import Clickoutside from "element-ui/src/utils/clickoutside"
 
 export default {
     name: "ShowSite",
@@ -381,6 +382,9 @@ export default {
         // RightBar,
         Particle,
         Aplayer,
+    },
+    directives: {
+        Clickoutside,
     },
     beforeMount() {
         // this.$message({
