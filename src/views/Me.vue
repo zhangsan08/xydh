@@ -136,6 +136,7 @@
                     </el-col>
                     <el-col :xs="24" :sm="12">
                         <el-card header="快捷添加书签" shadow="hover" class="card">
+                            <a target='_blank' rel='nofollow' href='https://www.bilibili.com/video/BV1tf4y1J7yz/'>使用教程</a>
                             <div v-if="showjscode">
                                 <div style="height: 10px"></div>
                                 使用方法一：<a :href="jscode">快捷添加书签</a>
