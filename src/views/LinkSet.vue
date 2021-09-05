@@ -1,8 +1,10 @@
 <template>
     <div>
         <!-- 添加 -->
-        隐私与法律免责声明: 炫猿会记录你的信息, 你所添加的每一个链接都将负法律责任
-        <el-card header="添加书签" shadow="hover" class="card" :model="linkform">
+        <div style="color:red">隐私与法律免责声明: 你所添加的每一个链接都将负法律责任</div> 
+        <el-divider>添加书签 <a target='_blank' rel='nofollow' href='https://www.bilibili.com/video/BV1tf4y1J7yz/'>快速加书签必看教程</a></el-divider>
+        <el-card shadow="hover" class="card" :model="linkform">
+            
             <el-row type="flex" justify="center">
                 <el-col :span="8">名称</el-col>
                 <el-col :span="16">链接</el-col>

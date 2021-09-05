@@ -23,7 +23,9 @@ export default {
     data() {
         return {
             Notice: [
-                {name: "v1.1.0 特性", list: [{li: " 背景音乐上线"}]},
+                {name: "v1.2.0 特性", list: [{li: "展开文件夹功能上线"}]},
+                {name: "v1.1.1 特性", list: [{li: "书签小图标可以自选了"}]},
+                {name: "v1.1.0 特性", list: [{li: "背景音乐上线"}]},
                 {name: "v1.0.1 特性", list: [{li: "私密文件夹可自定义引导语"}]},
                 {name: "v1.0.0 特性", list: [{li: "私密文件夹上线"}]},
                 {name: "v0.8.3 特性", list: [{li: "花果山上线"}]},

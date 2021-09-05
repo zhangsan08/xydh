@@ -12,7 +12,7 @@
             <a target='_blank' rel='follow' href='https://www.runningcheese.com/'>奔跑中的奶酪</a>&#160;
             <!-- <a target='_blank' rel='follow' href='http://lackk.com/'>兰客导航</a>&#160; -->
             <a target='_blank' rel='follow' href='https://met.red/'>遇见数据仓库</a>&#160;
-            <a target='_blank' rel='follow' href='https://www.24kdh.com/'>24k导航</a>&#160;
+            <a target='_blank' rel='follow' href='https://www.24kdh.cn/'>24k导航</a>&#160;
             <a target='_blank' rel='follow' href='https://creatorsdaily.com/'>创造者日报</a>&#160;
             <a target='_blank' rel='follow' href='http://zyplayer.fun/'>ZY Player</a>&#160;
             <a target='_blank' rel='follow' href='http://www.qyun.vip/'>Q云</a>&#160;

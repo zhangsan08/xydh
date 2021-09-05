@@ -1,23 +1,23 @@
 <template>
     <div class="bg">
-        <div v-if="bglizi>0">
+        <div v-if="bglizi > 0">
             <Particle :bglizi="bglizi"></Particle>
         </div>
 
         <div class="totop" v-if="top_bottom.top_switch">
-            <Header :historySwitch=historySwitch :navSwitch=navSwitch :Folders=Folders :myname=myname></Header>
+            <Header :historySwitch="historySwitch" :navSwitch="navSwitch" :Folders="Folders" :myname="myname"></Header>
             <!-- <RightBar></RightBar> -->
         </div>
 
         <!-- 名称简介 -->
-        <div style="margin:0 auto 0;">
+        <div style="margin: 0 auto 0">
             <span class="siteName">{{ sitename }}</span>
-            <div style="margin:10px auto"></div>
+            <div style="margin: 10px auto"></div>
             <!-- <p class="siteInfo">{{ siteinfo }}</p> -->
             {{ siteinfo }}
         </div>
 
-        <div style="height:80px" v-if="!navSwitch && !labSwitch"></div>
+        <div style="height: 80px" v-if="!navSwitch && !labSwitch"></div>
         <!-- 搜索框 -->
         <div class="search">
             <SearchTool></SearchTool>
@@ -25,9 +25,9 @@
 
         <!-- 点击实验室按钮会打开实验室页面 -->
         <div class="Lab totop" v-if="labSwitch">
-            <div class="hidden-sm-and-up" style="height:50px;"></div>
+            <div class="hidden-sm-and-up" style="height: 50px"></div>
             <transition name="el-zoom-in-left">
-                <IndexLab :lybID=lybID></IndexLab>
+                <IndexLab :lybID="lybID" :Folders="TabFolders" :AimName="AimFolderName" v-Clickoutside="switchLab"></IndexLab>
             </transition>
         </div>
 
@@ -45,35 +45,39 @@
             </div>
         </el-row>
 
-        <div class="bookmark" v-if="!labSwitch&&navSwitch">
+        <div class="bookmark" v-if="!labSwitch && navSwitch">
             <!-- 手机端快捷导航 -->
             <div class="hidden-sm-and-up totop">
                 <el-divider>快捷导航</el-divider>
-                <div style="padding:10px 10px;">
+                <div style="padding: 10px 10px">
                     <el-col :span="6" v-for="Folder in Folders" :key="Folder.id">
-                        <div style="margin:5px auto">
-                            <a :href="'#'+Folder.name" style="font-size:16px">
+                        <div style="margin: 5px auto">
+                            <a :href="'#' + Folder.name" style="font-size: 16px">
                                 {{ Folder.name }}
                             </a>
                         </div>
                     </el-col>
-
                 </div>
             </div>
             <!-- 猿选 -->
             <el-col v-if="!is_vip" :xs="24" :sm="12" :md="8" :xl="6">
-                <div class="folder totop" :style="{height:(screenWidth>768?'180px':'auto')}">
-                    <div class="foldername">
-                        <p>猿选</p>
-                    </div>
+                <div class="foldername">
+                    <p>猿选</p>
+                    <el-tooltip content="展开文件夹" placement="top">
+                        <div class="openFolder" @click="addToTabs(yuanxuan)">
+                            <i class="fa fa-arrows-alt"></i>
+                        </div>
+                    </el-tooltip>
+                </div>
+                <div class="folder totop" :style="{height: screenWidth > 768 ? '140px' : 'auto'}">
                     <div v-for="link in yuanxuan" :key="link.id">
                         <el-col :span="8">
                             <div class="link">
                                 <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                                    <span v-if="link.info" class="tooltiptext"><i class="fa fa-info-circle">{{
-                                            link.info
-                                        }}</i></span>
-                                    <p v-if="link.icon"><i :class="'fa fa-'+link.icon"></i>&#160;{{ link.name }}</p>
+                                    <span v-if="link.info" class="tooltiptext"
+                                        ><i class="fa fa-info-circle">{{ link.info }}</i></span
+                                    >
+                                    <p v-if="link.icon"><i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}</p>
                                     <p v-else>{{ link.name }}</p>
                                 </a>
                             </div>
@@ -82,31 +86,38 @@
                 </div>
             </el-col>
             <!-- 用户自定义内容 -->
-            <div v-for="(Folder,index) in Folders" :key="Folder.id">
+            <div v-for="(Folder, index) in Folders" :key="Folder.id">
                 <el-col :xs="24" :sm="12" :md="8" :xl="6">
-                    <div class="folder totop" :style="{height:(screenWidth>768?'180px':'auto')}" :id="Folder.id"
-                         onselectstart="return false;">
-                        <div class="foldername" :id="Folder.name">
-                            <p v-if="Folder.icon"><i :class="'fa fa-'+Folder.icon"></i>{{ Folder.name }}</p>
-                            <p v-else>{{ Folder.name }}</p>
-                        </div>
-                        <div class="inputPWD" v-if="Folder.need_password"> <!-- 如果文件夹需要密码 -->
-                            <el-input type="text" autosize v-model="passwords[index]" :placeholder="Folder.info"
-                                      clearable @keyup.enter.native="Sou(url+txt)">
-                                <span slot="append" type="text" @click="GetPWDFolder(index,Folder.id,passwords[index])">确定</span>
-                            </el-input>
-                        </div>
-                        <div class="links" v-else v-for="link in Folder.links" :key="link.id">
-                            <el-col :span="8">
-                                <div class="link">
-                                    <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                                        <span v-if="link.info" class="tooltiptext"><i
-                                            class="fa fa-info-circle">{{ link.info }}</i></span>
-                                        <p v-if="link.icon"><i :class="'fa fa-'+link.icon"></i>&#160;{{ link.name }}</p>
-                                        <p v-else>{{ link.name }}</p>
-                                    </a>
-                                </div>
-                            </el-col>
+                    <div class="foldername" :id="Folder.name">
+                        <p v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</p>
+                        <p v-else>{{ Folder.name }}</p>
+                        <el-tooltip content="展开文件夹" placement="top">
+                            <div class="openFolder" @click="addToTabs(Folder)">
+                                <i class="fa fa-arrows-alt"></i>
+                            </div>
+                        </el-tooltip>
+                    </div>
+                    <div class="folder totop" :style="{height: screenWidth > 768 ? '140px' : 'auto'}" :id="Folder.id" onselectstart="return false;">
+                        <div class="linkbox">
+                            <div class="inputPWD" v-if="Folder.need_password">
+                                <!-- 如果文件夹需要密码 -->
+                                <el-input type="text" autosize v-model="passwords[index]" :placeholder="Folder.info" clearable @keyup.enter.native="Sou(url + txt)">
+                                    <span slot="append" type="text" @click="GetPWDFolder(index, Folder.id, passwords[index])">确定</span>
+                                </el-input>
+                            </div>
+                            <div class="links" v-else v-for="link in Folder.links" :key="link.id">
+                                <el-col :span="8">
+                                    <div class="link">
+                                        <a @click="goToUrl(link)" target="_blank" rel="nofollow">
+                                            <span v-if="link.info" class="tooltiptext"
+                                                ><i class="fa fa-info-circle">{{ link.info }}</i></span
+                                            >
+                                            <p v-if="link.icon"><i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}</p>
+                                            <p v-else>{{ link.name }}</p>
+                                        </a>
+                                    </div>
+                                </el-col>
+                            </div>
                         </div>
                     </div>
                 </el-col>
@@ -114,8 +125,7 @@
         </div>
 
         <div class="amusic" v-if="music.open">
-            <aplayer :music="music.list[0]" :list="music.list" :narrow=false float :listFolded=true theme="#fff">
-            </aplayer>
+            <aplayer :music="music.list[0]" :list="music.list" :narrow="false" float :listFolded="true" theme="#fff"> </aplayer>
         </div>
 
         <!-- 跑马灯（暂时去掉了 本想留作广告位。发现接不到 -->
@@ -124,13 +134,13 @@
                 <!-- <Paomadeng v-if="ad"></Paomadeng>
                 <div v-else style="height:100px"></div> -->
                 <!-- 这里是200px 高的占位符。不然不好看 -->
-                <div style="height:200px" v-if="!navSwitch && !labSwitch"></div>
-                <div v-if="!is_vip || userid==1">
+                <div style="height: 200px" v-if="!navSwitch && !labSwitch"></div>
+                <div v-if="!is_vip || userid == 1">
                     <Footer></Footer>
                 </div>
-                <div v-else style="max-width:768px;margin: 30px auto 30px;text-align:center;">
-                    <div style="height:100px"></div>
-                    <li style="float:left;" v-for="link in top_bottom.bottom_list" :key="link.title">
+                <div v-else style="max-width: 768px; margin: 30px auto 30px; text-align: center">
+                    <div style="height: 100px"></div>
+                    <li style="float: left" v-for="link in top_bottom.bottom_list" :key="link.title">
                         <a @click="goToUrl(link)" target="_blank" rel="nofollow">
                             {{ link.title }}
                         </a>
@@ -138,35 +148,33 @@
                 </div>
             </div>
         </el-col>
-
-
     </div>
 </template>
 
 <script>
-
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
-import {siteService, linkService} from '@/common/api'
-import {cookieGet, cookieSet} from '@/common/cookie'
-import IndexLab from '@/views/IndexLab.vue'
-import {getUrl} from '@/common/pickup'
+import {siteService, linkService} from "@/common/api"
+import {cookieGet, cookieSet} from "@/common/cookie"
+import IndexLab from "@/views/IndexLab.vue"
+import {getUrl} from "@/common/pickup"
 
 // import RightBar from '@/components/RightBar'
-import SearchTool from '@/components/SearchTool.vue'
+import SearchTool from "@/components/SearchTool.vue"
 // import Paomadeng from '@/components/Paomadeng.vue'
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
-import Particle from '@/components/particle.vue'
-import Aplayer from 'vue-aplayer'
+import Header from "@/components/Header.vue"
+import Footer from "@/components/Footer.vue"
+import Particle from "@/components/particle.vue"
+import Aplayer from "vue-aplayer"
+import Clickoutside from "element-ui/src/utils/clickoutside"
 
 export default {
-    name: 'ShowSite',
+    name: "ShowSite",
     props: ["userName"],
     filters: {
         getDomain(url) {
             return getUrl(url)
-        }
+        },
     },
     data() {
         return {
@@ -183,9 +191,11 @@ export default {
             bglizi: 0,
             lybID: "",
             Folders: [],
+            TabFolders: [],
+            AimFolderName: "",
             yuanxuan: [],
             f_color: "white",
-            autoBgColor: '#fff',
+            autoBgColor: "#fff",
             cacheList: [],
             passwords: [],
             music: {
@@ -195,7 +205,7 @@ export default {
             top_bottom: {
                 top_switch: true,
                 bottom_list: [],
-            }
+            },
         }
     },
     methods: {
@@ -214,12 +224,12 @@ export default {
         load(uname) {
             siteService.getAllsiteandlinks(uname).then((res) => {
                 if (res.code > 0) {
-                    this.$alert('', '走迷路了', {
-                        confirmButtonText: '回主页',
+                    this.$alert("", "走迷路了", {
+                        confirmButtonText: "回主页",
                         callback: () => {
                             window.location.href = "https://xydh.fun"
-                        }
-                    });
+                        },
+                    })
                     return
                 } else {
                     // 加载用户
@@ -227,12 +237,12 @@ export default {
                     this.is_vip = res.data.target.is_vip
                     // 违规用户
                     if (res.data.target.level <= 0) {
-                        this.$alert('网络不是不法之地！请珍惜您的账号,账号申诉请联系邮箱 xuanyuandaohang@126.com 上传了非法网站的就不要申诉了', '该账号传播违法信息已被封禁', {
-                            confirmButtonText: '回主页',
+                        this.$alert("网络不是不法之地！请珍惜您的账号,账号申诉请联系邮箱 xuanyuandaohang@126.com 上传了非法网站的就不要申诉了", "该账号传播违法信息已被封禁", {
+                            confirmButtonText: "回主页",
                             callback: () => {
                                 window.location.href = "https://xydh.fun"
-                            }
-                        });
+                            },
+                        })
                         return
                     }
                     // 加载 Site
@@ -253,14 +263,13 @@ export default {
                     this.Folders = res.data.folderwith_links
                     // 文件夹排序
                     this.Folders.sort(function (f1, f2) {
-                        return f1.weight - f2.weight//weight
+                        return f1.weight - f2.weight //weight
                     })
                     // 文件夹里的每个书签排序
                     for (var i = 0; i < this.Folders.length; i++) {
-                        if (!this.Folders[i].links)
-                            continue
+                        if (!this.Folders[i].links) continue
                         this.Folders[i].links.sort(function (l1, l2) {
-                            return l2.weight - l1.weight//weight
+                            return l2.weight - l1.weight //weight
                         })
                     }
                     // 取当前登录的用户名
@@ -277,7 +286,7 @@ export default {
                 if (res.data) {
                     this.yuanxuan = res.data
                     this.yuanxuan.sort(function (l1, l2) {
-                        return l2.weight - l1.weight//weight
+                        return l2.weight - l1.weight //weight
                     })
                 } else {
                     this.yuanxuan = []
@@ -288,13 +297,13 @@ export default {
         GetPWDFolder(index, id, password) {
             siteService.getLinksbyfolderid(id, password).then((res) => {
                 if (res.code > 0) {
-                    this.$alert('请重试', '密码错误', {});
+                    this.$alert("请重试", "密码错误", {})
                     return
                 } else {
-                    this.Folders[index].need_password = false;
-                    this.Folders[index].links = res.data;
+                    this.Folders[index].need_password = false
+                    this.Folders[index].links = res.data
                     this.Folders[index].links.sort(function (l1, l2) {
-                        return l2.weight - l1.weight//weight
+                        return l2.weight - l1.weight //weight
                     })
                 }
             })
@@ -313,13 +322,13 @@ export default {
                 })
 
                 if (!existKey) {
-                    linkInfo['count'] = 1
+                    linkInfo["count"] = 1
                     cacheExist.push(linkInfo)
                 }
                 cookieSet("cacheLinkList", JSON.stringify(cacheExist))
             } else {
                 let array = []
-                linkInfo['count'] = 1
+                linkInfo["count"] = 1
                 array.push(linkInfo)
                 cookieSet("cacheLinkList", JSON.stringify(array))
             }
@@ -328,33 +337,41 @@ export default {
         },
         compare(array, key) {
             return array.sort(function (a, b) {
-                var x = a[key];
-                var y = b[key];
-                return ((y < x) ? -1 : (x > y) ? 1 : 0)
+                var x = a[key]
+                var y = b[key]
+                return y < x ? -1 : x > y ? 1 : 0
             })
         },
         // 展开folder
-        unfolder(id) {
-            if (id == 0) {
-                var folders = document.getElementsByClassName('folder');
-                for (var i = 0; i < folders.length; i++) {
-                    folders[i].setAttribute("style", "height:auto;");
-                }
-            } else {
-                document.getElementById(id).setAttribute("style", "height:auto;");
+        unfolder() {
+            var folders = document.getElementsByClassName("folder")
+            for (var i = 0; i < folders.length; i++) {
+                folders[i].setAttribute("style", "height:auto;")
+            }
+            var openFolderBtns = document.getElementsByClassName("openFolder")
+            for (var j = 0; j < openFolderBtns.length; j++) {
+                openFolderBtns[j].setAttribute("style", "display:none;")
             }
         },
-        enfolder(id) {
-            if (id == 0) {
-                var folders = document.getElementsByClassName('folder');
-                for (var i = 0; i < folders.length; i++) {
-                    folders[i].setAttribute("style", "height:180px;");
-                }
-            } else {
-                document.getElementById(id).setAttribute("style", "height:180px;");
+        enfolder() {
+            var folders = document.getElementsByClassName("folder")
+            for (var i = 0; i < folders.length; i++) {
+                folders[i].setAttribute("style", "height:180px;")
+            }
+            var openFolderBtns = document.getElementsByClassName("openFolder")
+            for (var j = 0; j < openFolderBtns.length; j++) {
+                openFolderBtns[j].setAttribute("style", "display:inline;")
             }
         },
-
+        addToTabs(folder) {
+            var flag = 0
+            this.TabFolders.filter(function (element) {
+                if (element.name == folder.name) return (flag = 1)
+            })
+            if (!flag == 1) this.TabFolders.push(folder)
+            this.AimFolderName = folder.name
+            this.switchLab()
+        },
     },
     components: {
         SearchTool,
@@ -366,6 +383,9 @@ export default {
         Particle,
         Aplayer,
     },
+    directives: {
+        Clickoutside,
+    },
     beforeMount() {
         // this.$message({
         //   showClose: true,
@@ -374,8 +394,7 @@ export default {
         // });
         this.screenWidth = document.body.clientWidth
         this.username = this.$route.params.username
-        if (!this.username)
-            this.username = "admin"
+        if (!this.username) this.username = "admin"
         this.load(this.username)
     },
     mounted() {
@@ -393,7 +412,7 @@ export default {
         let cache = cookieGet("cacheLinkList")
         if (cache) {
             this.cacheList = []
-            let tempList = this.compare(JSON.parse(cache), 'count')
+            let tempList = this.compare(JSON.parse(cache), "count")
             let showNum = tempList.length >= 12 ? 12 : tempList.length
             for (let i = 0; i < showNum; i++) {
                 this.cacheList.push(tempList[i])
@@ -403,17 +422,17 @@ export default {
         // 取“足迹开关状态”
         let open1 = cookieGet("historySwitch")
         if (open1 != undefined) {
-            this.historySwitch = (open1 == "true")
+            this.historySwitch = open1 == "true"
         }
         // 取“实验室开关状态”
         let open2 = cookieGet("labSwitch")
         if (open2 != undefined) {
-            this.labSwitch = (open2 == "true")
+            this.labSwitch = open2 == "true"
         }
         // 取“导航开关状态”
         let open3 = cookieGet("navSwitch")
         if (open3 != undefined) {
-            this.navSwitch = (open3 == "true")
+            this.navSwitch = open3 == "true"
         }
     },
 }
@@ -442,10 +461,9 @@ body {
 .folder {
     background: rgba(0, 0, 0, 0.03);
     /* background: rgba(255, 255, 255, 0.06); */
-    /* height: 180px; */
+    min-height: 140px;
     margin: 12px 20px;
-    padding: 5px;
-
+    padding: 5px 0px 0px 0px;
     border-radius: 20px;
     /* 滚动条 */
     overflow: auto;
@@ -462,13 +480,18 @@ body {
     background: rgba(0, 0, 0, 0.6);
     color: white;
 }
-
+.foldername {
+    position: relative;
+    top: 0;
+    left: 0;
+    padding-top: 6px;
+}
 .foldername p {
     font-size: 16px;
     letter-spacing: 5px;
     font-weight: bolder;
     margin: 6px auto 6px;
-    cursor: pointer;
+    cursor: default;
 }
 
 .links {
@@ -569,5 +592,16 @@ a {
     left: -5px;
     bottom: 10px;
     z-index: 999;
+}
+.openFolder {
+    position: absolute;
+    right: 1px;
+    top: 14px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.openFolder:hover {
+    color: gold;
 }
 </style>
