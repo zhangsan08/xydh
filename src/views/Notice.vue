@@ -23,6 +23,7 @@ export default {
     data() {
         return {
             Notice: [
+                {name: "v1.2.1 特性", list: [{li: "桌面、移动独立背景上线"}]},
                 {name: "v1.2.0 特性", list: [{li: "展开文件夹功能上线"}]},
                 {name: "v1.1.1 特性", list: [{li: "书签小图标可以自选了"}]},
                 {name: "v1.1.0 特性", list: [{li: "背景音乐上线"}]},

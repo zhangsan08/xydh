@@ -25,10 +25,12 @@
                 </el-switch>
                 <div v-if="SiteForm.bg_switch">
                     <el-row>
+                        <p>横版(适用于PC端展示)</p>
                         <el-input type="text" v-model="SiteForm.bg" minlength="0" maxlength="100"
                               placeholder="请自行选择图床上传背景图片 不填则是默认"></el-input>
                     </el-row>
                     <el-row>
+                        <p>竖版(适用于手机端展示)</p>
                         <el-input type="text" v-model="SiteForm.mobile_bg" minlength="0" maxlength="100"
                               placeholder="请自行选择移动端背景图片图床地址 不填则与PC端相同"></el-input>
                     </el-row>
@@ -208,6 +210,7 @@ export default {
                 this.SiteForm.name = res.data.name
                 this.SiteForm.info = res.data.info
                 this.SiteForm.bg = res.data.bg
+                this.SiteForm.mobile_bg = res.data.mobile_bg
                 this.SiteForm.btn_switch = res.data.btn_switch
                 this.SiteForm.bg_switch = res.data.bg_switch
                 this.SiteForm.bg_color = res.data.bg_color

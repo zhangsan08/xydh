@@ -189,7 +189,7 @@ export default {
             sitename: "",
             siteinfo: "",
             bglizi: 0,
-            mobile_bg: "https://i.loli.net/2021/09/28/9ts3jP58hunI4VA.png",
+            mobile_bg: "",
             lybID: "",
             Folders: [],
             TabFolders: [],
@@ -251,17 +251,23 @@ export default {
                     this.siteinfo = res.data.site_info.info
                     this.bglizi = res.data.site_info.bglizi
                     this.lybID = res.data.site_info.lyb_id
+                    this.mobile_bg = res.data.site_info.mobile_bg
                     document.title = this.sitename
                     // 改背景颜色或图片
                     var obj = document.getElementsByTagName("body")[0]
                     if (res.data.site_info.bg_switch) {
-                        window.onresize = () => {
-                            if(window.innerWidth < 768 && this.mobile_bg) {
-                                obj.style.backgroundImage = "url(" + this.mobile_bg + ")"
-                            } else {
-                                obj.style.backgroundImage = "url(" + res.data.site_info.bg + ")"
-                            }
+                        if(window.innerWidth < 768 && this.mobile_bg) {
+                            obj.style.backgroundImage = "url(" + this.mobile_bg + ")"
+                        } else {
+                            obj.style.backgroundImage = "url(" + res.data.site_info.bg + ")"
                         }
+                        // window.onresize = () => {
+                        //     if(window.innerWidth < 768 && this.mobile_bg) {
+                        //         obj.style.backgroundImage = "url(" + this.mobile_bg + ")"
+                        //     } else {
+                        //         obj.style.backgroundImage = "url(" + res.data.site_info.bg + ")"
+                        //     }
+                        // }
                     } else {
                         obj.style.backgroundColor = res.data.site_info.bg_color
                     }
@@ -602,7 +608,7 @@ a {
 }
 .openFolder {
     position: absolute;
-    right: 1px;
+    right: 20px;
     top: 14px;
     width: 20px;
     height: 20px;
