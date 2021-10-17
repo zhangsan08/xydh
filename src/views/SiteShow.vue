@@ -189,6 +189,7 @@ export default {
             sitename: "",
             siteinfo: "",
             bglizi: 0,
+            mobile_bg: "https://i.loli.net/2021/09/28/9ts3jP58hunI4VA.png",
             lybID: "",
             Folders: [],
             TabFolders: [],
@@ -254,7 +255,13 @@ export default {
                     // 改背景颜色或图片
                     var obj = document.getElementsByTagName("body")[0]
                     if (res.data.site_info.bg_switch) {
-                        obj.style.backgroundImage = "url(" + res.data.site_info.bg + ")"
+                        window.onresize = () => {
+                            if(window.innerWidth < 768 && this.mobile_bg) {
+                                obj.style.backgroundImage = "url(" + this.mobile_bg + ")"
+                            } else {
+                                obj.style.backgroundImage = "url(" + res.data.site_info.bg + ")"
+                            }
+                        }
                     } else {
                         obj.style.backgroundColor = res.data.site_info.bg_color
                     }

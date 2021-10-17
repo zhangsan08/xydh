@@ -24,8 +24,14 @@
                     inactive-text="纯色背景">
                 </el-switch>
                 <div v-if="SiteForm.bg_switch">
-                    <el-input type="text" v-model="SiteForm.bg" minlength="0" maxlength="100"
+                    <el-row>
+                        <el-input type="text" v-model="SiteForm.bg" minlength="0" maxlength="100"
                               placeholder="请自行选择图床上传背景图片 不填则是默认"></el-input>
+                    </el-row>
+                    <el-row>
+                        <el-input type="text" v-model="SiteForm.mobile_bg" minlength="0" maxlength="100"
+                              placeholder="请自行选择移动端背景图片图床地址 不填则与PC端相同"></el-input>
+                    </el-row>
                     <!-- <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62946'>怎么自定义背景图片?</a> -->
                 </div>
                 <div v-else>
@@ -168,6 +174,7 @@ export default {
                 name: "",
                 info: "",
                 bg: "",
+                mobile_bg: "",
                 btn_switch: "",
                 bg_switch: "",
                 bg_color: "",
