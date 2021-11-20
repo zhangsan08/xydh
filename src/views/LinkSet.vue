@@ -2,7 +2,7 @@
     <div>
         <!-- 添加 -->
         <div style="color:red">隐私与法律免责声明: 你所添加的每一个链接都将负法律责任</div> 
-        <el-divider>添加书签 <a target='_blank' rel='nofollow' href='https://www.bilibili.com/video/BV1tf4y1J7yz/'>快速加书签必看教程</a></el-divider>
+        <el-divider>手动添加书签 <a target='_blank' rel='nofollow' href='https://www.bilibili.com/video/BV1tf4y1J7yz/'>快速加书签必看教程</a></el-divider>
         <el-card shadow="hover" class="card" :model="linkform">
             
             <el-row type="flex" justify="center">

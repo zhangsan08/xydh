@@ -2,7 +2,7 @@
 
     <div class="vip">
         <h2>您要充值的账号id为: {{ username }}</h2>
-        <el-link style="font-size:20px" target='_blank' rel='nofollow' :href='"https:\/\/xydh.fun/"+username'>
+        <el-link style="font-size:20px" target='_blank' :href='"https:\/\/xydh.fun/"+username'>
             {{ username }}.xydh.fun
         </el-link>
         <h3>卡密兑换</h3>

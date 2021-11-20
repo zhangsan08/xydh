@@ -59,32 +59,6 @@
                     </el-col>
                 </div>
             </div>
-            <!-- 猿选 -->
-            <el-col v-if="!is_vip" :xs="24" :sm="12" :md="8" :xl="6">
-                <div class="foldername">
-                    <p>猿选</p>
-                    <el-tooltip content="展开文件夹" placement="top">
-                        <div class="openFolder" @click="addToTabs(yuanxuan)">
-                            <i class="fa fa-arrows-alt"></i>
-                        </div>
-                    </el-tooltip>
-                </div>
-                <div class="folder totop" :style="{height: screenWidth > 768 ? '140px' : 'auto'}">
-                    <div v-for="link in yuanxuan" :key="link.id">
-                        <el-col :span="8">
-                            <div class="link">
-                                <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                                    <span v-if="link.info" class="tooltiptext"
-                                        ><i class="fa fa-info-circle">{{ link.info }}</i></span
-                                    >
-                                    <p v-if="link.icon"><i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}</p>
-                                    <p v-else>{{ link.name }}</p>
-                                </a>
-                            </div>
-                        </el-col>
-                    </div>
-                </div>
-            </el-col>
             <!-- 用户自定义内容 -->
             <div v-for="(Folder, index) in Folders" :key="Folder.id">
                 <el-col :xs="24" :sm="12" :md="8" :xl="6">
@@ -154,7 +128,7 @@
 <script>
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
-import {siteService, linkService} from "@/common/api"
+import {siteService} from "@/common/api"
 import {cookieGet, cookieSet} from "@/common/cookie"
 import IndexLab from "@/views/IndexLab.vue"
 import {getUrl} from "@/common/pickup"
@@ -194,7 +168,6 @@ export default {
             Folders: [],
             TabFolders: [],
             AimFolderName: "",
-            yuanxuan: [],
             f_color: "white",
             autoBgColor: "#fff",
             cacheList: [],
@@ -292,17 +265,6 @@ export default {
                         this.music.list.splice(1)
                     }
                     this.top_bottom = JSON.parse(res.data.site_info.top_bottom)
-                }
-            })
-            // 取猿选、排序
-            linkService.getLinksbyFolderID(35413).then((res) => {
-                if (res.data) {
-                    this.yuanxuan = res.data
-                    this.yuanxuan.sort(function (l1, l2) {
-                        return l2.weight - l1.weight //weight
-                    })
-                } else {
-                    this.yuanxuan = []
                 }
             })
         },

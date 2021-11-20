@@ -1,5 +1,6 @@
 <template>
     <div class="me">
+        <!-- 选择小图标的弹窗 -->
         <el-dialog
             :visible.sync="dialogIconVisible"
             title="选择Icon"
@@ -7,6 +8,16 @@
         >
             <ICON @callback="chooseCallback"></ICON>
         </el-dialog>
+
+        您的专属链接<br><el-link
+            style="font-size: 24px"
+            type="primary"
+            target="_blank"
+            :href="'https://xydh.fun/' + username"
+        >https://{{ username }}.xydh.fun</el-link>
+        <div style="font-size: 17px">
+         <p><el-link type="primary" @click="logout" >退出登录</el-link></p>
+         </div>
 
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="欢迎">
@@ -105,38 +116,7 @@
                 </el-card>
                 <el-row>
                     <el-col :xs="24" :sm="12">
-                        <el-card header="您的专属链接" shadow="hover" class="card">
-                            <i class="fa fa-link"></i>&#160;
-                            <el-link
-                                style="font-size: 24px"
-                                type="primary"
-                                target="_blank"
-                                :href="'https://xydh.fun/' + username"
-                            >{{ username }}.xydh.fun
-                            </el-link
-                            >
-                            <div style="font-size: 17px">
-                                <p>
-                                    直接在浏览器地址栏输入，
-                                    <b>无需加http的前缀</b>
-                                    <br/>访问此链接无需登录，欢迎分享给你的朋友
-                                </p>
-                                <p>
-                                    <a
-                                        target="_blank"
-                                        rel="nofollow"
-                                        href="https://support.qq.com/products/106426/faqs/63457"
-                                    >关于如何让你的页面被搜索引擎收录</a
-                                    >
-                                </p>
-                                <p>请关注官方公众号 炫技巧 获取最新导航站资讯</p>
-                                <el-button type="" @click="logout" round="">登出</el-button>
-                            </div>
-                        </el-card>
-                    </el-col>
-                    <el-col :xs="24" :sm="12">
-                        <el-card header="快捷添加书签" shadow="hover" class="card">
-                            <a target='_blank' rel='nofollow' href='https://www.bilibili.com/video/BV1tf4y1J7yz/'>使用教程</a>
+                        <el-card header="快捷添加书签秘钥" shadow="hover" class="card">                            
                             <div v-if="showjscode">
                                 <div style="height: 10px"></div>
                                 使用方法一：<a :href="jscode">快捷添加书签</a>
@@ -177,101 +157,13 @@
                             </div>
                         </el-card>
                     </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24">
-                        <el-card header="添加书签" shadow="hover" class="card">
-                            <el-row type="flex" justify="center">
-                                <el-col :span="8">名称</el-col>
-                                <el-col :span="16">链接</el-col>
-                            </el-row>
-                            <el-row type="flex" justify="center">
-                                <el-col :span="8">
-                                    <el-input
-                                        type="text"
-                                        v-model="linkform.name"
-                                        minlength="0"
-                                        maxlength="12"
-                                        placeholder="0-8字/过长不好看"
-                                    ></el-input>
-                                </el-col>
-                                <el-col :span="16">
-                                    <el-input
-                                        type="text"
-                                        v-model="linkform.url"
-                                        minlength="0"
-                                        maxlength="100"
-                                        placeholder="http开头"
-                                    ></el-input>
-                                </el-col>
-                            </el-row>
-                            <el-row type="flex" justify="center">
-                                <el-col :span="6">图标</el-col>
-                                <el-col :span="10">介绍</el-col>
-                                <el-col :span="4">文件夹</el-col>
-                                <el-col :span="4"></el-col>
-                            </el-row>
-                            <el-row type="flex" justify="center">
-                                <el-col :span="4">
-                                    <el-input
-                                        type="text"
-                                        v-model="linkform.icon"
-                                        placeholder="可为空"
-                                    ></el-input>
-                                </el-col>
-                                <el-col :span="2">
-                                    <el-button
-                                        title="选择图标"
-                                        style="width: 40px"
-                                        id="bookmarks"
-                                        @click="iconHandle(linkform)"
-                                    >
-                                        <i
-                                            :class="'fa fa-' + linkform.icon"
-                                            v-if="linkform.icon"
-                                        ></i>
-                                        <i :class="'fa fa-hand-pointer-o'" v-else></i>
-                                    </el-button>
-                                </el-col>
-                                <el-col :span="10">
-                                    <el-input
-                                        type="text"
-                                        v-model="linkform.info"
-                                        minlength="0"
-                                        maxlength="30"
-                                        placeholder="鼠标放上时的提示语(可为空)"
-                                    >
-                                    </el-input>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-select v-model="linkform.fid">
-                                        <el-option
-                                            v-for="Folder in Folders"
-                                            :key="Folder.id"
-                                            :label="Folder.name"
-                                            :value="Folder.id"
-                                        ></el-option>
-                                    </el-select>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-button
-                                        title="添加书签"
-                                        size="small"
-                                        type="success"
-                                        icon="el-icon-plus"
-                                        @click="createLink()"
-                                        circle
-                                    ></el-button>
-                                </el-col>
-                            </el-row>
+                    <el-col :xs="24" :sm="12">
+                        <el-card header="快捷添加书签教程" shadow="hover" class="card">
+                            <iframe width="600px" height="400px" src="//player.bilibili.com/player.html?aid=292824387&bvid=BV1tf4y1J7yz&cid=402830926&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
                         </el-card>
                     </el-col>
                 </el-row>
 
-                <Notice :username="username" v-if="userID != 7163"></Notice>
-                <div v-else>
-                    该账号为测试账号。仅用于展示后台功能。使用上有多处限制。
-                </div>
             </el-tab-pane>
 
             <el-tab-pane label="导航配置">
@@ -295,14 +187,6 @@
             </el-tab-pane>
         </el-tabs>
 
-        <el-divider>⚠️警告</el-divider>
-        <!-- <p style="color:red;font-weight:bolder;">为了炫猿长久地发展，请勿上传涉政涉黄涉黑等违法犯罪网站。发现一条永久封号。</p> -->
-        使用本站的服务即同意<a
-        target="_blank"
-        rel="nofollow"
-        href="https://support.qq.com/products/106426/blog/11015"
-    >法律与免责声明</a
-    >
         <el-divider></el-divider>
         <!-- 跑马灯 -->
         <el-col :span="24">
@@ -314,7 +198,6 @@
 <script>
 import {userService, folderService, linkService} from "@/common/api";
 // import * as UserAPI from '@/api/user/'
-import Notice from "./Notice";
 import SiteSet from "./SiteSet";
 import FolderSet from "./FolderSet";
 import LinkSet from "./LinkSet";
@@ -516,7 +399,6 @@ export default {
         },
     },
     components: {
-        Notice,
         SiteSet,
         FolderSet,
         LinkSet,

@@ -2,9 +2,8 @@
 <div>
         <el-col :span="24">
             <div class="copyright">
-            <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426'>意见反馈</a>&#160;
+            <a target='_blank' rel='nofollow' href='https://yftk.fun/category/xydh/'>意见反馈</a>&#160;
             <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/blog/11015'>免责声明</a>&#160;
-            <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/blog/10953'>请作者吃辣条</a>
             <div style="height:10px"></div>
             友情链接
             <a target='_blank' rel='follow' href='https://oo1.win'>炫猿</a>&#160;

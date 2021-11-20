@@ -8,7 +8,7 @@
         <el-divider>注册</el-divider>
         <div class="regform">
             <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px">
-                <div style="text-align:right;"><a target='_blank' href='https://pr.kuaifaka.net/item/xydh_fun'>购买邀请码</a>
+                <div style="text-align:right;"><a target='_blank' href='https://yftk.fun/85/'>获取邀请码</a>
                 </div>
                 <el-form-item label="邀请码" prop="yuankey">
                     <el-input v-model="registerForm.yuankey"></el-input>
