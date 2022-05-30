@@ -18,6 +18,7 @@
         <div style="font-size: 17px">
          <p><el-link type="primary" @click="logout" >退出登录</el-link></p>
          </div>
+         社区[yftk.fun] 6 月活动再次开启邀请码、增值服务码免费兑换，敬请期待
 
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="欢迎">
