@@ -1,8 +1,6 @@
 <template>
     <div class="linksort">
-        <p>
-            肝不动了。界面丑了点。仅支持电脑端操作。凑合用吧。书签排序属于批量写入，即使你只改变某一个书签的位置，带来的也是全部书签的改写操作。大家尽量一次性改好顺序。不要一直改了。真的没钱再给服务器升配了。有能力的请用金钱羞辱我，谢谢！</p>
-        <el-collapse accordion v-model="FolderID" @change="getLinksin(FolderID)" v-loading="loading">
+        <el-collapse accordion v-model="FolderID" @change="getLinksin(FolderID)">
             <div v-for="Folder in Folders" :key="Folder.id">
                 <el-collapse-item :name="Folder.id">
                     <!-- 这是文件夹名字 -->
@@ -40,7 +38,6 @@ import {userService, folderService, linkService} from '@/common/api'
 export default {
     data() {
         return {
-            loading: false,
             FolderID: "",
             uid: 0,
             Folders: [],
@@ -74,11 +71,6 @@ export default {
             })
         },
         getLinksin(fid) {
-            // 这样只在折页打开时执行
-            this.loading = true;
-            setTimeout(() => {
-                this.loading = false;
-            }, 500);
             if (fid) {
                 linkService.getLinksbyFolderID(fid).then((res) => {
                     this.links = res.data
@@ -91,12 +83,12 @@ export default {
             }
         },
         sortLink() {
-            this.loading = true;
-            setTimeout(() => {
-                this.loading = false;
-            }, 2000);
+            let l = this.links.length;
+            for (let i = 0; i < l; ++i) {
+                this.links[i].weight = l-i
+            }
             var json = {
-                list: this.links
+                links: this.links
             }
             linkService.sortLink(json).then((res) => {
                 if (res.code > 0) {

@@ -18,7 +18,6 @@
         <div style="font-size: 17px">
          <p><el-link type="primary" @click="logout" >退出登录</el-link></p>
          </div>
-         社区[yftk.fun] 6 月活动再次开启邀请码、增值服务码免费兑换，敬请期待
 
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="欢迎">
@@ -160,7 +159,7 @@
                     </el-col>
                     <el-col :xs="24" :sm="12">
                         <el-card header="快捷添加书签教程" shadow="hover" class="card">
-                            <iframe width="600px" height="400px" src="//player.bilibili.com/player.html?aid=292824387&bvid=BV1tf4y1J7yz&cid=402830926&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+                            <iframe width="600px" height="400px" src="//player.bilibili.com/player.html?aid=292824387&bvid=BV1tf4y1J7yz&cid=402830926&page=1" scrolling="no"  frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
                         </el-card>
                     </el-col>
                 </el-row>
@@ -183,7 +182,7 @@
                 <Lab></Lab>
             </el-tab-pane>
 
-            <el-tab-pane label="账户" v-if="userID != 7163" lazy>
+            <el-tab-pane label="账户" v-if="userID !== 7163" lazy>
                 <Other></Other>
             </el-tab-pane>
         </el-tabs>
@@ -258,7 +257,7 @@ export default {
                         );
                         return;
                     }
-                    if (res.data.level == 0) {
+                    if (res.data.level === 0) {
                         this.$alert(
                             "请在删除违规书签后联系邮箱 xuanyuandaohang@126.com 申请解封",
                             "你的书签存在违规",

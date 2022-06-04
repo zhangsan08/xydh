@@ -25,13 +25,12 @@
                               maxlength="40"></el-input>
                 </el-form-item>
 
-                <el-popconfirm confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red"
-                               title="确定更改密码吗" @confirm="updatePWD()">
-                    <el-button slot="reference" type="primary">更改密码</el-button>
-                </el-popconfirm>
+                <!-- <el-popconfirm confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info" iconColor="red"
+                               title="确定更改密码吗" @confirm=""> -->
+                <!-- </el-popconfirm> -->
 
             </el-form>
-
+<el-button slot="reference" type="primary" @click="updatePWD()">更改密码</el-button>
         </div>
     </div>
 
@@ -84,9 +83,6 @@ export default {
 
 
 <style scoped>
-.upload {
-    margin: 20px auto 50px;
-}
 
 .pwdForm {
     min-width: 200px;

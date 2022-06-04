@@ -149,14 +149,11 @@
                     </el-table>
                 </div>
             </el-form-item>
-
-            <el-divider content-position="center">
-                <el-popconfirm v-if="userID!=7163" confirmButtonText='OK' cancelButtonText='取消' icon="el-icon-info"
-                               iconColor="red" title="确定更新站点信息吗" @confirm="updateSite()">
-                    <el-button slot="reference" type="primary">更新站点信息</el-button>
-                </el-popconfirm>
-            </el-divider>
         </el-form>
+        <el-divider content-position="center">
+           
+        </el-divider>
+         <el-button slot="reference" type="primary" @click="updateSite()">更新站点信息</el-button>
     </div>
 
 </template>
@@ -229,7 +226,19 @@ export default {
         },
         updateSite() {
             this.SiteForm.music = JSON.stringify(this.music)
+            if (this.SiteForm.music.length > 2000) {
+                this.$notify.error({
+                    title: "你添加的歌曲太多啦",
+                });
+                return;
+            }
             this.SiteForm.top_bottom = JSON.stringify(this.top_bottom)
+            if (this.SiteForm.top_bottom.length > 1000) {
+                this.$notify.error({
+                    title: "你添加的友链太多啦",
+                });
+                return;
+            }
             siteService.updateSite(this.SiteForm).then((res) => {
                 if (res.code > 0) {
                     this.$notify.error({
@@ -245,9 +254,9 @@ export default {
             })
         },
         addToList(list, x, where) {
-            if (x == 1) {
+            if (x === 1) {
                 var item = {title: "", artist: "", url: ""}
-            } else if (x == 2) {
+            } else if (x === 2) {
                 item = {title: "", url: ""}
             }
             switch (where) {
