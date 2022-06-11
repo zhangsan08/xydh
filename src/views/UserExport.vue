@@ -8,10 +8,16 @@
         <p>
             <el-input type="text" v-model="username" style="width:200px"></el-input>
         </p>
-        <el-button type="primary" @click="load(username)">输出</el-button>
+        <el-button type="primary" @click="getAllsiteandlinks(username)">输出</el-button>
         <el-divider>输出结果</el-divider>
         <!-- 用户自定义内容 -->
         <br>
+        <div v-if="Folders.length>0">
+            <div>背景图：{{bg}}</div>
+            <div>竖版背景图：{{mobile_bg}}</div>
+            <div>音乐：开发中 后序支持</div>
+        </div>
+
         <div v-for="Folder in Folders" :key="Folder.id">
             # {{ Folder.name }}<br><br>
             | 名称 | 链接 | 介绍 |<br>
@@ -25,7 +31,7 @@
 </template>
 
 <script>
-import {userService, siteService} from '@/common/api'
+import {siteService} from '@/common/api'
 
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
@@ -33,32 +39,23 @@ import {userService, siteService} from '@/common/api'
 export default {
     data() {
         return {
-            userid: "",
             username: "admin",
             Folders: [],
+            SiteInfo: {
+
+            },
+            bg: "",
+            mobile_bg: "",
+            music: {
+                open: false,
+                list: [],
+            },
         }
     },
     methods: {
-        load(uname) {
-            // userName取ID
-            userService.UserID(uname).then((res) => {
-                if (res.code > 0) {
-                    this.$alert('', '无此用户', {
-                        confirmButtonText: '回主页',
-                        callback: () => {
-                            window.location.href = "https://xydh.fun"
-                        }
-                    });
-                    return
-                } else {
-                    this.userid = res.data.id
-                    this.getAll(this.userid)
-                }
-            })
-        },
         // 取所有书签[文件夹、书签]
-        getAll(userid) {
-            siteService.getAll(userid).then((res) => {
+        getAllsiteandlinks(username) {
+            siteService.getAllsiteandlinks(username).then((res) => {
                 if (res.code > 0) {
                     this.$alert('', '请勿滥用此功能', {
                         confirmButtonText: '回主页',
@@ -67,9 +64,11 @@ export default {
                             })
                         }
                     });
-                    return
                 } else {
-                    this.Folders = res.data
+                    var siteInfo = res.data.site_info
+                    this.bg = siteInfo.bg
+                    this.mobile_bg = siteInfo.mobile_bg
+                    this.Folders = res.data.folderwith_links
                     this.Folders.sort(function (f1, f2) {
                         return f1.weight - f2.weight//weight
                     })

@@ -115,12 +115,6 @@ export const siteService = {
       method: 'put',
       data
     })
-  },  
-
-  getAll(id){
-    return request({
-      url: '/api/v1/all/'+ id,
-    })
   },
 
   getAllsiteandlinks(username){
