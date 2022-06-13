@@ -109,7 +109,7 @@
                 <div v-else style="height:100px"></div> -->
                 <!-- 这里是200px 高的占位符。不然不好看 -->
                 <div style="height: 200px" v-if="!navSwitch && !labSwitch"></div>
-                <div v-if="!is_vip || userid == 1">
+                <div v-if="!is_vip || userid === 1">
                     <Footer></Footer>
                 </div>
                 <div v-else style="max-width: 768px; margin: 30px auto 30px; text-align: center">
@@ -246,7 +246,7 @@ export default {
                     }
                     obj.style.color = res.data.site_info.font_color
                     // 取文件夹和书签
-                    this.Folders = res.data.folderwith_links
+                    this.Folders = res.data.folder_with_links
                     // 文件夹排序
                     this.Folders.sort(function (f1, f2) {
                         return f1.weight - f2.weight //weight

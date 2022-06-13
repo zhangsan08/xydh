@@ -65,10 +65,10 @@ export default {
                         }
                     });
                 } else {
-                    var siteInfo = res.data.site_info
+                    const siteInfo = res.data.site_info;
                     this.bg = siteInfo.bg
                     this.mobile_bg = siteInfo.mobile_bg
-                    this.Folders = res.data.folderwith_links
+                    this.Folders = res.data.folder_with_links
                     this.Folders.sort(function (f1, f2) {
                         return f1.weight - f2.weight//weight
                     })
