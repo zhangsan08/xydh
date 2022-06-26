@@ -39,6 +39,11 @@ export default new Router({
             component: () => import('./views/UserExport.vue')
         },
         {
+            path: '/u/copy',
+            name: 'UExport',
+            component: () => import('./views/LinksCopy.vue')
+        },
+        {
             path: '/u/vip',
             name: 'UVip',
             component: () => import('./views/UserVip.vue')

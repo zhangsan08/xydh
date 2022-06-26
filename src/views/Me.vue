@@ -10,6 +10,7 @@
         </el-dialog>
 
         您的专属链接<br><el-link
+            v-if="username"
             style="font-size: 24px"
             type="primary"
             target="_blank"
@@ -83,7 +84,7 @@
                         <el-table-column
                             fixed="right"
                             label="操作"
-                            align="center"
+
                             width="150"
                         >
                             <template slot-scope="scope">
@@ -159,7 +160,7 @@
                     </el-col>
                     <el-col :xs="24" :sm="12">
                         <el-card header="快捷添加书签教程" shadow="hover" class="card">
-                            <iframe width="600px" height="400px" src="//player.bilibili.com/player.html?aid=292824387&bvid=BV1tf4y1J7yz&cid=402830926&page=1" scrolling="no"  frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+                            <iframe width="600px" height="400px" src="//player.bilibili.com/player.html?aid=292824387&bvid=BV1tf4y1J7yz&cid=402830926&page=1"   allowfullscreen="true"> </iframe>
                         </el-card>
                     </el-col>
                 </el-row>
@@ -212,7 +213,7 @@ export default {
     data() {
         return {
             userID: 0,
-            username: "未登录",
+            username: "",
             isVIP: false,
             LoginCode: -1,
             JsToken: "xxxxxxxx",

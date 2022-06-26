@@ -27,9 +27,9 @@ export const linkService = {
     })
   },
   
-  createLink(data){
+  createLinks(data){
     return request({
-      url: '/api/v1/link',      
+      url: '/api/v1/links',
       method: 'post',
       data
     })

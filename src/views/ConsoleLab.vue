@@ -1,7 +1,21 @@
 <template>
     <div>
         <el-row :gutter="20" justify="center">
-            <el-col :xs="24" :sm="24">
+            <el-col :xs="24" :sm="12">
+                <el-card class="box-card" shadow="hover">
+                    <div slot="header" class="clearfix">
+                        <span>抄作业</span>
+                        <el-button style="float: right; padding: 3px 0" type="text" @click="go('/u/copy')">进入该功能</el-button>
+                    </div>
+                    <div>
+                        <p><b>介绍</b></p>
+                        偷学武功 && 懒猿福音
+                        <p><b>使用方法</b></p>
+                        输入用户id，即可将其站内书签导入到自己的小站。（ps,抄谁的作业呢？去<a href="/hgs" target="_blank">花果山</a>看下咯）
+                    </div>
+                </el-card>
+            </el-col>
+            <el-col :xs="24" :sm="12">
                 <el-card class="box-card" shadow="hover">
                     <div slot="header" class="clearfix">
                         <span>扩容 | 改名 | 开通VIP</span>

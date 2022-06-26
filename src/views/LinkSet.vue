@@ -67,7 +67,7 @@
                     >
                 </el-col>
                 <el-col :span="4">
-                    <el-select v-model="linkform.fid">
+                    <el-select v-model="linkform.fid" placeholder="请选择">
                         <el-option
                             v-for="Folder in Folders"
                             :key="Folder.id"
@@ -158,7 +158,6 @@
                     <el-table-column
                         fixed="right"
                         label="操作"
-                        align="center"
                         width="160"
                     >
                         <template slot-scope="scope">
@@ -352,7 +351,7 @@ export default {
             var divs = document.querySelector(".mainbox").querySelectorAll("div");
             Array.from(divs).filter(function (element) {
                 element.className = "";
-                if (element.id == id) {
+                if (element.id === id) {
                     element.className = "aim";
                 }
             });
@@ -395,7 +394,7 @@ export default {
     transform: translate(0, 0);
     border: 0.3px solid #ccc;
     border-radius: 8px;
-    padding: 0px 10px;
+    padding: 0 10px;
     cursor: pointer;
     background-color: #fff;
     color: #ccc;
