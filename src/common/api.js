@@ -27,13 +27,21 @@ export const linkService = {
     })
   },
   
+  createLink(data){
+    return request({
+      url: '/api/v1/link',
+      method: 'post',
+      data
+    })
+  },
+
   createLinks(data){
     return request({
       url: '/api/v1/links',
       method: 'post',
       data
     })
-  },  
+  },
 
   updateLink(data){
     return request({

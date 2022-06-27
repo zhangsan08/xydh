@@ -37,7 +37,7 @@
 import { userService } from '@/common/api'
 
 export default {
-    props:["historySwitch","navSwitch","myname"],
+    props:["historySwitch","navSwitch"],
     data(){
         return{
             data: [

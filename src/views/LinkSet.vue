@@ -240,6 +240,12 @@ export default {
             });
         },
         createLink() {
+            if (this.linkform.fid === "") {
+                this.$notify.error({
+                    title: "请选择一个文件夹",
+                });
+                return
+            }
             // this.linkform.fid = fid;
             linkService
                 .createLink(this.linkform)

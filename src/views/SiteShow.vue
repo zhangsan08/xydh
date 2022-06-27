@@ -1,11 +1,11 @@
 <template>
     <div class="bg">
-        <div v-if="bglizi > 0">
+        <div class="particle" v-if="bglizi > 0">
             <Particle :bglizi="bglizi"></Particle>
         </div>
 
         <div class="totop" v-if="top_bottom.top_switch">
-            <Header :historySwitch="historySwitch" :navSwitch="navSwitch" :Folders="Folders" :myname="myname"></Header>
+            <Header :historySwitch="historySwitch" :navSwitch="navSwitch" :Folders="Folders"></Header>
             <!-- <RightBar></RightBar> -->
         </div>
 
@@ -20,14 +20,15 @@
         <div style="height: 80px" v-if="!navSwitch && !labSwitch"></div>
         <!-- 搜索框 -->
         <div class="search">
-            <SearchTool></SearchTool>
+            <SearchTool :AllLinks="AllLinks"></SearchTool>
         </div>
 
         <!-- 点击实验室按钮会打开实验室页面 -->
         <div class="Lab totop" v-if="labSwitch">
             <div class="hidden-sm-and-up" style="height: 50px"></div>
             <transition name="el-zoom-in-left">
-                <IndexLab :lybID="lybID" :Folders="TabFolders" :AimName="AimFolderName" v-Clickoutside="switchLab"></IndexLab>
+                <IndexLab :lybID="lybID" :Folders="TabFolders" :AimName="AimFolderName"
+                          v-Clickoutside="switchLab"></IndexLab>
             </transition>
         </div>
 
@@ -71,11 +72,12 @@
                             </div>
                         </el-tooltip>
                     </div>
-                    <div class="folder totop" :style="{height: screenWidth > 768 ? '140px' : 'auto'}" :id="Folder.id" onselectstart="return false;">
+                    <div class="folder totop" :style="{height: screenWidth > 768 ? '140px' : 'auto'}" :id="Folder.id"
+                         onselectstart="return false;">
                         <div class="linkbox">
                             <div class="inputPWD" v-if="Folder.need_password">
                                 <!-- 如果文件夹需要密码 -->
-                                <el-input type="text" autosize v-model="passwords[index]" :placeholder="Folder.info" clearable @keyup.enter.native="Sou(url + txt)">
+                                <el-input type="text" autosize v-model="passwords[index]" :placeholder="Folder.info" clearable>
                                     <span slot="append" type="text" @click="GetPWDFolder(index, Folder.id, passwords[index])">确定</span>
                                 </el-input>
                             </div>
@@ -84,9 +86,11 @@
                                     <div class="link">
                                         <a @click="goToUrl(link)" target="_blank" rel="nofollow">
                                             <span v-if="link.info" class="tooltiptext"
-                                                ><i class="fa fa-info-circle">{{ link.info }}</i></span
+                                            ><i class="fa fa-info-circle">{{ link.info }}</i></span
                                             >
-                                            <p v-if="link.icon"><i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}</p>
+                                            <p v-if="link.icon"><i :class="'fa fa-' + link.icon"></i>&#160;{{
+                                                    link.name
+                                                }}</p>
                                             <p v-else>{{ link.name }}</p>
                                         </a>
                                     </div>
@@ -99,7 +103,8 @@
         </div>
 
         <div class="amusic" v-if="music.open">
-            <aplayer :music="music.list[0]" :list="music.list" :narrow="false" float :listFolded="true" theme="#fff"> </aplayer>
+            <aplayer :music="music.list[0]" :list="music.list" :narrow="false" float :listFolded="true"
+                     theme="#fff"></aplayer>
         </div>
 
         <!-- 跑马灯（暂时去掉了 本想留作广告位。发现接不到 -->
@@ -159,7 +164,6 @@ export default {
             screenWidth: "",
             userid: 0,
             username: "",
-            myname: "",
             sitename: "",
             siteinfo: "",
             bglizi: 0,
@@ -167,6 +171,7 @@ export default {
             lybID: "",
             Folders: [],
             TabFolders: [],
+            AllLinks: [], //检索用
             AimFolderName: "",
             f_color: "white",
             autoBgColor: "#fff",
@@ -204,7 +209,6 @@ export default {
                             window.location.href = "https://xydh.fun"
                         },
                     })
-                    return
                 } else {
                     // 加载用户
                     this.userid = res.data.target.id
@@ -229,7 +233,7 @@ export default {
                     // 改背景颜色或图片
                     var obj = document.getElementsByTagName("body")[0]
                     if (res.data.site_info.bg_switch) {
-                        if(window.innerWidth < 768 && this.mobile_bg) {
+                        if (window.innerWidth < 768 && this.mobile_bg) {
                             obj.style.backgroundImage = "url(" + this.mobile_bg + ")"
                         } else {
                             obj.style.backgroundImage = "url(" + res.data.site_info.bg + ")"
@@ -258,13 +262,21 @@ export default {
                             return l2.weight - l1.weight //weight
                         })
                     }
-                    // 取当前登录的用户名
-                    this.myname = res.data.me.name
-                    this.music = JSON.parse(res.data.site_info.music)
+                    //    载入所有书签到 AllLinks,检索用
+                    for (i = 0; i < this.Folders.length; i++) {
+                        this.AllLinks = this.AllLinks.concat(this.Folders[i].links)
+                    }
+                    // 载入音乐和自定义底部
+                    if (res.data.site_info.music !== "") {
+                        this.music = JSON.parse(res.data.site_info.music)
+                    }
                     if (!this.is_vip) {
                         this.music.list.splice(1)
                     }
-                    this.top_bottom = JSON.parse(res.data.site_info.top_bottom)
+                    if (res.data.site_info.top_bottom !== "") {
+                        this.top_bottom = JSON.parse(res.data.site_info.top_bottom)
+                    }
+
                 }
             })
         },
@@ -274,13 +286,16 @@ export default {
                 if (res.code > 0) {
                     this.$alert("请重试", "密码错误", {})
                     return
-                } else {
-                    this.Folders[index].need_password = false
-                    this.Folders[index].links = res.data
-                    this.Folders[index].links.sort(function (l1, l2) {
-                        return l2.weight - l1.weight //weight
-                    })
                 }
+                this.Folders[index].need_password = false
+                if (res.data == null) {
+                    // 文件夹里没有书签
+                    return;
+                }
+                this.Folders[index].links = res.data
+                this.Folders[index].links.sort(function (l1, l2) {
+                    return l2.weight - l1.weight //weight
+                })
             })
         },
         // 打开url
@@ -290,7 +305,7 @@ export default {
             if (cache) {
                 let cacheExist = JSON.parse(cache)
                 cacheExist.filter((d) => {
-                    if (d.id == linkInfo.id) {
+                    if (d.id === linkInfo.id) {
                         existKey = true
                         d.count += 1
                     }
@@ -341,9 +356,9 @@ export default {
         addToTabs(folder) {
             var flag = 0
             this.TabFolders.filter(function (element) {
-                if (element.name == folder.name) return (flag = 1)
+                if (element.name === folder.name) return (flag = 1)
             })
-            if (!flag == 1) this.TabFolders.push(folder)
+            if (!flag === 1) this.TabFolders.push(folder)
             this.AimFolderName = folder.name
             this.switchLab()
         },
@@ -396,18 +411,18 @@ export default {
 
         // 取“足迹开关状态”
         let open1 = cookieGet("historySwitch")
-        if (open1 != undefined) {
-            this.historySwitch = open1 == "true"
+        if (open1 !== undefined) {
+            this.historySwitch = open1 === "true"
         }
         // 取“实验室开关状态”
         let open2 = cookieGet("labSwitch")
-        if (open2 != undefined) {
-            this.labSwitch = open2 == "true"
+        if (open2 !== undefined) {
+            this.labSwitch = open2 === "true"
         }
         // 取“导航开关状态”
         let open3 = cookieGet("navSwitch")
-        if (open3 != undefined) {
-            this.navSwitch = open3 == "true"
+        if (open3 !== undefined) {
+            this.navSwitch = open3 === "true"
         }
     },
 }
@@ -438,7 +453,7 @@ body {
     /* background: rgba(255, 255, 255, 0.06); */
     min-height: 140px;
     margin: 12px 20px;
-    padding: 5px 0px 0px 0px;
+    padding: 5px 0 0 0;
     border-radius: 20px;
     /* 滚动条 */
     overflow: auto;
@@ -455,12 +470,14 @@ body {
     background: rgba(0, 0, 0, 0.6);
     color: white;
 }
+
 .foldername {
     position: relative;
     top: 0;
     left: 0;
     padding-top: 6px;
 }
+
 .foldername p {
     font-size: 16px;
     letter-spacing: 5px;
@@ -495,7 +512,7 @@ body {
     font-size: 16px;
     /* 定位 */
     top: 30px;
-    left: 0px;
+    left: 0;
     padding: 10px 20px;
     position: fixed;
     border-top-right-radius: 15px;
@@ -543,10 +560,10 @@ a {
 
 .inputPWD .el-input__inner {
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 0px;
+    border-radius: 0;
     color: inherit;
     font-size: 0.33vmax;
-    border: 0px;
+    border: 0;
 }
 
 .inputPWD .el-input__inner::placeholder {
@@ -556,9 +573,9 @@ a {
 .inputPWD .el-input-group__append {
     background-color: rgba(255, 255, 255, 0.15);
     color: inherit;
-    border-radius: 0px;
+    border-radius: 0;
     cursor: pointer;
-    border: 0px;
+    border: 0;
 }
 
 .amusic {
@@ -568,6 +585,7 @@ a {
     bottom: 10px;
     z-index: 999;
 }
+
 .openFolder {
     position: absolute;
     right: 20px;
@@ -576,7 +594,12 @@ a {
     height: 20px;
     cursor: pointer;
 }
+
 .openFolder:hover {
     color: gold;
+}
+
+.particle {
+    z-index: -999;
 }
 </style>
