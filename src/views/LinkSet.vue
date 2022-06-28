@@ -1,10 +1,11 @@
 <template>
     <div>
         <!-- 添加 -->
-        <div style="color:red">隐私与法律免责声明: 你所添加的每一个链接都将负法律责任</div> 
-        <el-divider>手动添加书签 <a target='_blank' rel='nofollow' href='https://www.bilibili.com/video/BV1tf4y1J7yz/'>快速加书签必看教程</a></el-divider>
+        <div style="color:red">隐私与法律免责声明: 你所添加的每一个链接都将负法律责任</div>
+        <el-divider>手动添加书签 <a target='_blank' rel='nofollow' href='https://www.bilibili.com/video/BV1tf4y1J7yz/'>快速加书签必看教程</a>
+        </el-divider>
         <el-card shadow="hover" class="card" :model="linkform">
-            
+
             <el-row type="flex" justify="center">
                 <el-col :span="8">名称</el-col>
                 <el-col :span="16">链接</el-col>
@@ -62,7 +63,7 @@
                         v-model="linkform.info"
                         minlength="0"
                         maxlength="30"
-                        placeholder="鼠标放上时的提示语(可为空)"
+                        placeholder="鼠标经过时的提示语,可用于站内搜索"
                     ></el-input
                     >
                 </el-col>
@@ -89,12 +90,13 @@
         </el-card>
         <!-- 更删 -->
         <el-divider>更新书签</el-divider>
+<!--        文件夹列表-->
         <div class="mainbox">
             <div
                 v-for="Folder in Folders"
                 :key="Folder.id"
                 :id="Folder.id"
-                @click="getLinksin(Folder.id)"
+                @click="getLinksIn(Folder.id)"
             >
                 <p v-if="Folder.icon">
                     <i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}
@@ -102,8 +104,9 @@
                 <p v-else>{{ Folder.name }}</p>
             </div>
         </div>
+<!--        书签列表-->
         <div class="bookmarkcard">
-            <div class="marklist">
+            <div class="marklist" v-if="links.length!==0">
                 <el-table :data="links" stripe>
                     <el-table-column label="图标" width="80">
                         <template slot-scope="scope">
@@ -139,7 +142,7 @@
                                 type="textarea"
                                 resize="none"
                                 v-model="scope.row.info"
-                                placeholder="鼠标放上时的提示语(可为空)"
+                                placeholder="鼠标经过时的提示语,可用于站内搜索"
                             ></el-input>
                         </template>
                     </el-table-column>
@@ -158,7 +161,7 @@
                     <el-table-column
                         fixed="right"
                         label="操作"
-                        width="160"
+                        width="120"
                     >
                         <template slot-scope="scope">
                             <el-button-group>
@@ -168,13 +171,6 @@
                                     type="success"
                                     icon="el-icon-view"
                                     @click="openLink(scope.row.url)"
-                                ></el-button>
-                                <el-button
-                                    title="确认编辑"
-                                    size="small"
-                                    type="primary"
-                                    icon="el-icon-edit"
-                                    @click="updateLink(scope.row)"
                                 ></el-button>
                                 <el-button
                                     title="删除书签"
@@ -187,6 +183,12 @@
                         </template>
                     </el-table-column>
                 </el-table>
+                <br>
+                <el-button
+                    type="primary"
+                    @click="updateLinks()"
+                >保存变更
+                </el-button>
             </div>
         </div>
     </div>
@@ -202,7 +204,7 @@ export default {
     data() {
         return {
             loading: false,
-            FolderID: "",
+            SelectedFolderID: "",
             uid: 0,
             Folders: [],
             rigthnowPage: 0,
@@ -226,7 +228,8 @@ export default {
                 });
             });
         },
-        getLinksin(fid) {
+        getLinksIn(fid) {
+            this.SelectedFolderID = fid
             this.ChooseFolder(fid);
             linkService.getLinksbyFolderID(fid).then((res) => {
                 if (res.data) {
@@ -246,7 +249,6 @@ export default {
                 });
                 return
             }
-            // this.linkform.fid = fid;
             linkService
                 .createLink(this.linkform)
                 .then((res) => {
@@ -270,7 +272,7 @@ export default {
                             url: "",
                             info: "",
                         };
-                        this.getLinksin(this.linkform.fid);
+                        this.getLinksIn(this.linkform.fid);
                     }
                 })
                 .catch((error) => {
@@ -280,34 +282,23 @@ export default {
                     });
                 });
         },
-        updateLink(link) {
+        updateLinks() {
             //传入folderID仅仅是为了更新后刷新列表
-            var form = {
-                id: link.id,
-                fid: link.fid,
-                icon: link.icon,
-                name: link.name,
-                url: link.url,
-                info: link.info,
+            const jsonData = {
+                links: this.links
             };
-            linkService
-                .updateLink(form)
-                .then((res) => {
-                    if (res.code > 0) {
-                        this.$notify.error({
-                            title: "更新失败",
-                            message: res.msg,
-                        });
-                    } else {
-                        // 刷新列表
-                        this.getLinksin(link.fid);
-                        this.$notify({
-                            title: "更新成功!",
-                            type: "success",
-                            duration: "800",
-                        });
-                    }
-                })
+            linkService.updateLinks(jsonData).then((res) => {
+                if (res.code > 0) {
+                    this.$notify.error({
+                        title: "更新失败",
+                        message: res.msg,
+                    });
+                } else {
+                    this.$alert("更新成功")
+                    // 刷新列表
+                    this.getLinksIn(this.SelectedFolderID);
+                }
+            })
                 .catch((error) => {
                     this.$notify.error({
                         title: "错误 请检查",
@@ -332,7 +323,7 @@ export default {
                             type: "success",
                             duration: "800",
                         });
-                        this.getLinksin(link.fid);
+                        this.getLinksIn(link.fid);
                     }
                 })
                 .catch((error) => {
@@ -354,7 +345,7 @@ export default {
         },
         ChooseFolder(id) {
             //选中文件夹后样式的变化
-            var divs = document.querySelector(".mainbox").querySelectorAll("div");
+            const divs = document.querySelector(".mainbox").querySelectorAll("div");
             Array.from(divs).filter(function (element) {
                 element.className = "";
                 if (element.id === id) {

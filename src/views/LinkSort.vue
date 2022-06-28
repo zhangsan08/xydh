@@ -87,10 +87,10 @@ export default {
             for (let i = 0; i < l; ++i) {
                 this.links[i].weight = l-i
             }
-            var json = {
+            const json = {
                 links: this.links
-            }
-            linkService.sortLink(json).then((res) => {
+            };
+            linkService.updateLinks(json).then((res) => {
                 if (res.code > 0) {
                     this.$notify.error({
                         title: "保存失败",

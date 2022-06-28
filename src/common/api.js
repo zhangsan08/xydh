@@ -49,9 +49,9 @@ export const linkService = {
       method: 'put',
       data
     })
-  },  
+  },
 
-  sortLink(data){
+  updateLinks(data){
     return request({
       url: '/api/v1/links',      
       method: 'put',

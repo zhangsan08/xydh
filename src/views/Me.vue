@@ -151,16 +151,13 @@
                                 >
                             </div>
                             <div v-else>
-                                <el-button type="" round="" @click="getJsToken()"
-                                >点击生成快捷添加书签秘钥
-                                </el-button
-                                >
+                                <el-button type="" round @click="getJsToken()">点击生成快捷添加书签秘钥</el-button>
                             </div>
                         </el-card>
                     </el-col>
                     <el-col :xs="24" :sm="12">
                         <el-card header="快捷添加书签教程" shadow="hover" class="card">
-                            <iframe width="600px" height="400px" src="//player.bilibili.com/player.html?aid=292824387&bvid=BV1tf4y1J7yz&cid=402830926&page=1"   allowfullscreen="true"> </iframe>
+                            <iframe width="600px" height="400px" src="//player.bilibili.com/player.html?aid=292824387&bvid=BV1tf4y1J7yz&cid=402830926&page=1"   allowfullscreen> </iframe>
                         </el-card>
                     </el-col>
                 </el-row>
@@ -295,30 +292,6 @@ export default {
                 this.Folders.push(x);
             });
         },
-        createLink() {
-            linkService
-                .createLink(this.linkform)
-                .then((res) => {
-                    if (res.code > 0) {
-                        this.$notify.error({
-                            title: "添加失败",
-                            message: res.msg,
-                        });
-                    } else {
-                        this.$notify({
-                            title: "添加成功!",
-                            type: "success",
-                            duration: "800",
-                        });
-                    }
-                })
-                .catch((error) => {
-                    this.$notify.error({
-                        title: "错误 请检查",
-                        message: error,
-                    });
-                });
-        },
         getJsToken() {
             userService.JsToken().then((res) => {
                 this.JsToken = res.data;
@@ -338,8 +311,13 @@ export default {
             window.open(link, "_blank");
         },
         updateLink(link) {
-            //传入folderID仅仅是为了更新后刷新列表
-            var form = {
+            if (link.fid === 0) {
+                this.$notify.error({
+                    title: "请选择一个文件夹",
+                });
+                return
+            }
+            const form = {
                 id: link.id,
                 fid: link.fid,
                 icon: link.icon,
@@ -373,7 +351,7 @@ export default {
                 });
         },
         deleteLink(link) {
-            var form = {id: link.id};
+            const form = {id: link.id};
             linkService
                 .deleteLink(form)
                 .then((res) => {

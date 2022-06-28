@@ -41,7 +41,7 @@
             <div :key="link.id"
                  v-for="link in AllLinks.filter(SiteSearch)">
                     <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                        <span v-if="link.icon"><i :class="'fa fa-' + link.icon"></i>:&#160;{{link.name}}&#160;{{link.info}}&#160;[{{link.url}}]</span>
+                        <span v-if="link.icon"><i :class="'fa fa-' + link.icon"></i>&#160;{{link.name}}:&#160;{{link.info}}&#160;[{{link.url}}]</span>
                         <span v-else>{{ link.name }}:&#160;{{link.info}}&#160;[{{link.url}}]</span>
                     </a>
             </div>
