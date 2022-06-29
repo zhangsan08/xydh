@@ -77,8 +77,10 @@
                         <div class="linkbox">
                             <div class="inputPWD" v-if="Folder.need_password">
                                 <!-- 如果文件夹需要密码 -->
-                                <el-input type="text" autosize v-model="passwords[index]" :placeholder="Folder.info" clearable>
-                                    <span slot="append" type="text" @click="GetPWDFolder(index, Folder.id, passwords[index])">确定</span>
+                                <el-input type="text" autosize v-model="passwords[index]" :placeholder="Folder.info"
+                                          clearable>
+                                    <span slot="append" type="text"
+                                          @click="GetPWDFolder(index, Folder.id, passwords[index])">确定</span>
                                 </el-input>
                             </div>
                             <div class="links" v-else v-for="link in Folder.links" :key="link.id">
@@ -354,11 +356,11 @@ export default {
             }
         },
         addToTabs(folder) {
-            var flag = 0
+            let flag = 0
             this.TabFolders.filter(function (element) {
-                if (element.name === folder.name) return (flag = 1)
+                if (element.id === folder.id) return (flag = 1)
             })
-            if (!flag === 1) this.TabFolders.push(folder)
+            if (flag !== 1) this.TabFolders.push(folder)
             this.AimFolderName = folder.name
             this.switchLab()
         },

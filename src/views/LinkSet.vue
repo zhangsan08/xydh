@@ -90,7 +90,7 @@
         </el-card>
         <!-- 更删 -->
         <el-divider>更新书签</el-divider>
-<!--        文件夹列表-->
+        <!--        文件夹列表-->
         <div class="mainbox">
             <div
                 v-for="Folder in Folders"
@@ -104,7 +104,7 @@
                 <p v-else>{{ Folder.name }}</p>
             </div>
         </div>
-<!--        书签列表-->
+        <!--        书签列表-->
         <div class="bookmarkcard">
             <div class="marklist" v-if="links.length!==0">
                 <el-table :data="links" stripe>
@@ -183,12 +183,9 @@
                         </template>
                     </el-table-column>
                 </el-table>
-                <br>
-                <el-button
-                    type="primary"
-                    @click="updateLinks()"
-                >保存变更
-                </el-button>
+                <div class="floatOnTop">
+                    <el-button type="primary" round @click="updateLinks()">保存变更</el-button>
+                </div>
             </div>
         </div>
     </div>
@@ -423,5 +420,14 @@ export default {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
+}
+
+.floatOnTop {
+    margin: 0 auto;
+    text-align: center;
+    bottom: 10px;
+    position: fixed;
+    z-index: 99;
+    width: 100%;
 }
 </style>

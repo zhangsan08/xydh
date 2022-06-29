@@ -36,14 +36,15 @@
             </el-col>
         </el-row>
 
-        <div  class="totop" v-if="searchTxt && AllLinks">
+        <div class="totop" v-if="searchTxt && AllLinks">
             <p></p>站内搜索：
             <div :key="link.id"
                  v-for="link in AllLinks.filter(SiteSearch)">
-                    <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                        <span v-if="link.icon"><i :class="'fa fa-' + link.icon"></i>&#160;{{link.name}}:&#160;{{link.info}}&#160;[{{link.url}}]</span>
-                        <span v-else>{{ link.name }}:&#160;{{link.info}}&#160;[{{link.url}}]</span>
-                    </a>
+                <a @click="goToUrl(link)" target="_blank" rel="nofollow">
+                    <span v-if="link.icon"><i
+                        :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}:&#160;{{ link.info }}&#160;[{{ link.url }}]</span>
+                    <span v-else>{{ link.name }}:&#160;{{ link.info }}&#160;[{{ link.url }}]</span>
+                </a>
             </div>
         </div>
 
@@ -192,10 +193,10 @@ export default {
             window.open(linkInfo.url, "_blank")
         },
         SiteSearch(oneLink) {
-            if (oneLink === null){
+            if (oneLink === null) {
                 return false
             }
-            return  oneLink.name.toLowerCase().includes(this.searchTxt.toLowerCase())
+            return oneLink.name.toLowerCase().includes(this.searchTxt.toLowerCase())
                 || oneLink.info.toLowerCase().includes(this.searchTxt.toLowerCase())
                 || oneLink.url.toLowerCase().includes(this.searchTxt.toLowerCase())
         }

@@ -49,10 +49,10 @@ export default {
             this.$parent.switchLab()
         },
         removeTab(targetName) {
-            let deletename = this.Folders.filter(function (element, index, array) {
-                if (element.name == targetName) return array.splice(index, 1)
+            let deleteName = this.Folders.filter(function (element, index, array) {
+                if (element.name === targetName) return array.splice(index, 1)
             })
-            if (this.Folders[0] && this.currentTabName == deletename[0].name) {
+            if (this.Folders[0] && this.currentTabName === deleteName[0].name) {
                 this.currentTabName = this.Folders[this.Folders.length - 1].name
             } else if (!this.Folders[0]) {
                 this.currentTabName = "留言板"
@@ -64,7 +64,7 @@ export default {
     },
     mounted() {
         let lyb = document.getElementById("lv-container")
-        if (this.lybID == "") {
+        if (this.lybID === "") {
             lyb.innerHTML = "该用户未开启留言板"
         } else {
             let script = document.createElement("script")

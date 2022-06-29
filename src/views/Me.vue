@@ -186,10 +186,6 @@
         </el-tabs>
 
         <el-divider></el-divider>
-        <!-- 跑马灯 -->
-        <el-col :span="24">
-            <Paomadeng></Paomadeng>
-        </el-col>
     </div>
 </template>
 
@@ -201,7 +197,6 @@ import FolderSet from "./FolderSet";
 import LinkSet from "./LinkSet";
 import Lab from "./ConsoleLab";
 import Other from "./Other";
-import Paomadeng from "@/components/Paomadeng.vue";
 import ICON from "@/components/icon.vue";
 import iconModule from "@/plugins/icon";
 
@@ -383,7 +378,6 @@ export default {
         LinkSet,
         Lab,
         Other,
-        Paomadeng,
         ICON,
     },
     beforeMount() {
