@@ -194,7 +194,8 @@
 // import * as FolderAPI from '@/api/folder/'
 // import * as LinkAPI from '@/api/link/'
 
-import {folderService, linkService} from "@/common/api";
+import {linkService} from "@/common/api";
+// import Sortable from "sortablejs";
 
 export default {
     props: ["userID","Folders"],
@@ -216,14 +217,6 @@ export default {
         };
     },
     methods: {
-        getFolder() {
-            folderService.getMyFolders().then((res) => {
-                this.Folders = res.data;
-                this.Folders.sort(function (f1, f2) {
-                    return f1.weight - f2.weight; //weight
-                });
-            });
-        },
         getLinksIn(fid) {
             this.SelectedFolderID = fid
             this.ChooseFolder(fid);
@@ -237,6 +230,9 @@ export default {
                     this.links = [];
                 }
             });
+            // const tbody = document.querySelector(".marklist tbody");
+            // console.log(tbody)
+            // Sortable.create(tbody);
         },
         createLink() {
             if (this.linkform.fid === "") {

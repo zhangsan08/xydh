@@ -190,14 +190,6 @@ export default {
         };
     },
     methods: {
-        getFolder() {
-            folderService.getMyFolders().then((res) => {
-                this.Folders = res.data;
-                this.Folders.sort(function (f1, f2) {
-                    return f1.weight - f2.weight; //weight
-                });
-            });
-        },
         createFolder() {
             folderService
                 .createFolder(this.Folderform)
@@ -214,7 +206,7 @@ export default {
                             duration: "800",
                         });
                         this.Folderform = {name: "", icon: ""};
-                        this.getFolder();
+                        this.$parent.$parent.$parent.getFolder();
                     }
                 })
                 .catch((error) => {
@@ -247,7 +239,7 @@ export default {
                             type: "success",
                             duration: "800",
                         });
-                        this.getFolder();
+                        this.$parent.$parent.$parent.getFolder();
                     }
                 })
                 .catch((error) => {
@@ -274,7 +266,7 @@ export default {
                             type: "success",
                             duration: "800",
                         });
-                        this.getFolder();
+                        this.$parent.$parent.$parent.getFolder();
                     }
                 })
                 .catch((error) => {
