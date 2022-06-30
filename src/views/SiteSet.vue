@@ -277,13 +277,8 @@ export default {
             }
         }
     },
-    components: {},
-    beforeMount() {
-    },
-    watch: {
-        userID: function () {
-            this.getSite()
-        },
+    mounted() {
+        this.getSite()
     }
 }
 

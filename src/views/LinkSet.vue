@@ -197,13 +197,12 @@
 import {folderService, linkService} from "@/common/api";
 
 export default {
-    props: ["userID"],
+    props: ["userID","Folders"],
     data() {
         return {
             loading: false,
             SelectedFolderID: "",
             uid: 0,
-            Folders: [],
             rigthnowPage: 0,
             links: [],
             linkform: {
@@ -355,16 +354,7 @@ export default {
         pageCount() {
             return this.Folders.length;
         },
-    },
-    components: {},
-    // beforeMount() {
-    // 	this.getUser()
-    // },
-    watch: {
-        userID: function () {
-            (this.uid = this.userID), this.getFolder();
-        },
-    },
+    }
 };
 </script>
 

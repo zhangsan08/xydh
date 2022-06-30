@@ -177,11 +177,10 @@
 import {folderService} from "@/common/api";
 
 export default {
-    props: ["userID"],
+    props: ["userID","Folders"],
     data() {
         return {
             uid: 0,
-            Folders: [],
             Folderform: {
                 id: "",
                 name: "",
@@ -291,15 +290,6 @@ export default {
                 return;
             }
             this.$emit("chooseIcon", this.Folderform);
-        },
-    },
-    components: {},
-    // beforeMount() {
-    // 	this.getUser()
-    // },
-    watch: {
-        userID: function () {
-            (this.uid = this.userID), this.getFolder();
         },
     },
 };

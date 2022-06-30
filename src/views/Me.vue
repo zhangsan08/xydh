@@ -34,7 +34,7 @@
                             <template slot-scope="scope">
                                 <el-select v-model="scope.row.fid">
                                     <el-option
-                                        v-for="Folder in Folders"
+                                        v-for="Folder in FoldersWithTemp"
                                         :key="Folder.id"
                                         :label="Folder.name"
                                         :value="Folder.id"
@@ -156,24 +156,28 @@
                         </el-card>
                     </el-col>
                     <el-col :xs="24" :sm="12">
-                        <el-card header="快捷添加书签教程" shadow="hover" class="card">
-                            <iframe width="600px" height="400px" src="//player.bilibili.com/player.html?aid=292824387&bvid=BV1tf4y1J7yz&cid=402830926&page=1"   allowfullscreen> </iframe>
+                        <el-card header="快捷添加书签视频教程" shadow="hover" class="card">
+                            <el-link
+                                target="_blank"
+                                rel="nofollow"
+                                href="https://www.bilibili.com/video/BV1tf4y1J7yz?zw"
+                            >点击观看</el-link>
                         </el-card>
                     </el-col>
                 </el-row>
 
             </el-tab-pane>
 
-            <el-tab-pane label="导航配置">
+            <el-tab-pane label="导航配置" lazy @tab-click="getSite">
                 <SiteSet :userID="userID" :isVIP="isVIP"></SiteSet>
             </el-tab-pane>
 
             <el-tab-pane label="文件夹" :lazy="false">
-                <FolderSet :userID="userID" @chooseIcon="iconHandle"></FolderSet>
+                <FolderSet :userID="userID" :Folders="Folders" @chooseIcon="iconHandle"></FolderSet>
             </el-tab-pane>
 
             <el-tab-pane label="书签管理" :lazy="false">
-                <LinkSet :userID="userID" @chooseIcon="iconHandle"></LinkSet>
+                <LinkSet :userID="userID"  :Folders="Folders" @chooseIcon="iconHandle"></LinkSet>
             </el-tab-pane>
 
             <el-tab-pane label="进阶功能" lazy>
@@ -190,7 +194,7 @@
 </template>
 
 <script>
-import {userService, folderService, linkService} from "@/common/api";
+import {userService, folderService, linkService, siteService} from "@/common/api";
 // import * as UserAPI from '@/api/user/'
 import SiteSet from "./SiteSet";
 import FolderSet from "./FolderSet";
@@ -212,6 +216,7 @@ export default {
             jscode: "***** 秘钥关联用户 请勿外传",
             showjscode: false,
             Folders: [],
+            FoldersWithTemp: [],
             linkform: {
                 fid: "",
                 icon: "",
@@ -277,14 +282,37 @@ export default {
                 },
             });
         },
+        getSite(tab, event) {
+            console.log(tab, event);
+            siteService.getSitebyID(this.userID).then((res) => {
+                this.SiteForm.name = res.data.name
+                this.SiteForm.info = res.data.info
+                this.SiteForm.bg = res.data.bg
+                this.SiteForm.mobile_bg = res.data.mobile_bg
+                this.SiteForm.btn_switch = res.data.btn_switch
+                this.SiteForm.bg_switch = res.data.bg_switch
+                this.SiteForm.bg_color = res.data.bg_color
+                this.SiteForm.font_color = res.data.font_color
+                this.SiteForm.bglizi = res.data.bglizi
+                this.SiteForm.lyb_id = res.data.lyb_id
+                if (res.data.music) {
+                    this.music = JSON.parse(res.data.music);
+                }
+                if (res.data.top_bottom) {
+                    this.top_bottom = JSON.parse(res.data.top_bottom);
+                }
+
+                this.userview = res.data.view
+            })
+        },
         getFolder() {
             folderService.getMyFolders().then((res) => {
                 this.Folders = res.data;
-                var x = {
+                this.FoldersWithTemp = this.Folders
+                this.FoldersWithTemp.push({
                     id: 0,
                     name: "选择文件夹",
-                };
-                this.Folders.push(x);
+                });
             });
         },
         getJsToken() {
