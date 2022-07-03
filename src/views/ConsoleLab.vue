@@ -36,21 +36,6 @@
             <el-col :xs="24" :sm="12">
                 <el-card class="box-card" shadow="hover">
                     <div slot="header" class="clearfix">
-                        <span>书签排序</span>
-                        <el-button style="float: right; padding: 3px 0" type="text" @click="go5()">进入该功能</el-button>
-                    </div>
-                    <div>
-                        <p><b>介绍</b></p>
-                        你们要的书签排序
-                        <p><b>使用方法</b></p>
-                        仅支持电脑端操作 拖动排序 记得点击保存
-                    </div>
-                </el-card>
-            </el-col>
-
-            <el-col :xs="24" :sm="12">
-                <el-card class="box-card" shadow="hover">
-                    <div slot="header" class="clearfix">
                         <span>书签备份</span>
                         <el-button style="float: right; padding: 3px 0" type="text" @click="go1()">进入该功能</el-button>
                     </div>
@@ -80,11 +65,7 @@ export default {
         go2() {
             let routeData = this.$router.resolve({path: '/u/vip', query: {}});
             window.open(routeData.href, '_blank');
-        },
-        go5() {
-            let routeData = this.$router.resolve({path: '/l/sort', query: {}});
-            window.open(routeData.href, '_blank');
-        },
+        }
     }
 }
 </script>

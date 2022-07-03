@@ -107,7 +107,7 @@
         <!--        书签列表-->
         <div class="bookmarkcard">
             <div class="marklist" v-if="links.length!==0">
-                <el-table :data="links" stripe>
+                <el-table :data="links" v-if="!isSorting" stripe>
                     <el-table-column label="图标" width="80">
                         <template slot-scope="scope">
                             <el-input type="text" v-model="scope.row.icon"></el-input>
@@ -158,11 +158,7 @@
                             </el-select>
                         </template>
                     </el-table-column>
-                    <el-table-column
-                        fixed="right"
-                        label="操作"
-                        width="120"
-                    >
+                    <el-table-column fixed="right" label="操作" width="120">
                         <template slot-scope="scope">
                             <el-button-group>
                                 <el-button
@@ -183,7 +179,16 @@
                         </template>
                     </el-table-column>
                 </el-table>
+                <el-table :data="links" row-key="id" v-if="isSorting"  class="sort_table" border stripe>
+                    <el-table-column label="名称">
+                        <template slot-scope="scope">
+                            {{scope.row.name}}
+                        </template>
+                    </el-table-column>
+                </el-table>
                 <div class="floatOnTop">
+                    <el-button type="primary" round v-if="!isSorting" @click="beforeSorting()">调整顺序</el-button>
+                    <el-button type="primary" round v-if="isSorting" @click="cancelSorting()">退出排序</el-button>
                     <el-button type="primary" round @click="updateLinks()">保存变更</el-button>
                 </div>
             </div>
@@ -195,10 +200,10 @@
 // import * as LinkAPI from '@/api/link/'
 
 import {linkService} from "@/common/api";
-// import Sortable from "sortablejs";
+import Sortable from "sortablejs";
 
 export default {
-    props: ["userID","Folders"],
+    props: ["userID", "Folders"],
     data() {
         return {
             loading: false,
@@ -206,6 +211,8 @@ export default {
             uid: 0,
             rigthnowPage: 0,
             links: [],
+            toSortLinks: [],
+            isSorting: false,
             linkform: {
                 id: "",
                 fid: "",
@@ -230,9 +237,20 @@ export default {
                     this.links = [];
                 }
             });
-            // const tbody = document.querySelector(".marklist tbody");
-            // console.log(tbody)
-            // Sortable.create(tbody);
+        },
+        beforeSorting() {
+            this.isSorting = true
+            const _this = this
+            const tbody = document.querySelector(".marklist tbody");
+            Sortable.create(tbody,{
+                onEnd({newIndex, oldIndex}){
+                    const currRow = _this.links.splice(oldIndex, 1)[0];
+                    _this.links.splice(newIndex, 0, currRow);
+                }
+            });
+        },
+        cancelSorting(){
+            this.isSorting = false
         },
         createLink() {
             if (this.linkform.fid === "") {
@@ -275,7 +293,10 @@ export default {
                 });
         },
         updateLinks() {
-            //传入folderID仅仅是为了更新后刷新列表
+            let i = 0, l = this.links.length;
+            for (; i < l; i++) {
+                this.links[i].weight = l - i
+            }
             const jsonData = {
                 links: this.links
             };
@@ -340,7 +361,7 @@ export default {
             const divs = document.querySelector(".mainbox").querySelectorAll("div");
             Array.from(divs).filter(function (element) {
                 element.className = "";
-                if (element.id === id) {
+                if (element.id === id.toString()) {
                     element.className = "aim";
                 }
             });
@@ -386,13 +407,13 @@ export default {
 }
 
 .mainbox div:hover {
-    border: 0.3px solid #000;
-    color: rgb(135, 0, 0);
+    border: 2px solid wheat;
 }
 
 .mainbox .aim {
-    border: 0.3px solid #000;
-    color: #000;
+    border: 1px solid #000;
+    color: white;
+    background: black;
 }
 
 .bookmarkcard {
@@ -415,5 +436,9 @@ export default {
     position: fixed;
     z-index: 99;
     width: 100%;
+}
+
+.sort_table {
+    width: 50%;
 }
 </style>

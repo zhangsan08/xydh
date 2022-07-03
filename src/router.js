@@ -73,11 +73,11 @@ export default new Router({
             name: 'hgs',
             component: () => import('./views/HGS.vue')
         },
-        {
-            path: '/test',
-            name: 'ShowSite',
-            component: () => import('./views/test.vue')
-        },
+        // {
+        //     path: '/test',
+        //     name: 'ShowSite',
+        //     component: () => import('./views/test.vue')
+        // },
         {
             path: '/:username',
             name: 'ShowSite',
