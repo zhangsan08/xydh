@@ -108,22 +108,17 @@
         <div class="bookmarkcard">
             <div class="marklist" v-if="links.length!==0">
                 <el-table :data="links" v-if="!isSorting" stripe>
-                    <el-table-column label="图标" width="80">
+                    <el-table-column label="图标" width="150">
                         <template slot-scope="scope">
-                            <el-input type="text" v-model="scope.row.icon"></el-input>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="" width="62">
-                        <template slot-scope="scope">
-                            <el-button
-                                style="width: 40px"
-                                title="选择图标"
-                                id="bookmarks"
-                                @click="iconHandleLink(scope.row)"
-                            >
-                                <i :class="'fa fa-' + scope.row.icon" v-if="scope.row.icon"></i>
-                                <i :class="'fa fa-hand-pointer-o'" v-else></i>
-                            </el-button>
+                            <el-input type="text" v-model="scope.row.icon">
+                                <span slot="append" style="cursor: pointer;" @click="iconHandleLink(scope.row)">
+                                    <i
+                                        v-if="scope.row.icon"
+                                        :class="'fa fa-' + scope.row.icon"
+                                    ></i>
+                                    <i v-else :class="'fa fa-hand-pointer-o'"></i>
+                                </span>
+                            </el-input>
                         </template>
                     </el-table-column>
                     <el-table-column label="名称" min-width="160">

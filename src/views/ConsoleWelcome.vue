@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <el-card shadow="hover" class="card">
+    <div class="welcome">
+        <el-card class="card" shadow="hover">
             临时书签 放入文件夹后才可展示到导航站
             <el-table :data="tempLinks" height="360" stripe>
                 <el-table-column label="名称" min-width="160">
                     <template slot-scope="scope">
-                        <el-input type="text" v-model="scope.row.name"></el-input>
+                        <el-input v-model="scope.row.name" type="text"></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column label="文件夹" min-width="130">
@@ -22,40 +22,31 @@
                 </el-table-column>
                 <el-table-column label="链接" min-width="160">
                     <template slot-scope="scope">
-                        <el-input type="text" v-model="scope.row.url"></el-input>
+                        <el-input v-model="scope.row.url" type="text"></el-input>
                     </template>
                 </el-table-column>
-                <el-table-column label="图标" width="80">
+                <el-table-column label="图标" width="150">
                     <template slot-scope="scope">
                         <el-row>
-                            <el-input type="text" v-model="scope.row.icon"></el-input>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column label="" width="60">
-                    <template slot-scope="scope">
-                        <el-row>
-                            <el-button
-                                title="选择图标"
-                                style="max-width: 40px"
-                                @click="iconHandle(scope.row)"
-                            >
-                                <i
-                                    :class="'fa fa-' + scope.row.icon"
-                                    v-if="scope.row.icon"
-                                ></i>
-                                <i :class="'fa fa-hand-pointer-o'" v-else></i>
-                            </el-button>
+                            <el-input v-model="scope.row.icon" type="text">
+                                <span slot="append" style="cursor: pointer;" @click="iconHandle(scope.row)">
+                                    <i
+                                        v-if="scope.row.icon"
+                                        :class="'fa fa-' + scope.row.icon"
+                                    ></i>
+                                    <i v-else :class="'fa fa-hand-pointer-o'"></i>
+                                </span>
+                            </el-input>
                         </el-row>
                     </template>
                 </el-table-column>
                 <el-table-column label="简介" min-width="180">
                     <template slot-scope="scope">
                         <el-input
-                            type="textarea"
-                            resize="none"
                             v-model="scope.row.info"
                             placeholder="鼠标放上时的提示语(可为空)"
+                            resize="none"
+                            type="textarea"
                         ></el-input>
                     </template>
                 </el-table-column>
@@ -68,24 +59,24 @@
                     <template slot-scope="scope">
                         <el-button-group>
                             <el-button
-                                title="打开书签"
-                                size="small"
-                                type="success"
                                 icon="el-icon-view"
+                                size="small"
+                                title="打开书签"
+                                type="success"
                                 @click="openLink(scope.row.url)"
                             ></el-button>
                             <el-button
-                                title="确认编辑"
-                                size="small"
-                                type="primary"
                                 icon="el-icon-edit"
+                                size="small"
+                                title="确认编辑"
+                                type="primary"
                                 @click="updateLink(scope.row)"
                             ></el-button>
                             <el-button
-                                title="删除书签"
-                                size="small"
-                                type="danger"
                                 icon="el-icon-delete"
+                                size="small"
+                                title="删除书签"
+                                type="danger"
                                 @click="deleteLink(scope.row)"
                             ></el-button>
                         </el-button-group>
@@ -94,8 +85,8 @@
             </el-table>
         </el-card>
         <el-row>
-            <el-col :xs="24" :sm="12">
-                <el-card header="快捷添加书签秘钥" shadow="hover" class="card">
+            <el-col :sm="12" :xs="24">
+                <el-card class="card" header="快捷添加书签秘钥" shadow="hover">
                     <div v-if="showjscode">
                         <div style="height: 10px"></div>
                         使用方法一：<br/><a :href="jscode">快捷添加书签</a>
@@ -103,35 +94,35 @@
                         右侧有视频教程
                         <div style="height: 10px"></div>
                         方法二：手动复制下面这个代码到你的书签栏
-                        <el-input type="textarea" rows="2" v-model="jscode"></el-input>
+                        <el-input v-model="jscode" rows="2" type="textarea"></el-input>
                         <div style="height: 10px"></div>
                         <el-link
-                            target="_blank"
-                            rel="nofollow"
                             href="https://www.yuque.com/xydh/start/ky664n"
+                            rel="nofollow"
+                            target="_blank"
                         >方法二详细说明请点我查看
                         </el-link
                         >
                         <br/>
                         <el-link
-                            target="_blank"
-                            rel="nofollow"
                             href="https://www.yuque.com/xydh/start/qgztd3"
+                            rel="nofollow"
+                            target="_blank"
                         >手机端玩法(iOS安卓均支持)
                         </el-link
                         >
                     </div>
                     <div v-else>
-                        <el-button type="" round @click="getJsToken()">点击生成快捷添加书签秘钥</el-button>
+                        <el-button round type="" @click="getJsToken()">点击生成快捷添加书签秘钥</el-button>
                     </div>
                 </el-card>
             </el-col>
-            <el-col :xs="24" :sm="12">
-                <el-card header="快捷添加书签视频教程" shadow="hover" class="card">
+            <el-col :sm="12" :xs="24">
+                <el-card class="card" header="快捷添加书签视频教程" shadow="hover">
                     <el-link
-                        target="_blank"
-                        rel="nofollow"
                         href="https://www.bilibili.com/video/BV1tf4y1J7yz?zw"
+                        rel="nofollow"
+                        target="_blank"
                     >点击观看
                     </el-link>
                 </el-card>

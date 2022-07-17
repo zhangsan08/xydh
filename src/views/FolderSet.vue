@@ -3,74 +3,72 @@
         <!-- 添加 -->
         <el-row>
             <el-col :span="24">
-                <el-card header="添加文件夹" shadow="hover" class="card">
-                    <el-row type="flex" justify="center">
+                <el-card class="card" header="添加文件夹" shadow="hover">
+                    <el-row justify="center" type="flex">
                         <el-col :span="8">图标</el-col>
                         <el-col :span="16">名称</el-col>
                         <el-col :span="8">排序</el-col>
                     </el-row>
-                    <el-row :model="Folderform" type="flex" justify="center">
+                    <el-row :model="Folderform" justify="center" type="flex">
                         <el-col :span="6"
                         >
                             <el-input
-                                type="text"
                                 v-model="Folderform.icon"
-                                minlength="0"
                                 maxlength="30"
+                                minlength="0"
                                 placeholder="icon"
-                            ></el-input
+                                type="text"
                             >
-                        </el-col>
-                        <el-col :span="2">
-                            <el-button @click="iconHandleFolder()" title="选择图标">
-                                <i
-                                    :class="'fa fa-' + Folderform.icon"
-                                    v-if="Folderform.icon"
-                                ></i>
-                                <i :class="'fa fa-hand-pointer-o'" v-else></i>
-                            </el-button>
+                                <span slot="append" style="cursor: pointer;" @click="iconHandleFolder()">
+                                    <i
+                                        v-if="Folderform.icon"
+                                        :class="'fa fa-' + Folderform.icon"
+                                    ></i>
+                                    <i v-else :class="'fa fa-hand-pointer-o'"></i>
+                                </span>
+                            </el-input>
                         </el-col>
                         <el-col :span="16"
                         >
                             <el-input
-                                type="text"
                                 v-model="Folderform.name"
-                                minlength="0"
                                 maxlength="8"
+                                minlength="0"
                                 placeholder="0-8字/过长不好看"
+                                type="text"
                             ></el-input
                             >
                         </el-col>
                         <el-col :span="8">
                             <el-input-number
-                                style="width: 120px"
                                 v-model="Folderform.weight"
-                                :min="0"
                                 :max="10"
+                                :min="0"
                                 label="越大越靠后"
+                                style="width: 120px"
                             ></el-input-number>
                         </el-col>
                     </el-row>
-                    <el-row type="flex" justify="center">
+                    <el-row justify="center" type="flex">
                         <el-col :span="8">密码</el-col>
                         <el-col :span="16">引导语</el-col>
                         <el-col :span="8">操作</el-col>
                     </el-row>
-                    <el-row type="flex" justify="center">
+                    <el-row justify="center" type="flex">
                         <el-col :span="8">
                             <el-input
-                                type="text"
                                 v-model="Folderform.password"
                                 show-password
+                                type="text"
                             ></el-input>
                         </el-col>
                         <el-col :span="16">
                             <el-input
-                                type="text"
                                 v-model="Folderform.info"
                                 maxlength="30"
                                 placeholder="设置了密码后的文字提示"
                                 show-word-limit
+                                type="text"
                             ></el-input>
                         </el-col>
                         <el-col :span="8"
@@ -93,57 +91,52 @@
             <p>文件夹密码: 1、本人登录状态下无需密码；2、密码为空则无需密码</p>
         </div>
         <el-table :data="Folders" stripe>
-            <el-table-column label="图标" width="80">
+            <el-table-column label="图标" width="180">
                 <template slot-scope="scope">
-                    <el-input type="text" v-model="scope.row.icon"></el-input>
-                </template>
-            </el-table-column>
-            <el-table-column width="62">
-                <template slot-scope="scope">
-                    <el-button
-                        title="选择图标"
-                        style="width: 40px"
-                        id="bookmarks"
-                        @click="iconHandleFolder(scope.row)"
-                    >
-                        <i :class="'fa fa-' + scope.row.icon" v-if="scope.row.icon"></i>
-                        <i :class="'fa fa-hand-pointer-o'" v-else></i>
-                    </el-button>
+                    <el-input v-model="scope.row.icon" type="text">
+                        <span slot="append" style="cursor: pointer;" @click="iconHandleFolder(scope.row)">
+                                    <i
+                                        v-if="scope.row.icon"
+                                        :class="'fa fa-' + scope.row.icon"
+                                    ></i>
+                                    <i v-else :class="'fa fa-hand-pointer-o'"></i>
+                                </span>
+                    </el-input>
                 </template>
             </el-table-column>
             <el-table-column label="名称" min-width="200">
                 <template slot-scope="scope">
-                    <el-input type="text" v-model="scope.row.name"></el-input>
+                    <el-input v-model="scope.row.name" type="text"></el-input>
                 </template>
             </el-table-column>
             <el-table-column label="密码" min-width="100">
                 <template slot-scope="scope">
                     <el-input
-                        type="text"
                         v-model="scope.row.password"
                         show-password
+                        type="text"
                     ></el-input>
                 </template>
             </el-table-column>
             <el-table-column label="引导语" min-width="100">
                 <template slot-scope="scope">
                     <el-input
-                        type="text"
                         v-model="scope.row.info"
                         maxlength="30"
                         show-word-limit
+                        type="text"
                     ></el-input>
                 </template>
             </el-table-column>
-            <el-table-column label="排序" align="center" width="120">
+            <el-table-column align="center" label="排序" width="120">
                 <template slot-scope="scope">
                     <el-input-number
+                        v-model="scope.row.weight"
+                        :max="15"
+                        :min="0"
+                        label="越大越靠后"
                         size="mini"
                         style="width: 100px"
-                        v-model="scope.row.weight"
-                        :min="0"
-                        :max="15"
-                        label="越大越靠后"
                     ></el-input-number>
                 </template>
             </el-table-column>
@@ -177,7 +170,7 @@
 import {folderService} from "@/common/api";
 
 export default {
-    props: ["userID","Folders"],
+    props: ["userID", "Folders"],
     data() {
         return {
             uid: 0,
