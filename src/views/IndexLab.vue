@@ -5,7 +5,8 @@
         <div class="labTabs">
             <el-tabs type="card" v-model="currentTabName" @tab-remove="removeTab">
                 <el-tab-pane label="留言板" name="留言板">
-                    <div id="lv-container" data-id="city" :data-uid="lybID"></div>
+                    <div>开发中</div>
+                    <!-- <div id="lv-container" data-id="city" :data-uid="lybID"></div> -->
                 </el-tab-pane>
 <!--                <el-tab-pane label="热榜" name="热榜">-->
 <!--                    优化后回归-->
@@ -31,6 +32,15 @@
                         </div>
                     </el-card>
                 </el-tab-pane>
+                <el-tab-pane v-for="IMG in IMGs" :key="IMG.id" :label="IMG.name" :name="IMG.name">
+                    <el-image 
+                        :src="IMG.url"
+                        fit="fill">
+                        <div slot="error" class="image-slot">
+                            <i class="el-icon-picture-outline"></i>
+                        </div>
+                    </el-image>
+                </el-tab-pane>
             </el-tabs>
         </div>
     </div>
@@ -38,7 +48,7 @@
 
 <script>
 export default {
-    props: ["lybID", "Folders", "AimName"],
+    props: ["lybID", "Folders", "AimName","IMGs"],
     data() {
         return {
             currentTabName: this.AimName,
@@ -63,14 +73,14 @@ export default {
         },
     },
     mounted() {
-        let lyb = document.getElementById("lv-container")
-        if (this.lybID === "") {
-            lyb.innerHTML = "该用户未开启留言板"
-        } else {
-            let script = document.createElement("script")
-            script.src = "https://cdn-city.livere.com/js/embed.dist.js"
-            lyb.appendChild(script)
-        }
+        // let lyb = document.getElementById("lv-container")
+        // if (this.lybID === "") {
+        //     lyb.innerHTML = "该用户未开启留言板"
+        // } else {
+        //     let script = document.createElement("script")
+        //     script.src = "https://cdn-city.livere.com/js/embed.dist.js"
+        //     lyb.appendChild(script)
+        // }
     },
 }
 </script>

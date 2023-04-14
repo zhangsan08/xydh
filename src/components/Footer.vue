@@ -18,6 +18,7 @@
             <!-- <a target='_blank' rel='follow' href='https://www.itab.link/'>iTab</a>&#160; -->
             <a target='_blank' rel='follow' href='https://www.niceso.fun/'>奈斯搜索</a>&#160;
             <a target='_blank' rel='follow' href='https://adzhp.cn/'>爱达杂货铺</a>&#160;
+            <a target='_blank' rel='follow' href='https://www.miguyu.com/?ext=xy'>咪咕鱼</a>&#160;
                 <!-- <li>2020 炫猿导航</li> -->
                 <li><a style="color: grey;" target='_blank' rel='nofollow' href='http://www.beian.miit.gov.cn/'>京ICP备19043213号</a></li>
             </div>

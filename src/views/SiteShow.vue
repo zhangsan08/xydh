@@ -27,7 +27,7 @@
         <div class="Lab totop" v-if="labSwitch">
             <div class="hidden-sm-and-up" style="height: 50px"></div>
             <transition name="el-zoom-in-left">
-                <IndexLab :lybID="lybID" :Folders="TabFolders" :AimName="AimFolderName"
+                <IndexLab :lybID="lybID" :Folders="TabFolders"  :IMGs="TabIMGs" :AimName="AimTabName"
                           v-Clickoutside="switchLab"></IndexLab>
             </transition>
         </div>
@@ -173,8 +173,9 @@ export default {
             lybID: "",
             Folders: [],
             TabFolders: [],
+            TabIMGs: [],
             AllLinks: [], //检索用
-            AimFolderName: "",
+            AimTabName: "",
             f_color: "white",
             autoBgColor: "#fff",
             cacheList: [],
@@ -302,6 +303,23 @@ export default {
         },
         // 打开url
         goToUrl(linkInfo) {
+            // 如果是图片
+            var thisUrl = linkInfo.url; 
+            var houzhui = /.[^.]+$/.exec(thisUrl); 
+            switch(houzhui[0])
+            {
+                case ".png":
+                case ".jpg":
+                case ".jpeg":
+                case ".gif":
+                case ".svg":
+                    this.addIMGToTabs(linkInfo)
+                    return
+                default:
+     
+                    break;
+            }
+
             let cache = cookieGet("cacheLinkList")
             let existKey = false
             if (cache) {
@@ -361,7 +379,16 @@ export default {
                 if (element.id === folder.id) return (flag = 1)
             })
             if (flag !== 1) this.TabFolders.push(folder)
-            this.AimFolderName = folder.name
+            this.AimTabName = folder.name
+            this.switchLab()
+        },
+        addIMGToTabs(IMGLink) {
+            let flag = 0
+            this.TabIMGs.filter(function (element) {
+                if (element.id === IMGLink.id) return (flag = 1)
+            })
+            if (flag !== 1) this.TabIMGs.push(IMGLink)
+            this.AimTabName = IMGLink.name
             this.switchLab()
         },
     },
