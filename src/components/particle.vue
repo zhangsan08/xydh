@@ -1,7 +1,7 @@
 <template>
-  <div id='particles-js'></div>
+    <div id='particles-js'></div>
 </template>
- 
+
 <script>
 import p1 from '@/assets/p1.json'
 import p2 from '@/assets/p2.json'
@@ -9,17 +9,17 @@ import p3 from '@/assets/p3.json'
 import p4 from '@/assets/p4.json'
 
 export default {
-  props: ['bglizi'],
-  name: 'ParticlesJS',
-  mounted () {
-    require('particles.js')
-    this.$nextTick(() => {
-      this.initParticlesJS()
-    })
-  },
-  methods: {
-    initParticlesJS () {
-      /* eslint-disable */
+    name: 'ParticlesJS',
+    props: ['bglizi'],
+    mounted () {
+        require('particles.js')
+        this.$nextTick(() => {
+            this.initParticlesJS()
+        })
+    },
+    methods: {
+        initParticlesJS () {
+            /* eslint-disable */
       switch (this.bglizi) {
         case 1:
           particlesJS('particles-js', p1)
@@ -52,6 +52,6 @@ export default {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   position:fixed;
-  /* z-index:-1; */
+  z-index:-1;
 }
 </style>
