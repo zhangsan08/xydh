@@ -52,6 +52,6 @@ export default {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   position:fixed;
-  z-index:-1;
+  /* z-index:-1; */
 }
 </style>

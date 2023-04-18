@@ -100,64 +100,69 @@
 
                 <!-- 用户自定义内容 -->
                 <el-row v-else>
-                    <div v-for="(Folder, index) in Folders" :key="Folder.id">
-                        <el-col :xs="24" :sm="12" :md="8" :xl="6">
-                            <div class="foldername" :id="Folder.name">
-                                <p v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</p>
-                                <p v-else>{{ Folder.name }}</p>
-                                <el-tooltip content="展开文件夹" placement="top">
-                                    <div class="openFolder" @click="addToTabs(Folder)">
-                                        <i class="fa fa-arrows-alt"></i>
-                                    </div>
-                                </el-tooltip>
-                            </div>
-                            <div
-                                class="folder totop"
-                                :style="{height: screenWidth > 768 ? '140px' : 'auto'}"
-                                :id="Folder.id"
-                                onselectstart="return false;"
-                            >
-                                <div class="linkbox">
-                                    <div class="inputPWD" v-if="Folder.need_password">
-                                        <!-- 如果文件夹需要密码 -->
-                                        <el-input
+                    <el-col
+                        :xs="24"
+                        :sm="12"
+                        :md="8"
+                        :xl="6"
+                        v-for="(Folder, index) in Folders"
+                        :key="Folder.id"
+                    >
+                        <div class="foldername" :id="Folder.name">
+                            <p v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</p>
+                            <p v-else>{{ Folder.name }}</p>
+                            <el-tooltip content="展开文件夹" placement="top">
+                                <div class="openFolder" @click="addToTabs(Folder)">
+                                    <i class="fa fa-arrows-alt"></i>
+                                </div>
+                            </el-tooltip>
+                        </div>
+                        <div
+                            class="folder totop"
+                            :style="{height: screenWidth > 768 ? '140px' : 'auto'}"
+                            :id="Folder.id"
+                            onselectstart="return false;"
+                        >
+                            <div class="linkbox">
+                                <div class="inputPWD" v-if="Folder.need_password">
+                                    <!-- 如果文件夹需要密码 -->
+                                    <el-input
+                                        type="text"
+                                        autosize
+                                        v-model="passwords[index]"
+                                        :placeholder="Folder.info"
+                                        clearable
+                                    >
+                                        <span
+                                            slot="append"
                                             type="text"
-                                            autosize
-                                            v-model="passwords[index]"
-                                            :placeholder="Folder.info"
-                                            clearable
-                                        >
-                                            <span
-                                                slot="append"
-                                                type="text"
-                                                @click="GetPWDFolder(index, Folder.id, passwords[index])"
-                                            >确定</span>
-                                        </el-input>
-                                    </div>
-                                    <div class="links" v-else v-for="link in Folder.links" :key="link.id">
-                                        <el-col :span="8">
-                                            <div class="link">
-                                                <el-tooltip :content="link.info" placement="top" v-if="link.info">
-                                                    <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                                                        <p v-if="link.icon">
-                                                            <i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}
-                                                        </p>
-                                                        <p v-else>{{ link.name }}</p>
-                                                    </a>
-                                                </el-tooltip>
-                                                <a @click="goToUrl(link)" target="_blank" rel="nofollow" v-else>
-                                                    <p v-if="link.icon">
+                                            @click="GetPWDFolder(index, Folder.id, passwords[index])"
+                                        >确定</span>
+                                    </el-input>
+                                </div>
+                                <div class="links" v-else v-for="link in Folder.links" :key="link.id">
+                                    <el-col :span="8">
+                                        <div class="link">
+                                            <el-tooltip :content="link.info" placement="top" v-if="link.info">
+                                                <a @click="goToUrl(link)" target="_blank" rel="nofollow">
+                                                    <div v-if="link.icon">
                                                         <i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}
-                                                    </p>
-                                                    <p v-else>{{ link.name }}</p>
+                                                    </div>
+                                                    <div v-else>{{ link.name }}</div>
                                                 </a>
-                                            </div>
-                                        </el-col>
-                                    </div>
+                                            </el-tooltip>
+                                            <a @click="goToUrl(link)" target="_blank" rel="nofollow" v-else>
+                                                <div v-if="link.icon">
+                                                    <i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}
+                                                </div>
+                                                <div v-else>{{ link.name }}</div>
+                                            </a>
+                                        </div>
+                                    </el-col>
                                 </div>
                             </div>
-                        </el-col>
-                    </div>
+                        </div>
+                    </el-col>
                 </el-row>
             </div>
         </div>
@@ -733,7 +738,8 @@ export default {
     .folder {
         /* background: rgba(0, 0, 0, 0.03); */
         /* background: rgba(255, 255, 255, 0.06); */
-        background-color: rgba(255, 255, 255, 0.1);
+        // background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(2px);
         min-height: 140px;
         margin: 12px 20px;
@@ -752,12 +758,9 @@ export default {
     }
 
     .folder:hover {
-        background: rgba(0, 0, 0, 0.6);
         color: white;
-        background-color: rgba(0, 125, 184, 0.4);
-        backdrop-filter: blur(3px);
-        border: 1px solid rgba(0, 125, 184, 0.4);
         box-sizing: border-box;
+        backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(110%) saturate(140%) blur(12px);
     }
 
     .foldername {
@@ -765,6 +768,7 @@ export default {
         top: 0;
         left: 0;
         padding-top: 6px;
+        height: 36px;
     }
 
     .foldername p {

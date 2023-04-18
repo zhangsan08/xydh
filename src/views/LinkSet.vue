@@ -11,7 +11,8 @@
                 <el-col :span="16">链接</el-col>
             </el-row>
             <el-row type="flex" justify="center">
-                <el-col :span="8"
+                <el-col
+                    :span="8"
                 >
                     <el-input
                         type="text"
@@ -19,10 +20,10 @@
                         minlength="0"
                         maxlength="12"
                         placeholder="0-8字/过长不好看"
-                    ></el-input
-                    >
+                    ></el-input>
                 </el-col>
-                <el-col :span="16"
+                <el-col
+                    :span="16"
                 >
                     <el-input
                         type="text"
@@ -30,8 +31,7 @@
                         minlength="0"
                         maxlength="100"
                         placeholder="http开头"
-                    ></el-input
-                    >
+                    ></el-input>
                 </el-col>
             </el-row>
             <el-row type="flex" justify="center">
@@ -41,14 +41,14 @@
                 <el-col :span="4">添加</el-col>
             </el-row>
             <el-row type="flex" justify="center">
-                <el-col :span="4"
+                <el-col
+                    :span="4"
                 >
                     <el-input
                         type="text"
                         v-model="linkform.icon"
                         placeholder="可为空"
-                    ></el-input
-                    >
+                    ></el-input>
                 </el-col>
                 <el-col :span="2">
                     <el-button @click="iconHandleLink()" title="选择图标">
@@ -56,7 +56,8 @@
                         <i :class="'fa fa-hand-pointer-o'" v-else></i>
                     </el-button>
                 </el-col>
-                <el-col :span="10"
+                <el-col
+                    :span="10"
                 >
                     <el-input
                         type="text"
@@ -64,8 +65,7 @@
                         minlength="0"
                         maxlength="30"
                         placeholder="鼠标经过时的提示语,可用于站内搜索"
-                    ></el-input
-                    >
+                    ></el-input>
                 </el-col>
                 <el-col :span="4">
                     <el-select v-model="linkform.fid" placeholder="请选择">
@@ -98,10 +98,10 @@
                 :id="Folder.id"
                 @click="getLinksIn(Folder.id)"
             >
-                <p v-if="Folder.icon">
+                <span v-if="Folder.icon">
                     <i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}
-                </p>
-                <p v-else>{{ Folder.name }}</p>
+                </span>
+                <span v-else>{{ Folder.name }}</span>
             </div>
         </div>
         <!--        书签列表-->
@@ -174,7 +174,14 @@
                         </template>
                     </el-table-column>
                 </el-table>
-                <el-table :data="links" row-key="id" v-if="isSorting"  class="sort_table" border stripe>
+                <el-table
+                    :data="links"
+                    row-key="id"
+                    v-if="isSorting"
+                    class="sort_table"
+                    border
+                    stripe
+                >
                     <el-table-column label="名称">
                         <template slot-scope="scope">
                             {{scope.row.name}}
@@ -218,6 +225,11 @@ export default {
             },
         };
     },
+    computed: {
+        pageCount() {
+            return this.Folders.length;
+        },
+    },
     methods: {
         getLinksIn(fid) {
             this.SelectedFolderID = fid
@@ -226,7 +238,7 @@ export default {
                 if (res.data) {
                     this.links = res.data;
                     this.links.sort(function (l1, l2) {
-                        return l2.weight - l1.weight; //weight
+                        return l2.weight - l1.weight; // weight
                     });
                 } else {
                     this.links = [];
@@ -237,14 +249,14 @@ export default {
             this.isSorting = true
             const _this = this
             const tbody = document.querySelector(".marklist tbody");
-            Sortable.create(tbody,{
-                onEnd({newIndex, oldIndex}){
+            Sortable.create(tbody, {
+                onEnd({newIndex, oldIndex}) {
                     const currRow = _this.links.splice(oldIndex, 1)[0];
                     _this.links.splice(newIndex, 0, currRow);
                 }
             });
         },
-        cancelSorting(){
+        cancelSorting() {
             this.isSorting = false
         },
         createLink() {
@@ -352,7 +364,7 @@ export default {
             this.$emit("chooseIcon", this.linkform);
         },
         ChooseFolder(id) {
-            //选中文件夹后样式的变化
+            // 选中文件夹后样式的变化
             const divs = document.querySelector(".mainbox").querySelectorAll("div");
             Array.from(divs).filter(function (element) {
                 element.className = "";
@@ -360,11 +372,6 @@ export default {
                     element.className = "aim";
                 }
             });
-        },
-    },
-    computed: {
-        pageCount() {
-            return this.Folders.length;
         },
     }
 };
