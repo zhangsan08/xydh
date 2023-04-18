@@ -511,8 +511,6 @@ export default {
                     if (res.data.site_info.top_bottom !== '') {
                         this.top_bottom = JSON.parse(res.data.site_info.top_bottom);
                     }
-                    const cacheKey = `xydh_tab_cached_data_for_id_${this.username}`;
-                    window.localStorage.setItem(cacheKey, JSON.stringify(this.Folders));
                 }
             });
         },
@@ -566,12 +564,18 @@ export default {
                     linkInfo.count = 1;
                     cacheExist.push(linkInfo);
                 }
-                cookieSet('cacheLinkList', JSON.stringify(cacheExist));
+                // 取最新10个
+                let newArr = cacheExist.slice(-10)
+                cookieSet('cacheLinkList', JSON.stringify(newArr));
+                this.cacheList = [...newArr]
+
             } else {
                 let array = [];
                 linkInfo.count = 1;
                 array.push(linkInfo);
-                cookieSet('cacheLinkList', JSON.stringify(array));
+                let newArr = array.slice(-10)
+                cookieSet('cacheLinkList', JSON.stringify(newArr));
+                this.cacheList = [...newArr]
             }
             window.open(linkInfo.url, '_blank');
         },
@@ -833,12 +837,15 @@ export default {
     }
 
     .historyLinks {
-        margin: 20px;
+        margin: 0 auto;
         margin-bottom: 50px;
         max-width: 1080px;
     }
     .historyLinkArea {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+        align-items: center;
+        justify-items: center;
         .historyLink {
             transition: all 0.2s ease-in-out 0s;
             box-sizing: border-box;
