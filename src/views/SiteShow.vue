@@ -56,7 +56,10 @@
                 <div class="historyLinks" v-if="historySwitch">
                     <div v-if="cacheList.length > 0" class="historyLinkArea">
                         <div class="historyLink" v-for="link in cacheList" @click="goToUrl(link)" :key="link.id">
-                            <p>{{ link.name }}</p>
+                            <div class="icon">
+                                <i class="el-icon-s-promotion"></i>
+                            </div>
+                            <span class="title">{{ link.name }}</span>
                         </div>
                     </div>
                     <div v-else>
@@ -167,7 +170,7 @@
             </div>
         </div>
         <!-- 音乐 -->
-        <span class="amusic">
+        <span class="amusic" v-if="music.open">
             <aplayer
                 :music="music.list[0]"
                 :list="music.list"
@@ -343,15 +346,14 @@ export default {
         if (open3 !== undefined) {
             this.navSwitch = open3 === 'true';
         }
-        const aplayer = this.$refs.aplayer.$el; // 获取 vue-aplayer 组件的 outerHTML 元素
-        aplayer.addEventListener('mouseenter', this.handleMouseEnter);
-        aplayer.addEventListener('mouseleave', this.handleMouseLeave);
     },
     beforeDestroy() {
         // 销毁组件前移除事件监听器
-        const aplayer = this.$refs.aplayer.$el;
-        aplayer.removeEventListener('mouseenter', this.handleMouseEnter);
-        aplayer.removeEventListener('mouseleave', this.handleMouseLeave);
+        if (this.music.open) {
+            const aplayer = this.$refs.aplayer.$el;
+            aplayer.removeEventListener('mouseenter', this.handleMouseEnter);
+            aplayer.removeEventListener('mouseleave', this.handleMouseLeave);
+        }
     },
     methods: {
         handleMouseEnter() {
@@ -498,6 +500,13 @@ export default {
                     }
                     if (!this.is_vip) {
                         this.music.list.splice(1);
+                    }
+                    if (this.music.open) {
+                        this.$nextTick(() => {
+                            const aplayer = this.$refs.aplayer.$el;
+                            aplayer.addEventListener('mouseenter', this.handleMouseEnter);
+                            aplayer.addEventListener('mouseleave', this.handleMouseLeave);
+                        });
                     }
                     if (res.data.site_info.top_bottom !== '') {
                         this.top_bottom = JSON.parse(res.data.site_info.top_bottom);
@@ -824,26 +833,59 @@ export default {
     }
 
     .historyLinks {
-        margin: 10px auto 100px;
+        margin: 20px;
+        margin-bottom: 50px;
         max-width: 1080px;
     }
     .historyLinkArea {
         display: flex;
+        .historyLink {
+            transition: all 0.2s ease-in-out 0s;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            height: 80px;
+            width: 104px;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: inherit;
+            .icon {
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+                border-radius: 12px;
+                // background: #ffffff;
+                align-items: center;
+                box-sizing: border-box;
+                justify-content: center;
+                display: flex;
+                margin-bottom: 5px;
+                i {
+                    color: inherit;
+                    font-size: 30px
+                }
+            }
+            &:hover {
+                box-sizing: border-box;
+                background: rgba(229, 229, 229, 0.3);
+            }
+        }
     }
     .historyLink p {
-        cursor: pointer;
-        width: 200px;
-        height: 50px;
-        overflow: hidden;
-        background-color: rgba(0, 125, 184, 0.4);
-        backdrop-filter: blur(3px);
-        margin-right: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid transparent;
-        border-radius: 0.25rem;
-        font-size: 0.9375rem;
+        // cursor: pointer;
+        // width: 200px;
+        // height: 50px;
+        // overflow: hidden;
+        // background-color: rgba(0, 125, 184, 0.4);
+        // backdrop-filter: blur(3px);
+        // margin-right: 20px;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        // border: 1px solid transparent;
+        // border-radius: 0.25rem;
+        // font-size: 0.9375rem;
     }
     .historyLink p:hover {
         border: 1px dashed rgba(0, 125, 184, 0.4);
