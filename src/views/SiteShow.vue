@@ -873,6 +873,13 @@ export default {
                     font-size: 30px
                 }
             }
+            .title{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: inline-block;
+                width: 100%;
+            }
             &:hover {
                 box-sizing: border-box;
                 background: rgba(229, 229, 229, 0.3);
