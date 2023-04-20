@@ -170,7 +170,7 @@
             </div>
         </div>
         <!-- 音乐 -->
-        <span class="amusic" v-if="music.open">
+        <span v-if="music.open" :class="['amusic', musicIsMini?'':'musicIsNoMini']">
             <aplayer
                 :music="music.list[0]"
                 :list="music.list"
@@ -927,15 +927,14 @@ export default {
         cursor: pointer;
         border: 0;
     }
-
+    .musicIsNoMini {
+        width: 100%;
+    }
     .amusic {
         position: fixed;
-        // max-width: 500px;
-        // left: -5px;
         bottom: 10px;
         left: 0;
         z-index: 999;
-        width: 100%;
         .aplayer {
             background-color: rgba(0, 125, 184, 0.4);
             backdrop-filter: blur(3px);
