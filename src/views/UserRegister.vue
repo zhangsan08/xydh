@@ -2,19 +2,22 @@
     <div class="reg">
 
         <div class="ad">
-            <!-- <el-divider></el-divider> -->
-            <!-- <div style="text-align:right;font-size:10px">广告 <a target='_blank' rel='nofollow' href=''>投放</a></div> -->
+<!--             <el-divider></el-divider>-->
+<!--             <div style="text-align:right;font-size:10px">广告 <a target='_blank' rel='nofollow' href=''>投放</a></div> -->
         </div>
+
+
+        <div style="text-align: center;">
+            <h4>获取网站最新资讯，欢迎关注公众号【炫技巧】</h4>
+            <img width="120px" src="https://pic.downk.cc/item/5ecfb96ac2a9a83be569795b.png"></div>
         <el-divider>注册</el-divider>
         <div class="regform">
             <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px">
-                <div style="text-align:right;"><a target='_blank' href='https://yftk.fun/85/'>获取邀请码</a>
+                <div style="text-align:right;">
+<!--                    <a target='_blank' href='https://yftk.fun/85/'>获取邀请码</a>-->
                 </div>
-                <el-form-item label="邀请码" prop="yuankey">
-                    <el-input v-model="registerForm.yuankey"></el-input>
-                </el-form-item>
-                <p class="tips">tips: 用户名将决定您的专属访问链接<br>如用户{{ registerForm.name }}的链接为
-                    http://{{ registerForm.name }}.xydh.fun/</p>
+                <p class="tips">用户名将决定您的专属链接<br>如用户{{ registerForm.name }}的个人站为
+                    https://xydh.fun/{{ registerForm.name }}</p>
                 <el-form-item label="用户名" prop="name">
                     <el-input type="text" placeholder="5~15字符 建议使用简短好记的字母组合" v-model="registerForm.name" minlength="5"
                               maxlength="15" show-word-limit></el-input>
@@ -25,6 +28,10 @@
                 </el-form-item>
                 <el-form-item label="确认密码" prop="checkPass">
                     <el-input type="password" v-model="registerForm.password_confirm" autocomplete="off"></el-input>
+                </el-form-item>
+
+                <el-form-item label="邀请码" prop="yuankey">
+                    <el-input v-model="registerForm.yuankey"></el-input>
                 </el-form-item>
                 <div style="padding:10px 50px">
                     <el-link type="primary" @click="agreeVisible = true">请点击阅读用户注册协议</el-link>
@@ -45,30 +52,26 @@
 
                 <div style="padding:10px 50px">
                     <el-button type="primary" @click="submitForm('registerForm')">同意用户注册协议并注册</el-button>
-                    <el-button type="danger" @click="resetForm('registerForm')">重置</el-button>
                 </div>
             </el-form>
         </div>
-        <h4>获取导航站最新资讯，推文送邀请码、送增值服务，欢迎关注官方公众号【炫技巧】</h4>
-
-        <center><img width="120px" src="https://pic.downk.cc/item/5ecfb96ac2a9a83be569795b.png"></center>
-        <p>为了永久地为用户提供服务,炫猿采用邀请码注册制。如果你是自媒体号主,可以联系我获得一部分邀请码进行合作推广:xuanyuandaohang@126.com 请在邮件内容中注明来意</p>
-        <p>个人用户请勿联系 邮件太多完全没有时间回复</p>
-        <el-divider></el-divider>
-        <h3>感谢以下科技榜优质自媒体 也欢迎大家关注他们</h3>
-        <p>如果你在他们的文章中领取到了邀请码, 也回去给他们留个言、点点在看、或者点点广告都是对他们的支持了!</p>
-        <h4>第一梯队</h4>
-        <el-table :data="tableData" stripe style="width: 800px">
-            <el-table-column prop="date" label="推文日期" width="100"></el-table-column>
-            <el-table-column prop="name" label="自媒体" width="180"></el-table-column>
-            <el-table-column prop="address" label="推文地址"></el-table-column>
-        </el-table>
-        <h4>历史合作</h4>
-        <el-table :data="tableData2" stripe style="width: 800px">
-            <el-table-column prop="date" label="推文日期" width="100"></el-table-column>
-            <el-table-column prop="name" label="自媒体" width="180"></el-table-column>
-            <el-table-column prop="address" label="推文地址"></el-table-column>
-        </el-table>
+<!--        <p>为了永久地为用户提供服务,炫猿采用邀请码注册制。如果你是自媒体号主,可以联系我获得一部分邀请码进行合作推广:xuanyuandaohang@126.com 请在邮件内容中注明来意</p>-->
+<!--        <p>个人用户请勿联系 邮件太多完全没有时间回复</p>-->
+<!--        <el-divider></el-divider>-->
+<!--        <h3>感谢以下科技榜优质自媒体 也欢迎大家关注他们</h3>-->
+<!--        <p>如果你在他们的文章中领取到了邀请码, 也回去给他们留个言、点点在看、或者点点广告都是对他们的支持了!</p>-->
+<!--        <h4>第一梯队</h4>-->
+<!--        <el-table :data="tableData" stripe style="width: 800px">-->
+<!--            <el-table-column prop="date" label="推文日期" width="100"></el-table-column>-->
+<!--            <el-table-column prop="name" label="自媒体" width="180"></el-table-column>-->
+<!--            <el-table-column prop="address" label="推文地址"></el-table-column>-->
+<!--        </el-table>-->
+<!--        <h4>历史合作</h4>-->
+<!--        <el-table :data="tableData2" stripe style="width: 800px">-->
+<!--            <el-table-column prop="date" label="推文日期" width="100"></el-table-column>-->
+<!--            <el-table-column prop="name" label="自媒体" width="180"></el-table-column>-->
+<!--            <el-table-column prop="address" label="推文地址"></el-table-column>-->
+<!--        </el-table>-->
 
         <el-dialog title="用户注册协议" :visible.sync="agreeVisible">
             <h1>炫猿软件服务条款</h1>
@@ -180,44 +183,44 @@ export default {
             }
         };
         return {
-            tableData: [
-                {date: '2020-04-01', name: '飞雪科技园', address: 'https://mp.weixin.qq.com/s/smnGrN1LC9TCelMEfBTwXQ'},
-                {date: '2020-05-01', name: '网罗灯下黑', address: 'https://mp.weixin.qq.com/s/qBcVAyEp2NdD1IQ_rQ8OqA'},
-                {date: '2020-04-09', name: '搜罗软件', address: 'https://mp.weixin.qq.com/s/Wy45xiUudv9xBpZwNbHh9Q'},
-                {
-                    date: '2020-04-15',
-                    name: '零点软件分享(每日送码)',
-                    address: 'https://mp.weixin.qq.com/s/ogKgQJQdaLegLEd3hY4poA'
-                },
-                {
-                    date: '2020-04-06',
-                    name: '迅哥儿科技(每日送码)',
-                    address: 'https://mp.weixin.qq.com/s?__biz=MzAxMjk5NzgyOQ==&mid=2247485292&idx=2&sn=ff987efcd8c779f69015ca777778912a&source=41'
-                },
-                {date: '2020-04-18', name: '黑白鲨', address: 'https://mp.weixin.qq.com/s/1GUY-3scqG9L3sf9D9nIDA'},
-                {date: '2020-04-28', name: '虚拟精华', address: 'https://mp.weixin.qq.com/s/EtIHPsIKd_21ZRCfSaectA'},
-            ],
-            tableData2: [
-                {date: '2020-04-29', name: '阿雷课堂', address: 'https://mp.weixin.qq.com/s/UCQW4wTPNugyxJjZs-pQVw'},
-                {date: '2020-04-28', name: '助手小伙伴', address: 'https://mp.weixin.qq.com/s/l32SsGkV6GfJteQuMB5eNg'},
-                {date: '2020-04-26', name: '极简源码', address: 'https://mp.weixin.qq.com/s/oMjfK42h1-dRrv6sNHIVzA'},
-                {date: '2020-04-26', name: '喵喵软件屋', address: 'https://mp.weixin.qq.com/s/Q5O3tPhlZ4qL3cJmqfGvwQ'},
-                {date: '2020-04-25', name: '科技蒙太奇', address: 'https://mp.weixin.qq.com/s/d_iLDoVt_w6tF8-9I-QQ8A'},
-                {date: '2020-04-24', name: '拾光小黑屋', address: 'https://mp.weixin.qq.com/s/NsNZFaeYHphUufGOQCtWoQ'},
-                {date: '2020-04-24', name: 'APP喵', address: 'https://mp.weixin.qq.com/s/a6UQ0UVowy6nlaMKzDNacg'},
-                {date: '2020-04-22', name: '梦十里', address: 'https://mp.weixin.qq.com/s/h9Ll4MrnJKbyBMZDiUvPmQ'},
-                {date: '2020-04-22', name: '软件安装猫管家', address: 'https://mp.weixin.qq.com/s/leeBfvqBwdSr4GlwdSaJDQ'},
-                {date: '2020-04-22', name: '黑鲨实验室', address: 'https://mp.weixin.qq.com/s/kEpE2hnCBw8jYu7UVmbzqQ'},
-                {date: '2020-04-21', name: '软件收藏家', address: 'https://mp.weixin.qq.com/s/FUTrNpN4WnnjUW8ArGEjWg'},
-                {date: '2020-04-21', name: 'APP资源君', address: 'https://mp.weixin.qq.com/s/1xel1xgq5TYEZvzBQCsVgQ'},
-                {date: '2020-04-20', name: '山猫黑科技', address: 'https://mp.weixin.qq.com/s/LyMrvEeaqsxJLWlV6YOFOA'},
-                {date: '2020-04-20', name: '我是小金鱼', address: 'https://mp.weixin.qq.com/s/_K4Zb-Bf58MKWwpLfTFPMA'},
-                {date: '2020-04-19', name: '极光玩机', address: 'https://mp.weixin.qq.com/s/Gp07o65VllqVa7fbJ5ySqw'},
-                {date: '2020-04-16', name: '软件趣谈', address: 'https://mp.weixin.qq.com/s/dCFcVaHMTfvP1m54FmseTA'},
-                {date: '2020-04-13', name: '软件资源共享', address: 'https://mp.weixin.qq.com/s/bEe8RyhEz4V81M_1tEpBOw'},
-                {date: '2020-04-11', name: 'Free黑科技', address: 'https://mp.weixin.qq.com/s/LYjAOuwqsjo7vZDRxnb5ig'},
-                {date: '2019-10-29', name: '资源分享天地', address: 'https://mp.weixin.qq.com/s/dDub5ELYsTLtoHkyr2SRHw'},
-            ],
+            // tableData: [
+            //     {date: '2020-04-01', name: '飞雪科技园', address: 'https://mp.weixin.qq.com/s/smnGrN1LC9TCelMEfBTwXQ'},
+            //     {date: '2020-05-01', name: '网罗灯下黑', address: 'https://mp.weixin.qq.com/s/qBcVAyEp2NdD1IQ_rQ8OqA'},
+            //     {date: '2020-04-09', name: '搜罗软件', address: 'https://mp.weixin.qq.com/s/Wy45xiUudv9xBpZwNbHh9Q'},
+            //     {
+            //         date: '2020-04-15',
+            //         name: '零点软件分享(每日送码)',
+            //         address: 'https://mp.weixin.qq.com/s/ogKgQJQdaLegLEd3hY4poA'
+            //     },
+            //     {
+            //         date: '2020-04-06',
+            //         name: '迅哥儿科技(每日送码)',
+            //         address: 'https://mp.weixin.qq.com/s?__biz=MzAxMjk5NzgyOQ==&mid=2247485292&idx=2&sn=ff987efcd8c779f69015ca777778912a&source=41'
+            //     },
+            //     {date: '2020-04-18', name: '黑白鲨', address: 'https://mp.weixin.qq.com/s/1GUY-3scqG9L3sf9D9nIDA'},
+            //     {date: '2020-04-28', name: '虚拟精华', address: 'https://mp.weixin.qq.com/s/EtIHPsIKd_21ZRCfSaectA'},
+            // ],
+            // tableData2: [
+            //     {date: '2020-04-29', name: '阿雷课堂', address: 'https://mp.weixin.qq.com/s/UCQW4wTPNugyxJjZs-pQVw'},
+            //     {date: '2020-04-28', name: '助手小伙伴', address: 'https://mp.weixin.qq.com/s/l32SsGkV6GfJteQuMB5eNg'},
+            //     {date: '2020-04-26', name: '极简源码', address: 'https://mp.weixin.qq.com/s/oMjfK42h1-dRrv6sNHIVzA'},
+            //     {date: '2020-04-26', name: '喵喵软件屋', address: 'https://mp.weixin.qq.com/s/Q5O3tPhlZ4qL3cJmqfGvwQ'},
+            //     {date: '2020-04-25', name: '科技蒙太奇', address: 'https://mp.weixin.qq.com/s/d_iLDoVt_w6tF8-9I-QQ8A'},
+            //     {date: '2020-04-24', name: '拾光小黑屋', address: 'https://mp.weixin.qq.com/s/NsNZFaeYHphUufGOQCtWoQ'},
+            //     {date: '2020-04-24', name: 'APP喵', address: 'https://mp.weixin.qq.com/s/a6UQ0UVowy6nlaMKzDNacg'},
+            //     {date: '2020-04-22', name: '梦十里', address: 'https://mp.weixin.qq.com/s/h9Ll4MrnJKbyBMZDiUvPmQ'},
+            //     {date: '2020-04-22', name: '软件安装猫管家', address: 'https://mp.weixin.qq.com/s/leeBfvqBwdSr4GlwdSaJDQ'},
+            //     {date: '2020-04-22', name: '黑鲨实验室', address: 'https://mp.weixin.qq.com/s/kEpE2hnCBw8jYu7UVmbzqQ'},
+            //     {date: '2020-04-21', name: '软件收藏家', address: 'https://mp.weixin.qq.com/s/FUTrNpN4WnnjUW8ArGEjWg'},
+            //     {date: '2020-04-21', name: 'APP资源君', address: 'https://mp.weixin.qq.com/s/1xel1xgq5TYEZvzBQCsVgQ'},
+            //     {date: '2020-04-20', name: '山猫黑科技', address: 'https://mp.weixin.qq.com/s/LyMrvEeaqsxJLWlV6YOFOA'},
+            //     {date: '2020-04-20', name: '我是小金鱼', address: 'https://mp.weixin.qq.com/s/_K4Zb-Bf58MKWwpLfTFPMA'},
+            //     {date: '2020-04-19', name: '极光玩机', address: 'https://mp.weixin.qq.com/s/Gp07o65VllqVa7fbJ5ySqw'},
+            //     {date: '2020-04-16', name: '软件趣谈', address: 'https://mp.weixin.qq.com/s/dCFcVaHMTfvP1m54FmseTA'},
+            //     {date: '2020-04-13', name: '软件资源共享', address: 'https://mp.weixin.qq.com/s/bEe8RyhEz4V81M_1tEpBOw'},
+            //     {date: '2020-04-11', name: 'Free黑科技', address: 'https://mp.weixin.qq.com/s/LYjAOuwqsjo7vZDRxnb5ig'},
+            //     {date: '2019-10-29', name: '资源分享天地', address: 'https://mp.weixin.qq.com/s/dDub5ELYsTLtoHkyr2SRHw'},
+            // ],
             agreeVisible: false,
             registerForm: {
                 yuankey: "",
@@ -246,7 +249,7 @@ export default {
                 } else {
                     this.$alert('', '注册成功', {
                         confirmButtonText: '点击登录',
-                        message: '您的小站链接为http://' + this.registerForm.name + '.xydh.fun' + '访问此链接无需登录, 方便您查看、分享',
+                        message: '您的个人站网址为 https://'+ '.xydh.fun'+this.registerForm.name ,
                         type: 'success',
                         callback: () => {
                             this.$router.push({name: 'ULogin'})
@@ -271,9 +274,6 @@ export default {
                     return false;
                 }
             });
-        },
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
         },
         getUser() {
             // 判断登录状态,若登录则取出当前userID和userName
@@ -396,11 +396,11 @@ export default {
     text-align: left;
 }
 
-.tips {
-    color: red;
-    font-size: 12px;
-    line-height: 15px;
-}
+/*.tips {*/
+/*    !*color: red;*!*/
+/*    font-size: 12px;*/
+/*    line-height: 15px;*/
+/*}*/
 
 .regform {
     width: 400px;
