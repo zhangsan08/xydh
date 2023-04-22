@@ -24,10 +24,6 @@
             <div style="height: 80px" v-if="!navSwitch && !labSwitch"></div>
             <!-- 搜索框 -->
             <SearchTool :AllLinks="AllLinks"></SearchTool>
-            <div class="infoTips" v-if="showMessage">
-                <i class="el-icon-info"></i>
-                {{ infoTips }}
-            </div>
 
             <!-- 点击实验室按钮会打开实验室页面 -->
             <div class="Lab totop" v-if="labSwitch">
@@ -82,7 +78,7 @@
                 <el-row v-else>
                     <div class="hidden-sm-and-up totop">
                         <el-divider>快捷导航</el-divider>
-                        <el-row  class="quickNav">
+                        <el-row class="quickNav">
                             <el-col :span="8" v-for="Folder in Folders" :key="Folder.id">
                                 <div class="link">
                                     <a :href="'#' + Folder.name">
@@ -99,7 +95,12 @@
                         :xl="6"
                         v-for="(Folder, index) in Folders"
                         :key="Folder.id"
+                        class="folderArea"
                     >
+                        <div class="infoTips" v-if="showMessage && hoverFileId === Folder.id">
+                            <i class="el-icon-info"></i>
+                            {{ infoTips }}
+                        </div>
                         <div class="foldername" :id="Folder.name">
                             <p v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</p>
                             <p v-else>{{ Folder.name }}</p>
@@ -136,7 +137,7 @@
                                     <el-col :span="8">
                                         <div
                                             class="link"
-                                            v-on:mouseenter="linkMouseEnter(link.info)"
+                                            v-on:mouseenter="linkMouseEnter(link.info, Folder.id)"
                                             v-on:mouseleave="linkMouseLeave"
                                         >
                                             <a @click="goToUrl(link)" target="_blank" rel="nofollow">
@@ -342,8 +343,9 @@ export default {
         }
     },
     methods: {
-        linkMouseEnter(info) {
+        linkMouseEnter(info, id) {
             if (!info) return;
+            this.hoverFileId = id;
             this.showMessage = true;
             this.infoTips = info;
         },
@@ -668,6 +670,7 @@ export default {
         background-color: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(2px);
         margin: 0 20px;
+        margin-bottom: 12px;
         border-radius: 4px;
         overflow-x: scroll;
         ul {
@@ -962,24 +965,26 @@ export default {
         border-right: 1px solid rgba(255, 255, 255, 0.4);
         box-shadow: rgba(0, 0, 0, 0.3) -1px -1px 5px;
         font-size: 14px;
-        .link{
-           padding: 0 15px;
-           font-size:14px;
-           display: flex;
-           align-items: center;
-
+        .link {
+            padding: 0 15px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
         }
+    }
+    .folderArea {
+        position: relative;
     }
     .infoTips {
         background: rgba(255, 255, 255, 0.2);
         color: #efefef;
         backdrop-filter: blur(10px);
         border-radius: 25px;
-        position: fixed;
-        top: 20px;
+        position: absolute;
+        top: 4px;
         left: 50%;
         transform: translateX(-50%);
-        height: 44px;
+        height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -988,6 +993,7 @@ export default {
         min-width: 120px;
         font-size: 14px;
         color: inherit;
+        white-space: nowrap;
         i {
             margin-right: 10px;
         }

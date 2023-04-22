@@ -63,7 +63,7 @@
                         type="text"
                         v-model="linkform.info"
                         minlength="0"
-                        maxlength="30"
+                        maxlength="25"
                         placeholder="鼠标经过时的提示语,可用于站内搜索"
                     ></el-input>
                 </el-col>
