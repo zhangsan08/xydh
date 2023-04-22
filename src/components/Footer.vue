@@ -6,7 +6,6 @@
                 <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/blog/11015'>免责声明</a>&#160;
                 <div style="height:10px"></div>
                 友情链接
-                <a target='_blank' rel='follow' href='https://xydh.fun/'>炫猿</a>&#160;
                 <!-- <a target='_blank' rel='follow' href='https://yinyue.qugeek.com/'>墨灵音乐</a>&#160; -->
                 <a target='_blank' rel='follow' href='https://www.runningcheese.com/'>奔跑中的奶酪</a>&#160;
                 <!-- <a target='_blank' rel='follow' href='http://lackk.com/'>兰客导航</a>&#160; -->

@@ -34,7 +34,7 @@ module.exports = {
                             pure_funcs: ['console.log']
                         }
                     },
-                    sourceMap: true,
+                    sourceMap: false,
                     parallel: true,
                 })]
             };

@@ -291,8 +291,11 @@ export default {
             activeIndex: '1',
             tabsList: [
                 {title: '首页', id: 'admin'},
-                {title: '以西笑嘻嘻', id: 'chenyixi'},
-                {title: 'YYDS导航', id: 'yyds007'},
+                {title: '小帅', id: 'gmengshuai'},
+                {title: '以西', id: 'chenyixi'},
+                {title: 'YYDS', id: 'yyds007'},
+                {title: '文学', id: 'tiantian666'},
+                {title: '加入', id: 'friend'},
             ],
             activeTabId: 'admin',
             random: new Date().valueOf(), // 处理切换tab重复请求
