@@ -23,21 +23,17 @@
             </div>
             <div style="height: 80px" v-if="!navSwitch && !labSwitch"></div>
             <!-- 搜索框 -->
-            <div class="search">
-                <SearchTool :AllLinks="AllLinks"></SearchTool>
+            <SearchTool :AllLinks="AllLinks"></SearchTool>
+            <div class="infoTips" v-if="showMessage">
+                <i class="el-icon-info"></i>
+                {{ infoTips }}
             </div>
 
             <!-- 点击实验室按钮会打开实验室页面 -->
             <div class="Lab totop" v-if="labSwitch">
                 <div class="hidden-sm-and-up" style="height: 50px"></div>
                 <transition name="el-zoom-in-left">
-                    <IndexLab
-                        :lybID="lybID"
-                        :Folders="TabFolders"
-                        :IMGs="TabIMGs"
-                        :AimName="AimTabName"
-                        v-Clickoutside="switchLab"
-                    ></IndexLab>
+                    <IndexLab :lybID="lybID" :Folders="TabFolders" :IMGs="TabIMGs" :AimName="AimTabName"></IndexLab>
                 </transition>
             </div>
             <!-- <el-drawer title="我是标题" :visible.sync="labSwitch">
@@ -67,42 +63,35 @@
                     </div>
                 </div>
             </el-row>
-            <!-- <div class="recommendedSites">
-                <ul>
-                    <li v-for="(item) in tabsList" :key="item.id">
-                        {{item.title}}
-                    </li>
-                </ul>
-            </div> -->
-            <div class="nav" v-if="username === 'admin'">
-                <ul>
-                    <li v-for="item in tabsList" :key="item.id" @click="clickTab(item.id)">
-                        <div :class="item.id === activeTabId ? 'active' : ''">
-                            {{ item.title }}
-                        </div>
-                    </li>
-                </ul>
-            </div>
             <div class="bookmark" v-if="!labSwitch && navSwitch">
-                <!-- 手机端快捷导航 -->
-                <div class="hidden-sm-and-up totop">
-                    <el-divider>快捷导航</el-divider>
-                    <div style="padding: 10px 10px">
-                        <el-col :span="6" v-for="Folder in Folders" :key="Folder.id">
-                            <div style="margin: 5px auto">
-                                <a :href="'#' + Folder.name" style="font-size: 16px">
-                                    {{ Folder.name }}
-                                </a>
+                <div class="nav" v-if="username === 'admin'">
+                    <ul>
+                        <li v-for="item in tabsList" :key="item.id" @click="clickTab(item.id)">
+                            <div :class="item.id === activeTabId ? 'active' : ''">
+                                {{ item.title }}
                             </div>
-                        </el-col>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
+
                 <div v-if="Folders.length === 0" class="loading">
                     <Loading />
                 </div>
 
                 <!-- 用户自定义内容 -->
                 <el-row v-else>
+                    <div class="hidden-sm-and-up totop">
+                        <el-divider>快捷导航</el-divider>
+                        <el-row  class="quickNav">
+                            <el-col :span="8" v-for="Folder in Folders" :key="Folder.id">
+                                <div class="link">
+                                    <a :href="'#' + Folder.name">
+                                        {{ Folder.name }}
+                                    </a>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </div>
                     <el-col
                         :xs="24"
                         :sm="12"
@@ -145,16 +134,12 @@
                                 </div>
                                 <div class="links" v-else v-for="link in Folder.links" :key="link.id">
                                     <el-col :span="8">
-                                        <div class="link">
-                                            <el-tooltip :content="link.info" placement="top" v-if="link.info">
-                                                <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                                                    <div v-if="link.icon">
-                                                        <i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}
-                                                    </div>
-                                                    <div v-else>{{ link.name }}</div>
-                                                </a>
-                                            </el-tooltip>
-                                            <a @click="goToUrl(link)" target="_blank" rel="nofollow" v-else>
+                                        <div
+                                            class="link"
+                                            v-on:mouseenter="linkMouseEnter(link.info)"
+                                            v-on:mouseleave="linkMouseLeave"
+                                        >
+                                            <a @click="goToUrl(link)" target="_blank" rel="nofollow">
                                                 <div v-if="link.icon">
                                                     <i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}
                                                 </div>
@@ -170,14 +155,14 @@
             </div>
         </div>
         <!-- 音乐 -->
-        <span v-if="music.open" :class="['amusic', musicIsMini?'':'musicIsNoMini']">
+        <span v-if="music.open" :class="['amusic', musicIsMini ? '' : 'musicIsNoMini']">
             <aplayer
                 :music="music.list[0]"
                 :list="music.list"
                 :narrow="false"
                 float
                 :listFolded="true"
-                :autoplay="true"
+                autoplay
                 :mini="musicIsMini"
                 ref="aplayer"
                 theme="#fff"
@@ -223,7 +208,6 @@ import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import Particle from '@/components/particle.vue';
 import Aplayer from 'vue-aplayer';
-import Clickoutside from 'element-ui/src/utils/clickoutside';
 import Loading from '@/components/Loading.vue';
 
 export default {
@@ -243,9 +227,6 @@ export default {
         Particle,
         Aplayer,
         Loading,
-    },
-    directives: {
-        Clickoutside,
     },
     props: ['userName'],
     data() {
@@ -299,6 +280,8 @@ export default {
             ],
             activeTabId: 'admin',
             random: new Date().valueOf(), // 处理切换tab重复请求
+            showMessage: false,
+            infoTips: '',
         };
     },
     beforeMount() {
@@ -359,6 +342,14 @@ export default {
         }
     },
     methods: {
+        linkMouseEnter(info) {
+            if (!info) return;
+            this.showMessage = true;
+            this.infoTips = info;
+        },
+        linkMouseLeave() {
+            this.showMessage = false;
+        },
         handleMouseEnter() {
             this.musicIsMini = false;
             clearTimeout(this.timeoutId); // 清除之前设置的定时器
@@ -568,17 +559,16 @@ export default {
                     cacheExist.push(linkInfo);
                 }
                 // 取最新10个
-                let newArr = cacheExist.slice(-10)
+                let newArr = cacheExist.slice(-10);
                 cookieSet('cacheLinkList', JSON.stringify(newArr));
-                this.cacheList = [...newArr]
-
+                this.cacheList = [...newArr];
             } else {
                 let array = [];
                 linkInfo.count = 1;
                 array.push(linkInfo);
-                let newArr = array.slice(-10)
+                let newArr = array.slice(-10);
                 cookieSet('cacheLinkList', JSON.stringify(newArr));
-                this.cacheList = [...newArr]
+                this.cacheList = [...newArr];
             }
             window.open(linkInfo.url, '_blank');
         },
@@ -636,15 +626,39 @@ export default {
     body {
         /* background-image: url('../assets/bg.jpg'); */
 
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
+        // background-attachment: fixed;
+        //  background-attachment: scroll;
+        // background-size: cover;
+        // background-position: center center;
+        // background-repeat: no-repeat;
         background-color: black;
+        background-repeat: no-repeat;
+        background-size: cover;
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover;
+        background-attachment: fixed;
+        z-index: -1;
         text-align: center;
         font-size: 13px;
         color: white;
         margin: 0;
+        &:before {
+            height: 100vh;
+            min-height: 100vh;
+            content: '';
+            position: fixed;
+            z-index: -1;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-position: center center;
+            background-image: inherit;
+            -webkit-background-size: cover !important;
+            -o-background-size: cover;
+            background-size: cover !important;
+        }
     }
     .loading {
         margin-top: 20px;
@@ -735,14 +749,6 @@ export default {
     .wx img {
         width: 100%;
     }
-    // .bg {
-    //     height: 100%;
-    //     width: 100%;
-    //     overflow-y: scroll;
-    //     position: absolute;
-    //     top: 0;
-    //     z-index: 1;
-    // }
     .siteName {
         font-size: 36px;
         font-weight: bold;
@@ -752,20 +758,17 @@ export default {
         position: relative;
     }
     .folder {
-        /* background: rgba(0, 0, 0, 0.03); */
-        /* background: rgba(255, 255, 255, 0.06); */
-        // background-color: rgba(255, 255, 255, 0.1);
-        background-color: rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(2px);
-        min-height: 140px;
+        min-height: 176px;
         margin: 12px 20px;
-        padding: 5px 0 0 0;
         border-radius: 20px;
-        /* 滚动条 */
         overflow: auto;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE 10+ */
         box-sizing: border-box;
+        backdrop-filter: blur(3px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        border-right: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: rgba(0, 0, 0, 0.3) -1px -1px 5px;
+        padding: 13px 0;
+        font-size: 13px;
     }
 
     /* 滚动条 */
@@ -776,7 +779,7 @@ export default {
     .folder:hover {
         color: white;
         box-sizing: border-box;
-        backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(110%) saturate(140%) blur(12px);
+        backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
     }
 
     .foldername {
@@ -795,44 +798,18 @@ export default {
         cursor: default;
     }
 
-    .links {
-        margin: 6px auto 0;
-    }
-
     /* 每个书签 */
     .link {
         min-height: 33px;
         max-height: 33px;
         cursor: pointer;
         padding: 0 15px;
+        text-align: left;
     }
 
     .link:hover {
         color: gold;
         /* cursor: pointer; */
-    }
-
-    /* Tooltip 文本 */
-    .link .tooltiptext {
-        text-align: left;
-        visibility: hidden;
-        background: rgba(0, 0, 0, 1);
-        max-width: 400px;
-        /* box-shadow: 0 0 5px #666; */
-        /* color: gold; */
-        font-size: 16px;
-        /* 定位 */
-        top: 30px;
-        left: 0;
-        padding: 10px 20px;
-        position: fixed;
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
-    }
-
-    .link:hover .tooltiptext {
-        visibility: visible;
-        color: white;
     }
 
     a {
@@ -873,10 +850,10 @@ export default {
                 margin-bottom: 5px;
                 i {
                     color: inherit;
-                    font-size: 30px
+                    font-size: 30px;
                 }
             }
-            .title{
+            .title {
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -888,21 +865,6 @@ export default {
                 background: rgba(229, 229, 229, 0.3);
             }
         }
-    }
-    .historyLink p {
-        // cursor: pointer;
-        // width: 200px;
-        // height: 50px;
-        // overflow: hidden;
-        // background-color: rgba(0, 125, 184, 0.4);
-        // backdrop-filter: blur(3px);
-        // margin-right: 20px;
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
-        // border: 1px solid transparent;
-        // border-radius: 0.25rem;
-        // font-size: 0.9375rem;
     }
     .historyLink p:hover {
         border: 1px dashed rgba(0, 125, 184, 0.4);
@@ -935,7 +897,7 @@ export default {
     }
     .amusic {
         position: fixed;
-        bottom: 10px;
+        bottom: 35px;
         left: 0;
         z-index: 999;
         .aplayer {
@@ -990,5 +952,44 @@ export default {
 
     .particle {
         z-index: -999;
+    }
+    .quickNav {
+        min-height: 176px;
+        margin: 12px 20px;
+        border-radius: 20px;
+        backdrop-filter: blur(3px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        border-right: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: rgba(0, 0, 0, 0.3) -1px -1px 5px;
+        font-size: 14px;
+        .link{
+           padding: 0 15px;
+           font-size:14px;
+           display: flex;
+           align-items: center;
+
+        }
+    }
+    .infoTips {
+        background: rgba(255, 255, 255, 0.2);
+        color: #efefef;
+        backdrop-filter: blur(10px);
+        border-radius: 25px;
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 44px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 21px;
+        z-index: 99;
+        min-width: 120px;
+        font-size: 14px;
+        color: inherit;
+        i {
+            margin-right: 10px;
+        }
     }
 </style>

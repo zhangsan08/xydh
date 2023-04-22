@@ -1,20 +1,17 @@
 <template>
-  <div style="height:100%;">
-    <router-view></router-view>
-    <!-- 回到顶端 -->
-    <el-backtop></el-backtop>
-  </div>  
+    <div style="height:100%;">
+        <router-view></router-view>
+        <!-- 回到顶端 -->
+        <el-backtop></el-backtop>
+    </div>
 </template>
 
 <script>
-  // import Footer from './components/Footer'
-  import 'element-ui/lib/theme-chalk/display.css';
-
-  export default {
+export default {
     name: 'App',
     components: {
     }
-  }
+}
 </script>
 
 <style>

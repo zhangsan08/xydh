@@ -31,8 +31,8 @@
         </el-row>
         <br />
         <!-- 搜索输入框 -->
-        <el-row type="flex" justify="center">
-            <el-col :xs="23" :sm="18" :md="10">
+        <el-row type="flex" justify="center" class="searchBox">
+            <el-col :xs="24" :sm="18" :md="10">
                 <el-input
                     autofocus="autofocus"
                     type="text"
@@ -46,8 +46,8 @@
                 </el-input>
             </el-col>
         </el-row>
-        <el-row type="flex" justify="center" v-if="searchTxt && AllLinks">
-            <el-col :xs="23" :sm="18" :md="10">
+        <el-row type="flex" justify="center" v-if="searchTxt && AllLinks" class="searchBox">
+            <el-col :xs="24" :sm="18" :md="10">
                 <div class="searchResult">
                     站内搜索结果：
                     <p :key="link.id" v-for="link in AllLinks.filter(SiteSearch)">
@@ -245,9 +245,12 @@ export default {
 
 <style>
     .search {
-        margin: 30px auto 30px;
+        margin: 30px 0;
         text-align: center;
         z-index: 999;
+    }
+    .searchBox{
+        margin: 0 20px;
     }
     .searchResult {
         z-index: 1;
@@ -258,6 +261,7 @@ export default {
         max-height: 300px;
         overflow-y: scroll;
         padding: 15px;
+         border-radius:0 0 4px 4px;
     }
     .searchResult .url {
         text-decoration: underline;
@@ -271,6 +275,8 @@ export default {
         background-color: transparent;
         backdrop-filter: blur(3px);
         border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        box-sizing: border-box;
     }
 
     .li-tab {

@@ -18,7 +18,6 @@ module.exports = {
     configureWebpack: (config) => {
         // 引入uglifyjs-webpack-plugin
         const UglifyPlugin = require('terser-webpack-plugin');
-
         if (process.env.NODE_ENV === 'production') {
             // 为生产环境修改配置
             config.mode = 'production';
@@ -66,5 +65,13 @@ module.exports = {
             // 为开发环境修改配置
             config.mode = 'development';
         }
+        // 添加新的 externals 配置
+        Object.assign(config, {
+            externals: {
+                'vue': 'Vue',
+                'element-ui': 'ELEMENT',
+                'lodash': '_',
+            }
+        })
     }
 }
