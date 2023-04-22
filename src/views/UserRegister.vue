@@ -32,6 +32,7 @@
 
                 <el-form-item label="邀请码" prop="yuankey">
                     <el-input v-model="registerForm.yuankey"></el-input>
+                    <a target='_blank' href='https://jinshuju.net/f/yukl9Z'>邀请码申请</a>
                 </el-form-item>
                 <div style="padding:10px 50px">
                     <el-link type="primary" @click="agreeVisible = true">请点击阅读用户注册协议</el-link>

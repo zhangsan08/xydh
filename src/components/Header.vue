@@ -11,7 +11,7 @@
                 自定义<i class="fa fa-cog"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item> <i class="fa fa-user-circle-o"></i><a class="headerbtn" href="/me" target="_blank">打开后台</a></el-dropdown-item>
+                <el-dropdown-item> <i class="fa fa-user-circle-o"></i><a class="headerbtn" href="https://xydh.fun/me" target="_blank">打开后台</a></el-dropdown-item>
                 <el-dropdown-item><span class="headerbtn" @click="onChangeHis()"><i class="fa fa-reply-all"></i> 足迹开关</span></el-dropdown-item>
                 <el-dropdown-item><span class="headerbtn" @click="onChangeNav()"><i class="fa fa-anchor"></i> 书签开关</span></el-dropdown-item>
                 <el-dropdown-item><span class="headerbtn" @click="logout()"><i class="fa fa-power-off"></i> 退出登录</span></el-dropdown-item>
