@@ -467,12 +467,23 @@ export default {
                     document.title = this.sitename;
                     // 改背景颜色或图片
                     var obj = document.getElementsByTagName('body')[0];
+                    var style = document.createElement('style');
+
                     if (res.data.site_info.bg_switch) {
+                        // if (window.innerWidth < 768 && this.mobile_bg) {
+                        //     obj.style.backgroundImage = 'url(' + this.mobile_bg + ')';
+                        // } else {
+                        //     obj.style.backgroundImage = 'url(' + res.data.site_info.bg + ')';
+                        // }
+
                         if (window.innerWidth < 768 && this.mobile_bg) {
-                            obj.style.backgroundImage = 'url(' + this.mobile_bg + ')';
+                            let bg = this.mobile_bg;
+                            style.innerHTML = `body::before { background-image: url(${bg})}`;
                         } else {
-                            obj.style.backgroundImage = 'url(' + res.data.site_info.bg + ')';
+                            let bg = res.data.site_info.bg;
+                            style.innerHTML = `body::before { background-image: url(${bg})}`;
                         }
+                        document.head.appendChild(style);
                         // window.onresize = () => {
                         //     if(window.innerWidth < 768 && this.mobile_bg) {
                         //         obj.style.backgroundImage = "url(" + this.mobile_bg + ")"
@@ -631,20 +642,19 @@ export default {
         // background-attachment: fixed;
         //  background-attachment: scroll;
         // background-size: cover;
-        // background-position: center center;
+        background-position: center center;
         // background-repeat: no-repeat;
         background-color: black;
         background-repeat: no-repeat;
         background-size: cover;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover;
         background-attachment: fixed;
         z-index: -1;
         text-align: center;
         font-size: 13px;
         color: white;
         margin: 0;
+        height: 100vh;
+        min-height: 100vh;
         &:before {
             height: 100vh;
             min-height: 100vh;
@@ -655,11 +665,9 @@ export default {
             right: 0;
             bottom: 0;
             left: 0;
+            background-repeat: no-repeat;
             background-position: center center;
-            background-image: inherit;
-            -webkit-background-size: cover !important;
-            -o-background-size: cover;
-            background-size: cover !important;
+            background-size: cover;
         }
     }
     .loading {
