@@ -161,7 +161,7 @@
                 :music="music.list[0]"
                 :list="music.list"
                 :narrow="false"
-                float
+                :float="false"
                 :listFolded="true"
                 autoplay
                 :mini="musicIsMini"
@@ -908,7 +908,7 @@ export default {
     }
     .amusic {
         position: fixed;
-        bottom: 35px;
+        bottom: 0;
         left: 0;
         z-index: 999;
         .aplayer {
