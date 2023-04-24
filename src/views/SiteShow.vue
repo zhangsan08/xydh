@@ -161,7 +161,7 @@
                 :music="music.list[0]"
                 :list="music.list"
                 :narrow="false"
-                :float="false"
+                float
                 :listFolded="true"
                 autoplay
                 :mini="musicIsMini"

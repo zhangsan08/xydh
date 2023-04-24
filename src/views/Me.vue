@@ -15,7 +15,7 @@
             type="primary"
             target="_blank"
             :href="'https://xydh.fun/' + username"
-        >https://{{ username }}.xydh.fun</el-link>
+        >https://xydh.fun/{{ username }}</el-link>
         <div style="font-size: 17px">
          <p><el-link type="primary" @click="logout" >退出登录</el-link></p>
          </div>
