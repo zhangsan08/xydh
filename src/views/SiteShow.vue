@@ -144,7 +144,10 @@
                                                 <div v-if="link.icon">
                                                     <i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}
                                                 </div>
-                                                <div v-else>{{ link.name }}</div>
+                                                <div v-else>
+<!--                                                    <i :class="'fa fa-' + getRandomIcon()"></i>&#160;{{ link.name }}-->
+                                                    <i :class="'fa fa-bookmark-o'"></i>&#160;{{ link.name }}
+                                                </div>
                                             </a>
                                         </div>
                                     </el-col>
@@ -283,6 +286,7 @@ export default {
             random: new Date().valueOf(), // 处理切换tab重复请求
             showMessage: false,
             infoTips: '',
+            goodIcons:["hashtag","bookmark","asterisk","bookmark-o","desktop","diamond","star","external-link","external-link-square","feed","gift","laptop","mouse-pointer"],
         };
     },
     beforeMount() {
@@ -343,6 +347,9 @@ export default {
         }
     },
     methods: {
+        getRandomIcon(){
+            return this.goodIcons[Math.floor(Math.random() * this.goodIcons.length)]
+        },
         linkMouseEnter(info, id) {
             if (!info) return;
             this.hoverFileId = id;
