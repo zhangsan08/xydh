@@ -142,11 +142,21 @@
                                         >
                                             <a @click="goToUrl(link)" target="_blank" rel="nofollow">
                                                 <div v-if="link.icon">
-                                                    <i :class="'fa fa-' + link.icon"></i>&#160;{{ link.name }}
+                                                    <span class="icon">
+                                                        <i :class="'fa fa-' + link.icon"></i>
+                                                    </span>
+                                                    <span class="linkName">
+                                                        {{link.name}}
+                                                    </span>
+
                                                 </div>
                                                 <div v-else>
-<!--                                                    <i :class="'fa fa-' + getRandomIcon()"></i>&#160;{{ link.name }}-->
-                                                    <i :class="'fa fa-bookmark-o'"></i>&#160;{{ link.name }}
+                                                    <span class="icon">
+                                                        <i :class="'fa fa-' + getCachedIcon(link.id)"></i>
+                                                    </span>
+                                                    <span class="linkName">
+                                                        {{link.name}}
+                                                    </span>
                                                 </div>
                                             </a>
                                         </div>
@@ -159,7 +169,7 @@
             </div>
         </div>
         <!-- 音乐 -->
-        <span v-if="music.open" :class="['amusic', musicIsMini ? '' : 'musicIsNoMini']">
+        <span v-if="music.open" :class="['amusic', musicIsMini ? '' : 'musicIsNoMini']" v-once>
             <aplayer
                 :music="music.list[0]"
                 :list="music.list"
@@ -204,7 +214,6 @@ import {cookieGet, cookieSet} from '@/common/cookie';
 import IndexLab from '@/views/IndexLab.vue';
 import {getUrl} from '@/common/pickup';
 import {isWeiXin} from '@/common/env';
-
 // import RightBar from '@/components/RightBar'
 import SearchTool from '@/components/SearchTool.vue';
 // import Paomadeng from '@/components/Paomadeng.vue'
@@ -286,7 +295,9 @@ export default {
             random: new Date().valueOf(), // 处理切换tab重复请求
             showMessage: false,
             infoTips: '',
-            goodIcons:["hashtag","bookmark","asterisk","bookmark-o","desktop","diamond","star","external-link","external-link-square","feed","gift","laptop","mouse-pointer"],
+            hoverFileId: '',
+            goodIcons: ["hashtag", "bookmark", "asterisk", "bookmark-o", "desktop", "diamond", "star", "external-link", "external-link-square", "feed", "gift", "laptop", "mouse-pointer"],
+            cachedIcons: {}
         };
     },
     beforeMount() {
@@ -347,8 +358,17 @@ export default {
         }
     },
     methods: {
-        getRandomIcon(){
+        getRandomIcon() {
             return this.goodIcons[Math.floor(Math.random() * this.goodIcons.length)]
+        },
+        getCachedIcon(linkId) {
+            if (this.cachedIcons[linkId]) {
+                return this.cachedIcons[linkId]
+            } else {
+                const icon = this.getRandomIcon()
+                this.$set(this.cachedIcons, linkId, icon)
+                return icon
+            }
         },
         linkMouseEnter(info, id) {
             if (!info) return;
@@ -643,374 +663,5 @@ export default {
 </script>
 
 <style lang="less">
-    body {
-        /* background-image: url('../assets/bg.jpg'); */
-
-        // background-attachment: fixed;
-        //  background-attachment: scroll;
-        // background-size: cover;
-        background-position: center center;
-        // background-repeat: no-repeat;
-        background-color: black;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: fixed;
-        z-index: -1;
-        text-align: center;
-        font-size: 13px;
-        color: white;
-        margin: 0;
-        height: 100vh;
-        min-height: 100vh;
-        &:before {
-            height: 100vh;
-            min-height: 100vh;
-            content: '';
-            position: fixed;
-            z-index: -1;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-        }
-    }
-    .loading {
-        margin-top: 20px;
-    }
-    .nav {
-        background: rgba(0, 0, 0, 0.318);
-        background-color: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(2px);
-        margin: 0 20px;
-        margin-bottom: 12px;
-        border-radius: 4px;
-        overflow-x: scroll;
-        ul {
-            align-items: center;
-            display: inline-flex;
-            height: auto;
-            margin: 0px;
-            overflow: hidden;
-            padding-inline: 0px;
-            li {
-                font-size: 14px;
-                list-style: none;
-                padding: 0px 10px;
-                align-items: center;
-                border-bottom: 2px solid transparent;
-                box-sizing: border-box;
-                cursor: pointer;
-                fill: #ffffff;
-                font-size: 14px;
-                justify-content: center;
-                line-height: 20px;
-                outline: none;
-                text-decoration: none;
-                white-space: nowrap;
-
-                .active {
-                    font-weight: bold;
-                    &::after {
-                        border-bottom: 2px solid #3091dc;
-                        border-radius: 40px;
-                        content: '';
-                        display: block;
-                        margin-left: auto;
-                        margin-right: auto;
-                        margin-top: 3px;
-                        width: 26px;
-                    }
-                }
-            }
-        }
-        .recommendedSites {
-            grid-row: 7 / auto;
-            opacity: 1;
-            transition: opacity 0.3s ease-out 0s;
-            visibility: visible;
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-            background-color: rgba(0, 0, 0, 0.2);
-            ul {
-                display: flex;
-                flex-flow: row wrap;
-                list-style: none;
-                margin: 0px;
-                overflow: hidden;
-                margin: 0px;
-                padding-top: 8px;
-                padding-bottom: 8px;
-                padding-inline: 8px 45px;
-                li {
-                    height: 28px;
-                    margin: 4px;
-                    padding: 0px 4px;
-                    border-radius: 6px;
-                }
-            }
-        }
-    }
-    .wx {
-        height: 100vh;
-        width: 100%;
-        background: #000;
-        position: absolute;
-        top: 0;
-        z-index: 1000;
-        color: #000;
-        font-size: 16px;
-    }
-    .wx img {
-        width: 100%;
-    }
-    .siteName {
-        font-size: 36px;
-        font-weight: bold;
-    }
-    .totop {
-        z-index: 1;
-        position: relative;
-    }
-    .folder {
-        min-height: 176px;
-        margin: 12px 20px;
-        border-radius: 20px;
-        overflow: auto;
-        box-sizing: border-box;
-        backdrop-filter: blur(3px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-        border-right: 1px solid rgba(255, 255, 255, 0.4);
-        box-shadow: rgba(0, 0, 0, 0.3) -1px -1px 5px;
-        padding: 13px 0;
-        font-size: 13px;
-    }
-
-    /* 滚动条 */
-    ::-webkit-scrollbar {
-        display: none; /* Chrome Safari */
-    }
-
-    .folder:hover {
-        color: white;
-        box-sizing: border-box;
-        backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
-    }
-
-    .foldername {
-        position: relative;
-        top: 0;
-        left: 0;
-        padding-top: 6px;
-        height: 36px;
-    }
-
-    .foldername p {
-        font-size: 16px;
-        letter-spacing: 5px;
-        font-weight: bolder;
-        margin: 6px auto 6px;
-        cursor: default;
-    }
-
-    /* 每个书签 */
-    .link {
-        min-height: 33px;
-        max-height: 33px;
-        cursor: pointer;
-        padding: 0 15px;
-        text-align: left;
-    }
-
-    .link:hover {
-        color: gold;
-        /* cursor: pointer; */
-    }
-
-    a {
-        color: inherit;
-    }
-
-    .historyLinks {
-        margin: 0 auto;
-        margin-bottom: 50px;
-        max-width: 1080px;
-    }
-    .historyLinkArea {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
-        align-items: center;
-        justify-items: center;
-        .historyLink {
-            transition: all 0.2s ease-in-out 0s;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            height: 80px;
-            width: 104px;
-            padding: 10px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            color: inherit;
-            .icon {
-                box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
-                border-radius: 12px;
-                // background: #ffffff;
-                align-items: center;
-                box-sizing: border-box;
-                justify-content: center;
-                display: flex;
-                margin-bottom: 5px;
-                i {
-                    color: inherit;
-                    font-size: 30px;
-                }
-            }
-            .title {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: inline-block;
-                width: 100%;
-            }
-            &:hover {
-                box-sizing: border-box;
-                background: rgba(229, 229, 229, 0.3);
-            }
-        }
-    }
-    .historyLink p:hover {
-        border: 1px dashed rgba(0, 125, 184, 0.4);
-    }
-    .inputPWD {
-        padding: 10% 2%;
-    }
-
-    .inputPWD .el-input__inner {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 0;
-        color: inherit;
-        font-size: 12px;
-        border: 0;
-    }
-
-    .inputPWD .el-input__inner::placeholder {
-        color: inherit;
-    }
-
-    .inputPWD .el-input-group__append {
-        background-color: rgba(255, 255, 255, 0.15);
-        color: inherit;
-        border-radius: 0;
-        cursor: pointer;
-        border: 0;
-    }
-    .musicIsNoMini {
-        width: 100%;
-    }
-    .amusic {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        z-index: 999;
-        .aplayer {
-            background-color: rgba(0, 125, 184, 0.4);
-            backdrop-filter: blur(3px);
-            .aplayer-title {
-                color: #fff;
-            }
-            .aplayer-body .aplayer-info .aplayer-music .aplayer-author {
-                color: #c0c0c0;
-            }
-        }
-
-        .aplayer-controller {
-            height: 30px;
-            .aplayer-time {
-                width: 30%;
-                .aplayer-time-inner {
-                    font-size: 14px;
-                }
-                .aplayer-icon {
-                    width: 20px;
-                    height: 20px;
-                }
-                .aplayer-fill {
-                    fill: #fff !important;
-                }
-                .aplayer-volume-wrap {
-                    margin-left: 0px;
-                    margin-right: 0px;
-                }
-                .aplayer-icon {
-                    margin-left: 10px !important;
-                    margin-right: 10px;
-                }
-            }
-        }
-    }
-
-    .openFolder {
-        position: absolute;
-        right: 20px;
-        top: 14px;
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-    }
-
-    .openFolder:hover {
-        color: gold;
-    }
-
-    .particle {
-        z-index: -999;
-    }
-    .quickNav {
-        min-height: 176px;
-        margin: 12px 20px;
-        border-radius: 20px;
-        backdrop-filter: blur(3px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-        border-right: 1px solid rgba(255, 255, 255, 0.4);
-        box-shadow: rgba(0, 0, 0, 0.3) -1px -1px 5px;
-        font-size: 14px;
-        .link {
-            padding: 0 15px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-        }
-    }
-    .folderArea {
-        position: relative;
-    }
-    .infoTips {
-        background: rgba(255, 255, 255, 0.2);
-        color: #efefef;
-        backdrop-filter: blur(10px);
-        border-radius: 25px;
-        position: absolute;
-        top: 4px;
-        left: 50%;
-        transform: translateX(-50%);
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 21px;
-        z-index: 99;
-        min-width: 120px;
-        font-size: 14px;
-        color: inherit;
-        white-space: nowrap;
-        i {
-            margin-right: 10px;
-        }
-    }
+    @import './index.less';
 </style>

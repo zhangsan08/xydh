@@ -3,8 +3,9 @@
         <!-- 选择小图标的弹窗 -->
         <el-dialog
             :visible.sync="dialogIconVisible"
-            title="选择Icon"
+            title="选择图标"
             append-to-body
+            width='70%'
         >
             <ICON @callback="chooseCallback"></ICON>
         </el-dialog>
@@ -17,13 +18,17 @@
             :href="'https://xydh.fun/' + username"
         >https://xydh.fun/{{ username }}</el-link>
         <div style="font-size: 17px">
-         <p><el-link type="primary" @click="logout" >退出登录</el-link></p>
-         </div>
+            <p><el-link type="primary" @click="logout" >退出登录</el-link></p>
+        </div>
 
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="欢迎">
-                <Welcome :userID="userID" :FoldersWithTemp="FoldersWithTemp"
-                         :temp-links="tempLinks" @chooseIcon="iconHandle"></Welcome>
+                <Welcome
+                    :userID="userID"
+                    :FoldersWithTemp="FoldersWithTemp"
+                    :temp-links="tempLinks"
+                    @chooseIcon="iconHandle"
+                ></Welcome>
             </el-tab-pane>
 
             <el-tab-pane label="导航配置" lazy @tab-click="getSite">
@@ -64,6 +69,15 @@ import ICON from "@/components/icon.vue";
 import iconModule from "@/plugins/icon";
 
 export default {
+    components: {
+        Welcome,
+        SiteSet,
+        FolderSet,
+        LinkSet,
+        Lab,
+        Other,
+        ICON,
+    },
     mixins: [iconModule],
     data() {
         return {
@@ -75,6 +89,11 @@ export default {
             FoldersWithTemp: [],
             tempLinks: [],
         };
+    },
+    beforeMount() {
+        document.title = "炫猿控制台";
+        this.getUser();
+        this.getTempLinks();
     },
     methods: {
         getUser() {
@@ -157,7 +176,7 @@ export default {
             folderService.getMyFolders().then((res) => {
                 this.Folders = res.data;
                 this.Folders.sort(function (f1, f2) {
-                    return f1.weight - f2.weight; //weight
+                    return f1.weight - f2.weight; // weight
                 });
                 this.FoldersWithTemp = JSON.parse(JSON.stringify(this.Folders));
                 this.FoldersWithTemp.unshift({
@@ -173,20 +192,6 @@ export default {
             });
         },
 
-    },
-    components: {
-        Welcome,
-        SiteSet,
-        FolderSet,
-        LinkSet,
-        Lab,
-        Other,
-        ICON,
-    },
-    beforeMount() {
-        document.title = "炫猿控制台";
-        this.getUser();
-        this.getTempLinks();
     },
 };
 </script>
