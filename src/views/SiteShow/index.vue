@@ -285,6 +285,7 @@ export default {
             activeIndex: '1',
             tabsList: [
                 {title: '首页', id: 'admin'},
+                {title: 'AI', id: 'loveai'},
                 {title: '小帅', id: 'gmengshuai'},
                 {title: '以西', id: 'chenyixi'},
                 {title: 'YYDS', id: 'yyds007'},
