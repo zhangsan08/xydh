@@ -76,11 +76,16 @@
 
                 <!-- 用户自定义内容 -->
                 <el-row v-else>
-                    <div class="hidden-sm-and-up totop">
-                        <el-divider>快捷导航</el-divider>
-                        <el-row class="quickNav">
+                    <div class="totop quickNav" v-if="env === 'h5'">
+                        <div class="foldername">
+                            <p>快捷导航</p>
+                        </div>
+                        <el-row class="folder">
                             <el-col :span="8" v-for="Folder in Folders" :key="Folder.id">
-                                <div class="link">
+                                <div class="link" :class="env">
+                                    <span class="icon">
+                                        <i :class="'fa fa-mail-forward'"></i>
+                                    </span>
                                     <a :href="'#' + Folder.name">
                                         {{ Folder.name }}
                                     </a>
@@ -88,15 +93,9 @@
                             </el-col>
                         </el-row>
                     </div>
-                    <el-col
-                        :xs="24"
-                        :sm="12"
-                        :md="8"
-                        :xl="6"
-                        v-for="(Folder, index) in Folders"
-                        :key="Folder.id"
-                        class="folderArea"
-                    >
+                </el-row>
+                <div class="folderContent" :class="env">
+                    <div v-for="(Folder, index) in Folders" :key="Folder.id" class="folderArea">
                         <div class="infoTips" v-if="showMessage && hoverFileId === Folder.id">
                             <i class="el-icon-info"></i>
                             {{ infoTips }}
@@ -104,7 +103,7 @@
                         <div class="foldername" :id="Folder.name">
                             <p v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</p>
                             <p v-else>{{ Folder.name }}</p>
-                            <el-tooltip content="展开文件夹" placement="top">
+                            <el-tooltip content="展开文件夹" placement="top" v-if="env === 'pc'">
                                 <div class="openFolder" @click="addToTabs(Folder)">
                                     <i class="fa fa-arrows-alt"></i>
                                 </div>
@@ -118,13 +117,16 @@
                         >
                             <div class="linkbox">
                                 <div class="inputPWD" v-if="Folder.need_password">
+                                    <p><i class="el-icon-lock"></i></p>
+                                    <p v-if="Folder.info">密码提示：{{Folder.info}}</p>
                                     <!-- 如果文件夹需要密码 -->
                                     <el-input
                                         type="text"
                                         autosize
                                         v-model="passwords[index]"
-                                        :placeholder="Folder.info"
                                         clearable
+                                        class="input"
+                                        placeholder="输入密码"
                                     >
                                         <span
                                             slot="append"
@@ -137,26 +139,17 @@
                                     <el-col :span="8">
                                         <div
                                             class="link"
+                                            :class="env"
                                             v-on:mouseenter="linkMouseEnter(link.info, Folder.id)"
                                             v-on:mouseleave="linkMouseLeave"
                                         >
                                             <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                                                <div v-if="link.icon">
+                                                <div class="linkContent">
                                                     <span class="icon">
-                                                        <i :class="'fa fa-' + link.icon"></i>
+                                                        <i :class="'fa fa-' + link.icon" v-if="link.icon"></i>
+                                                        <i :class="'fa fa-bookmark-o'" v-else></i>
                                                     </span>
-                                                    <span class="linkName">
-                                                        {{link.name}}
-                                                    </span>
-
-                                                </div>
-                                                <div v-else>
-                                                    <span class="icon">
-                                                        <i :class="'fa fa-' + getCachedIcon(link.id)"></i>
-                                                    </span>
-                                                    <span class="linkName">
-                                                        {{link.name}}
-                                                    </span>
+                                                    <span class="linkName">{{link.name}}</span>
                                                 </div>
                                             </a>
                                         </div>
@@ -164,8 +157,8 @@
                                 </div>
                             </div>
                         </div>
-                    </el-col>
-                </el-row>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- 音乐 -->
@@ -213,7 +206,7 @@ import {siteService} from '@/common/api';
 import {cookieGet, cookieSet} from '@/common/cookie';
 import IndexLab from '@/views/IndexLab.vue';
 import {getUrl} from '@/common/pickup';
-import {isWeiXin} from '@/common/env';
+import {isWeiXin, getEnv} from '@/common/env';
 // import RightBar from '@/components/RightBar'
 import SearchTool from '@/components/SearchTool.vue';
 // import Paomadeng from '@/components/Paomadeng.vue'
@@ -297,8 +290,7 @@ export default {
             showMessage: false,
             infoTips: '',
             hoverFileId: '',
-            goodIcons: ["hashtag", "bookmark", "asterisk", "bookmark-o", "desktop", "diamond", "star", "external-link", "external-link-square", "feed", "gift", "laptop", "mouse-pointer"],
-            cachedIcons: {}
+            env: '',
         };
     },
     beforeMount() {
@@ -322,7 +314,7 @@ export default {
                 this.enfolder(0);
             }
         };
-
+        this.env = getEnv();
         // 取“足迹”
         let cache = cookieGet('cacheLinkList');
         if (cache) {
@@ -359,18 +351,6 @@ export default {
         }
     },
     methods: {
-        getRandomIcon() {
-            return this.goodIcons[Math.floor(Math.random() * this.goodIcons.length)]
-        },
-        getCachedIcon(linkId) {
-            if (this.cachedIcons[linkId]) {
-                return this.cachedIcons[linkId]
-            } else {
-                const icon = this.getRandomIcon()
-                this.$set(this.cachedIcons, linkId, icon)
-                return icon
-            }
-        },
         linkMouseEnter(info, id) {
             if (!info) return;
             this.hoverFileId = id;
@@ -551,9 +531,13 @@ export default {
         },
         // 输入密码
         GetPWDFolder(index, id, password) {
+            if (!password) return
             siteService.getLinksbyfolderid(id, password).then(res => {
                 if (res.code > 0) {
-                    this.$alert('请重试', '密码错误', {});
+                    this.$message({
+                        message: '密码错误,请重试',
+                        type: 'error',
+                    });
                     return;
                 }
                 this.Folders[index].need_password = false;
