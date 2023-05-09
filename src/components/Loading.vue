@@ -1,5 +1,5 @@
 <template>
-    <div class="loader">
+    <div class="navLoader">
         <div class="face">
             <div class="circle"></div>
         </div>
@@ -10,7 +10,7 @@
 </template>
 
 <style scoped>
-    .loader {
+    .navLoader {
         margin: 0 auto;
         width: 17em;
         height: 17em;
@@ -21,14 +21,14 @@
         justify-content: center;
     }
 
-    .loader .face {
+    .navLoader .face {
         position: absolute;
         border-radius: 50%;
         border-style: solid;
         animation: animate 3s linear infinite;
     }
 
-    .loader .face:nth-child(1) {
+    .navLoader .face:nth-child(1) {
         width: 100%;
         height: 100%;
         color: gold;
@@ -38,7 +38,7 @@
         animation-direction: normal;
     }
 
-    .loader .face:nth-child(2) {
+    .navLoader .face:nth-child(2) {
         width: 70%;
         height: 70%;
         color: lime;
@@ -48,7 +48,7 @@
         animation-direction: reverse;
     }
 
-    .loader .face .circle {
+    .navLoader .face .circle {
         position: absolute;
         width: 50%;
         height: 0.1em;
@@ -59,7 +59,7 @@
         transform-origin: left;
     }
 
-    .loader .face .circle::before {
+    .navLoader .face .circle::before {
         position: absolute;
         top: -0.5em;
         right: -0.5em;

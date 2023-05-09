@@ -10,6 +10,16 @@
 export default {
     name: 'App',
     components: {
+    },
+    mounted() {
+    // 加载完成事件
+        window.addEventListener("load", () => {
+            // 去除加载标记
+            document.getElementsByTagName("body")[0].className = "";
+            // 给加载动画添加结束标记
+            let loadingBox = document.getElementById("loading-box");
+            loadingBox.classList.add("loaded");
+        });
     }
 }
 </script>

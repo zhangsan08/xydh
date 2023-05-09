@@ -26,7 +26,7 @@ body {
         background-size: cover;
     }
 }
-.loading {
+.navLoading {
     margin-top: 20px;
 }
 .nav {
@@ -116,9 +116,14 @@ body {
 .wx img {
     width: 100%;
 }
+.siteTitle{
+    height: 76px;
+    min-height: 76px;
+}
 .siteName {
     font-size: 36px;
     font-weight: bold;
+    padding-bottom: 10px;
 }
 .totop {
     z-index: 1;
@@ -135,10 +140,8 @@ body {
     box-shadow: rgba(0, 0, 0, 0.3) -1px -1px 5px;
     padding: 13px 0;
     font-size: 13px;
-    transform: scale(1);
     transition: all 0.3s;
     &:hover {
-        transform: scale(1.01);
         color: white;
         box-sizing: border-box;
         backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
@@ -154,7 +157,6 @@ body {
     position: relative;
     top: 0;
     left: 0;
-    padding-top: 6px;
     height: 36px;
 }
 
@@ -380,10 +382,10 @@ a {
     justify-content: center;
     grid-gap: 15px;
     &.pc {
-        grid-template-columns: repeat(auto-fill, minmax(440px, 460px));
+        grid-template-columns: repeat(auto-fill, minmax(440px, 445px));
     }
     &.h5 {
-        grid-template-columns: repeat(auto-fill, minmax(auto, 460px));
+        grid-template-columns: repeat(auto-fill, minmax(auto, 445px));
     }
 }
 
@@ -396,7 +398,7 @@ a {
     backdrop-filter: blur(10px);
     border-radius: 25px;
     position: absolute;
-    top: 4px;
+    top: -4px;
     left: 50%;
     transform: translateX(-50%);
     height: 40px;

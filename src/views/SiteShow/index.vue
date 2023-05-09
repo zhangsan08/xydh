@@ -15,11 +15,9 @@
             </div>
 
             <!-- 名称简介 -->
-            <div style="margin: 0 auto 0">
-                <span class="siteName">{{ sitename }}</span>
-                <div style="margin: 10px auto"></div>
-                <!-- <p class="siteInfo">{{ siteinfo }}</p> -->
-                {{ siteinfo }}
+            <div class="siteTitle">
+                <div class="siteName">{{ sitename }}</div>
+                <div class="siteInfo">{{ siteinfo }}</div>
             </div>
             <div style="height: 80px" v-if="!navSwitch && !labSwitch"></div>
             <!-- 搜索框 -->
@@ -70,7 +68,7 @@
                     </ul>
                 </div>
 
-                <div v-if="Folders.length === 0" class="loading">
+                <div v-if="Folders.length === 0" class="navLoading">
                     <Loading />
                 </div>
 
@@ -300,6 +298,8 @@ export default {
         //   type: 'warning'
         // });
         this.screenWidth = document.body.clientWidth;
+    },
+    created() {
         this.username = this.$route.params.username;
         if (!this.username) this.username = 'admin';
         this.load(this.username);

@@ -1,58 +1,58 @@
 <template>
-<div class="header">
-    <!-- 天气 -->
-    <div class="weather" id="he-plugin-simple"></div>
-    <div style="text-align:right;" class="headerbtns">
-        <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
-        <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
-        <a class="headerbtn" href="/u/rand" target="_blank">月光宝盒 <i class="fa fa-random"></i></a>
-        <el-dropdown :hide-on-click="false">
-            <span style="color:inherit;">
-                自定义<i class="fa fa-cog"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item> <i class="fa fa-user-circle-o"></i><a class="headerbtn" href="https://xydh.fun/me" target="_blank">打开后台</a></el-dropdown-item>
-                <el-dropdown-item><span class="headerbtn" @click="onChangeHis()"><i class="fa fa-reply-all"></i> 足迹开关</span></el-dropdown-item>
-                <el-dropdown-item><span class="headerbtn" @click="onChangeNav()"><i class="fa fa-anchor"></i> 书签开关</span></el-dropdown-item>
-                <el-dropdown-item><span class="headerbtn" @click="logout()"><i class="fa fa-power-off"></i> 退出登录</span></el-dropdown-item>
-            </el-dropdown-menu>
-        </el-dropdown>
-        
-    </div>  
-    <div class="paomadeng">
-        <el-carousel  indicator-position="none" arrow="always" direction="vertical" height="25px">
-            <!-- <el-carousel-item>
+    <div class="header">
+        <!-- 天气 -->
+        <div class="weather" id="he-plugin-simple"></div>
+        <div style="text-align:right;" class="headerbtns">
+            <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
+            <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
+            <a class="headerbtn" href="/u/rand" target="_blank">月光宝盒 <i class="fa fa-random"></i></a>
+            <el-dropdown :hide-on-click="false">
+                <span style="color:inherit;">
+                    自定义<i class="fa fa-cog"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item> <i class="fa fa-user-circle-o"></i><a class="headerbtn" href="https://xydh.fun/me" target="_blank">打开后台</a></el-dropdown-item>
+                    <el-dropdown-item><span class="headerbtn" @click="onChangeHis()"><i class="fa fa-reply-all"></i> 足迹开关</span></el-dropdown-item>
+                    <el-dropdown-item><span class="headerbtn" @click="onChangeNav()"><i class="fa fa-anchor"></i> 书签开关</span></el-dropdown-item>
+                    <el-dropdown-item><span class="headerbtn" @click="logout()"><i class="fa fa-power-off"></i> 退出登录</span></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+
+        </div>
+        <div class="paomadeng">
+            <el-carousel  indicator-position="none" arrow="always" direction="vertical" height="25px">
+                <!-- <el-carousel-item>
                 公告
             </el-carousel-item> -->
-            <el-carousel-item v-for="item in data" :key="item.name">
-                {{ item.name }}
-            </el-carousel-item>
-        </el-carousel>
+                <el-carousel-item v-for="item in data" :key="item.name">
+                    {{ item.name }}
+                </el-carousel-item>
+            </el-carousel>
+        </div>
+
     </div>
-    
-</div>
 </template>
 
 <script>
 import { userService } from '@/common/api'
 
 export default {
-    props:["historySwitch","navSwitch"],
-    data(){
-        return{
+    props: ["historySwitch", "navSwitch"],
+    data() {
+        return {
             data: [
                 // {"name":"留言板添加方法见上午8点炫技巧推文"},
             ]
         }
     },
-    methods:{
-        onChangeHis(){
+    methods: {
+        onChangeHis() {
             this.$parent.switchHistory()
         },
-        onChangeNav(){
+        onChangeNav() {
             this.$parent.switchNav()
         },
-        logout(){
+        logout() {
             userService.UserLogout({noQs: false})
             location.reload();
         },
@@ -62,7 +62,7 @@ export default {
 
 <style scoped>
 .header {
-    margin: 10px 10px;
+    padding: 10px 10px;
 }
 .headerbtn{
     margin: 5px;
