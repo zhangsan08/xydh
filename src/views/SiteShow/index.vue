@@ -1,5 +1,6 @@
 <template>
     <div>
+        <InitLoading/>
         <div v-if="isWeiXin" class="wx">
             <img src="~@/assets/share.png" class="logo" alt="logo" />
             更多内容，请点击右上角分享按钮，在默认浏览器打开
@@ -43,18 +44,22 @@
             </el-drawer> -->
             <!-- 历史足迹 -->
             <el-row>
-                <div class="historyLinks" v-if="historySwitch">
-                    <div v-if="cacheList.length > 0" class="historyLinkArea">
-                        <div class="historyLink" v-for="link in cacheList" @click="goToUrl(link)" :key="link.id">
-                            <div class="icon">
-                                <i class="el-icon-s-promotion"></i>
+                <div class="historyLinks">
+                    <div @click="switchHistory()" class="historyLinksArrow">我的足迹<i class="el-icon-arrow-down" v-if='historySwitch'></i><i class="el-icon-arrow-up" v-else></i></div>
+                    <div v-if="historySwitch">
+                        <div v-if="cacheList.length > 0" class="historyLinkArea">
+                            <div class="historyLink" v-for="link in cacheList" @click="goToUrl(link)" :key="link.id">
+                                <div class="icon">
+                                    <i class="el-icon-s-promotion"></i>
+                                </div>
+                                <span class="title">{{ link.name }}</span>
                             </div>
-                            <span class="title">{{ link.name }}</span>
+                        </div>
+                        <div v-else>
+                            <el-divider>正常使用导航后此处将显示本地最常访问的书签哦</el-divider>
                         </div>
                     </div>
-                    <div v-else>
-                        <el-divider>正常使用导航后此处将显示本地最常访问的书签哦</el-divider>
-                    </div>
+
                 </div>
             </el-row>
             <div class="bookmark" v-if="!labSwitch && navSwitch">
@@ -213,6 +218,7 @@ import Footer from '@/components/Footer.vue';
 import Particle from '@/components/particle.vue';
 import Aplayer from 'vue-aplayer';
 import Loading from '@/components/Loading.vue';
+import InitLoading from '@/components/InitLoading.vue';
 
 export default {
     name: 'ShowSite',
@@ -231,6 +237,7 @@ export default {
         Particle,
         Aplayer,
         Loading,
+        InitLoading
     },
     props: ['userName'],
     data() {

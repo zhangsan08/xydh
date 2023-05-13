@@ -1,89 +1,98 @@
 <template>
     <div class="welcome">
-        <el-card class="card" shadow="hover">
+        <el-card class="card" shadow="hover" ref="filterTable">
             临时书签 放入文件夹后才可展示到导航站
-            <el-table :data="tempLinks" height="360" stripe>
-                <el-table-column label="名称" min-width="160">
-                    <template slot-scope="scope">
-                        <el-input v-model="scope.row.name" type="text"></el-input>
-                    </template>
-                </el-table-column>
-                <el-table-column label="文件夹" min-width="130">
-                    <template slot-scope="scope">
-                        <el-select v-model="scope.row.fid">
-                            <el-option
-                                v-for="Folder in FoldersWithTemp"
-                                :key="Folder.id"
-                                :label="Folder.name"
-                                :value="Folder.id"
-                            ></el-option>
-                        </el-select>
-                    </template>
-                </el-table-column>
-                <el-table-column label="链接" min-width="160">
-                    <template slot-scope="scope">
-                        <el-input v-model="scope.row.url" type="text"></el-input>
-                    </template>
-                </el-table-column>
-                <el-table-column label="图标" width="150">
-                    <template slot-scope="scope">
-                        <el-row>
-                            <el-input v-model="scope.row.icon" type="text">
-                                <span slot="append" style="cursor: pointer;" @click="iconHandle(scope.row)">
-                                    <i
-                                        v-if="scope.row.icon"
-                                        :class="'fa fa-' + scope.row.icon"
-                                    ></i>
-                                    <i v-else :class="'fa fa-hand-pointer-o'"></i>
-                                </span>
-                            </el-input>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column label="简介" min-width="180">
-                    <template slot-scope="scope">
-                        <el-input
-                            v-model="scope.row.info"
-                            placeholder="鼠标放上时的提示语(可为空)"
-                            resize="none"
-                            type="textarea"
-                        ></el-input>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    fixed="right"
-                    label="操作"
-
-                    width="150"
-                >
-                    <template slot-scope="scope">
-                        <el-button-group>
-                            <el-button
-                                icon="el-icon-view"
-                                size="small"
-                                title="打开书签"
-                                type="success"
-                                @click="openLink(scope.row.url)"
-                            ></el-button>
-                            <el-button
-                                icon="el-icon-edit"
-                                size="small"
-                                title="确认编辑"
-                                type="primary"
-                                @click="updateLink(scope.row)"
-                            ></el-button>
-                            <el-button
-                                icon="el-icon-delete"
-                                size="small"
-                                title="删除书签"
-                                type="danger"
-                                @click="deleteLink(scope.row)"
-                            ></el-button>
-                        </el-button-group>
-                    </template>
-                </el-table-column>
+            <el-table
+                :data="tempLinks"
+                height="360"
+                stripe
+            >
+                <div v-if="tempLinks.length>0">
+                    <el-table-column label="名称" min-width="160" >
+                        <template slot-scope="scope">
+                            <el-input v-model="scope.row.name" type="text"></el-input>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="文件夹" min-width="130">
+                        <template slot-scope="scope">
+                            <el-select v-model="scope.row.fid">
+                                <el-option
+                                    v-for="Folder in FoldersWithTemp"
+                                    :key="Folder.id"
+                                    :label="Folder.name"
+                                    :value="Folder.id"
+                                ></el-option>
+                            </el-select>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="链接" min-width="160">
+                        <template slot-scope="scope">
+                            <el-input v-model="scope.row.url" type="text"></el-input>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="图标" width="150">
+                        <template slot-scope="scope">
+                            <el-row>
+                                <el-input v-model="scope.row.icon" type="text">
+                                    <span slot="append" style="cursor: pointer;" @click="iconHandle(scope.row)">
+                                        <i
+                                            v-if="scope.row.icon"
+                                            :class="'fa fa-' + scope.row.icon"
+                                        ></i>
+                                        <i v-else :class="'fa fa-hand-pointer-o'"></i>
+                                    </span>
+                                </el-input>
+                            </el-row>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="简介" min-width="180">
+                        <template slot-scope="scope">
+                            <el-input
+                                v-model="scope.row.info"
+                                placeholder="鼠标放上时的提示语(可为空)"
+                                resize="none"
+                                type="textarea"
+                            ></el-input>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        fixed="right"
+                        label="操作"
+                        width="150"
+                    >
+                        <template slot-scope="scope">
+                            <el-button-group>
+                                <el-button
+                                    icon="el-icon-view"
+                                    size="small"
+                                    title="打开书签"
+                                    type="success"
+                                    @click="openIframe(scope.row.url)"
+                                ></el-button>
+                                <el-button
+                                    icon="el-icon-edit"
+                                    size="small"
+                                    title="确认编辑"
+                                    type="primary"
+                                    @click="updateLink(scope.row)"
+                                ></el-button>
+                                <el-button
+                                    icon="el-icon-delete"
+                                    size="small"
+                                    title="删除书签"
+                                    type="danger"
+                                    @click="deleteLink(scope.row)"
+                                ></el-button>
+                            </el-button-group>
+                        </template>
+                    </el-table-column>
+                </div>
             </el-table>
         </el-card>
+        <el-dialog title="预览" :visible.sync="dialogTableVisible" width='800px' :close="closeIframe">
+            <div class="iframeTips">网页加载可能存在延迟,如遇加载不出 <el-button type="primary" size='mini' @click="openLink">点击跳转</el-button></div>
+            <iframe class="iframe" :src="linkUrl" :key="linkUrl"/>
+        </el-dialog>
         <el-row>
             <el-col :sm="12" :xs="24">
                 <el-card class="card" header="快捷添加书签秘钥" shadow="hover">
@@ -101,16 +110,14 @@
                             rel="nofollow"
                             target="_blank"
                         >方法二详细说明请点我查看
-                        </el-link
-                        >
+                        </el-link>
                         <br/>
                         <el-link
                             href="https://www.yuque.com/xydh/start/qgztd3"
                             rel="nofollow"
                             target="_blank"
                         >手机端玩法(iOS安卓均支持)
-                        </el-link
-                        >
+                        </el-link>
                     </div>
                     <div v-else>
                         <el-button round type="" @click="getJsToken()">点击生成快捷添加书签秘钥</el-button>
@@ -141,6 +148,8 @@ export default {
             showjscode: false,
             JsToken: "xxxxxxxx",
             jscode: "***** 秘钥关联用户 请勿外传",
+            dialogTableVisible: false,
+            linkUrl: ''
         }
     },
     methods: {
@@ -154,8 +163,21 @@ export default {
             });
             this.showjscode = true;
         },
-        openLink(link) {
-            window.open(link, "_blank");
+        openLink() {
+            window.open(this.linkUrl, "_blank");
+        },
+        openIframe(link) {
+            this.linkUrl = link
+            this.dialogTableVisible = true
+        },
+        closeIframe() {
+            this.linkUrl = ''
+            this.dialogTableVisible = false
+            const iframe = document.querySelector('.iframe'); // 找到iframe元素
+            if (iframe) {
+                iframe.removeEventListener('load', this.handleIframeLoad); // 移除iframe的load事件监听
+                iframe.parentNode.removeChild(iframe); // 从DOM树中删除iframe元素
+            }
         },
         updateLink(link) {
             if (link.fid === 0) {
@@ -231,7 +253,16 @@ export default {
 </script>
 
 <style scoped>
-.card {
-    margin: 10px 10px;
-}
+    .card {
+        margin: 10px 10px;
+    }
+    .iframeTips{
+        margin-bottom: 10px;
+    }
+    iframe {
+            width: 100%;
+            height: 500px;
+            transform-origin: left top;
+            border: 1px solid rgba(227, 227, 227, 1);
+        }
 </style>

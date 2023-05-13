@@ -116,7 +116,7 @@ body {
 .wx img {
     width: 100%;
 }
-.siteTitle{
+.siteTitle {
     height: 76px;
     min-height: 76px;
 }
@@ -173,15 +173,15 @@ body {
     min-height: 33px;
     max-height: 33px;
     cursor: pointer;
-   text-align: left;
-    &.pc{
-        padding-left:15px;
+    text-align: left;
+    &.pc {
+        padding-left: 15px;
     }
-    &.h5{
+    &.h5 {
         padding-left: 7px;
         font-size: 12px;
     }
-    .linkContent{
+    .linkContent {
         white-space: nowrap; /* 不换行 */
         overflow: hidden;
         text-overflow: ellipsis;
@@ -228,65 +228,12 @@ a {
     color: inherit;
 }
 
-.historyLinks {
-    margin: 0 auto;
-    margin-bottom: 50px;
-    max-width: 1080px;
-}
-.historyLinkArea {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
-    align-items: center;
-    justify-items: center;
-    .historyLink {
-        transition: all 0.2s ease-in-out 0s;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        height: 80px;
-        width: 104px;
-        padding: 10px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        color: inherit;
-        .icon {
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
-            border-radius: 12px;
-            // background: #ffffff;
-            align-items: center;
-            box-sizing: border-box;
-            justify-content: center;
-            display: flex;
-            margin-bottom: 5px;
-            i {
-                color: inherit;
-                font-size: 30px;
-            }
-        }
-        .title {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: inline-block;
-            width: 100%;
-        }
-        &:hover {
-            box-sizing: border-box;
-            background: rgba(229, 229, 229, 0.3);
-        }
-    }
-}
-.historyLink p:hover {
-    border: 1px dashed rgba(0, 125, 184, 0.4);
-}
 .inputPWD {
     margin-top: 20px;
-    i{
+    i {
         font-size: 26px;
     }
-    .input{
+    .input {
         width: 80%;
         border-radius: 5px;
         overflow: hidden;
@@ -414,4 +361,66 @@ a {
     i {
         margin-right: 10px;
     }
+}
+
+.historyLinks {
+    margin: 0 auto;
+    margin-bottom: 30px;
+    max-width: 1080px;
+    padding: 0 20px;
+    cursor: pointer;
+    .historyLinksArrow {
+        text-align: right;
+        i {
+            margin-left: 5px;
+        }
+    }
+}
+.historyLinkArea {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+    align-items: center;
+    justify-items: center;
+    .historyLink {
+        transition: all 0.2s ease-in-out 0s;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        height: 80px;
+        width: 104px;
+        padding: 10px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        color: inherit;
+        .icon {
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+            border-radius: 12px;
+            // background: #ffffff;
+            align-items: center;
+            box-sizing: border-box;
+            justify-content: center;
+            display: flex;
+            margin-bottom: 5px;
+            i {
+                color: inherit;
+                font-size: 30px;
+            }
+        }
+        .title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: inline-block;
+            width: 100%;
+        }
+        &:hover {
+            box-sizing: border-box;
+            background: rgba(229, 229, 229, 0.3);
+        }
+    }
+}
+.historyLink p:hover {
+    border: 1px dashed rgba(0, 125, 184, 0.4);
 }

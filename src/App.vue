@@ -11,15 +11,6 @@ export default {
     name: 'App',
     components: {
     },
-    mounted() {
-        setTimeout(() => {
-            // 去除加载标记
-            document.getElementsByTagName("body")[0].className = "";
-            // 给加载动画添加结束标记
-            let loadingBox = document.getElementById("loading-box");
-            loadingBox.classList.add("loaded");
-        }, 250);
-    }
 }
 </script>
 

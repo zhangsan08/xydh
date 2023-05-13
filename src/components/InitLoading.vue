@@ -1,4 +1,35 @@
-body {
+<template>
+    <div id="loading-box">
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="loader">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+            <div class="loading-word">
+                <span id="loading-text">W e l c o m e ~</span>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+export default {
+    name: 'InitLoading',
+    mounted() {
+        setTimeout(() => {
+            // 去除加载标记
+            document.getElementsByTagName("body")[0].className = "";
+            // 给加载动画添加结束标记
+            let loadingBox = document.getElementById("loading-box");
+            loadingBox.classList.add("loaded");
+        }, 250);
+    }
+}
+</script>
+<style scoped>
+   body {
     margin: 0;
     padding: 0;
 }
@@ -129,3 +160,5 @@ body {
         transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
     }
 }
+
+</style>

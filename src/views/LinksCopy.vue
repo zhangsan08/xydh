@@ -21,37 +21,43 @@
             <p>注意，每次只能选择对方的一个文件夹！</p>
             <el-table
                 :data="Folders"
-                style="width: 100%">
+                style="width: 100%"
+            >
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-table
                             :data="props.row.links"
                             tooltip-effect="dark"
                             style="width: 100%"
-                            @selection-change="handleSelectionChange">
+                            @selection-change="handleSelectionChange"
+                        >
                             <el-table-column
                                 type="selection"
-                                width="55">
+                                width="55"
+                            >
                             </el-table-column>
                             <el-table-column
                                 label="名称"
-                                width="200">
+                                width="200"
+                            >
                                 <template slot-scope="scope">{{ scope.row.name }}</template>
                             </el-table-column>
                             <el-table-column
                                 prop="url"
                                 label="链接"
                                 width="300"
-                                show-overflow-tooltip>
+                                show-overflow-tooltip
+                            >
                             </el-table-column>
                             <el-table-column
                                 prop="info"
                                 label="简介"
-                                show-overflow-tooltip>
+                                show-overflow-tooltip
+                            >
                             </el-table-column>
                         </el-table>
                         <br><br>
-                        <el-row type="flex" justify="center">
+                        <el-row type="flex" :gutter="20" justify="center">
                             <el-col :span="4">
                                 <el-select v-model="folder_id" placeholder="选择导入文件夹">
                                     <el-option
@@ -62,10 +68,19 @@
                                     ></el-option>
                                 </el-select>
                             </el-col>
-                            <el-col :span="4">
+                            <el-col :span="2">
                                 <el-button
                                     @click="createLinks()"
-                                >我抄！
+                                    type="primary"
+                                >我抄!
+                                </el-button>
+                            </el-col>
+                            <el-col :span="6">
+                                没有找到文件夹？
+                                <el-button
+                                    type="text"
+                                    @click="visible = true"
+                                >新建文件夹
                                 </el-button>
                             </el-col>
                         </el-row>
@@ -73,10 +88,48 @@
                 </el-table-column>
                 <el-table-column
                     label="文件夹"
-                    prop="name">
+                    prop="name"
+                >
                 </el-table-column>
             </el-table>
         </div>
+        <el-dialog :visible.sync="visible" title="添加文件夹" append-to-body width="720">
+            <el-form ref="form" :model="Folderform" label-width="80px" label-position="left">
+                <el-form-item label="图标">
+                    <el-row type="flex" justify="space-between">
+                        <el-col :span="20">
+                            <el-input
+                                v-model="Folderform.icon"
+                                type="text"
+                                minlength="0"
+                                maxlength="30"
+                                placeholder="icon"
+                            />
+                        </el-col>
+                        <el-col :span="2">
+                            <el-button title="选择图标" @click="iconHandleFolder()">
+                                <i v-if="Folderform.icon" :class="'fa fa-' + Folderform.icon" />
+                                <i v-else :class="'fa fa-hand-pointer-o'" />
+                            </el-button>
+                        </el-col>
+                        <el-row />
+                    </el-row>
+                </el-form-item>
+                <el-form-item label="名称">
+                    <el-input
+                        v-model="Folderform.name"
+                        type="text"
+                        minlength="0"
+                        maxlength="8"
+                        placeholder="0-8字/过长不好看"
+                    />
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="visible = false">取 消</el-button>
+                <el-button type="primary" @click="createFolder()">确 定</el-button>
+            </span>
+        </el-dialog>
         <br><br><br><br>
 
     </div>
@@ -103,7 +156,17 @@ export default {
             },
             multipleSelection: [],
             folder_id: "",
+            Folderform: {
+                id: '',
+                name: '',
+                icon: '',
+                weight: 0,
+            },
+            visible: false
         }
+    },
+    beforeMount() {
+        document.title = "抄作业";
     },
     methods: {
         // 取所有书签[文件夹、书签]
@@ -129,12 +192,12 @@ export default {
                     this.mobile_bg = siteInfo.mobile_bg
                     this.Folders = res.data.folder_with_links
                     this.Folders.sort(function (f1, f2) {
-                        return f1.weight - f2.weight//weight
+                        return f1.weight - f2.weight// weight
                     })
                     folderService.getMyFolders().then((res) => {
                         this.MyFolders = res.data;
                         this.MyFolders.sort(function (f1, f2) {
-                            return f1.weight - f2.weight; //weight
+                            return f1.weight - f2.weight; // weight
                         });
                     });
                 }
@@ -162,7 +225,7 @@ export default {
             }
             const clearLinks = this.multipleSelection.map(
                 // 抹掉脏数据
-                item=>{
+                item => {
                     delete item.id
                     delete item.user_id
                     delete item.folder_id
@@ -197,9 +260,39 @@ export default {
                     });
                 });
         },
-    },
-    beforeMount() {
-        document.title = "抄作业";
+        createFolder() {
+            this.visible = true;
+            folderService
+                .createFolder(this.Folderform)
+                .then(res => {
+                    if (res.code > 0) {
+                        this.$notify.error({
+                            title: '添加失败',
+                            message: res.msg,
+                        });
+                    } else {
+                        this.$notify({
+                            title: '添加成功!',
+                            type: 'success',
+                            duration: '800',
+                        });
+                        this.Folderform = {name: '', icon: ''};
+                        folderService.getMyFolders().then((res) => {
+                            this.MyFolders = res.data;
+                            this.MyFolders.sort(function (f1, f2) {
+                                return f1.weight - f2.weight; // weight
+                            });
+                        });
+                        this.visible = false;
+                    }
+                })
+                .catch(error => {
+                    this.$notify.error({
+                        title: '错误 请检查',
+                        message: error,
+                    });
+                });
+        },
     },
 }
 </script>
