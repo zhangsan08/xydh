@@ -50,7 +50,8 @@
                         <div v-if="cacheList.length > 0" class="historyLinkArea">
                             <div class="historyLink" v-for="link in cacheList" @click="goToUrl(link)" :key="link.id">
                                 <div class="icon">
-                                    <i class="el-icon-s-promotion"></i>
+                                    <i :class="'fa fa-' + link.icon" v-if="link.icon"></i>
+                                    <i class="el-icon-s-promotion" v-else></i>
                                 </div>
                                 <span class="title">{{ link.name }}</span>
                             </div>
