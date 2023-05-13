@@ -10,20 +10,10 @@
             <ICON @callback="chooseCallback"></ICON>
         </el-dialog>
 
-        您的专属链接<br><el-link
-            v-if="username"
-            style="font-size: 24px"
-            type="primary"
-            target="_blank"
-            :href="'https://xydh.fun/' + username"
-        >https://xydh.fun/{{ username }}</el-link>
-        <div style="font-size: 17px">
-            <p><el-link type="primary" @click="logout" >退出登录</el-link></p>
-        </div>
-
         <el-tabs type="border-card" :stretch="true">
             <el-tab-pane label="欢迎">
                 <Welcome
+                    :username="username"
                     :userID="userID"
                     :FoldersWithTemp="FoldersWithTemp"
                     :temp-links="tempLinks"

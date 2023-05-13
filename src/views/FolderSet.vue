@@ -195,7 +195,7 @@ export default {
             this.isSort = false
             console.log(sortId);
             folderService
-                .batchSort({folders: sortId})
+                .updateFolders({folders: sortId})
                 .then(res => {
                     console.log(res);
                     if (res.code === 0) {

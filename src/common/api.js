@@ -96,7 +96,7 @@ export const folderService = {
             data,
         });
     },
-    batchSort(data) {
+    updateFolders(data) {
         return request({
             url: '/api/v1/folders',
             method: 'put',

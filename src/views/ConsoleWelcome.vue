@@ -1,5 +1,21 @@
 <template>
     <div class="welcome">
+        <el-row>
+            <el-col :sm="12" :xs="24">
+                <el-card class="card" header="您的专属链接" shadow="hover">
+                    <el-link
+                        v-if="username"
+                        style="font-size: 20px"
+                        type="primary"
+                        target="_blank"
+                        :href="'https://xydh.fun/' + username"
+                    >https://xydh.fun/{{ username }}</el-link>
+                    <div style="font-size: 17px">
+                        <p><el-link type="primary" @click="logout" >退出登录</el-link></p>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
         <el-card class="card" shadow="hover" ref="filterTable">
             临时书签 放入文件夹后才可展示到导航站
             <el-table
@@ -89,7 +105,7 @@
                 </div>
             </el-table>
         </el-card>
-        <el-dialog title="预览" :visible.sync="dialogTableVisible" width='800px' :close="closeIframe">
+        <el-dialog title="预览" :visible.sync="dialogTableVisible" width='1180px' :close="closeIframe">
             <div class="iframeTips">网页加载可能存在延迟,如遇加载不出 <el-button type="primary" size='mini' @click="openLink">点击跳转</el-button></div>
             <iframe class="iframe" :src="linkUrl" :key="linkUrl"/>
         </el-dialog>
@@ -142,7 +158,7 @@
 import {linkService, userService} from "@/common/api";
 
 export default {
-    props: ["userID", "FoldersWithTemp", "tempLinks"],
+    props: ["username", "userID", "FoldersWithTemp", "tempLinks"],
     data() {
         return {
             showjscode: false,
@@ -247,6 +263,15 @@ export default {
                 return;
             }
             this.$emit("chooseIcon", this.linkform);
+        },
+        logout() {
+            userService.UserLogout({noQs: false});
+            this.$alert("", "注销成功", {
+                type: "success",
+                callback: () => {
+                    this.$router.push({name: "Home"});
+                },
+            });
         },
     }
 }

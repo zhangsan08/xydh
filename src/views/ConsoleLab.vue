@@ -19,8 +19,11 @@
                 <el-card class="box-card" shadow="hover">
                     <div slot="header" class="clearfix">
                         <span>扩容 | 改名 | 开通VIP</span>
-                        <el-button style="float: right; padding: 13px 15px" type="danger"
-                                   @click="go('https://pr.kuaifaka.net/item/xydh_fun')">购买卡密
+                        <el-button
+                            style="float: right; padding: 13px 15px"
+                            type="danger"
+                            @click="go('https://pr.kuaifaka.net/item/xydh_fun')"
+                        >购买卡密
                         </el-button>
                         <el-button style="float: right; padding: 13px 15px" type="text" @click="go2()">兑换卡密</el-button>
                     </div>
@@ -41,7 +44,7 @@
                     </div>
                     <div>
                         <p><b>介绍</b></p>
-                        炫猿承诺会永久为大家提供服务。但为了降低由于不可抗力对各位猿友产生的风险, 建议您对精心收藏的书签定期备份, 相信大家的每个书签都是宝贵的数字资源。
+                        每个书签都是宝贵的数字资源，本站承诺会永久为大家提供服务。但为了降低由于不可抗力对各位猿友产生的风险, 建议您对精心收藏的书签定期备份。
                         <p><b>使用方法</b></p>
                         输入用户id，即可以markdown格式的纯文本将该用户的所有书签数据展示。
                     </div>
@@ -69,7 +72,6 @@ export default {
     }
 }
 </script>
-
 
 <style scoped>
 .box-card {

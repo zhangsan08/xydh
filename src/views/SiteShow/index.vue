@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <div v-else>
-                            <el-divider>正常使用导航后此处将显示本地最常访问的书签哦</el-divider>
+                            <el-divider>暂无书签最近访问记录呢~🐱</el-divider>
                         </div>
                     </div>
 
