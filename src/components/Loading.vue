@@ -20,13 +20,13 @@
         align-items: center;
         justify-content: center;
     }
-
+    /*
     .navLoader .face {
         position: absolute;
         border-radius: 50%;
         border-style: solid;
         animation: animate 3s linear infinite;
-    }
+    } */
 
     .navLoader .face:nth-child(1) {
         width: 100%;
@@ -35,7 +35,10 @@
         border-color: currentColor transparent transparent currentColor;
         border-width: 0.2em 0.2em 0em 0em;
         --deg: -45deg;
-        animation-direction: normal;
+        position: absolute;
+        border-radius: 50%;
+        border-style: solid;
+        animation: rotate-clockwise 3s linear infinite;
     }
 
     .navLoader .face:nth-child(2) {
@@ -45,7 +48,10 @@
         border-color: currentColor currentColor transparent transparent;
         border-width: 0.2em 0em 0em 0.2em;
         --deg: -135deg;
-        animation-direction: reverse;
+        position: absolute;
+        border-radius: 50%;
+        border-style: solid;
+        animation: rotate-counterclockwise 3s linear infinite;
     }
 
     .navLoader .face .circle {
@@ -71,9 +77,23 @@
         box-shadow: 0 0 2em, 0 0 4em, 0 0 6em, 0 0 8em, 0 0 10em, 0 0 0 0.5em rgba(255, 255, 0, 0.1);
     }
 
-    @keyframes animate {
+    /* 正时针旋转动画 */
+    @keyframes rotate-clockwise {
+        from {
+            transform: rotate(0deg);
+        }
         to {
-            transform: rotate(1turn);
+            transform: rotate(360deg);
+        }
+    }
+
+    /* 逆时针旋转动画 */
+    @keyframes rotate-counterclockwise {
+        from {
+            transform: rotate(360deg);
+        }
+        to {
+            transform: rotate(0deg);
         }
     }
 </style>
