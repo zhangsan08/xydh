@@ -58,33 +58,20 @@
     </body>
 
     <script>
-        // WIDGET = {
-        //     CONFIG: {
-        //         "modules": "02",
-        //         "background": 1,
-        //         "tmpColor": "FFFFFF",
-        //         "tmpSize": 13,
-        //         "cityColor": "FFFFFF",
-        //         "citySize": 13,
-        //         "aqiSize": 13,
-        //         "weatherIconSize": 16,
-        //         "alertIconSize": 18,
-        //         "padding": "0px 0px 0px 0px",
-        //         "shadow": "1",
-        //         "borderRadius": 5,
-        //         "fixed": "true",
-        //         "vertical": "middle",
-        //         "horizontal": "center",
-        //         "left": "10",
-        //         "top": "5",
-        //         "key": "848677647f8443cc93edcac7c77f3fa7",
-        //         "lang":'zh-cn',
-        //         "theme":'dev'
-        //     }
-        // }
+        const getEnv = () => {
+            // eslint-disable-next-line
+            if (
+                navigator.userAgent.match(
+                    /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+                )
+            ) {
+                return 'h5';
+            }
+            return 'pc';
+        };
         WIDGET = {
             CONFIG: {
-                modules: '0124',
+                modules: getEnv() === 'pc' ? '0124' : '20',
                 background: '4',
                 tmpColor: 'EEEEEE',
                 tmpSize: '14',
