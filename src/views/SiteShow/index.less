@@ -148,6 +148,23 @@ body {
     }
 }
 
+.folderNoBorder {
+    min-height: 176px;
+    border-radius: 20px;
+    overflow: auto;
+    box-sizing: border-box;
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 13px 0;
+    font-size: 13px;
+    transition: all 0.3s;
+    &:hover {
+        color: white;
+        box-sizing: border-box;
+        backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
+    }
+}
+
 /* 滚动条 */
 ::-webkit-scrollbar {
     display: none; /* Chrome Safari */

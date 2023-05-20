@@ -24,7 +24,7 @@ export default {
             // 给加载动画添加结束标记
             let loadingBox = document.getElementById("loading-box");
             loadingBox.classList.add("loaded");
-        }, 250);
+        }, 200);
     }
 }
 </script>
@@ -39,7 +39,7 @@ export default {
     z-index: 999998;
     width: 50%;
     height: 100%;
-    background-color: #515151e0;
+    background-color: rgba(255, 255, 255, 0.1);
     transition: all 0.75s cubic-bezier(0.42, 0, 0, 1.01);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);

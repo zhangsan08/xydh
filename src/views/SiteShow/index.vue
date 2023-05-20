@@ -45,7 +45,12 @@
             <!-- 历史足迹 -->
             <el-row>
                 <div class="historyLinks">
-                    <div @click="switchHistory()" class="historyLinksArrow">我的足迹<i class="el-icon-arrow-down" v-if='historySwitch'></i><i class="el-icon-arrow-up" v-else></i></div>
+                    <div
+                        @click="switchHistory()"
+                        class="historyLinksArrow"
+                    >我的足迹<i class="el-icon-arrow-down" v-if='historySwitch'></i>
+                        <i class="el-icon-arrow-up" v-else></i>
+                    </div>
                     <div v-if="historySwitch">
                         <div v-if="cacheList.length > 0" class="historyLinkArea">
                             <div class="historyLink" v-for="link in cacheList" @click="goToUrl(link)" :key="link.id">
@@ -84,7 +89,7 @@
                         <div class="foldername">
                             <p>快捷导航</p>
                         </div>
-                        <el-row class="folder">
+                        <el-row :class="isBorder?'folder':'folderNoBorder'">
                             <el-col :span="8" v-for="Folder in Folders" :key="Folder.id">
                                 <div class="link" :class="env">
                                     <span class="icon">
@@ -114,7 +119,8 @@
                             </el-tooltip>
                         </div>
                         <div
-                            class="folder totop"
+                            :class="isBorder?'folder':'folderNoBorder'"
+                            class="totop"
                             :style="{height: screenWidth > 768 ? '140px' : 'auto'}"
                             :id="Folder.id"
                             onselectstart="return false;"
@@ -297,6 +303,7 @@ export default {
             infoTips: '',
             hoverFileId: '',
             env: '',
+            isBorder: false,
         };
     },
     beforeMount() {
@@ -402,7 +409,7 @@ export default {
             // 调用API获取数据
             siteService.getAllsiteandlinks(id).then(res => {
                 // 如果随机数已经变化，则表示已经更新了tab，需要丢弃当前的数据
-                if (this.random != random) return;
+                if (this.random !== random) return;
                 // 对数据进行相关处理
                 let linksData = this.handlelinkSort(res.data.folder_with_links);
                 // 比较数据是否和缓存中的一致
@@ -499,6 +506,9 @@ export default {
                             let bg = res.data.site_info.bg;
                             style.innerHTML = `body::before { background-image: url(${bg})}`;
                         }
+
+                        this.isBorder = res.data.site_info.bg !== '';
+
                         document.head.appendChild(style);
                         // window.onresize = () => {
                         //     if(window.innerWidth < 768 && this.mobile_bg) {
