@@ -7,48 +7,44 @@
             <input type="file" ref="fileInput" accept=".html,text/html" @change="onFileChange" />
         </div>
         <div v-if="Folders.length > 0">
-            <el-table :data="Folders" style="width: 100%">
-                <el-table-column type="expand">
-                    <template slot-scope="props">
-                        <el-table
-                            :data="props.row.links"
-                            tooltip-effect="dark"
-                            style="width: 100%"
-                            @selection-change="handleSelectionChange"
-                        >
-                            <el-table-column type="selection" width="55"> </el-table-column>
-                            <el-table-column label="名称" width="300">
-                                <template slot-scope="scope">{{ scope.row.name }}</template>
-                            </el-table-column>
-                            <el-table-column prop="url" label="链接" show-overflow-tooltip>
-                            </el-table-column>
-                        </el-table>
-                        <br /><br />
-                        <el-row type="flex" :gutter="20" justify="center">
-                            <el-col :span="4">
-                                <el-select v-model="folder_id" placeholder="选择导入文件夹">
-                                    <el-option
-                                        v-for="Folder in MyFolders"
-                                        :key="Folder.id"
-                                        :label="Folder.name"
-                                        :value="Folder.id"
-                                    ></el-option>
-                                </el-select>
+            <el-row type="flex" :gutter="20" justify="center" class="selectFolder">
+                <el-col :span="4">
+                    <el-select v-model="folder_id" placeholder="选择导入文件夹">
+                        <el-option
+                            v-for="Folder in MyFolders"
+                            :key="Folder.id"
+                            :label="Folder.name"
+                            :value="Folder.id"
+                        ></el-option>
+                    </el-select>
+                </el-col>
+                <el-col :span="2">
+                    <el-button @click="createweb()" type="primary">确定</el-button>
+                </el-col>
+                <el-col :span="6">
+                    没有找到文件夹？
+                    <el-button type="text" @click="visible = true">新建文件夹 </el-button>
+                </el-col>
+            </el-row>
+            <div v-for="Folder in Folders" :key="Folder.name">
+                <div v-if="Folder.web.length > 0">
+                    <el-divider content-position="left">{{ Folder.name }}</el-divider>
+                    <el-row type="flex" :gutter="50">
+                        <el-checkbox-group v-model="multipleSelection" @change="handleCheckedCitiesChange">
+                            <el-col :span="5" v-for="bookmark in Folder.web" :key="bookmark.name">
+                                <el-checkbox :label="bookmark">
+                                    <div class="linkName">
+                                        {{ bookmark.name || '--' }}
+                                    </div>
+                                </el-checkbox>
                             </el-col>
-                            <el-col :span="2">
-                                <el-button @click="createLinks()" type="primary">确定 </el-button>
-                            </el-col>
-                            <el-col :span="6">
-                                没有找到文件夹？
-                                <el-button type="text" @click="visible = true">新建文件夹 </el-button>
-                            </el-col>
-                        </el-row>
-                    </template>
-                </el-table-column>
-                <el-table-column label="文件夹" prop="name"> </el-table-column>
-            </el-table>
+                        </el-checkbox-group>
+                    </el-row>
+                </div>
+
+            </div>
         </div>
-        <AddFolderPopup :visible="visible" @close="handleClose" />
+        <AddFolderPopup :visible="visible" @close="handleClose"/>
     </div>
 </template>
 
@@ -56,7 +52,6 @@
 import {folderService, linkService} from '@/common/api';
 
 import AddFolderPopup from '@/components/AddFolderPopup.vue';
-
 export default {
     components: {
         AddFolderPopup,
@@ -82,10 +77,10 @@ export default {
         document.title = '书签导入';
     },
     mounted() {
-        this.getAllSiteAndLinks();
+        this.getAllSiteAndweb();
     },
     methods: {
-        getAllSiteAndLinks() {
+        getAllSiteAndweb() {
             folderService.getMyFolders().then(res => {
                 this.MyFolders = res.data;
                 this.MyFolders.sort(function (f1, f2) {
@@ -93,11 +88,7 @@ export default {
                 });
             });
         },
-        handleSelectionChange(val) {
-            // 把勾选项加入数组
-            this.multipleSelection = val;
-        },
-        createLinks() {
+        createweb() {
             if (this.folder_id === 0) {
                 this.$notify.error({
                     title: '添加失败',
@@ -140,6 +131,7 @@ export default {
                             message: '请前往书签管理查看',
                             duration: '800',
                         });
+                        this.multipleSelection = [];
                     }
                 })
                 .catch(error => {
@@ -149,9 +141,11 @@ export default {
                     });
                 });
         },
-        handleClose() {
+        handleClose(v) {
+            if (v === 'succ') {
+                this.getAllSiteAndweb();
+            }
             this.visible = false;
-            this.getAllSiteAndLinks();
         },
         onFileChange() {
             // 获取上传的文件
@@ -170,15 +164,25 @@ export default {
                     // 从dom对象中获取DL标签
                     if (dom.tagName === 'DL') {
                         const result = this.textHandle(dom, null);
-                        console.log(result);
                         const other = {
                             name: '收藏夹栏',
-                            links: result.links,
+                            web: result.web,
                         };
-                        this.Folders = [other, ...result.children];
+                        this.Folders = this.flatten([other, ...result.children]);
                     }
                 }
             });
+        },
+        flatten(arr) {
+            const result = [];
+            arr.forEach(item => {
+                const { children, ...rest } = item;
+                result.push(rest);
+                if (children && children.length > 0) {
+                    result.push(...this.flatten(children));
+                }
+            });
+            return result;
         },
 
         /**
@@ -196,11 +200,11 @@ export default {
                     const dt = dts[i],
                         hdl = this.getTag(dt, 'DL');
                     if (hdl != null) {
-                        const h = this.getTag(dt, 'H3');
-                        const returns = this.textHandle(hdl, {
+                        let h = this.getTag(dt, 'H3');
+                        let returns = this.textHandle(hdl, {
                             name: h.textContent,
                             children: [],
-                            links: [],
+                            web: []
                         });
                         if (temp == null) {
                             temp = returns;
@@ -208,8 +212,8 @@ export default {
                             temp.children.push(returns);
                         }
                     } else {
-                        const a = this.getTag(dt, 'A');
-                        temp.links.push({
+                        var a = this.getTag(dt, 'A');
+                        temp.web.push({
                             url: a.href,
                             name: a.textContent,
                             desc: a.textContent,
@@ -279,6 +283,34 @@ export default {
 
 <style scoped lang="less">
     .user_copy {
+        /deep/ .expanded {
+            background: #f6f8f9;
+        }
+        /deep/ .el-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+            font-weight: normal;
+        }
+        /deep/ .el-checkbox__label {
+            width: 100%;
+        }
+        /deep/ .el-checkbox-group {
+            width: 100%;
+        }
+        .linkName {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .selectFolder {
+            position: sticky;
+            top: 0;
+            padding: 10px 0;
+            background: #fff;
+            z-index: 99;
+        }
         .upload {
             background: #f6f8f9;
             border: 1px dashed #d9d9d9;
@@ -322,3 +354,4 @@ export default {
         }
     }
 </style>
+

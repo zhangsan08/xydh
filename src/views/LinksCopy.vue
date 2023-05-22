@@ -93,43 +93,7 @@
                 </el-table-column>
             </el-table>
         </div>
-        <el-dialog :visible.sync="visible" title="添加文件夹" append-to-body width="720">
-            <el-form ref="form" :model="Folderform" label-width="80px" label-position="left">
-                <el-form-item label="图标">
-                    <el-row type="flex" justify="space-between">
-                        <el-col :span="20">
-                            <el-input
-                                v-model="Folderform.icon"
-                                type="text"
-                                minlength="0"
-                                maxlength="30"
-                                placeholder="icon"
-                            />
-                        </el-col>
-                        <el-col :span="2">
-                            <el-button title="选择图标" @click="iconHandleFolder()">
-                                <i v-if="Folderform.icon" :class="'fa fa-' + Folderform.icon" />
-                                <i v-else :class="'fa fa-hand-pointer-o'" />
-                            </el-button>
-                        </el-col>
-                        <el-row />
-                    </el-row>
-                </el-form-item>
-                <el-form-item label="名称">
-                    <el-input
-                        v-model="Folderform.name"
-                        type="text"
-                        minlength="0"
-                        maxlength="8"
-                        placeholder="0-8字/过长不好看"
-                    />
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="visible = false">取 消</el-button>
-                <el-button type="primary" @click="createFolder()">确 定</el-button>
-            </span>
-        </el-dialog>
+        <AddFolderPopup :visible="visible" @close="handleClose"/>
         <br><br><br><br>
 
     </div>
@@ -137,11 +101,15 @@
 
 <script>
 import {folderService, linkService, siteService} from '@/common/api'
+import AddFolderPopup from '@/components/AddFolderPopup.vue';
 
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
 
 export default {
+    components: {
+        AddFolderPopup,
+    },
     data() {
         return {
             username: "",
@@ -169,6 +137,20 @@ export default {
         document.title = "抄作业";
     },
     methods: {
+        handleClose(v) {
+            if (v === 'succ') {
+                this.getAllSiteAndweb();
+            }
+            this.visible = false;
+        },
+        getAllSiteAndweb() {
+            folderService.getMyFolders().then(res => {
+                this.MyFolders = res.data;
+                this.MyFolders.sort(function (f1, f2) {
+                    return f1.weight - f2.weight; // weight
+                });
+            });
+        },
         // 取所有书签[文件夹、书签]
         getAllSiteAndLinks(username) {
             if (username === "") {
@@ -194,12 +176,7 @@ export default {
                     this.Folders.sort(function (f1, f2) {
                         return f1.weight - f2.weight// weight
                     })
-                    folderService.getMyFolders().then((res) => {
-                        this.MyFolders = res.data;
-                        this.MyFolders.sort(function (f1, f2) {
-                            return f1.weight - f2.weight; // weight
-                        });
-                    });
+                    this.getAllSiteAndweb()
                 }
             })
         },
@@ -256,39 +233,6 @@ export default {
                 .catch((error) => {
                     this.$notify.error({
                         title: "错误 请检查",
-                        message: error,
-                    });
-                });
-        },
-        createFolder() {
-            this.visible = true;
-            folderService
-                .createFolder(this.Folderform)
-                .then(res => {
-                    if (res.code > 0) {
-                        this.$notify.error({
-                            title: '添加失败',
-                            message: res.msg,
-                        });
-                    } else {
-                        this.$notify({
-                            title: '添加成功!',
-                            type: 'success',
-                            duration: '800',
-                        });
-                        this.Folderform = {name: '', icon: ''};
-                        folderService.getMyFolders().then((res) => {
-                            this.MyFolders = res.data;
-                            this.MyFolders.sort(function (f1, f2) {
-                                return f1.weight - f2.weight; // weight
-                            });
-                        });
-                        this.visible = false;
-                    }
-                })
-                .catch(error => {
-                    this.$notify.error({
-                        title: '错误 请检查',
                         message: error,
                     });
                 });
