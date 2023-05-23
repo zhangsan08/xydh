@@ -11,12 +11,40 @@
                         :href="'https://xydh.fun/' + username"
                     >https://xydh.fun/{{ username }}</el-link>
                     <div style="font-size: 17px">
+                        <div>文件夹容量:[{{userAllInfo.max_folder}}]  书签容量:[{{userAllInfo.max_link}}]
+                            <span><el-link
+                                type="primary"
+                                target="_blank"
+                                href="../u/vip"
+                            >扩容</el-link></span>
+                            <span v-if="userAllInfo.is_vip">
+                                <span> VIP到期时间:</span> [{{ userAllInfo.vip_time }}]</span>
+
+                        </div>
+
                         <p><el-link type="primary" @click="logout" >退出登录</el-link></p>
                     </div>
                 </el-card>
             </el-col>
+            <el-col :sm="12" :xs="24">
+                <el-card class="card" header="社群" shadow="hover">
+
+                    <span><el-link
+                        type="primary"
+                        target="_blank"
+                        href=" https://docs.qq.com/doc/DQXJKbkplRUtORGFI"
+                    >点击加入微信群</el-link></span>
+                    <p><el-link
+                        type="primary"
+                        target="_blank"
+                        href="https://pic1.58cdn.com.cn/nowater/webim/big/n_v27b7aa70b649d4943b27cb7399f44d8a6.png"
+                    >iLinks 高质量知识星球</el-link></p>
+
+                    <!--                    <div><img src="https://pic1.58cdn.com.cn/nowater/webim/big/n_v27b7aa70b649d4943b27cb7399f44d8a6.png" alt="知识星球" height="200px"></div>-->
+                </el-card>
+            </el-col>
         </el-row>
-        <el-card class="card" shadow="hover" ref="filterTable">
+        <el-card class="card" shadow="hover" ref="filterTable" v-if="tempLinks.length>0">
             临时书签 放入文件夹后才可展示到导航站
             <el-table
                 :data="tempLinks"
@@ -158,7 +186,7 @@
 import {linkService, userService} from "@/common/api";
 
 export default {
-    props: ["username", "userID", "FoldersWithTemp", "tempLinks"],
+    props: ["username", "userID", "FoldersWithTemp", "tempLinks", "userAllInfo"],
     data() {
         return {
             showjscode: false,

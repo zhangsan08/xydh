@@ -2,7 +2,7 @@
     <div>
         <!-- 添加 -->
         <div style="color:red">隐私与法律免责声明: 你所添加的每一个链接都将负法律责任</div>
-        <el-divider>手动添加书签 <a target='_blank' rel='nofollow' href='https://www.bilibili.com/video/BV1tf4y1J7yz/'>快速加书签必看教程</a>
+        <el-divider>手动添加书签 | <a target='_blank' rel='nofollow' href='https://www.bilibili.com/video/BV1tf4y1J7yz/'>快速加书签必看教程</a>
         </el-divider>
         <el-card shadow="hover" class="card" :model="linkform">
 
@@ -88,8 +88,10 @@
                 </el-col>
             </el-row>
         </el-card>
+        <el-divider><a target='_blank' rel='nofollow' href='../u/ImportBookmarks'>导入浏览器书签</a>
+        </el-divider>
         <!-- 更删 -->
-        <el-divider>更新书签</el-divider>
+        <el-divider>更新书签 | 选择文件夹</el-divider>
         <!--        文件夹列表-->
         <div class="mainbox">
             <div

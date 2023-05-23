@@ -15,7 +15,7 @@
             <el-form-item>
                 <div v-if="is_vip"><span>VIP到期时间:</span> {{ vip_time }}</div>
                 <span v-else>未开通 VIP</span></el-form-item>
-            <el-form-item label="输入兑换卡密">
+            <el-form-item label="增值服务卡密">
                 <el-col span="18">
                     <el-input type="text" placeholder="" v-model="VipForm.key"></el-input>
                 </el-col>
@@ -33,7 +33,7 @@
                     <el-input type="text" placeholder="" v-model="renameForm.name"></el-input>
                 </el-col>
             </el-form-item>
-            <el-form-item label="卡密">
+            <el-form-item label="改名卡卡密">
                 <el-col span="18">
                     <el-input type="text" placeholder="" v-model="renameForm.key"></el-input>
                 </el-col>
@@ -71,6 +71,9 @@ export default {
             is_vip: 0,
             vip_time: '',
         }
+    },
+    beforeMount() {
+        this.getUser()
     },
     methods: {
         getUser() {
@@ -133,9 +136,6 @@ export default {
                 }
             })
         },
-    },
-    beforeMount() {
-        this.getUser()
     }
 }
 </script>

@@ -15,6 +15,7 @@
                 <Welcome
                     :username="username"
                     :userID="userID"
+                    :userAllInfo="userAllInfo"
                     :FoldersWithTemp="FoldersWithTemp"
                     :temp-links="tempLinks"
                     @chooseIcon="iconHandle"
@@ -74,6 +75,7 @@ export default {
             userID: 0,
             username: "",
             isVIP: false,
+            userAllInfo: {},
             LoginCode: -1,
             Folders: [],
             FoldersWithTemp: [],
@@ -127,6 +129,7 @@ export default {
                     this.userID = res.data.id;
                     this.username = res.data.name;
                     this.isVIP = res.data.is_vip;
+                    this.userAllInfo = res.data
                     this.getFolder();
                 }
             });
