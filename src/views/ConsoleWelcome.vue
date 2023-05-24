@@ -44,14 +44,14 @@
                 </el-card>
             </el-col>
         </el-row>
-        <el-card class="card" shadow="hover" ref="filterTable" v-if="tempLinks.length>0">
+        <el-card class="card" shadow="hover" ref="filterTable" v-if="tempLinks?.length>0">
             临时书签 放入文件夹后才可展示到导航站
             <el-table
                 :data="tempLinks"
                 height="360"
                 stripe
             >
-                <div v-if="tempLinks.length>0">
+                <div v-if="tempLinks?.length>0">
                     <el-table-column label="名称" min-width="160" >
                         <template slot-scope="scope">
                             <el-input v-model="scope.row.name" type="text"></el-input>
