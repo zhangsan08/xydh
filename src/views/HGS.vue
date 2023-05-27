@@ -25,37 +25,45 @@
         </el-carousel> -->
         <!-- {{top100}} -->
 
-        <div class="amusic">
-            <aplayer :music="audio[0]" :list="audio" :narrow=false float theme="#fff">
-            </aplayer>
-        </div>
-
+        <Player :musicList="audio"/>
         <div>
-            <el-table class="top100table" highlight-current-row stripe
-                      :data="topSite.filter(data => !topSearch || data.name.includes(topSearch) || data.uName.includes(topSearch))">
+            <el-table
+                class="top100table"
+                highlight-current-row
+                stripe
+                :data="topSite.filter(data => !topSearch || data.name.includes(topSearch) || data.uName.includes(topSearch))"
+            >
                 <el-table-column
-                    label="排名" fixed
+                    label="排名"
+                    fixed
                     align="center"
-                    type="index">
+                    type="index"
+                >
                 </el-table-column>
                 <el-table-column
                     label="名称"
-                    align="center" width="150"
-                    prop="name">
+                    align="center"
+                    width="150"
+                    prop="name"
+                >
                 </el-table-column>
                 <el-table-column
                     label="用户"
-                    align="left">
+                    align="left"
+                >
                     <template slot-scope="scope">
                         <a target='_blank' :href='"/"+scope.row.uName'>{{ scope.row.uName }}</a>
                     </template>
                 </el-table-column>
                 <el-table-column
-                    align="left" min-width="200">
+                    align="left"
+                    min-width="200"
+                >
                     <template slot="header" slot-scope="scope">
                         <el-input
                             v-model="topSearch"
-                            placeholder="输入姓名搜索是否在榜"/>
+                            placeholder="输入姓名搜索是否在榜"
+                        />
                         {{ scope.info }}
                     </template>
                     <template slot-scope="scope">
@@ -72,12 +80,12 @@
 
 import Header from '@/components/Header.vue'
 import {userService} from '@/common/api'
-import Aplayer from 'vue-aplayer'
+import Player from '@/components/Player.vue'
 
 export default {
     components: {
         Header,
-        Aplayer,
+        Player,
     },
     data() {
         return {
@@ -101,6 +109,10 @@ export default {
             ],
         }
     },
+    beforeMount() {
+        document.title = "花果山 | 炫猿导航"
+        this.getUserRank('d')
+    },
     methods: {
         getUserRank(t) {
             userService.UserRank(t).then((res) => {
@@ -111,10 +123,6 @@ export default {
                 }
             })
         },
-    },
-    beforeMount() {
-        document.title = "花果山 | 炫猿导航"
-        this.getUserRank('d')
     }
 }
 </script>

@@ -181,7 +181,9 @@ export default {
         },
         getTempLinks() {
             linkService.getTempLinks().then((res) => {
-                this.tempLinks = res.data;
+                if (res.code === 0) {
+                    this.tempLinks = res.data;
+                }
             });
         },
 

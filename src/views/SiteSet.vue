@@ -3,36 +3,62 @@
         <!-- <p>热度: {{ userview }} [后期推出排行榜功能]</p> -->
         <el-form :model="SiteForm" label-width="150px" label-position="right">
             <el-form-item label="站点名">
-                <el-input type="text" v-model="SiteForm.name" minlength="2" maxlength="10"
-                          placeholder="2-10字符"></el-input>
+                <el-input
+                    type="text"
+                    v-model="SiteForm.name"
+                    minlength="2"
+                    maxlength="10"
+                    show-word-limit
+                    placeholder="2-10字符"
+                ></el-input>
             </el-form-item>
 
             <el-form-item label="站点简介">
-                <el-input type="text" v-model="SiteForm.info" minlength="0" maxlength="100"
-                          placeholder="可为空"></el-input>
+                <el-input
+                    type="text"
+                    v-model="SiteForm.info"
+                    minlength="0"
+                    maxlength="100"
+                    show-word-limit
+                    placeholder="可为空"
+                ></el-input>
             </el-form-item>
 
             <!-- <el-form-item label="顶部开关">
                 <el-switch v-model="SiteForm.btn_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="显示" inactive-text="隐藏">
                 </el-switch>
-                <div style="font-size:12px">关闭后可从主站进入控制台</div> 
+                <div style="font-size:12px">关闭后可从主站进入控制台</div>
             </el-form-item> -->
 
             <el-form-item label="自定义背景">
                 <el-switch
-                    v-model="SiteForm.bg_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="图片背景"
-                    inactive-text="纯色背景">
+                    v-model="SiteForm.bg_switch"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949"
+                    active-text="图片背景"
+                    inactive-text="纯色背景"
+                >
                 </el-switch>
                 <div v-if="SiteForm.bg_switch">
                     <el-row>
                         <p>横版(适用于PC端展示)</p>
-                        <el-input type="text" v-model="SiteForm.bg" minlength="0" maxlength="100"
-                              placeholder="请自行选择图床上传背景图片 不填则是默认"></el-input>
+                        <el-input
+                            type="text"
+                            v-model="SiteForm.bg"
+                            minlength="0"
+                            maxlength="100"
+                            placeholder="请自行选择图床上传背景图片 不填则是默认"
+                        ></el-input>
                     </el-row>
                     <el-row>
                         <p>竖版(适用于手机端展示)</p>
-                        <el-input type="text" v-model="SiteForm.mobile_bg" minlength="0" maxlength="100"
-                              placeholder="请自行选择移动端背景图片图床地址 不填则与PC端相同"></el-input>
+                        <el-input
+                            type="text"
+                            v-model="SiteForm.mobile_bg"
+                            minlength="0"
+                            maxlength="100"
+                            placeholder="请自行选择移动端背景图片图床地址 不填则与PC端相同"
+                        ></el-input>
                     </el-row>
                     <!-- <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62946'>怎么自定义背景图片?</a> -->
                 </div>
@@ -51,28 +77,46 @@
                         v-for="item in texiao"
                         :key="item.value"
                         :label="item.label"
-                        :value="item.value">
+                        :value="item.value"
+                    >
                     </el-option>
                 </el-select>
             </el-form-item>
 
             <el-form-item label="留言板">
-                <el-input type="text" v-model="SiteForm.lyb_id" minlength="24" maxlength="24" placeholder=""></el-input>
+                <el-input
+                    type="text"
+                    v-model="SiteForm.lyb_id"
+                    minlength="24"
+                    maxlength="24"
+                    show-word-limit
+                    placeholder=""
+                ></el-input>
             </el-form-item>
             <!-- 音乐模块 -->
             <el-form-item label="音乐">
                 <el-switch
-                    v-model="music.open" active-color="#13ce66" inactive-color="#ff4949" active-text="开启"
-                    inactive-text="关闭">
+                    v-model="music.open"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949"
+                    active-text="开启"
+                    inactive-text="关闭"
+                >
                 </el-switch>
                 <div v-if="music.open">
                     <p>普通用户添加音乐后只能加载2首，VIP用户可添加更多</p>
                     <el-form :inline="true">
-                        <el-button type="success" @click="addToList(music.list,1,1)"
-                                   :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表头
+                        <el-button
+                            type="success"
+                            @click="addToList(music.list,1,1)"
+                            :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30"
+                        >添加至表头
                         </el-button>
-                        <el-button type="success" @click="addToList(music.list,1,2)"
-                                   :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30">添加至表尾
+                        <el-button
+                            type="success"
+                            @click="addToList(music.list,1,2)"
+                            :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30"
+                        >添加至表尾
                         </el-button>
                     </el-form>
                     <el-table :data="music.list" stripe>
@@ -99,7 +143,8 @@
                         <el-table-column
                             fixed="right"
                             label="操作"
-                            width="80">
+                            width="80"
+                        >
                             <template slot-scope="scope">
                                 <el-button size="mini" type="danger" @click="deleteFromList(music.list,scope.row)"> 删除
                                 </el-button>
@@ -112,18 +157,29 @@
             <!-- 自定义顶部和底部 -->
             <el-form-item label="顶部开关">
                 <el-switch
-                    v-model="top_bottom.top_switch" active-color="#13ce66" inactive-color="#ff4949" active-text="开启"
-                    inactive-text="关闭" :disabled="!isVIP">
+                    v-model="top_bottom.top_switch"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949"
+                    active-text="开启"
+                    inactive-text="关闭"
+                    :disabled="!isVIP"
+                >
                 </el-switch>
             </el-form-item>
             <el-form-item label="自定义友链" :disabled="!isVIP">
                 <div>
                     <el-form :inline="true">
-                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2, 1)"
-                                   :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表头
+                        <el-button
+                            type="success"
+                            @click="addToList(top_bottom.bottom_list, 2, 1)"
+                            :disabled="!isVIP || top_bottom.bottom_list.length>15"
+                        >添加至表头
                         </el-button>
-                        <el-button type="success" @click="addToList(top_bottom.bottom_list, 2, 2)"
-                                   :disabled="!isVIP || top_bottom.bottom_list.length>15">添加至表尾
+                        <el-button
+                            type="success"
+                            @click="addToList(top_bottom.bottom_list, 2, 2)"
+                            :disabled="!isVIP || top_bottom.bottom_list.length>15"
+                        >添加至表尾
                         </el-button>
                     </el-form>
                     <el-table :data="top_bottom.bottom_list" stripe>
@@ -139,10 +195,14 @@
                         </el-table-column>
                         <el-table-column
                             label="操作"
-                            width="80">
+                            width="80"
+                        >
                             <template slot-scope="scope">
-                                <el-button size="mini" type="danger"
-                                           @click="deleteFromList(top_bottom.bottom_list, scope.row)"> 删除
+                                <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="deleteFromList(top_bottom.bottom_list, scope.row)"
+                                > 删除
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -151,9 +211,9 @@
             </el-form-item>
         </el-form>
         <el-divider content-position="center">
-           
+
         </el-divider>
-         <el-button slot="reference" type="primary" @click="updateSite()">更新站点信息</el-button>
+        <el-button slot="reference" type="primary" @click="updateSite()">更新站点信息</el-button>
     </div>
 
 </template>
@@ -190,7 +250,7 @@ export default {
                 {value: 3, label: '搞怪猫(会使背景图片失效)'},
                 {value: 4, label: '吹气泡(点击生成气泡)'},
             ],
-            predefineColors: ['#000000', '#ffffff', '#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff', '#c71585',],
+            predefineColors: ['#000000', '#ffffff', '#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff', '#c71585', ],
             music: {
                 open: false,
                 list: [],
@@ -200,6 +260,9 @@ export default {
                 bottom_list: [],
             },
         }
+    },
+    mounted() {
+        this.getSite()
     },
     methods: {
         getSite() {
@@ -260,14 +323,14 @@ export default {
                 item = {title: "", url: ""}
             }
             switch (where) {
-                case 1:
-                    list.unshift(item)
-                    break;
-                case 2:
-                    list.push(item)
-                    break;
-                default:
-                    break;
+            case 1:
+                list.unshift(item)
+                break;
+            case 2:
+                list.push(item)
+                break;
+            default:
+                break;
             }
         },
         deleteFromList(list, item) {
@@ -276,9 +339,6 @@ export default {
                 list.splice(index, 1)
             }
         }
-    },
-    mounted() {
-        this.getSite()
     }
 }
 
@@ -293,10 +353,7 @@ export default {
 }
 
 .siteForm .el-input {
-    max-width: 400px;
+    max-width: 650px;
 }
 
-.siteForm .el-input__inner {
-    border-radius: 20px;
-}
 </style>
