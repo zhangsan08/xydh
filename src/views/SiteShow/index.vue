@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div class="hHidden">
+            <h1>炫猿,炫猿导航</h1>
+            <h2>炫猿,炫猿导航,网址导航,自定义网址导航,定制网址导航,炫猿邀请码,ilinks</h2>
+        </div>
+
         <InitLoading/>
         <div v-if="isWeiXin" class="wx">
             <img src="~@/assets/share.png" class="logo" alt="logo" />
@@ -17,8 +22,8 @@
 
             <!-- 名称简介 -->
             <div class="siteTitle">
-                <div class="siteName">{{ sitename }}</div>
-                <div class="siteInfo">{{ siteinfo }}</div>
+                <h2 class="siteName">{{ sitename }}</h2>
+                <h2 class="siteInfo">{{ siteinfo }}</h2>
             </div>
             <div style="height: 80px" v-if="!navSwitch && !labSwitch"></div>
             <!-- 搜索框 -->
@@ -110,8 +115,8 @@
                             {{ infoTips }}
                         </div>
                         <div class="foldername" :id="Folder.name">
-                            <p v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</p>
-                            <p v-else>{{ Folder.name }}</p>
+                            <h3 v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</h3>
+                            <h3 v-else>{{ Folder.name }}</h3>
                             <el-tooltip content="展开文件夹" placement="top" v-if="env === 'pc'">
                                 <div class="openFolder" @click="addToTabs(Folder)">
                                     <i class="fa fa-arrows-alt"></i>
