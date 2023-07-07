@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: 
+Sitemap: http://xydh.fun/sitemap.xml

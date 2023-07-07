@@ -1,0 +1,86 @@
+.el-container {
+    height: 100%;
+}
+.el-header {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+.el-aside{
+    cursor: pointer;
+}
+.logo {
+    width: 140px;
+    img {
+        width: 60px;
+    }
+}
+.titleContent {
+    text-align: left;
+    .title {
+        color: #222;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    .info {
+        color: #939393;
+        font-size: 14px;
+    }
+}
+
+.el-main {
+    background-color: #f1f0f5;
+    border-radius: 6px;
+    padding: 10px;
+    height: 100%;
+    overflow: auto;
+    text-align: left;
+}
+ul {
+    padding: 0;
+    margin: 0 10px;
+}
+.d-tabs {
+    color: #000;
+}
+.d-tabs-item {
+    margin: 0px 10px;
+    border-radius: 6px;
+    position: relative;
+    z-index: 1;
+    margin: 5px 0;
+    padding: var(--padding, 8px);
+    &:hover {
+        background: rgba(0, 0, 0, 0.04);
+        border-radius: 6px;
+    }
+    .setting-aside-item {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        i{
+            font-size: 20px;
+            margin-right: 10px;
+        }
+    }
+}
+.active {
+    transition: color 0.2s;
+    color: #1890ff;
+    border-color: #1890ff;
+    background: rgba(24, 144, 255, 0.1);
+    &:hover {
+        background: rgba(24, 144, 255, 0.1);
+    }
+}
+.card {
+    padding: 8px 16px;
+    background-color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    line-height: 25px;
+    color: #222;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}

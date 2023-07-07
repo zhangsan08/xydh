@@ -283,6 +283,7 @@ export default {
         float: left;
         cursor: pointer;
         line-height: 18px;
+        margin: 10px;
     }
 
     .active .trangle {

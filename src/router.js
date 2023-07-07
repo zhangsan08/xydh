@@ -13,6 +13,16 @@ export default new Router({
             name: 'Home',
             component: () => import('./views/SiteShow/index.vue'),
         },
+        // {
+        //     path: '/',
+        //     name: 'Home',
+        //     component: () => import('./views/siteInlet.vue'),
+        // },
+        {
+            path: '/Theme1',
+            name: 'Theme1',
+            component: () => import('./views/Theme1/index.vue'),
+        },
         {
             path: '/Me',
             name: 'Me',

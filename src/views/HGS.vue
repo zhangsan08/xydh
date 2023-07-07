@@ -95,12 +95,12 @@ export default {
             // 音频列表
             audio: [
                 {
-                    title: '花果山',
+                    name: '花果山',
                     artist: '球哥',
                     url: 'https://cdn.jsdelivr.net/gh/ixsim/upload/xyj.mp3',
                 },
                 {
-                    title: '夜的第七章',
+                    name: '夜的第七章',
                     artist: '杰伦',
                     url: 'https://cdn.jsdelivr.net/gh/ixsim/upload/yddqz.m4a',
                     pic: 'http://img.mp.itc.cn/upload/20160717/89429f4074754a20996ec74d6bcf0304_th.jpg',

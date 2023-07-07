@@ -1,26 +1,19 @@
 <template>
     <span :class="['amusic', musicIsMini ? 'musicIsMini' : 'musicIsNoMini']">
         <aplayer
-            :music="musicList[0]"
-            :list="musicList"
-            :narrow="false"
-            :float="false"
+            :audio="musicList"
+            ref="aplayer"
+            fixed
+            :mini="musicIsMini"
             :listFolded="true"
             autoplay
-            :mini="musicIsMini"
-            ref="aplayer"
-            theme="#fff"
         ></aplayer>
     </span>
 </template>
 <script>
-import Aplayer from 'vue-aplayer';
-
 export default {
     name: 'Player',
-    components: {
-        Aplayer,
-    },
+    components: {},
     props: {
         musicList: {
             type: Array,
@@ -65,61 +58,88 @@ export default {
         left: 0;
         z-index: 999;
         max-width: 100%;
-        /deep/ .aplayer {
-            background-color: rgba(0, 125, 184, 0.4);
-            backdrop-filter: blur(3px);
-            margin: 0;
-            .aplayer-pic {
-                height: 55px;
-                width: 55px;
-                border-radius: 7px;
-                margin-top: 6px;
-                margin-left: 6px;
-                margin-bottom: 6px;
-            }
-            .aplayer-info {
-                border: none !important;
-            }
-            .aplayer-title {
-                color: #fff;
-            }
-            .aplayer-author {
-                color: #c0c0c0;
-            }
-            .aplayer-controller {
-                height: 30px;
-                .aplayer-time {
-                    min-width: 30%;
-                    .aplayer-time-inner {
-                        font-size: 14px;
-                        min-width: 100px;
+        /deep/ .aplayer-fixed {
+            max-width: 100%;
+
+            .aplayer-body {
+                background-color: rgba(0, 125, 184, 0.4);
+                backdrop-filter: blur(3px);
+                margin: 0;
+                max-width: 100%;
+                box-sizing: content-box;
+                .aplayer-pic {
+                    height: 55px;
+                    width: 55px;
+                    border-radius: 7px;
+                    margin-top: 5px;
+                    margin-left: 5px;
+                    margin-bottom: 5px;
+                }
+                .aplayer-info {
+                    border: none !important;
+                    .aplayer-music {
+                        text-align: left;
                     }
-                    .aplayer-icon {
-                        width: 20px;
-                        height: 20px;
-                    }
-                    .aplayer-volume-wrap {
-                        margin-left: 0px;
-                        margin-right: 0px;
-                        .aplayer-volume-bar-wrap:after {
-                            background-color: transparent;
-                            bottom: -20px;
-                            height: 66px;
+                }
+                .aplayer-title {
+                    color: #fff;
+                }
+
+                .aplayer-controller {
+                    height: 30px;
+                    .aplayer-time {
+                        min-width: 30%;
+                        text-align: left;
+                        .aplayer-icon-back {
+                            left: 0;
                         }
-                        .aplayer-volume-bar {
-                            bottom: 4px;
-                            left: 17px;
-                            width: 6px;
+                        .aplayer-icon-play {
+                            left: 40px;
+                        }
+                        .aplayer-icon-forward {
+                            left: 80px;
+                        }
+                        .aplayer-icon-menu {
+                            left: 139px;
+                        }
+                        .aplayer-time-inner {
+                            font-size: 14px;
+                            min-width: 100px;
+                        }
+                        .aplayer-icon {
+                            width: 20px;
+                            height: 20px;
+                        }
+                        .aplayer-volume-wrap {
+                            margin-left: 0px;
+                            margin-right: 0px;
+                            .aplayer-volume-bar-wrap:after {
+                                background-color: transparent;
+                                bottom: -20px;
+                                height: 67px;
+                            }
+                            .aplayer-volume-bar {
+                                bottom: 4px;
+                                left: 17px;
+                                width: 6px;
+                            }
+                        }
+                        .aplayer-icon {
+                            margin-left: 10px !important;
+                            margin-right: 10px;
                         }
                     }
-                    .aplayer-icon {
-                        margin-left: 10px !important;
-                        margin-right: 10px;
-                    }
+                }
+
+                .aplayer-miniswitcher {
+                    display: none;
                 }
             }
             .aplayer-list {
                 background: #fff;
+                .aplayer-list-index {
+                    float: left;
+                }
             }
         }
     }
@@ -127,7 +147,7 @@ export default {
         width: 100%;
     }
     .musicIsMini {
-        /deep/ .aplayer {
+        /deep/ .aplayer .aplayer-body {
             background-color: transparent;
             box-shadow: none;
         }

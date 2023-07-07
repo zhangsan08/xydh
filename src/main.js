@@ -1,15 +1,19 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import { Message } from 'element-ui';
-Vue.config.productionTip = false
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import {Message} from 'element-ui';
+import APlayer from '@moefe/vue-aplayer';
+Vue.config.productionTip = false;
 Vue.prototype.$message = Message;
 
 new Vue({
     router,
     render: h => h(App),
-}).$mount('#app')
-
+}).$mount('#app');
+Vue.use(APlayer, {
+    defaultCover: 'https://pic.rmb.bdstatic.com/e92e4d8c9226db1c2194eb043128b945.jpeg',
+    productionTip: true,
+});
 // //main.js里面的代码
 // router.beforeEach((to) => {
 //   /* 路由发生变化修改页面meta */
