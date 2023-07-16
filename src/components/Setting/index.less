@@ -1,3 +1,19 @@
+.el-drawer{
+    width: 450px;
+}
+@media screen and (max-width: 568px){
+    .el-drawer {
+        max-width: 80% !important;
+    }
+    .item-title{
+        display: none !important;
+    }
+    .el-aside{
+        width: 60px !important;
+    }
+
+}
+
 .el-container {
     height: 100%;
 }
@@ -61,7 +77,9 @@ ul {
         justify-content: center;
         i{
             font-size: 20px;
-            margin-right: 10px;
+        }
+        .item-title{
+            margin-left: 10px;
         }
     }
 }
@@ -84,3 +102,8 @@ ul {
     margin-bottom: 10px;
     box-sizing: border-box;
 }
+.felx{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }

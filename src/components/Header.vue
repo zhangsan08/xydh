@@ -29,7 +29,7 @@
                 </el-dropdown-menu>
             </el-dropdown>
             <el-button @click="drawer = true" type="primary" style="margin-left: 16px"> 点我打开 </el-button>
-            <Setting :visible="true"/>
+            <Setting :visible="false"/>
         </div>
         <div class="paomadeng">
             <el-carousel indicator-position="none" arrow="always" direction="vertical" height="25px">

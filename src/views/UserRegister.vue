@@ -2,25 +2,36 @@
     <div class="reg">
 
         <div class="ad">
-<!--             <el-divider></el-divider>-->
-<!--             <div style="text-align:right;font-size:10px">广告 <a target='_blank' rel='nofollow' href=''>投放</a></div> -->
+            <!--             <el-divider></el-divider>-->
+            <!--             <div style="text-align:right;font-size:10px">广告 <a target='_blank' rel='nofollow' href=''>投放</a></div> -->
         </div>
-
 
         <div style="text-align: center;">
             <h4>获取网站最新资讯，欢迎关注公众号【炫技巧】</h4>
             <img width="120px" src="https://pic.downk.cc/item/5ecfb96ac2a9a83be569795b.png"></div>
         <el-divider>注册</el-divider>
         <div class="regform">
-            <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="100px">
+            <el-form
+                :model="registerForm"
+                status-icon
+                :rules="rules"
+                ref="registerForm"
+                label-width="100px"
+            >
                 <div style="text-align:right;">
-<!--                    <a target='_blank' href='https://yftk.fun/85/'>获取邀请码</a>-->
+                    <!--                    <a target='_blank' href='https://yftk.fun/85/'>获取邀请码</a>-->
                 </div>
                 <p class="tips">用户名将决定您的专属链接<br>如用户{{ registerForm.name }}的个人站为
                     https://xydh.fun/{{ registerForm.name }}</p>
                 <el-form-item label="用户名" prop="name">
-                    <el-input type="text" placeholder="5~15字符 建议使用简短好记的字母组合" v-model="registerForm.name" minlength="5"
-                              maxlength="15" show-word-limit></el-input>
+                    <el-input
+                        type="text"
+                        placeholder="5~15字符 建议使用简短好记的字母组合"
+                        v-model="registerForm.name"
+                        minlength="5"
+                        maxlength="15"
+                        show-word-limit
+                    ></el-input>
                 </el-form-item>
 
                 <el-form-item label="密码" prop="pass">
@@ -56,23 +67,23 @@
                 </div>
             </el-form>
         </div>
-<!--        <p>为了永久地为用户提供服务,炫猿采用邀请码注册制。如果你是自媒体号主,可以联系我获得一部分邀请码进行合作推广:xuanyuandaohang@126.com 请在邮件内容中注明来意</p>-->
-<!--        <p>个人用户请勿联系 邮件太多完全没有时间回复</p>-->
-<!--        <el-divider></el-divider>-->
-<!--        <h3>感谢以下科技榜优质自媒体 也欢迎大家关注他们</h3>-->
-<!--        <p>如果你在他们的文章中领取到了邀请码, 也回去给他们留个言、点点在看、或者点点广告都是对他们的支持了!</p>-->
-<!--        <h4>第一梯队</h4>-->
-<!--        <el-table :data="tableData" stripe style="width: 800px">-->
-<!--            <el-table-column prop="date" label="推文日期" width="100"></el-table-column>-->
-<!--            <el-table-column prop="name" label="自媒体" width="180"></el-table-column>-->
-<!--            <el-table-column prop="address" label="推文地址"></el-table-column>-->
-<!--        </el-table>-->
-<!--        <h4>历史合作</h4>-->
-<!--        <el-table :data="tableData2" stripe style="width: 800px">-->
-<!--            <el-table-column prop="date" label="推文日期" width="100"></el-table-column>-->
-<!--            <el-table-column prop="name" label="自媒体" width="180"></el-table-column>-->
-<!--            <el-table-column prop="address" label="推文地址"></el-table-column>-->
-<!--        </el-table>-->
+        <!--        <p>为了永久地为用户提供服务,炫猿采用邀请码注册制。如果你是自媒体号主,可以联系我获得一部分邀请码进行合作推广:xuanyuandaohang@126.com 请在邮件内容中注明来意</p>-->
+        <!--        <p>个人用户请勿联系 邮件太多完全没有时间回复</p>-->
+        <!--        <el-divider></el-divider>-->
+        <!--        <h3>感谢以下科技榜优质自媒体 也欢迎大家关注他们</h3>-->
+        <!--        <p>如果你在他们的文章中领取到了邀请码, 也回去给他们留个言、点点在看、或者点点广告都是对他们的支持了!</p>-->
+        <!--        <h4>第一梯队</h4>-->
+        <!--        <el-table :data="tableData" stripe style="width: 800px">-->
+        <!--            <el-table-column prop="date" label="推文日期" width="100"></el-table-column>-->
+        <!--            <el-table-column prop="name" label="自媒体" width="180"></el-table-column>-->
+        <!--            <el-table-column prop="address" label="推文地址"></el-table-column>-->
+        <!--        </el-table>-->
+        <!--        <h4>历史合作</h4>-->
+        <!--        <el-table :data="tableData2" stripe style="width: 800px">-->
+        <!--            <el-table-column prop="date" label="推文日期" width="100"></el-table-column>-->
+        <!--            <el-table-column prop="name" label="自媒体" width="180"></el-table-column>-->
+        <!--            <el-table-column prop="address" label="推文地址"></el-table-column>-->
+        <!--        </el-table>-->
 
         <el-dialog title="用户注册协议" :visible.sync="agreeVisible">
             <h1>炫猿软件服务条款</h1>
@@ -237,6 +248,40 @@ export default {
             }
         };
     },
+    beforeMount() {
+        document.title = "注册炫猿 | 优雅的浏览器第一站从此开始"
+        this.getUser()
+    },
+    mounted() {
+        let self = this
+        console.log( self.$props);
+
+        var config = extend({
+            vid: '5ed51bb4187d2bfd159c033d',
+            // container: this.$refs.vaptcha,
+            style: self.vpStyle
+        }, self.$props)
+        self.loadV2Script().then(() => {
+            window.vaptcha(config).then(vaptchaObj => {
+                window.vaptchaObj = vaptchaObj
+                // console.log(window)
+                this.obj = vaptchaObj
+                self.$emit('input', vaptchaObj)
+                // console.log(vaptchaObj)
+
+                vaptchaObj.listen("pass", function () {
+                    // 验证成功进行后续操作
+                    self.registerForm.token = vaptchaObj.getToken()
+                    self.SubmitRegister()
+                });
+                // 关闭验证弹窗时触发
+                vaptchaObj.listen("close", function () {
+                    vaptchaObj.reset();
+                });
+                // obj.render()
+            })
+        })
+    },
     methods: {
         SubmitRegister() {
             // window.vaptchaObj.validate();
@@ -250,7 +295,7 @@ export default {
                 } else {
                     this.$alert('', '注册成功', {
                         confirmButtonText: '点击登录',
-                        message: '您的个人站网址为 https://'+ '.xydh.fun'+this.registerForm.name ,
+                        message: '您的个人站网址为 https://' + '.xydh.fun' + this.registerForm.name,
                         type: 'success',
                         callback: () => {
                             this.$router.push({name: 'ULogin'})
@@ -293,7 +338,7 @@ export default {
             })
         },
         loadV2Script() {
-            if (typeof window.vaptcha === 'function') { //如果已经加载就直接放回
+            if (typeof window.vaptcha === 'function') { // 如果已经加载就直接放回
                 return Promise.resolve()
             } else {
                 return new Promise(resolve => {
@@ -310,38 +355,6 @@ export default {
                 })
             }
         },
-    },
-    beforeMount() {
-        document.title = "注册炫猿 | 优雅的浏览器第一站从此开始"
-        this.getUser()
-    },
-    mounted() {
-        let self = this
-        var config = extend({
-            vid: '5ed51bb4187d2bfd159c033d',
-            // container: this.$refs.vaptcha,
-            style: self.vpStyle
-        }, self.$props)
-        self.loadV2Script().then(() => {
-            window.vaptcha(config).then(vaptchaObj => {
-                window['vaptchaObj'] = vaptchaObj
-                // console.log(window)
-                this.obj = vaptchaObj
-                self.$emit('input', vaptchaObj)
-                // console.log(vaptchaObj)
-
-                vaptchaObj.listen("pass", function () {
-                    // 验证成功进行后续操作
-                    self.registerForm.token = vaptchaObj.getToken()
-                    self.SubmitRegister()
-                });
-                //关闭验证弹窗时触发
-                vaptchaObj.listen("close", function () {
-                    vaptchaObj.reset();
-                });
-                // obj.render()
-            })
-        })
     },
 };
 </script>

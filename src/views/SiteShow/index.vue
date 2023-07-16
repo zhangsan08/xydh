@@ -52,6 +52,7 @@
                         我的足迹<i class="el-icon-arrow-down" v-if="historySwitch"></i>
                         <i class="el-icon-arrow-up" v-else></i>
                     </div>
+
                     <div v-if="historySwitch">
                         <div v-if="cacheList.length > 0" class="historyLinkArea">
                             <div class="historyLink" v-for="link in cacheList" @click="goToUrl(link)" :key="link.id">
@@ -66,19 +67,39 @@
                             <el-divider>暂无书签最近访问记录呢~🐱</el-divider>
                         </div>
                     </div>
+
                 </div>
             </el-row>
             <div class="bookmark" v-if="!labSwitch && navSwitch">
                 <div class="nav" v-if="username === 'admin'">
                     <ul>
-                        <li v-for="item in tabsList" :key="item.id" @click="clickTab(item.id)">
-                            <div :class="item.id === activeTabId ? 'active' : ''">
-                                {{ item.title }}
-                            </div>
-                        </li>
+                        <div v-for="item in tabsList" :key="item.id">
+                            <li @click="clickTab(item.id)" v-if="item.noUrl" >
+                                <div :class="item.id === activeTabId ? 'active' : ''">
+                                    {{ item.title }}
+                                </div>
+                            </li>
+                            <el-tooltip
+                                placement="bottom"
+                                effect="light"
+                                v-else
+                            >
+                                <div slot="content" class="tooltipContent">
+                                    <a
+                                        :href="`https://xydh.fun/${item.id}`"
+                                        target="_blank"
+                                    >前往站长主页 <i class="el-icon-top-right"></i></a>
+                                </div>
+                                <li @click="clickTab(item.id)">
+                                    <div :class="item.id === activeTabId ? 'active' : ''">
+                                        {{ item.title }}
+                                    </div>
+                                </li>
+                            </el-tooltip>
+                        </div>
+
                     </ul>
                 </div>
-
                 <div v-if="Folders.length === 0" class="navLoading">
                     <Loading />
                 </div>
@@ -120,7 +141,6 @@
                         </div>
                         <div
                             :class="isBorder ? 'folder' : 'folderNoBorder'"
-
                             :style="{height: screenWidth > 768 ? '140px' : 'auto'}"
                             :id="Folder.id"
                             onselectstart="return false;"
@@ -177,8 +197,12 @@
                 </div>
             </div>
         </div>
-        <MoreLinkModal :visible="moreLinkModalVisible" :foldersInfo="foldersInfo" @close-click="moreLinkModalCloseClick"/>
-        <ImgLinkModal :visible="imgLinkModalVisible" :imgLinkInfo="imgLinkInfo" @close-click="imgLinkModalCloseClick"/>
+        <MoreLinkModal
+            :visible="moreLinkModalVisible"
+            :foldersInfo="foldersInfo"
+            @close-click="moreLinkModalCloseClick"
+        />
+        <ImgLinkModal :visible="imgLinkModalVisible" :imgLinkInfo="imgLinkInfo" @close-click="imgLinkModalCloseClick" />
 
         <!-- 音乐 -->
         <Player :musicList="music.list" v-if="music.open" />
@@ -244,7 +268,7 @@ export default {
         Player,
         Loading,
         MoreLinkModal,
-        ImgLinkModal
+        ImgLinkModal,
     },
     props: ['userName'],
     data() {
@@ -288,13 +312,13 @@ export default {
             isWeiXin: isWeiXin(),
             activeIndex: '1',
             tabsList: [
-                {title: '首页', id: 'admin'},
+                {title: '首页', id: 'admin', noUrl: true},
                 {title: 'AI', id: 'loveai'},
                 {title: '小帅', id: 'gmengshuai'},
                 {title: '以西', id: 'chenyixi'},
                 {title: 'YYDS', id: 'yyds007'},
                 {title: '文学', id: 'tiantian666'},
-                {title: '加入', id: 'friend'},
+                {title: '加入', id: 'friend', noUrl: true},
             ],
             activeTabId: 'admin',
             random: new Date().valueOf(), // 处理切换tab重复请求
@@ -306,7 +330,7 @@ export default {
             moreLinkModalVisible: false,
             imgLinkModalVisible: false,
             foldersInfo: {},
-            imgLinkInfo: {}
+            imgLinkInfo: {},
         };
     },
     beforeMount() {
@@ -539,18 +563,18 @@ export default {
             }
         },
         moreLinkModalCloseClick() {
-            this.moreLinkModalVisible = false
+            this.moreLinkModalVisible = false;
         },
         imgLinkModalCloseClick() {
-            this.imgLinkModalVisible = false
+            this.imgLinkModalVisible = false;
         },
         openFolder(folder) {
-            this.foldersInfo = folder
-            this.moreLinkModalVisible = true
+            this.foldersInfo = folder;
+            this.moreLinkModalVisible = true;
         },
         openImgLink(IMGLink) {
-            this.imgLinkInfo = IMGLink
-            this.imgLinkModalVisible = true
+            this.imgLinkInfo = IMGLink;
+            this.imgLinkModalVisible = true;
         },
     },
 };

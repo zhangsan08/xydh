@@ -36,7 +36,9 @@
                     </ul>
                 </el-aside>
                 <el-main>
-                    <About/>
+                    <Account v-if="activeItem.key==='account'"/>
+                    <About v-if="activeItem.key==='about'"/>
+                    <Layout v-if="activeItem.key==='layout'"/>
                 </el-main>
             </el-container>
         </el-container>
@@ -44,11 +46,15 @@
 </template>
 <script>
 import About from './about';
+import Layout from './layout';
+import Account from './account';
 
 export default {
     name: 'Setting',
     components: {
         About,
+        Layout,
+        Account
     },
     props: {
         visible: {
@@ -59,23 +65,29 @@ export default {
     data() {
         return {
             activeItem: {
-                title: '打开后台',
-                info: '打开后台',
+                title: '账号',
+                info: '注册账号，配置云书签',
                 icon: 'el-icon-guide',
-                key: '1'
+                key: 'account'
             },
             settingList: [
                 {
-                    title: '打开后台',
-                    info: '打开后台',
+                    title: '账号',
+                    info: '注册账号，配置云书签',
                     icon: 'el-icon-guide',
-                    key: '1'
+                    key: 'account'
                 },
                 {
-                    title: '打开后台1',
+                    title: '布局',
+                    info: '配置主题风格',
+                    icon: 'el-icon-guide',
+                    key: 'layout'
+                },
+                {
+                    title: '关于',
                     info: '打开后台1',
                     icon: 'el-icon-guide',
-                    key: '2'
+                    key: 'about'
                 }
             ]
         };
