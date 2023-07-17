@@ -8,7 +8,7 @@
         </div>
         <div class="content">
             <div>
-                <el-table class="top100table" :data="links" stripe    v-loading="links.length === 0">
+                <el-table class="top100table" :data="links" stripe v-loading="links.length === 0">
                     <el-table-column prop="url" label="名称" align="center">
                         <template slot-scope="scope">
                             <a target="_blank" rel="nofollow" :href="scope.row.url">
@@ -212,7 +212,7 @@ export default {
             font-size: 40px;
             text-shadow: 0.1em 0.1em 0 hsl(200 50% 30%);
         }
-        p{
+        p {
             cursor: pointer;
             text-decoration: underline;
         }
@@ -225,7 +225,9 @@ export default {
     .top100card {
         margin: 10px 20px;
     }
-
+    .content {
+        padding: 0 4px;
+    }
     .top100table {
         margin: 0px auto;
         max-width: 1080px;
@@ -269,6 +271,7 @@ export default {
                 -webkit-box-orient: vertical;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                padding: 0 6px;
             }
         }
         tr.el-table__row--striped td.el-table__cell {

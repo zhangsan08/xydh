@@ -157,7 +157,9 @@ export default {
     .top100card {
         margin: 10px 20px;
     }
-
+    .content {
+        padding: 0 4px;
+    }
     .top100table {
         margin: 0px auto;
         max-width: 1080px;
@@ -189,6 +191,14 @@ export default {
         }
         .el-table__body-wrapper .el-table__cell {
             padding: 27px 0;
+            .cell {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 6px;
+            }
         }
         tr.el-table__row--striped td.el-table__cell {
             background: rgb(246, 251, 255, 0.1);

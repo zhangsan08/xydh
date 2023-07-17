@@ -225,9 +225,6 @@ export default {
             isLogin: true,
         };
     },
-    beforeMount() {
-        this.getUser();
-    },
     mounted() {
         let self = this;
         var config = extend(
@@ -267,22 +264,6 @@ export default {
             const container = document.getElementById('container');
             container.classList.remove('right-panel-active');
             this.isLogin = false;
-        },
-        getUser() {
-            // 判断登录状态,若登录则取出当前userID和userName
-            userService.UserMe().then(res => {
-                this.LoginCode = res.code;
-                if (this.LoginCode > 0) {
-                    // 未登录
-                } else {
-                    this.$message({
-                        message: '您可能是注册用户,个人开发者不易,希望您能合理地使用炫猿的资源!',
-                        center: true,
-                        showClose: true,
-                        type: 'warning',
-                    });
-                }
-            });
         },
         submitLogin(form) {
             userService
