@@ -5,7 +5,7 @@
         <div style="text-align: right" class="headerbtns">
             <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
             <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
-            <a class="headerbtn" href="/u/rand" target="_blank">月光宝盒 <i class="fa fa-random"></i></a>
+            <a class="headerbtn" @click="getRandomUser">月光宝盒 <i class="fa fa-random"></i></a>
             <el-dropdown :hide-on-click="false">
                 <span style="color: inherit"> 自定义<i class="fa fa-cog"></i> </span>
                 <el-dropdown-menu slot="dropdown" class="dropdownMenu">
@@ -28,8 +28,7 @@
                         <span class="headerbtn" @click="logout()"> 退出登录</span></el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
-            <el-button @click="drawer = true" type="primary" style="margin-left: 16px"> 点我打开 </el-button>
-            <Setting :visible="false"/>
+            <Setting/>
         </div>
         <div class="paomadeng">
             <el-carousel indicator-position="none" arrow="always" direction="vertical" height="25px">
@@ -41,16 +40,19 @@
                 </el-carousel-item>
             </el-carousel>
         </div>
+        <RandomUserLoading v-if="randomUserLoadingShow"/>
     </div>
 </template>
 
 <script>
 import {userService} from '@/common/api';
 import Setting from '@/components/Setting';
+import RandomUserLoading from '@/components/RandomUserLoading';
 
 export default {
     components: {
         Setting,
+        RandomUserLoading
     },
     props: ['historySwitch', 'navSwitch'],
     data() {
@@ -59,6 +61,7 @@ export default {
                 // {"name":"留言板添加方法见上午8点炫技巧推文"},
             ],
             drawer: false,
+            randomUserLoadingShow: false,
         };
     },
     methods: {
@@ -71,6 +74,19 @@ export default {
         logout() {
             userService.UserLogout({noQs: false});
             location.reload();
+        },
+        getRandomUser() {
+            this.randomUserLoadingShow = true
+            // 判断登录状态,若登录则取出当前userID和userName
+            userService.UserRandom().then(res => {
+                this.retCode = res.code;
+                if (this.retCode > 0) {
+                    this.getRandomUser()
+                } else {
+                    window.open(`/${res.data.name}`, '_blank');
+                    this.randomUserLoadingShow = false
+                }
+            });
         },
     },
 };

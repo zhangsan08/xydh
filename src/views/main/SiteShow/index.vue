@@ -46,7 +46,7 @@
                 </transition>
             </el-drawer> -->
             <!-- 历史足迹 -->
-            <el-row>
+            <el-row v-if="showHistory">
                 <div class="historyLinks">
                     <div @click="switchHistory()" class="historyLinksArrow">
                         我的足迹<i class="el-icon-arrow-down" v-if="historySwitch"></i>
@@ -174,13 +174,13 @@
                                     <el-col :span="8">
                                         <div
                                             class="link"
-                                            :class="env"
+                                            :class="{ [env]: true, 'lineTextCenter': lineTextCenter }"
                                             v-on:mouseenter="linkMouseEnter(link.info, Folder.id)"
                                             v-on:mouseleave="linkMouseLeave"
                                         >
                                             <a @click="goToUrl(link)" target="_blank" rel="nofollow">
                                                 <div class="linkContent">
-                                                    <span class="icon">
+                                                    <span class="icon" v-if="showLineIcon">
                                                         <i :class="'fa fa-' + link.icon" v-if="link.icon"></i>
                                                         <i :class="'fa fa-bookmark-o'" v-else></i>
                                                     </span>
@@ -270,6 +270,7 @@ export default {
         MoreLinkModal,
         ImgLinkModal,
     },
+
     props: ['userName'],
     data() {
         return {
@@ -332,6 +333,17 @@ export default {
             foldersInfo: {},
             imgLinkInfo: {},
         };
+    },
+    computed: {
+        showHistory() {
+            return this.$store.state.userConfig.showHistory;
+        },
+        lineTextCenter() {
+            return this.$store.state.userConfig.lineTextCenter;
+        },
+        showLineIcon() {
+            return this.$store.state.userConfig.showLineIcon;
+        },
     },
     beforeMount() {
         this.screenWidth = document.body.clientWidth;

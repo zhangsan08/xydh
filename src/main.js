@@ -3,10 +3,12 @@ import App from './App.vue';
 import router from './router';
 import {Message} from 'element-ui';
 import APlayer from '@moefe/vue-aplayer';
+import store from './store';
 Vue.config.productionTip = false;
 Vue.prototype.$message = Message;
 
 new Vue({
+    store,
     router,
     render: h => h(App),
 }).$mount('#app');

@@ -74,6 +74,7 @@ module.exports = {
         Object.assign(config, {
             externals: {
                 vue: 'Vue',
+                vuex: 'Vuex',
                 'element-ui': 'ELEMENT',
                 lodash: '_',
             },

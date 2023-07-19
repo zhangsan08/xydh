@@ -1,48 +1,51 @@
 <template>
-    <el-drawer
-        title="我是标题"
-        :visible.sync="visible"
-        :with-header="false"
-        :direction="ltr"
-        :append-to-body="true"
-        :modal-append-to-body="false"
-        :size="450"
-    >
-        <el-container>
-            <el-header height="86px">
-                <div class="logo">
-                    <img src="~@/assets/logo.png" class="logo" alt="logo" />
-                </div>
-                <div class="titleContent">
-                    <div class="title">{{activeItem.title}}</div>
-                    <div class="info">{{activeItem.info}}</div>
-                </div>
-            </el-header>
+    <div>
+        <i class="el-icon-setting" @click="visible = true"></i>
+        <el-drawer
+            title="我是标题"
+            :visible.sync="visible"
+            :with-header="false"
+            :direction="ltr"
+            :append-to-body="true"
+            :modal-append-to-body="false"
+            :size="450"
+        >
             <el-container>
-                <el-aside width="140px">
-                    <ul class="d-tabs relative">
-                        <li
-                            class="d-tabs-item"
-                            :class="activeItem.key===item.key?'active':''"
-                            v-for="item in settingList"
-                            :key="item.key"
-                            @click="change(item)"
-                        >
-                            <div class="setting-aside-item">
-                                <i :class="item.icon"></i>
-                                <div class="item-title">{{item.title}}</div>
-                            </div>
-                        </li>
-                    </ul>
-                </el-aside>
-                <el-main>
-                    <Account v-if="activeItem.key==='account'"/>
-                    <About v-if="activeItem.key==='about'"/>
-                    <Layout v-if="activeItem.key==='layout'"/>
-                </el-main>
+                <el-header height="86px">
+                    <div class="logo">
+                        <img src="~@/assets/logo.png" class="logo" alt="logo" />
+                    </div>
+                    <div class="titleContent">
+                        <div class="title">{{activeItem.title}}</div>
+                        <div class="info">{{activeItem.info}}</div>
+                    </div>
+                </el-header>
+                <el-container>
+                    <el-aside width="140px">
+                        <ul class="d-tabs relative">
+                            <li
+                                class="d-tabs-item"
+                                :class="activeItem.key===item.key?'active':''"
+                                v-for="item in settingList"
+                                :key="item.key"
+                                @click="change(item)"
+                            >
+                                <div class="setting-aside-item">
+                                    <i :class="item.icon"></i>
+                                    <div class="item-title">{{item.title}}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </el-aside>
+                    <el-main>
+                        <Account v-if="activeItem.key==='account'"/>
+                        <About v-if="activeItem.key==='about'"/>
+                        <Layout v-if="activeItem.key==='layout'"/>
+                    </el-main>
+                </el-container>
             </el-container>
-        </el-container>
-    </el-drawer>
+        </el-drawer>
+    </div>
 </template>
 <script>
 import About from './about';
@@ -56,14 +59,15 @@ export default {
         Layout,
         Account
     },
-    props: {
-        visible: {
-            type: Boolean,
-            default: false,
-        },
-    },
+    // props: {
+    //     visible: {
+    //         type: Boolean,
+    //         default: false,
+    //     },
+    // },
     data() {
         return {
+            visible: false,
             activeItem: {
                 title: '账号',
                 info: '注册账号，配置云书签',

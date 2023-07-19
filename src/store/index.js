@@ -1,19 +1,26 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { cookieGet } from '@/common/cookie'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import {cookieGet} from '@/common/cookie';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    // 存储token
-    token: cookieGet('token') ? cookieGet('token') : '',
-    userInfo: cookieGet('userInfo') ? cookieGet('userInfo') : ''
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+    state: {
+        token: cookieGet('token') ? cookieGet('token') : '',
+        userInfo: cookieGet('userInfo') ? cookieGet('userInfo') : '',
+        userConfig: JSON.parse(window.localStorage.getItem('userConfig')) || {
+            themeType: 1,
+            showHistory: true,
+            lineTextCenter: false,
+            showLineIcon: true,
+        },
+    },
+    mutations: {
+        updateUserConfig(state, newData) {
+            state.userConfig = {...state.userConfig, ...newData};
+            window.localStorage.setItem('userConfig', JSON.stringify(state.userConfig));
+        },
+    },
+    actions: {},
+    modules: {},
+});
