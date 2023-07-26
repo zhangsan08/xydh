@@ -38,7 +38,8 @@ export default {
                     imgSrc: 'https://pic.rmb.bdstatic.com/6ab1dd211f866ff2d0a869d4ee7b2597.png',
                 },
                 {
-                    title: '月光宝盒',
+                    title: '设置',
+                    key: 'setting',
                     imgSrc: require(`@/assets/dockIcon/setting.txt`),
                 },
             ],
@@ -58,7 +59,7 @@ export default {
         position: fixed;
         bottom: 30px;
         text-align: center;
-        z-index: 9999;
+        z-index: 20;
         text-align: center;
         margin: 0 auto;
         display: flex;

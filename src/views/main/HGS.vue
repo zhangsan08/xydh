@@ -166,6 +166,7 @@ export default {
         border-radius: 20px;
         margin-top: -40px;
         border: 1px solid rgb(198, 217, 252);
+        box-shadow: 0 4px 8px 6px rgba(7,17,27,.06);
 
         img {
             width: 32px;

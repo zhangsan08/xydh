@@ -1,5 +1,5 @@
 <template>
-    <div style="height:100%;">
+    <div style="height:100%;overflow: auto;">
         <router-view></router-view>
         <!-- 回到顶端 -->
         <el-backtop></el-backtop>

@@ -7,16 +7,16 @@ Vue.use(Router);
 const router = new Router({
     mode: 'history', // 加入这一句即可
     routes: [
-        {
-            path: '/',
-            name: 'Home',
-            component: () => import('./views/main/SiteShow/index.vue'),
-        },
         // {
         //     path: '/',
         //     name: 'Home',
-        //     component: () => import('./views/main/siteInlet.vue'),
+        //     component: () => import('./views/main/SiteShow/index.vue'),
         // },
+        {
+            path: '/',
+            name: 'Home',
+            component: () => import('./views/main/siteInlet.vue'),
+        },
         {
             path: '/Theme1',
             name: 'Theme1',

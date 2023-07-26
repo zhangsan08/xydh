@@ -1,48 +1,66 @@
 <template>
-    <div >
-        <div class="siteInlet"></div>
-        <InitLoading />
-        <Theme1 v-if="themeType === 'Theme1'" :userInfo="userInfo" :userName="userName" />
-        <Theme2 v-if="themeType === 'Theme2'" />
-        <SiteShow v-if="themeType === 'SiteShow'" />
+    <div class="siteInletaaa">
+        <div v-if="isWeiXin" class="wx">
+            <img src="~@/assets/share.png" class="logo" alt="logo" />
+            更多内容，请点击右上角分享按钮，在默认浏览器打开
+        </div>
+        <div v-else>
+            <div class="hHidden">
+                <h1>炫猿,炫猿导航</h1>
+                <h2>炫猿,炫猿导航,网址导航,自定义网址导航,定制网址导航,炫猿邀请码,ilinks</h2>
+            </div>
+            <div class="siteInlet"></div>
+            <InitLoading />
+            <Theme1 v-if="themeType === 1" :userInfo="userInfo" :userName="userName" />
+            <Theme2 v-if="themeType === 2" />
+            <Theme3 v-if="themeType === 3" :userInfo="userInfo" />
+
+        </div>
     </div>
 </template>
 
 <script>
 import Theme1 from './Theme1';
 import Theme2 from './Theme2';
-import SiteShow from '@/components/SiteShow/index.vue';
+import Theme3 from './Theme3';
 import InitLoading from '@/components/InitLoading.vue';
 import {userService} from '@/common/api';
 import {helloInit} from '@/common/getTime';
 import {getAllLinkDataFunc} from '@/common/mainRequest';
+import {isWeiXin} from '@/common/env';
 
 export default {
     components: {
         Theme1,
-        SiteShow,
         InitLoading,
         Theme2,
+        Theme3,
     },
     data() {
         return {
-            themeType: '',
             userInfo: {},
             userName: '',
+            isWeiXin: isWeiXin(),
         };
     },
+    computed: {
+        themeType() {
+            return this.$store.state.userConfig.themeType;
+        },
+    },
     created() {
+        helloInit();
+    },
+
+    mounted() {
         this.userName = this.$route.params.username;
         if (!this.userName) this.userName = 'admin';
         this.getUserInfo(this.userName);
-        helloInit();
-    },
-    mounted() {
-        this.themeType = 'Theme2';
     },
     methods: {
         async getUserInfo(id) {
             this.userInfo = await getAllLinkDataFunc(id);
+            console.log(this.userInfo);
         },
     },
 };
@@ -62,9 +80,9 @@ export default {
         margin: 0;
         height: 100vh;
         min-height: 100vh;
-    position: fixed;
-    width: 100%;
-    height: 100%;
+        position: fixed;
+        width: 100%;
+        height: 100%;
     }
     .el-message {
         --el-message-bg-color: #00000040 !important;
@@ -73,10 +91,27 @@ export default {
         backdrop-filter: blur(10px) !important;
         border-radius: 25px !important;
         border-color: transparent !important;
-    justify-content: center;
-    min-width: 200px;
+        justify-content: center;
+        min-width: 200px;
         .el-message__badge {
             display: none;
         }
+    }
+    .hHidden {
+        height: 0;
+        overflow: hidden;
+    }
+    .wx {
+        height: 100vh;
+        width: 100%;
+        background: #000;
+        position: absolute;
+        top: 0;
+        z-index: 1000;
+        color: #000;
+        font-size: 16px;
+    }
+    .wx img {
+        width: 100%;
     }
 </style>

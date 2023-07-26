@@ -258,12 +258,12 @@ export default {
         goRegister() {
             const container = document.getElementById('container');
             container.classList.add('right-panel-active');
-            this.isLogin = true;
+            this.isLogin = false;
         },
         goLogin() {
             const container = document.getElementById('container');
             container.classList.remove('right-panel-active');
-            this.isLogin = false;
+            this.isLogin = true;
         },
         submitLogin(form) {
             userService
@@ -682,10 +682,6 @@ export default {
 
     .overlay-panel {
         position: absolute;
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
-        // flex-direction: column;
         padding: 30px;
         text-align: left;
         top: 0;

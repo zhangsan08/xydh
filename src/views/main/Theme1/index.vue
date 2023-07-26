@@ -1,12 +1,11 @@
 <template>
     <div class="bg">
-        <div v-show="activeDock==='home'">
-            <Time/>
-            <Search ref="search" :userInfo="userInfo" :showDefaultSearchBox="false"/>
-        </div>
-        <div v-show="activeDock==='site'">
-            <SiteShow :userInfo="userInfo" :userName="userName"/>
-        </div>
+        <Time v-show="activeDock==='home'" />
+        <Search ref="search" :userInfo="userInfo" :showDefaultSearchBox="false"/>
+        <keep-alive>
+            <SiteShow :userInfo="userInfo" :userName="userName" v-if="activeDock==='site'"/>
+        </keep-alive>
+        <Setting @setting-close="settingVisible = false" :visible="settingVisible"/>
         <Dock @dock-click="dockClick"/>
     </div>
 </template>
@@ -16,14 +15,15 @@ import Dock from '@/components/Dock.vue';
 import Time from '@/components/Time.vue';
 import SiteShow from '@/components/SiteShow/index.vue'
 import Search from '@/components/Search/index.vue';
+import Setting from '@/components/Setting';
 
 export default {
     components: {
         Dock,
         Time,
         SiteShow,
-        Search
-
+        Search,
+        Setting
     },
     props: {
         userInfo: {
@@ -37,18 +37,19 @@ export default {
     },
     data() {
         return {
-            activeDock: 'home'
+            activeDock: 'home',
+            settingVisible: false
         }
     },
     methods: {
         dockClick(key) {
             if (key === 'search') {
                 this.$refs.search.souClick();
+            } else if (key === 'setting') {
+                this.settingVisible = true
             } else {
                 this.activeDock = key
             }
-            console.log(key);
-
         }
     }
 }

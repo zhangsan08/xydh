@@ -79,7 +79,24 @@
                                     {{ item.title }}
                                 </div>
                             </li>
-                            <el-tooltip
+                            <el-popover
+                                placement="top"
+                                trigger="hover"
+                                v-else
+                            >
+                                <div class="tooltipContent">
+                                    <a
+                                        :href="`https://xydh.fun/${item.id}`"
+                                        target="_blank"
+                                    >前往站长主页 <i class="el-icon-top-right"></i></a>
+                                </div>
+                                <li @click="clickTab(item.id)" slot="reference">
+                                    <div :class="item.id === activeTabId ? 'active' : ''">
+                                        {{ item.title }}
+                                    </div>
+                                </li>
+                            </el-popover>
+                            <!-- <el-tooltip
                                 placement="bottom"
                                 effect="light"
                                 v-else
@@ -95,7 +112,7 @@
                                         {{ item.title }}
                                     </div>
                                 </li>
-                            </el-tooltip>
+                            </el-tooltip> -->
                         </div>
 
                     </ul>
@@ -175,7 +192,7 @@
                                         <div
                                             class="link"
                                             :class="{ [env]: true, 'lineTextCenter': lineTextCenter }"
-                                            v-on:mouseenter="linkMouseEnter(link.info, Folder.id)"
+                                            v-on:mouseenter="linkMouseEnter(link.info,link.name, Folder.id)"
                                             v-on:mouseleave="linkMouseLeave"
                                         >
                                             <a @click="goToUrl(link)" target="_blank" rel="nofollow">
@@ -392,11 +409,18 @@ export default {
         }
     },
     methods: {
-        linkMouseEnter(info, id) {
-            if (!info) return;
+        linkMouseEnter(info, name, id) {
+            if (!info && !name) {
+                return
+            }
             this.hoverFileId = id;
             this.showMessage = true;
-            this.infoTips = info;
+            if (info) {
+                this.infoTips = info;
+            }
+            else {
+                this.infoTips = name;
+            }
         },
         linkMouseLeave() {
             this.showMessage = false;
@@ -489,20 +513,28 @@ export default {
                     // 改背景颜色或图片
                     var obj = document.getElementsByTagName('body')[0];
                     var style = document.createElement('style');
+                    let bg_source = 'bing'
+                    if (bg_source === 'bing') {
 
-                    if (res.data.site_info.bg_switch) {
-                        if (window.innerWidth < 768 && this.mobile_bg) {
-                            let bg = this.mobile_bg;
-                            style.innerHTML = `body::before { background-image: url(${bg})}`;
-                        } else {
-                            let bg = res.data.site_info.bg;
-                            style.innerHTML = `body::before { background-image: url(${bg})}`;
-                        }
-                        this.isBorder = res.data.site_info.bg !== '';
+                        console.log(111);
+
+                        const bg = "https://api.dujin.org/bing/1920.php"
+                        style.innerHTML = `body::before { background-image: url(${bg})}`;
                         document.head.appendChild(style);
-                    } else {
-                        obj.style.backgroundColor = res.data.site_info.bg_color;
                     }
+                    // if (res.data.site_info.bg_switch) {
+                    //     if (window.innerWidth < 768 && this.mobile_bg) {
+                    //         let bg = this.mobile_bg;
+                    //         style.innerHTML = `body::before { background-image: url(${bg})}`;
+                    //     } else {
+                    //         let bg = res.data.site_info.bg;
+                    //         style.innerHTML = `body::before { background-image: url(${bg})}`;
+                    //     }
+                    //     this.isBorder = res.data.site_info.bg !== '';
+                    //     document.head.appendChild(style);
+                    // } else {
+                    //     obj.style.backgroundColor = res.data.site_info.bg_color;
+                    // }
                     obj.style.color = res.data.site_info.font_color;
                     // 取文件夹和书签
                     this.Folders = this.handlelinkSort(res.data.folder_with_links);

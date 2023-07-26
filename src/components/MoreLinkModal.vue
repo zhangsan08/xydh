@@ -73,14 +73,16 @@ export default {
             position: relative;
             padding: 10px 10px;
             text-align: left;
+            display: flex;
             .item {
                 display: flex;
                 align-items: center;
                 position: relative;
                 z-index: 2;
+                width: 100%;
                 .icon {
                     border: 1px solid #fff;
-                    border-radius: 25px;
+                    border-radius: 10px;
                     width: 40px;
                     height: 40px;
                     font-size: 20px;
@@ -94,7 +96,7 @@ export default {
                     width: 0;
                     .title {
                         color: #282c33;
-                        font-size: 17px;
+                        font-size: 15px;
                         font-weight: 500;
                     }
                     .tips {
@@ -109,33 +111,19 @@ export default {
                 }
             }
 
-            transition: transform 0.3s ease-out;
+            visibility: visible;
+            opacity: 1;
+            transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            transition: all 0.3s ease 0s, opacity 0.8s cubic-bezier(0.5, 0, 0, 1) 0.2s,
+                transform 0.8s cubic-bezier(0.5, 0, 0, 1) 0.2s;
             &:hover {
-                transition: transform 0.3s ease-out;
                 border: 1px solid #1890ff;
-                box-shadow: 0 5px 10px #1890ffb3;
+                background-color: #1890ff;
+                box-shadow: 0 12px 32px #1890ffb3;
                 .title,
                 .tips {
                     color: #fff !important;
                 }
-            }
-            &:before {
-                position: absolute;
-                z-index: 1;
-                border-radius: 8px;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                background: #1890ff !important;
-                content: '';
-                transition-timing-function: ease-out;
-                transition-duration: 0.3s;
-                transition-property: transform;
-                transform: scale(0);
-            }
-            &:hover:before {
-                transform: scale(1);
             }
         }
     }

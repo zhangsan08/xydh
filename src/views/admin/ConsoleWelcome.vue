@@ -21,8 +21,6 @@
                                 <span> VIP到期时间:</span> [{{ userAllInfo.vip_time }}]</span>
 
                         </div>
-
-                        <p><el-link type="primary" @click="logout" >退出登录</el-link></p>
                     </div>
                 </el-card>
             </el-col>
@@ -291,15 +289,6 @@ export default {
                 return;
             }
             this.$emit("chooseIcon", this.linkform);
-        },
-        logout() {
-            userService.UserLogout({noQs: false});
-            this.$alert("", "注销成功", {
-                type: "success",
-                callback: () => {
-                    this.$router.push({name: "Home"});
-                },
-            });
         },
     }
 }

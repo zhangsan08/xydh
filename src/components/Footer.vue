@@ -1,9 +1,6 @@
 <template>
     <div class="footer">
-        <!--                <a target='_blank' rel='nofollow' href='https://yftk.fun/category/xydh/'>意见反馈</a>&#160;-->
-        <!--                <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/blog/11015'>免责声明</a>&#160;-->
         友情链接
-
         <a
             target="_blank"
             rel="follow"
@@ -11,8 +8,6 @@
             v-for="friendlyLink in friendlyLinks"
             :key="friendlyLink.name"
         ><span class="line">|</span> <span class="name">{{ friendlyLink.name }}</span></a>
-        <!-- <li>2020 炫猿导航</li> -->
-        <!--                <li><a style="color: grey;" target='_blank' rel='nofollow' href='http://www.beian.miit.gov.cn/'>京ICP备19043213号</a></li>-->
     </div>
 </template>
 <script>

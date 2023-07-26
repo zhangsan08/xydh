@@ -4,9 +4,33 @@
         <el-dialog :visible.sync="dialogIconVisible" title="选择图标" append-to-body width="70%">
             <ICON @callback="chooseCallback"></ICON>
         </el-dialog>
-
-        <el-tabs type="border-card" :stretch="true">
-            <el-tab-pane label="欢迎">
+        <div class="header">
+            <div class="logo">ILINKS</div>
+            <div class="Notice">
+                公告：
+                <el-carousel class="carousel" height="50px" direction="vertical" indicator-position="none">
+                    <el-carousel-item> 炫猿正式更名ILINKS啦~ </el-carousel-item>
+                </el-carousel>
+            </div>
+            <div class="rigthArea">
+                <div class="vip" v-if="isVIP">
+                    <img src="@/assets/isVip.svg" alt="" />
+                    {{ userAllInfo.vip_time }}到期
+                </div>
+                <div class="vip" v-else>
+                    <el-popover placement="bottom" width="100" trigger="hover">
+                        <div class="tips">
+                            <p>您还不是Vip</p>
+                            <el-link type="primary" @click="activeName='vip'">查看vip权益</el-link>
+                        </div>
+                        <img src="@/assets/noVip.svg" alt="" slot="reference" />
+                    </el-popover>
+                </div>
+                <el-link type="primary" @click="logout">退出登录</el-link>
+            </div>
+        </div>
+        <el-tabs type="border-card" :stretch="true" class="content" v-model="activeName">
+            <el-tab-pane label="欢迎" name="welcome">
                 <Welcome
                     :username="username"
                     :userID="userID"
@@ -16,8 +40,7 @@
                     @chooseIcon="iconHandle"
                 ></Welcome>
             </el-tab-pane>
-
-            <el-tab-pane label="导航配置" lazy @tab-click="getSite">
+            <el-tab-pane label="导航配置" lazy @tab-click="getSite" name="siteSet">
                 <SiteSet :userID="userID" :isVIP="isVIP"></SiteSet>
             </el-tab-pane>
 
@@ -28,7 +51,9 @@
             <el-tab-pane label="书签管理" :lazy="false">
                 <LinkSet :userID="userID" :Folders="Folders" @chooseIcon="iconHandle"></LinkSet>
             </el-tab-pane>
-
+            <el-tab-pane label="增值服务" name="vip">
+                <Vip/>
+            </el-tab-pane>
             <el-tab-pane label="进阶功能" lazy>
                 <Lab></Lab>
             </el-tab-pane>
@@ -37,8 +62,6 @@
                 <Other></Other>
             </el-tab-pane>
         </el-tabs>
-
-        <el-divider></el-divider>
     </div>
 </template>
 
@@ -50,6 +73,7 @@ import SiteSet from './SiteSet';
 import FolderSet from './FolderSet';
 import LinkSet from './LinkSet';
 import Lab from './ConsoleLab';
+import Vip from './Vip';
 import Other from './Other';
 import ICON from '@/components/icon.vue';
 import iconModule from '@/plugins/icon';
@@ -63,6 +87,7 @@ export default {
         Lab,
         Other,
         ICON,
+        Vip
     },
     mixins: [iconModule],
     data() {
@@ -75,6 +100,7 @@ export default {
             Folders: [],
             FoldersWithTemp: [],
             tempLinks: [],
+            activeName: 'welcome'
         };
     },
     created() {
@@ -186,16 +212,93 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less">
+    body {
+        background-image: url('https://pic.rmb.bdstatic.com/9dd4b7f26325e8568da05d99f97280dc.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+    }
+
     .me {
-        /* min-width: 800px; */
+        min-width: 800px;
         max-width: 1680px;
         margin: 0 auto;
         text-align: center;
         font-size: 17px;
-    }
+        padding: 20px;
+        padding-top: 0;
+        .header {
+            height: 60px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .logo {
+                font-size: 27px;
+                font-weight: bold;
+                color: #fff;
+            }
+            .Notice {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                .carousel {
+                    width: 300px;
 
+                    .el-carousel__container {
+                        width: 100%;
+
+                        .el-carousel__item {
+                            display: flex;
+                            align-items: center;
+                            text-align: left;
+                            color: red;
+                        }
+                    }
+                }
+            }
+            .rigthArea {
+                height: 100%;
+                display: flex;
+                img {
+                    height: 25px;
+                    margin-right: 10px;
+                }
+                .vip {
+                    font-size: 14px;
+                    display: flex;
+                    align-items: center;
+                    margin-right: 20px;
+                }
+            }
+        }
+    }
+    .tips {
+        text-align: center;
+        p {
+            margin-bottom: 5px;
+        }
+    }
     .el-button i {
         transform: translateX(-6px);
+    }
+    .el-tabs {
+        border-radius: 6px;
+        .el-tabs__header {
+            border-radius: 6px 6px 0 0;
+        }
+    }
+    .el-tabs__nav.is-stretch {
+        padding: 0 5px;
+    }
+    .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
+        border-radius: 10px 10px 0 0;
+        margin-top: 8px;
+        border-top-color: #dcdfe6;
+    }
+    .el-tabs--border-card > .el-tabs__header .el-tabs__item {
+        margin-top: 8px;
     }
 </style>

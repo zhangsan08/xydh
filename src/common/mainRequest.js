@@ -31,7 +31,7 @@ export function getActiveLabelDataFunc(id, newRandom) {
     // 记录当前的随机数，用于判断是否需要更新数据
     const random = newRandom;
     // 调用API获取数据
-    siteService.getAllsiteandlinks(id).then(res => {
+    return siteService.getAllsiteandlinks(id).then(res => {
         // 如果随机数已经变化，则表示已经更新了tab，需要丢弃当前的数据
         if (newRandom !== random) return;
         // 对数据进行相关处理
@@ -43,6 +43,8 @@ export function getActiveLabelDataFunc(id, newRandom) {
             // 如果不一致，则进行更新，并将数据存入localStorage中
             window.localStorage.setItem(cacheKey, JSON.stringify(linksData));
             return [...linksData];
+        } else {
+            return JSON.parse(cachedData);
         }
     });
 }
@@ -125,8 +127,10 @@ export function getAllLinkDataFunc(id) {
                 return;
             }
             // 加载 Site
-            userInfo.sitename = siteInfo.name;
-            userInfo.siteinfo = siteInfo.info;
+            userInfo.titleInfo = {
+                name: siteInfo.name,
+                info: siteInfo.info,
+            };
             userInfo.bglizi = siteInfo.bglizi;
             userInfo.lybID = siteInfo.lyb_id;
             userInfo.mobile_bg = siteInfo.mobile_bg;

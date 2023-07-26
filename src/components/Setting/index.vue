@@ -1,6 +1,5 @@
 <template>
     <div>
-        <i class="el-icon-setting" @click="visible = true"></i>
         <el-drawer
             title="我是标题"
             :visible.sync="visible"
@@ -9,6 +8,7 @@
             :append-to-body="true"
             :modal-append-to-body="false"
             :size="450"
+            @close="close"
         >
             <el-container>
                 <el-header height="86px">
@@ -59,15 +59,14 @@ export default {
         Layout,
         Account
     },
-    // props: {
-    //     visible: {
-    //         type: Boolean,
-    //         default: false,
-    //     },
-    // },
+    props: {
+        visible: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
-            visible: false,
             activeItem: {
                 title: '账号',
                 info: '注册账号，配置云书签',
@@ -101,8 +100,9 @@ export default {
     methods: {
         change(item) {
             this.activeItem = item
-            console.log(item);
-
+        },
+        close() {
+            this.$emit('setting-close');
         }
     },
 };

@@ -9,7 +9,7 @@ export default new Vuex.Store({
         token: cookieGet('token') ? cookieGet('token') : '',
         userInfo: cookieGet('userInfo') ? cookieGet('userInfo') : '',
         userConfig: JSON.parse(window.localStorage.getItem('userConfig')) || {
-            themeType: 1,
+            themeType: 3,
             showHistory: true,
             lineTextCenter: false,
             showLineIcon: true,

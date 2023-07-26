@@ -1,12 +1,12 @@
 <template>
     <div class="layout">
         <div class="card selectLayout">
-            <div class="layoutItem" @click="handelTheme(1)">
-                <img src="~@/assets/jingdian.png"  alt="经典主题" :class="{ 'isChecked': themeType===1 }"/>
+            <div class="layoutItem" @click="handelTheme(3)">
+                <img src="~@/assets/jingdian.png"  alt="经典主题" :class="{ 'isChecked': themeType===3 }"/>
                 <span>经典主题</span>
             </div>
-            <div class="layoutItem" @click="handelTheme(2)">
-                <img src="~@/assets/jijian.png"  alt="极简主题" :class="{ 'isChecked': themeType===2 }"/>
+            <div class="layoutItem" @click="handelTheme(1)">
+                <img src="~@/assets/jijian.png"  alt="极简主题" :class="{ 'isChecked': themeType===1 }"/>
                 <span>极简主题</span>
             </div>
         </div>
