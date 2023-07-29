@@ -30,6 +30,8 @@ export default {
 .siteTitle {
     height: 76px;
     min-height: 76px;
+    position: relative;
+    z-index: 1;
 }
 .siteName {
     font-size: 36px;

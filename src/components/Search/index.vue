@@ -30,7 +30,7 @@
                     </div>
                     <input type="submit" id="search-submit" style="display: none" />
                 </form>
-                <div id="keywords" v-if="keywordsShow">
+                <div id="keywords" v-show="keywordsShow">
                     <p class="title">
                         站内搜索结果：
                         <span v-if="searchResultLinks.length === 0"> 没有符合的结果 </span>
@@ -203,26 +203,18 @@ export default {
             },
             searchResultLinks: [],
             searchTxt: '',
-            allLinks: [],
             keywordsShow: false,
             isfocus: false,
             searchAreaShow: this.showDefaultSearchBox,
         };
     },
     watch: {
-        userInfo: {
-            handler(newVal) {
-                // 当 userInfo 变化时，将新的 userInfo 中的 Folders 赋值给组件的 Folders 属性
-                this.allLinks = newVal.AllLinks;
-            },
-            deep: true, // 深度监听 userInfo 对象的变化
-        },
         searchTxt(newVal) {
             // 在searchTxt变化时更新allLinks的值
             if (newVal === '') {
                 this.keywordsShow = false;
             } else {
-                this.searchResultLinks = this.findObjectsWithSubstring(this.allLinks, newVal);
+                this.searchResultLinks = this.findObjectsWithSubstring(this.$props.userInfo.AllLinks, newVal);
                 this.keywordsShow = true;
             }
         },

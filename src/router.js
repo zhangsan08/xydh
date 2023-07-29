@@ -18,11 +18,6 @@ const router = new Router({
             component: () => import('./views/main/siteInlet.vue'),
         },
         {
-            path: '/Theme1',
-            name: 'Theme1',
-            component: () => import('./views/main/Theme1/index.vue'),
-        },
-        {
             path: '/Me',
             name: 'Me',
             component: () => import('./views/admin/Me.vue'),
@@ -91,7 +86,7 @@ const router = new Router({
         {
             path: '/:username',
             name: 'ShowSite',
-            component: () => import('./views/main/SiteShow/index.vue'),
+            component: () => import('./views/main/siteInlet.vue'),
         },
     ],
 });

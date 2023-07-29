@@ -80,6 +80,11 @@
                         </el-row>
                     </div>
                 </el-row>
+                <!-- <div class="commonUse">
+                    <div v-for="item in 30" :key="item" class="item">
+                        item
+                    </div>
+                </div> -->
                 <div class="folderContent" :class="env">
                     <div v-for="(Folder, index) in Folders" :key="Folder.id" class="folderArea">
                         <div class="infoTips" v-if="showMessage && hoverFileId === Folder.id">

@@ -146,13 +146,18 @@ export function getAllLinkDataFunc(id) {
             if (siteInfo.bg_switch) {
                 userInfo.isBorder = siteInfo.bg !== '';
             }
+            userInfo.music = {
+                open: false,
+            };
             // 载入音乐和自定义底部
             if (siteInfo.music !== '') {
                 userInfo.music = JSON.parse(siteInfo.music);
+                if (!target.is_vip) {
+                    userInfo.music.list?.splice(1);
+                }
+                userInfo.music.open = true;
             }
-            if (!target.is_vip) {
-                userInfo.music.list.splice(1);
-            }
+
             if (siteInfo.top_bottom !== '') {
                 userInfo.top_bottom = JSON.parse(siteInfo.top_bottom);
             }

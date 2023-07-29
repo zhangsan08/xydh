@@ -1,7 +1,9 @@
 <template>
-    <div class="bg">
+    <div class="theme1">
         <Time v-show="activeDock==='home'" />
-        <Search ref="search" :userInfo="userInfo" :showDefaultSearchBox="false"/>
+        <div class="search-area" v-show="activeDock==='home'" >
+            <Search ref="search" :userInfo="userInfo" :showDefaultSearchBox="true"/>
+        </div>
         <keep-alive>
             <SiteShow :userInfo="userInfo" :userName="userName" v-if="activeDock==='site'"/>
         </keep-alive>

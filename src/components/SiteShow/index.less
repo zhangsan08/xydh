@@ -11,7 +11,9 @@ body {
     margin: 0;
     height: 100vh;
     min-height: 100vh;
-    h1,h2,h3{
+    h1,
+    h2,
+    h3 {
         margin: 0;
     }
 
@@ -30,10 +32,16 @@ body {
         background-size: cover;
     }
 }
+.backdropFilter {
+    backdrop-filter: blur(3px);
+}
+.backdropFilterHover {
+    backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
+}
 .navLoading {
     margin-top: 20px;
 }
-.tooltipContent{
+.tooltipContent {
     color: #3091dc;
     display: flex;
     justify-content: space-around;
@@ -46,7 +54,7 @@ body {
     margin-bottom: 12px;
     border-radius: 4px;
     overflow-x: scroll;
-   
+
     ul {
         align-items: center;
         display: inline-flex;
@@ -96,7 +104,7 @@ body {
     border-radius: 20px;
     overflow: auto;
     box-sizing: border-box;
-    backdrop-filter: blur(3px);
+    .backdropFilter;
     transform: translateZ(0);
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     border-right: 1px solid rgba(255, 255, 255, 0.4);
@@ -107,7 +115,7 @@ body {
     &:hover {
         color: white;
         box-sizing: border-box;
-        backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
+        .backdropFilterHover;
     }
 }
 
@@ -116,7 +124,7 @@ body {
     border-radius: 20px;
     overflow: auto;
     box-sizing: border-box;
-    backdrop-filter: blur(3px);
+    .backdropFilter;
     border: 1px solid rgba(255, 255, 255, 0.4);
     padding: 13px 0;
     font-size: 13px;
@@ -124,10 +132,10 @@ body {
     &:hover {
         color: white;
         box-sizing: border-box;
-        backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
+        .backdropFilterHover;
     }
 }
-.emptyFolder{
+.emptyFolder {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -160,7 +168,7 @@ body {
     max-height: 33px;
     cursor: pointer;
     text-align: left;
-    &.lineTextCenter{
+    &.lineTextCenter {
         text-align: center;
     }
     &.pc {
@@ -209,7 +217,7 @@ body {
 }
 
 .link:hover {
-    color: #87CEFA; 
+    color: #87cefa;
     /* cursor: pointer; */
 }
 
@@ -259,7 +267,7 @@ a {
 }
 
 .openFolder:hover {
-    color: #87CEFA;
+    color: #87cefa;
 }
 
 .quickNav {
@@ -365,3 +373,34 @@ a {
 .historyLink p:hover {
     border: 1px dashed rgba(0, 125, 184, 0.4);
 }
+// .commonUse {
+//     position: relative;
+//     width: 90%;
+//     margin: 0 auto;
+//     height: 124px;
+//     overflow: auto;
+//     display: grid;
+//     grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+//     align-items: center;
+//     justify-items: center;
+//     border-radius: 20px;
+//     overflow: auto;
+//     box-sizing: border-box;
+//     .backdropFilter;
+//     border: 1px solid rgba(255, 255, 255, 0.4);
+//     padding: 8px;
+//     font-size: 13px;
+//     transition: all 0.3s;
+//     &:hover {
+//         color: white;
+//         box-sizing: border-box;
+//         .backdropFilterHover;
+//     }
+//     .item {
+//         min-height: 38px;
+//         max-height: 38px;
+//         line-height: 38px;
+//         cursor: pointer;
+//         text-align: left;
+//     }
+// }

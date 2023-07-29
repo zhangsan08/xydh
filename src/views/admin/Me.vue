@@ -5,7 +5,9 @@
             <ICON @callback="chooseCallback"></ICON>
         </el-dialog>
         <div class="header">
-            <div class="logo">ILINKS</div>
+            <div class="logo">
+                <img src="@/assets/logo.png" alt="" />
+                ILINKS</div>
             <div class="Notice">
                 公告：
                 <el-carousel class="carousel" height="50px" direction="vertical" indicator-position="none">
@@ -236,9 +238,16 @@ export default {
             align-items: center;
             justify-content: space-between;
             .logo {
+                height: 100%;
                 font-size: 27px;
                 font-weight: bold;
-                color: #fff;
+                color: #88C666;
+                display: flex;
+                align-items: center;
+                img{
+                    height: 80%;
+                    margin-right: 10px;
+                }
             }
             .Notice {
                 display: flex;

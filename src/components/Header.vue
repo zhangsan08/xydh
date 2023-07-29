@@ -1,18 +1,21 @@
 <template>
-    <div class="header">
-        <div  v-if="1">
-            <div class="weather" id="he-plugin-simple"></div>
-            <div style="text-align: right" class="headerbtns">
-                <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
-                <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
-                <a class="headerbtn" @click="getRandomUser">月光宝盒 <i class="fa fa-random"></i></a>
-                <a class="headerbtn" @click="visible = true" >打开后台 <i class="fa fa-cog"></i></a>
-                <Setting @setting-close="visible = false" :visible="visible"/>
+    <div class="headerArea" >
+        <div class="header">
+            <div v-if="1">
+                <div class="weather" id="he-plugin-simple"></div>
+                <div style="text-align: right" class="headerbtns">
+                    <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
+                    <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
+                    <a class="headerbtn" @click="getRandomUser">月光宝盒 <i class="fa fa-random"></i></a>
+                    <a class="headerbtn" @click="visible = true">打开后台 <i class="fa fa-cog"></i></a>
+                    <Setting @setting-close="visible = false" :visible="visible" />
+                </div>
+            </div>
+            <div v-else>
+                <Setting />
             </div>
         </div>
-        <div v-else>
-            <Setting />
-        </div>
+
         <RandomUserLoading v-if="randomUserLoadingShow" />
     </div>
 </template>
@@ -31,7 +34,7 @@ export default {
         return {
             drawer: false,
             randomUserLoadingShow: false,
-            visible: false
+            visible: false,
         };
     },
     methods: {
@@ -59,6 +62,9 @@ export default {
 <style scoped lang="less">
     .header {
         padding: 10px 10px;
+        height: 70px;
+        z-index: 1;
+        position: relative;
     }
 
     .headerbtn {

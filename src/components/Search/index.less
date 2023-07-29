@@ -12,9 +12,15 @@
         height: calc(100% - 0px);
         transition: 0.25s;
     }
+    .sou {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
     .all-search {
         background-color: #efefef !important;
-        transform: translateY(-140%);
+        // transform: translateY(-140%);
         transition: ease 0.3s !important;
     }
     /*搜索引擎按钮*/
@@ -46,7 +52,7 @@
         }
     }
 }
-.isfocus{
+.isfocus {
     position: fixed;
     top: 0;
     left: 0;
@@ -57,22 +63,6 @@
     z-index: 9999;
 }
 .searchArea {
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-    // position: absolute;s
-    // width: 100%;
-    // top: 300px;
-
-    // position: fixed;
-    // top: 0;
-    // left: 0;
-    // margin: auto;
-    // width: 100%;
-    // height: 100%;
-    // backdrop-filter: blur(10px);
-    // z-index: 9999;
-
     /*关闭块*/
     .close_sou {
         width: 100%;
@@ -81,17 +71,18 @@
     }
     .sou {
         // position: relative;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-50%, -50%);
+        // position: absolute;
         max-width: 680px;
         width: calc(100% - 60px);
-        animation: fade;
-        -webkit-animation: fade 0.5s;
-        -moz-animation: fade 0.5s;
-        -o-animation: fade 0.5s;
-        -ms-animation: fade 0.5s;
+        // animation: fade;
+        // -webkit-animation: fade 0.5s;
+        // -moz-animation: fade 0.5s;
+        // -o-animation: fade 0.5s;
+        // -ms-animation: fade 0.5s;
+        margin: 0 auto;
         /* transform: translateY(-150%); */
     }
     /*搜索框*/
@@ -128,7 +119,7 @@
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         overflow: hidden;
-        transition: 0.5s ease;
+        // transition: 0.5s ease;
     }
     .all-search:hover {
         box-shadow: 0 0 20px #00000033;
@@ -197,7 +188,7 @@
     /*切换搜索引擎*/
     .search-engine {
         position: absolute;
-        top: 0;
+        top: 50px;
         box-sizing: border-box;
         padding: 10px;
         color: #efefef;
@@ -271,7 +262,7 @@
     #keywords {
         position: absolute;
         width: 100%;
-        top: 0;
+        top: 50px;
         font-size: small;
         color: #efefef;
         background-color: #00000040;
@@ -288,6 +279,7 @@
         -ms-animation: down 0.5s;
         text-align: left;
         max-height: 300px;
+        min-height: 50px;
         overflow-y: scroll;
         .title {
             padding: 0 12px;

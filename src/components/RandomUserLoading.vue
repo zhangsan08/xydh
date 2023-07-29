@@ -31,8 +31,11 @@ export default {};
 <style scoped lang="less">
     .random {
         position: fixed;
-        height: 90%;
+        height: 100%;
         width: 100%;
+        top: 0;
+        z-index: 100;
+        background-color: rgba(0, 0, 0, 0.7);
         .randomContent {
             position: absolute;
             top: 50%;

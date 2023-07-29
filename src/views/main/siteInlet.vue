@@ -9,12 +9,16 @@
                 <h1>炫猿,炫猿导航</h1>
                 <h2>炫猿,炫猿导航,网址导航,自定义网址导航,定制网址导航,炫猿邀请码,ilinks</h2>
             </div>
+            <div class="particle" v-if="userInfo.bglizi > 0">
+                <Particle :bglizi="userInfo.bglizi"></Particle>
+            </div>
             <div class="siteInlet"></div>
             <InitLoading />
-            <Theme1 v-if="themeType === 1" :userInfo="userInfo" :userName="userName" />
-            <Theme2 v-if="themeType === 2" />
-            <Theme3 v-if="themeType === 3" :userInfo="userInfo" />
-
+            <div class="mainArea">
+                <Theme1 v-if="themeType === 1" :userInfo="userInfo" :userName="userName" />
+                <Theme2 v-if="themeType === 2" />
+                <Theme3 v-if="themeType === 3" :userInfo="userInfo" />
+            </div>
         </div>
     </div>
 </template>
@@ -28,6 +32,7 @@ import {userService} from '@/common/api';
 import {helloInit} from '@/common/getTime';
 import {getAllLinkDataFunc} from '@/common/mainRequest';
 import {isWeiXin} from '@/common/env';
+import Particle from '@/components/particle.vue';
 
 export default {
     components: {
@@ -35,6 +40,7 @@ export default {
         InitLoading,
         Theme2,
         Theme3,
+        Particle,
     },
     data() {
         return {
@@ -60,7 +66,6 @@ export default {
     methods: {
         async getUserInfo(id) {
             this.userInfo = await getAllLinkDataFunc(id);
-            console.log(this.userInfo);
         },
     },
 };
@@ -83,6 +88,13 @@ export default {
         position: fixed;
         width: 100%;
         height: 100%;
+    }
+    .particle {
+        z-index: -999;
+    }
+    .mainArea {
+        position: relative;
+        z-index: 1;
     }
     .el-message {
         --el-message-bg-color: #00000040 !important;
