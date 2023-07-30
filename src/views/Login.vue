@@ -26,7 +26,6 @@
                         <div class="form">
                             <div class="inputBox">
                                 <input type="text" required v-model="registerForm.name" maxlength="15" />
-                                <span>用户名(如名为a则链接为https://xydh.fun/a)</span>
                             </div>
                             <div class="inputBox">
                                 <input type="password" required v-model="registerForm.password" /> <span>密码</span>
@@ -57,7 +56,6 @@
                             <div class="form">
                                 <div class="inputBox">
                                     <input type="text" required v-model="registerForm.name" maxlength="15" />
-                                    <span>用户名(如名为a则链接为https://xydh.fun/a)</span>
                                 </div>
                                 <div class="inputBox">
                                     <input type="text" required v-model="registerForm.password" /> <span>密码</span>
@@ -126,12 +124,12 @@
 
                         </div>
                         <div class="overlay-panel overlay-left">
-                            <h3><i class="fa fa-modx"></i>服务稳定</h3>
-                            <p>为数十万用户稳定服务三年，随时备份</p>
+                            <h3><i class="fa fa-modx"></i>长期保障</h3>
+                            <p>已稳定服务三年，可导出到本地冷备</p>
                             <h3><i class="fa fa-cloud"></i>书签上云</h3>
-                            <p>随时随地，不限设备，云端同步</p>
+                            <p>随时随地，不限设备，即刻访问</p>
                             <h3><i class="fa fa-edit"></i>高度自定义</h3>
-                            <p>自定义域名、背景、音乐，成为你的专属导航网站</p>
+                            <p>自定义域名、背景、音乐、用户数据订阅</p>
                             <div class="registerAbout">
                                 <p>
                                     注册小贴士：用户名将决定您的专属链接，如用户名为：XiaoMing<br />

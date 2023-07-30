@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="hHidden">
-            <h1>炫猿,炫猿导航</h1>
-            <h2>炫猿,炫猿导航,网址导航,自定义网址导航,定制网址导航,炫猿邀请码,ilinks</h2>
+            <h1>炫猿,炫猿导航,iLinks</h1>
+            <h2>炫猿,炫猿导航,网址导航,自定义网址导航,定制网址导航,炫猿邀请码,iLinks</h2>
         </div>
 
         <InitLoading/>
