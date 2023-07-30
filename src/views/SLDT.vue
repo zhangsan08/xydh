@@ -208,6 +208,9 @@ export default {
         color: #fff;
         font-weight: bold;
         padding-top: 55px;
+        h1{
+            margin: 0;
+        }
         .dynamic-text-shadow {
             font-size: 40px;
             text-shadow: 0.1em 0.1em 0 hsl(200 50% 30%);

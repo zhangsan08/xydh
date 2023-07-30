@@ -36,7 +36,7 @@
                                 <span>确认密码</span>
                             </div>
                             <div class="inputBox">
-                                <input type="password" required v-model="registerForm.yuankey" />
+                                <input type="text" required v-model="registerForm.yuankey" />
                                 <span>邀请码</span>
                             </div>
                             <div class="links">
@@ -60,14 +60,14 @@
                                     <span>用户名(如名为a则链接为https://xydh.fun/a)</span>
                                 </div>
                                 <div class="inputBox">
-                                    <input type="password" required v-model="registerForm.password" /> <span>密码</span>
+                                    <input type="text" required v-model="registerForm.password" /> <span>密码</span>
                                 </div>
                                 <div class="inputBox">
                                     <input type="text" required v-model="registerForm.password_confirm" />
                                     <span>确认密码</span>
                                 </div>
                                 <div class="inputBox">
-                                    <input type="password" required v-model="registerForm.yuankey" />
+                                    <input type="text" required v-model="registerForm.yuankey" />
                                     <span>邀请码</span>
                                 </div>
                                 <div class="links">
@@ -126,8 +126,8 @@
 
                         </div>
                         <div class="overlay-panel overlay-left">
-                            <h3><i class="fa fa-modx"></i>长期稳定</h3>
-                            <p>iLinks已稳定为用户提供服务三年，且提供导入导出的冷备份方案</p>
+                            <h3><i class="fa fa-modx"></i>服务稳定</h3>
+                            <p>为数十万用户稳定服务三年，随时备份</p>
                             <h3><i class="fa fa-cloud"></i>书签上云</h3>
                             <p>随时随地，不限设备，云端同步</p>
                             <h3><i class="fa fa-edit"></i>高度自定义</h3>
@@ -503,7 +503,6 @@ export default {
     section .signin .content h2 {
         font-size: 2em;
         color: #0f0;
-        text-transform: uppercase;
     }
     section .signin .content .form {
         width: 100%;
@@ -526,7 +525,13 @@ export default {
         color: #fff;
         font-weight: 500;
         font-size: 1em;
+        &:-internal-autofill-previewed,
+        &:-internal-autofill-selected {
+            -webkit-text-fill-color: #808080;
+            transition: background-color 1000s ease-out 0.5s;
+        }
     }
+
     section .signin .content .form .inputBox span {
         position: absolute;
         left: 0;

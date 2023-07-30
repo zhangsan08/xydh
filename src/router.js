@@ -16,6 +16,7 @@ const router = new Router({
             path: '/Me',
             name: 'Me',
             component: () => import('./views/Me.vue'),
+            meta: {requiresAuth: true}, // 添加一个 meta 字段用于标记需要登录的路由
         },
         {
             path: '/Hot',
