@@ -1,11 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import Home from './views/Home.vue'
-// import ShowSite from './views/SiteShow.vue'
+import {userService} from '@/common/api';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     mode: 'history', // 加入这一句即可
     routes: [
         {
@@ -31,7 +30,7 @@ export default new Router({
         {
             path: '/u/login',
             name: 'ULogin',
-            component: () => import('./views/UserLogin.vue'),
+            component: () => import('./views/Login.vue'),
         },
         {
             path: '/u/export',
@@ -90,3 +89,26 @@ export default new Router({
         },
     ],
 });
+const getLogged = () => {
+    return userService.UserMe().then(res => {
+        if (res.code > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+};
+router.beforeEach(async (to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        let isLogged = await getLogged();
+        // 判断是否已登录的逻辑
+        if (!isLogged) {
+            next('/u/login'); // 未登录则跳转到登录页
+        } else {
+            next(); // 已登录则继续加载目标路由
+        }
+    } else {
+        next(); // 不需要登录的路由直接加载
+    }
+});
+export default router;

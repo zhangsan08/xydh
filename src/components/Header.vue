@@ -28,12 +28,6 @@
                             target="_blank"
                         >打开后台</a></el-dropdown-item>
                     <el-dropdown-item>
-                        <i class="fa fa-edit"></i><a
-                            class="headerbtn"
-                            href="https://xydh.fun/u/register"
-                            target="_blank"
-                        >注册专属导航</a></el-dropdown-item>
-                    <el-dropdown-item>
                         <i class="fa fa-reply-all"></i>
                         <span
                             class="headerbtn"
