@@ -9,7 +9,7 @@
                 <div class="inner three"></div>
             </div>
             <div class="loading-word">
-                <span id="loading-text">W e l c o m e ~</span>
+                <div>海内存知己，天涯若比邻</div>
             </div>
         </div>
     </div>

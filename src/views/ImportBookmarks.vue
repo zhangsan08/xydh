@@ -7,30 +7,25 @@
             <input type="file" ref="fileInput" accept=".html,text/html" @change="onFileChange" />
         </div>
         <div v-if="Folders.length > 0">
-            <el-row type="flex" :gutter="20" justify="center" class="selectFolder">
-                <el-col :span="4">
-                    <el-select v-model="folder_id" placeholder="选择导入文件夹">
-                        <el-option
-                            v-for="Folder in MyFolders"
-                            :key="Folder.id"
-                            :label="Folder.name"
-                            :value="Folder.id"
-                        ></el-option>
-                    </el-select>
-                </el-col>
-                <el-col :span="2">
-                    <el-button @click="createweb()" type="primary">确定</el-button>
-                </el-col>
-                <el-col :span="6">
-                    没有找到文件夹？
-                    <el-button type="text" @click="visible = true">新建文件夹 </el-button>
-                </el-col>
-            </el-row>
+            <br />
+            <div class="selectFolder">
+                <el-select v-model="folder_id" placeholder="选择导入文件夹" class="input">
+                    <el-option
+                        v-for="Folder in MyFolders"
+                        :key="Folder.id"
+                        :label="Folder.name"
+                        :value="Folder.id"
+                    ></el-option>
+                </el-select>
+                <el-button @click="createweb()" type="primary">确定</el-button>
+                <span class="input"> 没有找到文件夹？</span>
+                <el-button type="text" @click="visible = true">新建文件夹 </el-button>
+            </div>
             <div v-for="Folder in Folders" :key="Folder.name">
                 <div v-if="Folder.web.length > 0">
                     <el-divider content-position="left">{{ Folder.name }}</el-divider>
                     <el-row type="flex" :gutter="50">
-                        <el-checkbox-group v-model="multipleSelection" @change="handleCheckedCitiesChange">
+                        <el-checkbox-group v-model="multipleSelection">
                             <el-col :span="5" v-for="bookmark in Folder.web" :key="bookmark.name">
                                 <el-checkbox :label="bookmark">
                                     <div class="linkName">
@@ -41,10 +36,9 @@
                         </el-checkbox-group>
                     </el-row>
                 </div>
-
             </div>
         </div>
-        <AddFolderPopup :visible="visible" @close="handleClose"/>
+        <AddFolderPopup :visible="visible" @close="handleClose" />
     </div>
 </template>
 
@@ -176,7 +170,7 @@ export default {
         flatten(arr) {
             const result = [];
             arr.forEach(item => {
-                const { children, ...rest } = item;
+                const {children, ...rest} = item;
                 result.push(rest);
                 if (children && children.length > 0) {
                     result.push(...this.flatten(children));
@@ -204,7 +198,7 @@ export default {
                         let returns = this.textHandle(hdl, {
                             name: h.textContent,
                             children: [],
-                            web: []
+                            web: [],
                         });
                         if (temp == null) {
                             temp = returns;
@@ -283,6 +277,8 @@ export default {
 
 <style scoped lang="less">
     .user_copy {
+        text-align: center;
+        min-width: 800px;
         /deep/ .expanded {
             background: #f6f8f9;
         }
@@ -299,10 +295,14 @@ export default {
         /deep/ .el-checkbox-group {
             width: 100%;
         }
+        .input {
+            margin: 0 20px;
+        }
         .linkName {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            text-align: left;
         }
         .selectFolder {
             position: sticky;
@@ -354,4 +354,3 @@ export default {
         }
     }
 </style>
-

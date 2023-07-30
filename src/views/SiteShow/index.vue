@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div class="hHidden">
+            <h1>炫猿,炫猿导航</h1>
+            <h2>炫猿,炫猿导航,网址导航,自定义网址导航,定制网址导航,炫猿邀请码,ilinks</h2>
+        </div>
+
         <InitLoading/>
         <div v-if="isWeiXin" class="wx">
             <img src="~@/assets/share.png" class="logo" alt="logo" />
@@ -17,8 +22,8 @@
 
             <!-- 名称简介 -->
             <div class="siteTitle">
-                <div class="siteName">{{ sitename }}</div>
-                <div class="siteInfo">{{ siteinfo }}</div>
+                <h2 class="siteName">{{ sitename }}</h2>
+                <h2 class="siteInfo">{{ siteinfo }}</h2>
             </div>
             <div style="height: 80px" v-if="!navSwitch && !labSwitch"></div>
             <!-- 搜索框 -->
@@ -110,8 +115,8 @@
                             {{ infoTips }}
                         </div>
                         <div class="foldername" :id="Folder.name">
-                            <p v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</p>
-                            <p v-else>{{ Folder.name }}</p>
+                            <h3 v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</h3>
+                            <h3 v-else>{{ Folder.name }}</h3>
                             <el-tooltip content="展开文件夹" placement="top" v-if="env === 'pc'">
                                 <div class="openFolder" @click="addToTabs(Folder)">
                                     <i class="fa fa-arrows-alt"></i>
@@ -172,20 +177,7 @@
             </div>
         </div>
         <!-- 音乐 -->
-        <span v-if="music.open" :class="['amusic', musicIsMini ? '' : 'musicIsNoMini']" v-once>
-            <aplayer
-                :music="music.list[0]"
-                :list="music.list"
-                :narrow="false"
-                float
-                :listFolded="true"
-                autoplay
-                :mini="musicIsMini"
-                ref="aplayer"
-                theme="#fff"
-            ></aplayer>
-        </span>
-
+        <Player :musicList="music.list" v-if="music.open"/>
         <!-- 跑马灯（暂时去掉了 本想留作广告位。发现接不到 -->
         <el-col :span="24">
             <div class="totop">
@@ -223,7 +215,7 @@ import SearchTool from '@/components/SearchTool.vue';
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import Particle from '@/components/particle.vue';
-import Aplayer from 'vue-aplayer';
+import Player from '@/components/Player.vue'
 import Loading from '@/components/Loading.vue';
 import InitLoading from '@/components/InitLoading.vue';
 
@@ -242,7 +234,7 @@ export default {
         IndexLab,
         // RightBar,
         Particle,
-        Aplayer,
+        Player,
         Loading,
         InitLoading
     },
@@ -280,7 +272,6 @@ export default {
                     // },
                 ],
             },
-            musicIsMini: true,
             timeoutId: null, // 存储 setTimeout 的 ID
             top_bottom: {
                 top_switch: true,
@@ -357,14 +348,6 @@ export default {
             this.navSwitch = open3 === 'true';
         }
     },
-    beforeDestroy() {
-        // 销毁组件前移除事件监听器
-        if (this.music.open) {
-            const aplayer = this.$refs.aplayer.$el;
-            aplayer.removeEventListener('mouseenter', this.handleMouseEnter);
-            aplayer.removeEventListener('mouseleave', this.handleMouseLeave);
-        }
-    },
     methods: {
         linkMouseEnter(info, id) {
             if (!info) return;
@@ -374,15 +357,6 @@ export default {
         },
         linkMouseLeave() {
             this.showMessage = false;
-        },
-        handleMouseEnter() {
-            this.musicIsMini = false;
-            clearTimeout(this.timeoutId); // 清除之前设置的定时器
-        },
-        handleMouseLeave() {
-            this.timeoutId = setTimeout(() => {
-                this.musicIsMini = true; // 鼠标移出后 1 秒钟
-            }, 1000);
         },
         // 切换tab
         clickTab(id) {
@@ -533,13 +507,6 @@ export default {
                     }
                     if (!this.is_vip) {
                         this.music.list.splice(1);
-                    }
-                    if (this.music.open) {
-                        this.$nextTick(() => {
-                            const aplayer = this.$refs.aplayer.$el;
-                            aplayer.addEventListener('mouseenter', this.handleMouseEnter);
-                            aplayer.addEventListener('mouseleave', this.handleMouseLeave);
-                        });
                     }
                     if (res.data.site_info.top_bottom !== '') {
                         this.top_bottom = JSON.parse(res.data.site_info.top_bottom);
