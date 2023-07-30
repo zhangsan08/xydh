@@ -5,7 +5,7 @@
             <div class="h5">
                 <div class="signin" v-if="isLogin">
                     <div class="content">
-                        <h2>登录ILINKS</h2>
+                        <h2>登录 iLinks</h2>
                         <div class="form">
                             <div class="inputBox">
                                 <input type="text" required v-model="loginForm.name" /> <span>用户名</span>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="signin" v-else>
                     <div class="content">
-                        <h2>注册ILINKS</h2>
+                        <h2>注册 iLinks</h2>
                         <div class="form">
                             <div class="inputBox">
                                 <input type="text" required v-model="registerForm.name" maxlength="15" />
@@ -53,7 +53,7 @@
                 <div class="form-container login-container">
                     <div class="signin">
                         <div class="content">
-                            <h2>注册ILINKS</h2>
+                            <h2>注册 iLinks</h2>
                             <div class="form">
                                 <div class="inputBox">
                                     <input type="text" required v-model="registerForm.name" maxlength="15" />
@@ -83,7 +83,7 @@
                 <div class="form-container register-container">
                     <div class="signin">
                         <div class="content">
-                            <h2>登录ILINKS</h2>
+                            <h2>登录 iLinks</h2>
                             <div class="form">
                                 <div class="inputBox">
                                     <input type="text" required v-model="loginForm.name" /> <span>用户名</span>
@@ -102,7 +102,7 @@
                 <div class="overlay-container">
                     <div class="overlay">
                         <div class="overlay-panel overlay-right">
-                            <h1>ILINKS / 书签导航</h1>
+                            <h1>iLinks | 书签导航</h1>
                             <h3>管理记录你收藏的网站</h3>
                             <div class="loginAbout">
                                 <p>关注公众号【炫技巧】获取网站最新资讯</p>
@@ -117,17 +117,17 @@
                                         src="~@/assets/logo.png"
                                         alt=""
                                     />
-                                    ILINKS
+                                    iLinks
                                 </div>
                                 <div class="info">
-                                    服务由ILINKS提供
+                                    服务由iLinks提供
                                 </div>
                             </div>
 
                         </div>
                         <div class="overlay-panel overlay-left">
-                            <h3><i class="fa fa-modx"></i>永久免费</h3>
-                            <p>注册即可免费使用，ILINKS永久提供服务</p>
+                            <h3><i class="fa fa-modx"></i>长期稳定</h3>
+                            <p>iLinks已稳定为用户提供服务三年，且提供导入导出的冷备份方案</p>
                             <h3><i class="fa fa-cloud"></i>书签上云</h3>
                             <p>随时随地，不限设备，云端同步</p>
                             <h3><i class="fa fa-edit"></i>高度自定义</h3>
@@ -144,10 +144,10 @@
                                         src="~@/assets/logo.png"
                                         alt=""
                                     />
-                                    ILINKS
+                                    iLinks
                                 </div>
                                 <div class="info">
-                                    服务由ILINKS提供
+                                    服务由iLinks提供
                                 </div>
                             </div>
 
