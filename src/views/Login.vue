@@ -25,10 +25,23 @@
                         <h2>注册 iLinks</h2>
                         <div class="form">
                             <div class="inputBox">
-                                <input type="text" required v-model="registerForm.name" maxlength="15" />
+                                <input
+                                    type="text"
+                                    required
+                                    v-model="registerForm.name"
+                                    placeholder="英文或数字，5-15个字符"
+                                    maxlength="15"
+                                />
+                                <span>用户名<a
+                                    v-if="registerForm.name"
+                                >（域名:https://xydh.fun/{{ registerForm.name }}）</a></span>
+                                <div class="limitLength">
+                                    {{ registerForm.name.length}}/15
+                                </div>
                             </div>
                             <div class="inputBox">
-                                <input type="password" required v-model="registerForm.password" /> <span>密码</span>
+                                <input type="text" required v-model="registerForm.password" />
+                                <span>密码</span>
                             </div>
                             <div class="inputBox">
                                 <input type="text" required v-model="registerForm.password_confirm" />
@@ -55,10 +68,24 @@
                             <h2>注册 iLinks</h2>
                             <div class="form">
                                 <div class="inputBox">
-                                    <input type="text" required v-model="registerForm.name" maxlength="15" />
+                                    <input
+                                        type="text"
+                                        required
+                                        v-model="registerForm.name"
+                                        placeholder="英文或数字，5-15个字符"
+                                        maxlength="15"
+                                        :onKeyUp="registerForm.name=registerForm.name.replace(/[\W]/g,'')"
+                                    />
+                                    <span>用户名<a
+                                        v-if="registerForm.name"
+                                    >（域名:https://xydh.fun/{{ registerForm.name }}）</a></span>
+                                    <div class="limitLength">
+                                        {{ registerForm.name.length}}/15
+                                    </div>
                                 </div>
                                 <div class="inputBox">
-                                    <input type="text" required v-model="registerForm.password" /> <span>密码</span>
+                                    <input type="text" required v-model="registerForm.password" />
+                                    <span>密码</span>
                                 </div>
                                 <div class="inputBox">
                                     <input type="text" required v-model="registerForm.password_confirm" />
@@ -111,17 +138,11 @@
 
                             <div class="bottomArea">
                                 <div class="logo">
-                                    <img
-                                        src="~@/assets/logo.png"
-                                        alt=""
-                                    />
+                                    <img src="~@/assets/logo.png" alt="" />
                                     iLinks
                                 </div>
-                                <div class="info">
-                                    服务由iLinks提供
-                                </div>
+                                <div class="info">服务由iLinks提供</div>
                             </div>
-
                         </div>
                         <div class="overlay-panel overlay-left">
                             <h3><i class="fa fa-modx"></i>长期保障</h3>
@@ -130,25 +151,13 @@
                             <p>随时随地，不限设备，即刻访问</p>
                             <h3><i class="fa fa-edit"></i>高度自定义</h3>
                             <p>自定义域名、背景、音乐、用户数据订阅</p>
-                            <div class="registerAbout">
-                                <p>
-                                    注册小贴士：用户名将决定您的专属链接，如用户名为：XiaoMing<br />
-                                    个人站点为：https://xydh.fun/XiaoMing
-                                </p>
-                            </div>
                             <div class="bottomArea">
                                 <div class="logo">
-                                    <img
-                                        src="~@/assets/logo.png"
-                                        alt=""
-                                    />
+                                    <img src="~@/assets/logo.png" alt="" />
                                     iLinks
                                 </div>
-                                <div class="info">
-                                    服务由iLinks提供
-                                </div>
+                                <div class="info">服务由iLinks提供</div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -350,6 +359,14 @@ export default {
         },
         handleRegisterSubmit() {
             const hasEmptyValues = this.checkEmptyValues(this.registerForm);
+            if (this.registerForm.name.length > 0 && this.registerForm.name.length < 5) {
+                this.$message({
+                    type: 'warning',
+                    message: '用户名长度不能小于5位，请检查~',
+                    center: true,
+                });
+                return;
+            }
             if (hasEmptyValues) {
                 this.$message({
                     type: 'warning',
@@ -528,6 +545,9 @@ export default {
             -webkit-text-fill-color: #808080;
             transition: background-color 1000s ease-out 0.5s;
         }
+        &::placeholder {
+            font-size: 12px;
+        }
     }
 
     section .signin .content .form .inputBox span {
@@ -547,6 +567,13 @@ export default {
         transform: translateY(-7.5px);
         font-size: 0.8em;
         color: #fff;
+    }
+    .limitLength{
+        position: absolute;
+        bottom: 10px;
+        right: 5px;
+        color: #aaa;
+        font-size: 12px;
     }
     .signin .content .form .links {
         position: relative;
@@ -643,7 +670,6 @@ export default {
         max-width: 100%;
         min-height: 480px;
         border-radius: 4px;
-
     }
     .form-container {
         position: absolute;
@@ -778,36 +804,35 @@ export default {
         height: 500px;
         overflow: auto;
     }
-    .loginAbout{
+    .loginAbout {
         margin-top: 70px;
         color: #bbbbbb;
     }
-    .registerAbout{
+    .registerAbout {
         color: #bbbbbb;
     }
-    .bottomArea{
+    .bottomArea {
         position: absolute;
         bottom: 38px;
         left: 30px;
-        .logo{
-        height: 40px;
-        display: flex;
-        align-items: center;
-        font-size: 25px;
-        letter-spacing: 1px;
-        color: #88C666;
-    font-weight: bold;
-        img{
-            height: 100%;
-            margin-right: 10px;
+        .logo {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            font-size: 25px;
+            letter-spacing: 1px;
+            color: #88c666;
+            font-weight: bold;
+            img {
+                height: 100%;
+                margin-right: 10px;
+            }
+        }
+        .info {
+            color: #bbbbbb;
+            letter-spacing: 1px;
+            font-size: 12px;
+            margin-top: 5px;
         }
     }
-    .info{
-        color: #bbbbbb;
-        letter-spacing: 1px;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-    }
-
 </style>
