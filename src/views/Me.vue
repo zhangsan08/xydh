@@ -1,6 +1,9 @@
 <template>
     <div class="me">
-        <div v-if="isMaintenance" class="isMaintenance">系统维护中...</div>
+        <div v-if="isMaintenance" class="isMaintenance">
+            <p>系统维护中...</p>
+            <p>关注公众号 炫技巧 获取信息</p>
+        </div>
         <div v-else>
             <!-- 选择小图标的弹窗 -->
             <el-dialog :visible.sync="dialogIconVisible" title="选择图标" append-to-body width="70%">
@@ -172,7 +175,9 @@ export default {
                 let linkInfo = res.data.folder_with_links
                 let totalLinks = 0;
                 for (let i = 0; i < linkInfo.length; i++) {
-                    totalLinks += linkInfo[i].links.length;
+                    if (linkInfo[i].links != null) {
+                        totalLinks += linkInfo[i].links.length;
+                    }
                 }
                 this.userAllInfo.usedFolderNum = linkInfo.length
                 this.userAllInfo.usedLinks = totalLinks
@@ -237,7 +242,7 @@ export default {
 <style lang="less">
     .me {
         min-width: 800px;
-        max-width: 1680px;
+        max-width: 2160px;
         margin: 0 auto;
         text-align: center;
         font-size: 17px;
