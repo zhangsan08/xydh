@@ -73,12 +73,7 @@
 
             <el-form-item label="背景特效">
                 <el-select v-model="SiteForm.bglizi" placeholder="请选择">
-                    <el-option
-                        v-for="item in texiao"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                    >
+                    <el-option v-for="item in texiao" :key="item.value" :label="item.label" :value="item.value">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -108,14 +103,14 @@
                     <el-form :inline="true">
                         <el-button
                             type="success"
-                            @click="addToList(music.list,1,1)"
-                            :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30"
+                            @click="addToList(music.list, 1, 1)"
+                            :disabled="(!isVIP && this.music.list.length > 1) || this.music.list.length > 30"
                         >添加至表头
                         </el-button>
                         <el-button
                             type="success"
-                            @click="addToList(music.list,1,2)"
-                            :disabled="!isVIP && this.music.list.length>1 || this.music.list.length>30"
+                            @click="addToList(music.list, 1, 2)"
+                            :disabled="(!isVIP && this.music.list.length > 1) || this.music.list.length > 30"
                         >添加至表尾
                         </el-button>
                     </el-form>
@@ -140,13 +135,10 @@
                                 <el-input type="text" v-model="scope.row.pic"></el-input>
                             </template>
                         </el-table-column>
-                        <el-table-column
-                            fixed="right"
-                            label="操作"
-                            width="80"
-                        >
+                        <el-table-column fixed="right" label="操作" width="80">
                             <template slot-scope="scope">
-                                <el-button size="mini" type="danger" @click="deleteFromList(music.list,scope.row)"> 删除
+                                <el-button size="mini" type="danger" @click="deleteFromList(music.list, scope.row)">
+                                    删除
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -172,13 +164,13 @@
                         <el-button
                             type="success"
                             @click="addToList(top_bottom.bottom_list, 2, 1)"
-                            :disabled="!isVIP || top_bottom.bottom_list.length>15"
+                            :disabled="!isVIP || top_bottom.bottom_list.length > 15"
                         >添加至表头
                         </el-button>
                         <el-button
                             type="success"
                             @click="addToList(top_bottom.bottom_list, 2, 2)"
-                            :disabled="!isVIP || top_bottom.bottom_list.length>15"
+                            :disabled="!isVIP || top_bottom.bottom_list.length > 15"
                         >添加至表尾
                         </el-button>
                     </el-form>
@@ -193,16 +185,14 @@
                                 <el-input type="text" v-model="scope.row.url"></el-input>
                             </template>
                         </el-table-column>
-                        <el-table-column
-                            label="操作"
-                            width="80"
-                        >
+                        <el-table-column label="操作" width="80">
                             <template slot-scope="scope">
                                 <el-button
                                     size="mini"
                                     type="danger"
                                     @click="deleteFromList(top_bottom.bottom_list, scope.row)"
-                                > 删除
+                                >
+                                    删除
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -210,38 +200,33 @@
                 </div>
             </el-form-item>
         </el-form>
-        <el-divider content-position="center">
-
-        </el-divider>
-        <el-button slot="reference" type="primary" @click="updateSite()">更新站点信息</el-button>
+        <el-button slot="reference" type="primary" class="floatOnTop" @click="updateSite()">更新站点信息</el-button>
     </div>
-
 </template>
 
 <script>
-
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
-import {siteService} from '@/common/api'
+import {siteService} from '@/common/api';
 
 export default {
-    props: ["userID", "isVIP"],
+    props: ['userID', 'isVIP'],
     data() {
         return {
             userview: 0,
             SiteForm: {
-                name: "",
-                info: "",
-                bg: "",
-                mobile_bg: "",
-                btn_switch: "",
-                bg_switch: "",
-                bg_color: "",
-                font_color: "",
+                name: '',
+                info: '',
+                bg: '',
+                mobile_bg: '',
+                btn_switch: '',
+                bg_switch: '',
+                bg_color: '',
+                font_color: '',
                 bglizi: 0,
-                lyb_id: "",
-                music: "",
-                top_bottom: "",
+                lyb_id: '',
+                music: '',
+                top_bottom: '',
             },
             texiao: [
                 {value: 0, label: '关闭'},
@@ -250,7 +235,17 @@ export default {
                 {value: 3, label: '搞怪猫(会使背景图片失效)'},
                 {value: 4, label: '吹气泡(点击生成气泡)'},
             ],
-            predefineColors: ['#000000', '#ffffff', '#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff', '#c71585', ],
+            predefineColors: [
+                '#000000',
+                '#ffffff',
+                '#ff4500',
+                '#ff8c00',
+                '#ffd700',
+                '#90ee90',
+                '#00ced1',
+                '#1e90ff',
+                '#c71585',
+            ],
             music: {
                 open: false,
                 list: [],
@@ -259,24 +254,24 @@ export default {
                 top_switch: true,
                 bottom_list: [],
             },
-        }
+        };
     },
     mounted() {
-        this.getSite()
+        this.getSite();
     },
     methods: {
         getSite() {
-            siteService.getSitebyID(this.userID).then((res) => {
-                this.SiteForm.name = res.data.name
-                this.SiteForm.info = res.data.info
-                this.SiteForm.bg = res.data.bg
-                this.SiteForm.mobile_bg = res.data.mobile_bg
-                this.SiteForm.btn_switch = res.data.btn_switch
-                this.SiteForm.bg_switch = res.data.bg_switch
-                this.SiteForm.bg_color = res.data.bg_color
-                this.SiteForm.font_color = res.data.font_color
-                this.SiteForm.bglizi = res.data.bglizi
-                this.SiteForm.lyb_id = res.data.lyb_id
+            siteService.getSitebyID(this.userID).then(res => {
+                this.SiteForm.name = res.data.name;
+                this.SiteForm.info = res.data.info;
+                this.SiteForm.bg = res.data.bg;
+                this.SiteForm.mobile_bg = res.data.mobile_bg;
+                this.SiteForm.btn_switch = res.data.btn_switch;
+                this.SiteForm.bg_switch = res.data.bg_switch;
+                this.SiteForm.bg_color = res.data.bg_color;
+                this.SiteForm.font_color = res.data.font_color;
+                this.SiteForm.bglizi = res.data.bglizi;
+                this.SiteForm.lyb_id = res.data.lyb_id;
                 if (res.data.music) {
                     this.music = JSON.parse(res.data.music);
                 }
@@ -284,76 +279,80 @@ export default {
                     this.top_bottom = JSON.parse(res.data.top_bottom);
                 }
 
-                this.userview = res.data.view
-            })
+                this.userview = res.data.view;
+            });
         },
         updateSite() {
-            this.SiteForm.music = JSON.stringify(this.music)
+            this.SiteForm.music = JSON.stringify(this.music);
             if (this.SiteForm.music.length > 2000) {
                 this.$notify.error({
-                    title: "你添加的歌曲太多啦",
+                    title: '你添加的歌曲太多啦',
                 });
                 return;
             }
-            this.SiteForm.top_bottom = JSON.stringify(this.top_bottom)
+            this.SiteForm.top_bottom = JSON.stringify(this.top_bottom);
             if (this.SiteForm.top_bottom.length > 1000) {
                 this.$notify.error({
-                    title: "你添加的友链太多啦",
+                    title: '你添加的友链太多啦',
                 });
                 return;
             }
-            siteService.updateSite(this.SiteForm).then((res) => {
+            siteService.updateSite(this.SiteForm).then(res => {
                 if (res.code > 0) {
                     this.$notify.error({
-                        title: "更新失败",
-                        message: res.msg
+                        title: '更新失败',
+                        message: res.msg,
                     });
                 } else {
                     this.$notify({
-                        title: "更新完成😊",
-                        type: "success",
+                        title: '更新完成😊',
+                        type: 'success',
                     });
                 }
-            })
+            });
         },
         addToList(list, x, where) {
             if (x === 1) {
-                var item = {title: "", artist: "", url: ""}
+                var item = {title: '', artist: '', url: ''};
             } else if (x === 2) {
-                item = {title: "", url: ""}
+                item = {title: '', url: ''};
             }
             switch (where) {
             case 1:
-                list.unshift(item)
+                list.unshift(item);
                 break;
             case 2:
-                list.push(item)
+                list.push(item);
                 break;
             default:
                 break;
             }
         },
         deleteFromList(list, item) {
-            var index = list.indexOf(item)
+            var index = list.indexOf(item);
             if (index !== -1) {
-                list.splice(index, 1)
+                list.splice(index, 1);
             }
-        }
-    }
-}
-
+        },
+    },
+};
 </script>
 
 <style>
-.siteForm {
-    min-width: 400px;
-    /* max-width: 400px; */
-    margin: 0 auto;
-    text-align: left;
-}
+    .siteForm {
+        min-width: 400px;
+        /* max-width: 400px; */
+        margin: 0 auto;
+        text-align: left;
+    }
 
-.siteForm .el-input {
-    max-width: 650px;
-}
-
+    .siteForm .el-input {
+        max-width: 650px;
+    }
+    .floatOnTop {
+        bottom: 40px;
+        position: fixed;
+        z-index: 99;
+        right: 60px;
+    }
 </style>

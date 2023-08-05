@@ -188,13 +188,18 @@
                 <div v-if="!is_vip || userid === 1">
                     <Footer></Footer>
                 </div>
-                <div v-else style="max-width: 768px; margin: 30px auto 30px; text-align: center">
-                    <div style="height: 100px"></div>
-                    <li style="float: left" v-for="link in top_bottom.bottom_list" :key="link.title">
-                        <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                            {{ link.title }}
-                        </a>
-                    </li>
+                <div v-else class="footer">
+                    <a
+                        @click="goToUrl(link)"
+                        target="_blank"
+                        rel="nofollow"
+                        class="name"
+                        v-for="(link,index) in top_bottom.bottom_list"
+                        :key="`${link.title}-${index}`"
+                        style="margin: 0 5px;"
+                    >
+                        {{ link.title }}
+                    </a>
                 </div>
             </div>
         </el-col>

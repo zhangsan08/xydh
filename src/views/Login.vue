@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="inputBox">
-                                <input type="text" required v-model="registerForm.password" />
+                                <input type="text" required v-model="registerForm.password"/>
                                 <span>密码</span>
                             </div>
                             <div class="inputBox">
@@ -145,8 +145,10 @@
                             </div>
                         </div>
                         <div class="overlay-panel overlay-left">
+                            <h3><i class="fa fa-newspaper-o"></i>一键建站</h3>
+                            <p>零技术门槛，注册即可拥有自己的专属导航网站</p>
                             <h3><i class="fa fa-modx"></i>长期保障</h3>
-                            <p>已稳定服务三年，可导出到本地冷备</p>
+                            <p>已稳定服务三年，可导出到本地冷备份</p>
                             <h3><i class="fa fa-cloud"></i>书签上云</h3>
                             <p>随时随地，不限设备，即刻访问</p>
                             <h3><i class="fa fa-edit"></i>高度自定义</h3>
@@ -781,7 +783,8 @@ export default {
     .h5 {
         position: relative;
         overflow: hidden;
-        width: 375px;
+        width: 95vw;
+        max-width: 384px;
         min-height: 480px;
         display: none;
         border-radius: 4px;
