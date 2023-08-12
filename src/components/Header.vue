@@ -22,29 +22,50 @@
                 <span style="color: inherit"> 自定义<i class="fa fa-cog"></i> </span>
                 <el-dropdown-menu slot="dropdown" class="dropdownMenu">
                     <el-dropdown-item>
-                        <i class="fa fa-user-circle-o"></i><a
-                            class="headerbtn"
-                            href="https://xydh.fun/me"
-                            target="_blank"
-                        >打开后台</a></el-dropdown-item>
+                        <div class="elDropdownItemMenu">
+                            <i class="fa fa-user-circle-o"></i><a
+                                class="headerbtn"
+                                href="https://xydh.fun/me"
+                                target="_blank"
+                            >打开后台</a>
+                        </div>
+                    </el-dropdown-item>
                     <el-dropdown-item>
-                        <i class="fa fa-reply-all"></i>
-                        <span
-                            class="headerbtn"
-                            @click="onChangeHis()"
-                        > 足迹开关</span></el-dropdown-item>
+                        <div class="elDropdownItemMenu">
+                            <i class="fa fa-address-card-o"></i><a
+                                class="headerbtn"
+                                href="https://xydh.fun/u/login"
+                                target="_blank"
+                            >注册专属导航</a>
+                        </div></el-dropdown-item>
                     <el-dropdown-item>
-                        <i class="fa fa-anchor"></i>
-                        <span
-                            class="headerbtn"
-                            @click="onChangeNav()"
-                        > 书签开关</span></el-dropdown-item>
+                        <div class="elDropdownItemMenu">
+                            <i class="fa fa-reply-all"></i>
+                            <span
+                                class="headerbtn"
+                                @click="onChangeHis()"
+                            > 足迹开关</span></div></el-dropdown-item>
                     <el-dropdown-item>
-                        <i class="fa fa-power-off"></i>
-                        <span
-                            class="headerbtn"
-                            @click="logout()"
-                        > 退出登录</span></el-dropdown-item>
+                        <div class="elDropdownItemMenu">
+                            <i class="fa fa-anchor"></i>
+                            <span
+                                class="headerbtn"
+                                @click="onChangeNav()"
+                            > 书签开关</span></div></el-dropdown-item>
+                    <el-dropdown-item>
+                        <div class="elDropdownItemMenu">
+                            <i class="fa fa-frown-o"></i><a
+                                class="headerbtn"
+                                href="https://support.qq.com/products/106426/#label=show"
+                                target="_blank"
+                            >反馈与建议</a></div></el-dropdown-item>
+                    <el-dropdown-item>
+                        <div class="elDropdownItemMenu">
+                            <i class="fa fa-power-off"></i>
+                            <span
+                                class="headerbtn"
+                                @click="logout()"
+                            > 退出登录</span></div></el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -93,7 +114,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .header {
   padding: 10px 10px;
 }
@@ -107,7 +128,15 @@ export default {
   color: inherit;
   cursor: pointer;
 }
-
+.elDropdownItemMenu{
+    display: flex;
+    align-items: center;
+    a,span{
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+    }
+}
 .dropdownMenu {
   text-align: left;
   width: 160px;

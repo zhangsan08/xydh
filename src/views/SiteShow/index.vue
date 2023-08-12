@@ -74,16 +74,34 @@
                 </div>
             </el-row>
             <div class="bookmark" v-if="!labSwitch && navSwitch">
-                <div class="nav" v-if="username === 'admin'">
+                <div class="nav" v-if="subscribe.open">
                     <ul>
-                        <li v-for="item in tabsList" :key="item.id" @click="clickTab(item.id)">
-                            <div :class="item.id === activeTabId ? 'active' : ''">
-                                {{ item.title }}
+                        <li  @click="clickTab(0,username)">
+                            <div :class="0 === activeTabId ? 'active' : ''">
+                                首页
                             </div>
                         </li>
+                        <div v-for="item in subscribe.list" :key="item.id">
+                            <el-popover
+                                placement="top"
+                                trigger="hover"
+                            >
+                                <div class="tooltipContent">
+                                    <a
+                                        :href="`https://xydh.fun/${item.id}`"
+                                        target="_blank"
+                                    >前往站长主页 <i class="el-icon-top-right"></i></a>
+                                </div>
+                                <li @click="clickTab(item.id,item.user_name)" slot="reference">
+                                    <div :class="item.id === activeTabId ? 'active' : ''">
+                                        {{ item.alias || item.user_name }}
+                                    </div>
+                                </li>
+                            </el-popover>
+                        </div>
+
                     </ul>
                 </div>
-
                 <div v-if="Folders.length === 0" class="navLoading">
                     <Loading />
                 </div>
@@ -277,6 +295,10 @@ export default {
                     // },
                 ],
             },
+            subscribe: {
+                open: false,
+                list: [],
+            },
             timeoutId: null, // 存储 setTimeout 的 ID
             top_bottom: {
                 top_switch: true,
@@ -284,16 +306,7 @@ export default {
             },
             isWeiXin: isWeiXin(),
             activeIndex: '1',
-            tabsList: [
-                {title: '首页', id: 'admin'},
-                {title: 'AI', id: 'loveai'},
-                {title: '小帅', id: 'gmengshuai'},
-                {title: '以西', id: 'chenyixi'},
-                {title: 'YYDS', id: 'yyds007'},
-                {title: '文学', id: 'tiantian666'},
-                {title: '加入', id: 'friend'},
-            ],
-            activeTabId: 'admin',
+            activeTabId: 0,
             random: new Date().valueOf(), // 处理切换tab重复请求
             showMessage: false,
             infoTips: '',
@@ -364,7 +377,7 @@ export default {
             this.showMessage = false;
         },
         // 切换tab
-        clickTab(id) {
+        clickTab(id, user_name) {
             // 更新随机数，用于判断是否需要更新数据
             this.random = new Date().valueOf();
             // 清空Folders数组，以便展示loading效果
@@ -372,27 +385,27 @@ export default {
             // 设置当前活动的tabId
             this.activeTabId = id;
             // 获取缓存数据
-            const cacheKey = `xydh_tab_cached_data_for_id_${id}`;
+            const cacheKey = `xydh_tab_cached_data_for_id_${user_name}_${id}`;
             const cachedData = window.localStorage.getItem(cacheKey);
             if (cachedData) {
                 // 如果有缓存的数据，则直接使用
                 this.Folders = JSON.parse(cachedData);
             }
             // 请求数据
-            this.getActiveLabelData(id);
+            this.getActiveLabelData(id, user_name);
         },
         // 切换tab,请求数据
-        getActiveLabelData(id) {
+        getActiveLabelData(id, user_name) {
             // 记录当前的随机数，用于判断是否需要更新数据
             const random = this.random;
             // 调用API获取数据
-            siteService.getAllsiteandlinks(id).then(res => {
+            siteService.getAllsiteandlinks(user_name).then(res => {
                 // 如果随机数已经变化，则表示已经更新了tab，需要丢弃当前的数据
                 if (this.random !== random) return;
                 // 对数据进行相关处理
                 let linksData = this.handlelinkSort(res.data.folder_with_links);
                 // 比较数据是否和缓存中的一致
-                const cacheKey = `xydh_tab_cached_data_for_id_${id}`;
+                const cacheKey = `xydh_tab_cached_data_for_id_${user_name}_${id}`;
                 const cachedData = window.localStorage.getItem(cacheKey);
                 if (!_.isEqual(linksData, cachedData)) {
                     // 如果不一致，则进行更新，并将数据存入localStorage中
@@ -417,9 +430,6 @@ export default {
                 });
             }
             return linksData;
-        },
-        handleSelect(key, keyPath) {
-            console.log(key, keyPath);
         },
         switchHistory() {
             this.historySwitch = !this.historySwitch;
@@ -513,6 +523,7 @@ export default {
                     if (!this.is_vip) {
                         this.music.list.splice(1);
                     }
+                    this.subscribe = JSON.parse(res.data.site_info.subscribe);
                     if (res.data.site_info.top_bottom !== '') {
                         this.top_bottom = JSON.parse(res.data.site_info.top_bottom);
                     }

@@ -35,6 +35,9 @@ export default {
         }
     },
     methods: {
+        go(link) {
+            window.open(link, '_blank');
+        },
         go2() {
             let routeData = this.$router.resolve({path: '/u/vip', query: {}});
             window.open(routeData.href, '_blank');

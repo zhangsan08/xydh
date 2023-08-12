@@ -89,7 +89,7 @@
                 ></el-input>
             </el-form-item>
             <!-- 音乐模块 -->
-            <el-form-item label="音乐">
+            <el-form-item label="背景音乐">
                 <el-switch
                     v-model="music.open"
                     active-color="#13ce66"
@@ -104,33 +104,35 @@
                         <el-button
                             type="success"
                             @click="addToList(music.list, 1, 1)"
+                            size="medium"
                             :disabled="(!isVIP && this.music.list.length > 1) || this.music.list.length > 30"
                         >添加至表头
                         </el-button>
                         <el-button
                             type="success"
                             @click="addToList(music.list, 1, 2)"
+                            size="medium"
                             :disabled="(!isVIP && this.music.list.length > 1) || this.music.list.length > 30"
                         >添加至表尾
                         </el-button>
                     </el-form>
                     <el-table :data="music.list" stripe>
-                        <el-table-column label="歌曲名" width="200">
+                        <el-table-column label="歌曲名" width="150">
                             <template slot-scope="scope">
                                 <el-input type="text" v-model="scope.row.title"></el-input>
                             </template>
                         </el-table-column>
-                        <el-table-column label="歌手名" width="200">
+                        <el-table-column label="歌手名" width="120">
                             <template slot-scope="scope">
                                 <el-input type="text" v-model="scope.row.artist"></el-input>
                             </template>
                         </el-table-column>
-                        <el-table-column label="音乐外链">
+                        <el-table-column label="音乐外链地址">
                             <template slot-scope="scope">
                                 <el-input type="text" v-model="scope.row.url"></el-input>
                             </template>
                         </el-table-column>
-                        <el-table-column label="封面图片">
+                        <el-table-column label="封面图片地址">
                             <template slot-scope="scope">
                                 <el-input type="text" v-model="scope.row.pic"></el-input>
                             </template>
@@ -139,6 +141,75 @@
                             <template slot-scope="scope">
                                 <el-button size="mini" type="danger" @click="deleteFromList(music.list, scope.row)">
                                     删除
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+            </el-form-item>
+            <!-- 站点订阅模块 -->
+            <el-form-item label="站点订阅">
+                <el-switch
+                    v-model="subscribe.open"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949"
+                    active-text="开启"
+                    inactive-text="关闭"
+                >
+                </el-switch>
+                <div v-if="subscribe.open">
+                    <p>除默认订阅主站外，普通用户可订阅3个站点，VIP用户可订阅10个站点</p>
+                    <el-form :inline="true">
+                        <el-button
+                            type="success"
+                            @click="addToList(subscribe.list, 3, 2)"
+                            size="medium"
+                            :disabled="
+                                (!isVIP && this.subscribe.list.length > 3) || (isVIP && this.subscribe.list.length > 10)
+                            "
+                        >
+                            <span v-if="!isVIP && this.subscribe.list.length > 3">
+                                普通用户可订阅3个站点，开通vip订阅更多
+                            </span>
+                            <span v-else-if="isVIP && this.subscribe.list.length > 10"> 最多可订阅10个 </span>
+                            <span v-else> 添加订阅 </span>
+                        </el-button>
+                    </el-form>
+                    <el-table :data="subscribe.list" stripe ref="table" row-key="id">
+                        <el-table-column label="排序" width="50">
+                            <div class="el-rank">
+                                <i class="el-icon-rank" />
+                            </div>
+                        </el-table-column>
+                        <el-table-column label="用户id">
+                            <template slot-scope="scope">
+                                <el-input
+                                    type="text"
+                                    v-model="scope.row.user_name"
+                                    :disabled="scope.row.disabled"
+                                ></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="别名(实际展示名称)">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.alias" maxlength="6" show-word-limit></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column fixed="right" label="操作" width="160">
+                            <template slot-scope="scope">
+                                <el-button
+                                    size="mini"
+                                    type="danger"
+                                    :disabled="scope.row.disabled"
+                                    @click="deleteFromList(subscribe.list, scope.row)"
+                                >
+                                    删除
+                                </el-button>
+                                <el-button
+                                    size="mini"
+                                    @click="goPreview(scope.row.user_name)"
+                                >
+                                    预览
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -165,12 +236,14 @@
                             type="success"
                             @click="addToList(top_bottom.bottom_list, 2, 1)"
                             :disabled="!isVIP || top_bottom.bottom_list.length > 15"
+                            size="medium"
                         >添加至表头
                         </el-button>
                         <el-button
                             type="success"
                             @click="addToList(top_bottom.bottom_list, 2, 2)"
                             :disabled="!isVIP || top_bottom.bottom_list.length > 15"
+                            size="medium"
                         >添加至表尾
                         </el-button>
                     </el-form>
@@ -208,6 +281,7 @@
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
 import {siteService} from '@/common/api';
+import Sortable from 'sortablejs';
 
 export default {
     props: ['userID', 'isVIP'],
@@ -227,6 +301,7 @@ export default {
                 lyb_id: '',
                 music: '',
                 top_bottom: '',
+                subscribe: '',
             },
             texiao: [
                 {value: 0, label: '关闭'},
@@ -250,16 +325,49 @@ export default {
                 open: false,
                 list: [],
             },
+            subscribe: {
+                open: false,
+                list: [
+                    {
+                        user_name: 'admin',
+                        alias: 'iLinks',
+                        disabled: true,
+                        id: 1,
+                    },
+                ],
+            },
             top_bottom: {
                 top_switch: true,
                 bottom_list: [],
             },
         };
     },
+    watch: {
+        'subscribe.open': function (newVal) {
+            if (newVal) {
+                this.$nextTick(() => {
+                    this.rowDrop();
+                });
+            }
+        },
+    },
     mounted() {
         this.getSite();
     },
     methods: {
+        rowDrop() {
+            if (this.subscribe.open) {
+                const tableBody = this.$refs.table.$el.querySelector('.el-table__body-wrapper tbody');
+                this.sortable = Sortable.create(tableBody, {
+                    animation: 150,
+                    handle: '.el-rank',
+                    onEnd: evt => {
+                        const item = this.subscribe.list.splice(evt.oldIndex, 1)[0];
+                        this.subscribe.list.splice(evt.newIndex, 0, item);
+                    },
+                });
+            }
+        },
         getSite() {
             siteService.getSitebyID(this.userID).then(res => {
                 this.SiteForm.name = res.data.name;
@@ -275,6 +383,9 @@ export default {
                 if (res.data.music) {
                     this.music = JSON.parse(res.data.music);
                 }
+                if (res.data.subscribe) {
+                    this.subscribe = JSON.parse(res.data.subscribe);
+                }
                 if (res.data.top_bottom) {
                     this.top_bottom = JSON.parse(res.data.top_bottom);
                 }
@@ -282,14 +393,49 @@ export default {
                 this.userview = res.data.view;
             });
         },
-        updateSite() {
-            this.SiteForm.music = JSON.stringify(this.music);
-            if (this.SiteForm.music.length > 2000) {
-                this.$notify.error({
-                    title: '你添加的歌曲太多啦',
-                });
-                return;
+        // 判空函数
+        hasEmptyValue(arr, key) {
+            for (let i = 0; i < arr.length; i++) {
+                if (!arr[i][key]) {
+                    return true;
+                }
             }
+            return false;
+        },
+        notifyError(message) {
+            this.$notify.error({
+                title: message,
+            });
+        },
+        updateSite() {
+            if (this.subscribe.open) {
+                if (this.subscribe.list.length === 0) {
+                    this.notifyError('订阅站点开关已打开，但未添加');
+                    return;
+                }
+                if (this.hasEmptyValue(this.subscribe.list, 'user_name')) {
+                    this.notifyError('有未填写id的订阅站点存在，请检查');
+                    return;
+                }
+            }
+
+            this.SiteForm.subscribe = JSON.stringify(this.subscribe);
+
+            if (this.music.open) {
+                if (this.music.list.length === 0) {
+                    this.notifyError('背景音乐开关已打开，但未添加');
+                    return;
+                }
+                if (this.hasEmptyValue(this.music.list, 'url')) {
+                    this.notifyError('有未填写的音乐外链存在，请检查');
+                    return;
+                }
+                if (this.music.length > 2000) {
+                    this.notifyError('你添加的歌曲太多啦');
+                    return;
+                }
+            }
+            this.SiteForm.music = JSON.stringify(this.music);
             this.SiteForm.top_bottom = JSON.stringify(this.top_bottom);
             if (this.SiteForm.top_bottom.length > 1000) {
                 this.$notify.error({
@@ -316,6 +462,9 @@ export default {
                 var item = {title: '', artist: '', url: ''};
             } else if (x === 2) {
                 item = {title: '', url: ''};
+            } else if (x === 3) {
+                const id = Math.floor(1000000000 + Math.random() * 9000000000); // 生成10位随机数作为id，排序用
+                item = {user_name: '', alias: '', id: id};
             }
             switch (where) {
             case 1:
@@ -334,6 +483,9 @@ export default {
                 list.splice(index, 1);
             }
         },
+        goPreview(user_name) {
+            window.open(`https://xydh.fun/${user_name}`, '_blank');
+        }
     },
 };
 </script>
@@ -344,6 +496,7 @@ export default {
         /* max-width: 400px; */
         margin: 0 auto;
         text-align: left;
+        padding-bottom: 40px;
     }
 
     .siteForm .el-input {
@@ -353,6 +506,6 @@ export default {
         bottom: 40px;
         position: fixed;
         z-index: 99;
-        right: 60px;
+        right: 100px;
     }
 </style>
