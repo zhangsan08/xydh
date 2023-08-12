@@ -12,14 +12,19 @@
             <div class="header">
                 <div class="logo">
                     <img src="@/assets/logo.png" alt="" />
-                    iLinks
+                    <div class="iLinks">
+                        iLinks
+                    </div>
+                    <div class="Notice">
+                        公告：
+                        <el-carousel class="carousel" height="50px" direction="vertical" indicator-position="none">
+                            <el-carousel-item> 站点订阅功能上线啦~ </el-carousel-item>
+                            <el-carousel-item> 站点订阅功能上线啦~ </el-carousel-item>
+                            <el-carousel-item> 站点订阅功能上线啦~ </el-carousel-item>
+                        </el-carousel>
+                    </div>
                 </div>
-                <!-- <div class="Notice">
-                    公告：
-                    <el-carousel class="carousel" height="50px" direction="vertical" indicator-position="none">
-                        <el-carousel-item> 炫猿正式更名ILINKS啦~ </el-carousel-item>
-                    </el-carousel>
-                </div> -->
+
                 <div class="rigthArea">
                     <div class="vip" v-if="isVIP">
                         <img src="@/assets/isVip.svg" alt="" />
@@ -266,17 +271,21 @@ export default {
         }
         .header {
             height: 60px;
-            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0 20px;
             .logo {
                 height: 100%;
-                font-size: 27px;
-                font-weight: bold;
-                color: #88c666;
                 display: flex;
                 align-items: center;
+                .iLinks{
+                    font-size: 27px;
+                    font-weight: bold;
+                    color: #88c666;
+                    display: flex;
+                    align-items: center;
+                }
                 img {
                     height: 80%;
                     margin-right: 10px;
@@ -286,6 +295,7 @@ export default {
                 display: flex;
                 align-items: center;
                 font-size: 14px;
+                margin-left: 100px;
                 .carousel {
                     width: 300px;
 
