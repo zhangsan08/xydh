@@ -15,9 +15,8 @@
                 <Particle :bglizi="bglizi"></Particle>
             </div>
 
-            <div class="totop" v-if="top_bottom.top_switch">
-                <Header :historySwitch="historySwitch" :navSwitch="navSwitch" :Folders="Folders"></Header>
-                <!-- <RightBar></RightBar> -->
+            <div class="totop">
+                <Header :isOpen="top_bottom.top_switch"></Header>
             </div>
 
             <!-- 名称简介 -->
@@ -48,7 +47,7 @@
                 </transition>
             </el-drawer> -->
             <!-- 历史足迹 -->
-            <el-row>
+            <el-row  v-if="showHistory">
                 <div class="historyLinks">
                     <div
                         @click="switchHistory()"
@@ -110,7 +109,7 @@
                 <el-row v-else>
                     <div class="totop quickNav" v-if="env === 'h5'">
                         <div class="foldername">
-                            <p>快捷导航</p>
+                            <h3>快捷导航</h3>
                         </div>
                         <el-row :class="isBorder?'folder':'folderNoBorder'">
                             <el-col :span="8" v-for="Folder in Folders" :key="Folder.id">
@@ -136,7 +135,7 @@
                             <h3 v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</h3>
                             <h3 v-else>{{ Folder.name }}</h3>
                             <el-tooltip content="展开文件夹" placement="top" v-if="env === 'pc'">
-                                <div class="openFolder" @click="addToTabs(Folder)">
+                                <div class="openFolder" @click="openFolder(Folder)">
                                     <i class="fa fa-arrows-alt"></i>
                                 </div>
                             </el-tooltip>
@@ -172,13 +171,13 @@
                                     <el-col :span="8">
                                         <div
                                             class="link"
-                                            :class="env"
+                                            :class="{[env]: true, 'lineTextCenter': lineTextCenter }"
                                             v-on:mouseenter="linkMouseEnter(link.info, Folder.id)"
                                             v-on:mouseleave="linkMouseLeave"
                                         >
                                             <a @click="goToUrl(link)" target="_blank" rel="nofollow">
                                                 <div class="linkContent">
-                                                    <span class="icon">
+                                                    <span class="icon" v-if="showLineIcon">
                                                         <i :class="'fa fa-' + link.icon" v-if="link.icon"></i>
                                                         <i :class="'fa fa-bookmark-o'" v-else></i>
                                                     </span>
@@ -194,6 +193,13 @@
                 </div>
             </div>
         </div>
+        <MoreLinkModal
+            :visible="moreLinkModalVisible"
+            :foldersInfo="foldersInfo"
+            @close-click="moreLinkModalCloseClick"
+        />
+        <ImgLinkModal :visible="imgLinkModalVisible" :imgLinkInfo="imgLinkInfo" @close-click="imgLinkModalCloseClick" />
+
         <!-- 音乐 -->
         <Player :musicList="music.list" v-if="music.open"/>
         <!-- 跑马灯（暂时去掉了 本想留作广告位。发现接不到 -->
@@ -241,6 +247,8 @@ import Particle from '@/components/particle.vue';
 import Player from '@/components/Player.vue'
 import Loading from '@/components/Loading.vue';
 import InitLoading from '@/components/InitLoading.vue';
+import MoreLinkModal from '@/components/MoreLinkModal.vue';
+import ImgLinkModal from '@/components/ImgLinkModal.vue';
 
 export default {
     name: 'ShowSite',
@@ -259,7 +267,9 @@ export default {
         Particle,
         Player,
         Loading,
-        InitLoading
+        InitLoading,
+        MoreLinkModal,
+        ImgLinkModal,
     },
     props: ['userName'],
     data() {
@@ -313,7 +323,22 @@ export default {
             hoverFileId: '',
             env: '',
             isBorder: false,
+            moreLinkModalVisible: false,
+            imgLinkModalVisible: false,
+            foldersInfo: {},
+            imgLinkInfo: {},
         };
+    },
+    computed: {
+        showHistory() {
+            return this.$store.state.userConfig.showHistory;
+        },
+        lineTextCenter() {
+            return this.$store.state.userConfig.lineTextCenter;
+        },
+        showLineIcon() {
+            return this.$store.state.userConfig.showLineIcon;
+        },
     },
     beforeMount() {
         // this.$message({
@@ -325,7 +350,10 @@ export default {
     },
     created() {
         this.username = this.$route.params.username;
-        if (!this.username) this.username = 'admin';
+        if (!this.username) {
+            this.username = 'admin';
+            window.isLinks = true
+        }
         this.load(this.username);
     },
     mounted() {
@@ -523,7 +551,10 @@ export default {
                     if (!this.is_vip) {
                         this.music.list.splice(1);
                     }
-                    this.subscribe = JSON.parse(res.data.site_info.subscribe);
+                    if (res.data.site_info.subscribe) {
+                        this.subscribe = JSON.parse(res.data.site_info.subscribe);
+                    }
+
                     if (res.data.site_info.top_bottom !== '') {
                         this.top_bottom = JSON.parse(res.data.site_info.top_bottom);
                     }
@@ -563,7 +594,7 @@ export default {
             case '.jpeg':
             case '.gif':
             case '.svg':
-                this.addIMGToTabs(linkInfo);
+            this.openImgLink(linkInfo);
                 return;
             default:
                 break;
@@ -643,6 +674,20 @@ export default {
             if (flag !== 1) this.TabIMGs.push(IMGLink);
             this.AimTabName = IMGLink.name;
             this.switchLab();
+        },
+        moreLinkModalCloseClick() {
+            this.moreLinkModalVisible = false;
+        },
+        imgLinkModalCloseClick() {
+            this.imgLinkModalVisible = false;
+        },
+        openFolder(folder) {
+            this.foldersInfo = folder;
+            this.moreLinkModalVisible = true;
+        },
+        openImgLink(IMGLink) {
+            this.imgLinkInfo = IMGLink;
+            this.imgLinkModalVisible = true;
         },
     },
 };

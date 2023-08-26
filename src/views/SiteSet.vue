@@ -158,23 +158,45 @@
                 >
                 </el-switch>
                 <div v-if="subscribe.open">
-                    <p>除默认订阅主站外，普通用户可订阅3个站点，VIP用户可订阅10个站点</p>
-                    <el-form :inline="true">
-                        <el-button
-                            type="success"
-                            @click="addToList(subscribe.list, 3, 2)"
-                            size="medium"
-                            :disabled="
-                                (!isVIP && this.subscribe.list.length > 3) || (isVIP && this.subscribe.list.length > 10)
-                            "
+                    <div class="recommendSubscribe">
+                        <span class="item">
+                            推荐订阅
+                        </span>
+                        <el-tooltip class="item" effect="dark" placement="top">
+                            <div slot="content">打开后除了你订阅的站点外<br/><br/>会自动为你推荐其他优质站点在你的主页展示<br/><br/>订阅的站点+推荐的站点共8个</div>
+                            <i :class="'fa fa-question-circle-o'" />
+                        </el-tooltip>
+
+                        <el-switch
+                            v-model="subscribe.allowRecommend"
+                            active-color="#13ce66"
+                            inactive-color="#ff4949"
+                            active-text="开启"
+                            inactive-text="关闭"
                         >
-                            <span v-if="!isVIP && this.subscribe.list.length > 3">
-                                普通用户可订阅3个站点，开通vip订阅更多
-                            </span>
-                            <span v-else-if="isVIP && this.subscribe.list.length > 10"> 最多可订阅10个 </span>
-                            <span v-else> 添加订阅 </span>
-                        </el-button>
-                    </el-form>
+                        </el-switch>
+                    </div>
+
+                    <div>
+                        <span style="margin-right: 10px;">
+                            <el-button
+                                type="success"
+                                @click="addToList(subscribe.list, 3, 2)"
+                                size="medium"
+                                :disabled="
+                                    (!isVIP && this.subscribe.list.length > 2) || (isVIP && this.subscribe.list.length > 7)
+                                "
+                            >
+                                <span v-if="!isVIP && this.subscribe.list.length > 2">
+                                    普通用户可订阅3个站点，开通vip订阅更多
+                                </span>
+                                <span v-else-if="isVIP && this.subscribe.list.length > 7"> 最多可订阅8个 </span>
+                                <span v-else> 添加订阅 </span>
+                            </el-button>
+                        </span>
+
+                        <span>普通用户可订阅3个站点，VIP用户可订阅8个站点</span>
+                    </div>
                     <el-table :data="subscribe.list" stripe ref="table" row-key="id">
                         <el-table-column label="排序" width="50">
                             <div class="el-rank">
@@ -218,7 +240,7 @@
             </el-form-item>
             <el-divider content-position="left">VIP 功能</el-divider>
             <!-- 自定义顶部和底部 -->
-            <el-form-item label="顶部开关">
+            <el-form-item label="顶部内容开关">
                 <el-switch
                     v-model="top_bottom.top_switch"
                     active-color="#13ce66"
@@ -326,15 +348,9 @@ export default {
                 list: [],
             },
             subscribe: {
-                open: false,
-                list: [
-                    {
-                        user_name: 'admin',
-                        alias: 'iLinks',
-                        disabled: true,
-                        id: 1,
-                    },
-                ],
+                open: true,
+                list: [],
+                allowRecommend: true
             },
             top_bottom: {
                 top_switch: true,
@@ -353,6 +369,9 @@ export default {
     },
     mounted() {
         this.getSite();
+        this.$nextTick(() => {
+            this.rowDrop();
+        });
     },
     methods: {
         rowDrop() {
@@ -463,7 +482,7 @@ export default {
             } else if (x === 2) {
                 item = {title: '', url: ''};
             } else if (x === 3) {
-                const id = Math.floor(1000000000 + Math.random() * 9000000000); // 生成10位随机数作为id，排序用
+                const id = Math.floor(100000 + Math.random() * 900000); // 生成6位随机数作为id，排序用
                 item = {user_name: '', alias: '', id: id};
             }
             switch (where) {
@@ -490,7 +509,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
     .siteForm {
         min-width: 400px;
         /* max-width: 400px; */
@@ -507,5 +526,13 @@ export default {
         position: fixed;
         z-index: 99;
         right: 100px;
+    }
+    .recommendSubscribe{
+        display: flex;
+        align-items: center;
+        .item{
+            margin-right: 10px;
+        }
+
     }
 </style>

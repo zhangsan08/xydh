@@ -132,15 +132,18 @@ body {
 .siteTitle {
     height: 76px;
     min-height: 76px;
+    position: relative;
 }
 .siteName {
     font-size: 36px;
     font-weight: bold;
     padding-bottom: 10px;
+    letter-spacing: 2px;
 }
 .siteInfo{
     font-size: 13px;
     font-weight: normal;
+    letter-spacing: 0.5px;
 }
 .totop {
     z-index: 1;
@@ -158,10 +161,12 @@ body {
     padding: 13px 0;
     font-size: 13px;
     transition: all 0.3s;
+    transform: translateZ(0);
     &:hover {
         color: white;
         box-sizing: border-box;
         backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
+        // background: rgba(0, 0, 0, 0.3)
     }
 }
 
@@ -208,6 +213,9 @@ body {
     max-height: 33px;
     cursor: pointer;
     text-align: left;
+    &.lineTextCenter{
+        text-align: center;
+    }
     &.pc {
         padding-left: 15px;
     }

@@ -11,7 +11,7 @@
             </el-dialog>
             <div class="header">
                 <div class="logo">
-                    <img src="@/assets/logo.png" alt="" />
+                    <img src="@/assets/logo.svg" alt="" />
                     <div class="iLinks">
                         iLinks
                     </div>

@@ -138,7 +138,7 @@
 
                             <div class="bottomArea">
                                 <div class="logo">
-                                    <img src="~@/assets/logo.png" alt="" />
+                                    <img src="~@/assets/logo.svg" alt="" />
                                     iLinks
                                 </div>
                                 <div class="info">服务由iLinks提供</div>
@@ -155,7 +155,7 @@
                             <p>自定义域名、背景、音乐、用户数据订阅</p>
                             <div class="bottomArea">
                                 <div class="logo">
-                                    <img src="~@/assets/logo.png" alt="" />
+                                    <img src="~@/assets/logo.svg" alt="" />
                                     iLinks
                                 </div>
                                 <div class="info">服务由iLinks提供</div>

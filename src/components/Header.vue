@@ -1,144 +1,102 @@
 <template>
-    <div class="header">
-        <!-- 天气 -->
-        <div class="weather" id="he-plugin-simple"></div>
-        <div style="text-align: right" class="headerbtns">
-            <a
-                class="headerbtn"
-                href="/hgs"
-                target="_blank"
-            >花果山 <i class="fa fa-sort-alpha-asc"></i></a>
-            <a
-                class="headerbtn"
-                href="/sldt"
-                target="_blank"
-            >水帘洞天 <i class="fa fa-external-link"></i></a>
-            <a
-                class="headerbtn"
-                href="/u/rand"
-                target="_blank"
-            >月光宝盒 <i class="fa fa-random"></i></a>
-            <el-dropdown :hide-on-click="false">
-                <span style="color: inherit"> 自定义<i class="fa fa-cog"></i> </span>
-                <el-dropdown-menu slot="dropdown" class="dropdownMenu">
-                    <el-dropdown-item>
-                        <div class="elDropdownItemMenu">
-                            <i class="fa fa-user-circle-o"></i><a
-                                class="headerbtn"
-                                href="https://xydh.fun/me"
-                                target="_blank"
-                            >打开后台</a>
-                        </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item>
-                        <div class="elDropdownItemMenu">
-                            <i class="fa fa-address-card-o"></i><a
-                                class="headerbtn"
-                                href="https://xydh.fun/u/login"
-                                target="_blank"
-                            >注册专属导航</a>
-                        </div></el-dropdown-item>
-                    <el-dropdown-item>
-                        <div class="elDropdownItemMenu">
-                            <i class="fa fa-reply-all"></i>
-                            <span
-                                class="headerbtn"
-                                @click="onChangeHis()"
-                            > 足迹开关</span></div></el-dropdown-item>
-                    <el-dropdown-item>
-                        <div class="elDropdownItemMenu">
-                            <i class="fa fa-anchor"></i>
-                            <span
-                                class="headerbtn"
-                                @click="onChangeNav()"
-                            > 书签开关</span></div></el-dropdown-item>
-                    <el-dropdown-item>
-                        <div class="elDropdownItemMenu">
-                            <i class="fa fa-frown-o"></i><a
-                                class="headerbtn"
-                                href="https://support.qq.com/products/106426/#label=show"
-                                target="_blank"
-                            >反馈与建议</a></div></el-dropdown-item>
-                    <el-dropdown-item>
-                        <div class="elDropdownItemMenu">
-                            <i class="fa fa-power-off"></i>
-                            <span
-                                class="headerbtn"
-                                @click="logout()"
-                            > 退出登录</span></div></el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
+    <div class="headerArea" >
+        <div class="header">
+            <div class="weather" id="he-plugin-simple"></div>
+            <div v-if="isOpen">
+                <div  class="settingArea">
+                    <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
+                    <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
+                    <a class="headerbtn" @click="getRandomUser">月光宝盒 <i class="fa fa-random"></i></a>
+                    <a class="headerbtn" @click="visible = true">设置<i class="fa fa-cog"></i></a>
+                </div>
+            </div>
+            <div v-else class="settingArea">
+                <a class="settingIcon" @click="visible = true"><i class="el-icon-setting"></i></a>
+            </div>
         </div>
-        <div class="paomadeng">
-            <el-carousel
-                indicator-position="none"
-                arrow="always"
-                direction="vertical"
-                height="25px"
-            >
-                <!-- <el-carousel-item>
-                公告
-            </el-carousel-item> -->
-                <el-carousel-item v-for="item in data" :key="item.name">
-                    {{ item.name }}
-                </el-carousel-item>
-            </el-carousel>
-        </div>
+        <Setting @setting-close="visible = false" :visible="visible" />
+        <RandomUserLoading v-if="randomUserLoadingShow" />
     </div>
 </template>
 
 <script>
-import { userService } from "@/common/api";
+import {userService} from '@/common/api';
+import Setting from '@/components/Setting';
+import RandomUserLoading from '@/components/RandomUserLoading';
 
 export default {
-    props: ["historySwitch", "navSwitch"],
+    components: {
+        Setting,
+        RandomUserLoading,
+    },
+    props: {
+        isOpen: {
+            type: Boolean,
+            default: true,
+        },
+    },
     data() {
         return {
-            data: [
-                // {"name":"留言板添加方法见上午8点炫技巧推文"},
-            ],
+            drawer: false,
+            randomUserLoadingShow: false,
+            visible: false,
         };
     },
     methods: {
-        onChangeHis() {
-            this.$parent.switchHistory();
-        },
-        onChangeNav() {
-            this.$parent.switchNav();
-        },
         logout() {
-            userService.UserLogout({ noQs: false });
+            userService.UserLogout({noQs: false});
             location.reload();
+        },
+        getRandomUser() {
+            this.randomUserLoadingShow = true;
+            // 判断登录状态,若登录则取出当前userID和userName
+            userService.UserRandom().then(res => {
+                this.retCode = res.code;
+                if (this.retCode > 0) {
+                    this.getRandomUser();
+                } else {
+                    window.open(`/${res.data.name}`, '_blank');
+                    this.randomUserLoadingShow = false;
+                }
+            });
         },
     },
 };
 </script>
 
 <style scoped lang="less">
-.header {
-  padding: 10px 10px;
-}
-
-.headerbtn {
-  margin: 5px;
-  cursor: pointer;
-}
-
-.el-dropdown {
-  color: inherit;
-  cursor: pointer;
-}
-.elDropdownItemMenu{
-    display: flex;
-    align-items: center;
-    a,span{
-        display: inline-block;
-        width: 100%;
-        height: 100%;
+    .header {
+        padding: 10px 10px;
+        height: 70px;
+        z-index: 1;
+        position: relative;
     }
-}
-.dropdownMenu {
-  text-align: left;
-  width: 160px;
-}
+
+    .headerbtn {
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    .el-dropdown {
+        color: inherit;
+        cursor: pointer;
+    }
+
+    .dropdownMenu {
+        text-align: left;
+        width: 160px;
+    }
+    .settingArea{
+        text-align: right;
+        line-height: 1.4;
+        cursor: pointer;
+    }
+    /deep/.module{
+        color: inherit !important;
+    }
+    .settingIcon{
+        font-size:20px;
+        padding-right: 20px;
+        color: inherit;
+    }
 </style>
