@@ -4,10 +4,10 @@
             <div class="weather" id="he-plugin-simple"></div>
             <div v-if="isOpen">
                 <div  class="settingArea">
-                    <a class="headerbtn" href="/hgs" target="_blank">花果山 <i class="fa fa-sort-alpha-asc"></i></a>
-                    <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 <i class="fa fa-external-link"></i></a>
-                    <a class="headerbtn" @click="getRandomUser">月光宝盒 <i class="fa fa-random"></i></a>
-                    <a class="headerbtn" @click="visible = true">设置<i class="fa fa-cog"></i></a>
+                    <a class="headerbtn" href="/hgs" target="_blank">花果山 </a>
+                    <!-- <a class="headerbtn" href="/sldt" target="_blank">水帘洞天 </a> -->
+                    <a class="headerbtn" @click="getRandomUser">月光宝盒 </a>
+                    <a class="headerbtn" @click="visible = true"><i class="fa fa-cog fa-spin"></i>设置<i class="fa fa-cog fa-spin"></i></a>
                 </div>
             </div>
             <div v-else class="settingArea">

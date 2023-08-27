@@ -160,10 +160,10 @@
                 <div v-if="subscribe.open">
                     <div class="recommendSubscribe">
                         <span class="item">
-                            推荐订阅
+                            热门订阅（VIP功能，限时免费）
                         </span>
                         <el-tooltip class="item" effect="dark" placement="top">
-                            <div slot="content">打开后除了你订阅的站点外<br/><br/>会自动为你推荐其他优质站点在你的主页展示<br/><br/>订阅的站点+推荐的站点共8个</div>
+                            <div slot="content">将热门/优质站点的内容嵌入到自己的页面<br/></div>
                             <i :class="'fa fa-question-circle-o'" />
                         </el-tooltip>
 
@@ -203,21 +203,22 @@
                                 <i class="el-icon-rank" />
                             </div>
                         </el-table-column>
-                        <el-table-column label="用户id">
+                        <el-table-column label="用户id" width="250">
                             <template slot-scope="scope">
                                 <el-input
                                     type="text"
                                     v-model="scope.row.user_name"
                                     :disabled="scope.row.disabled"
+                                    maxlength="18" 
                                 ></el-input>
                             </template>
                         </el-table-column>
                         <el-table-column label="别名(实际展示名称)">
                             <template slot-scope="scope">
-                                <el-input type="text" v-model="scope.row.alias" maxlength="6" show-word-limit></el-input>
+                                <el-input type="text" v-model="scope.row.alias" maxlength="8" show-word-limit></el-input>
                             </template>
                         </el-table-column>
-                        <el-table-column fixed="right" label="操作" width="160">
+                        <el-table-column label="操作" width="160">
                             <template slot-scope="scope">
                                 <el-button
                                     size="mini"
@@ -428,7 +429,7 @@ export default {
         },
         updateSite() {
             if (this.subscribe.open) {
-                if (this.subscribe.list.length === 0) {
+                if (this.subscribe.list.length === 0 && this.subscribe.allowRecommend == false) {
                     this.notifyError('订阅站点开关已打开，但未添加');
                     return;
                 }

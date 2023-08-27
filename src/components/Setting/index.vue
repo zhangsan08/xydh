@@ -40,10 +40,10 @@
                         <Account v-if="activeItem.key === 'account'" />
                         <About v-if="activeItem.key === 'about'" />
                         <Layout v-if="activeItem.key === 'layout'" />
-                        <div class="card" v-if="activeItem.key === 'feedback'">
+                        <!-- <div class="card" v-if="activeItem.key === 'feedback'">
                             <a href="https://support.qq.com/products/106426/#label=show" class="felx" target="_blank">
                                 产品反馈 <i class="el-icon-top-right"></i></a>
-                        </div>
+                        </div> -->
                     </el-main>
                 </el-container>
             </el-container>
@@ -95,12 +95,12 @@ export default {
                     icon: 'el-icon-info',
                     key: 'about',
                 },
-                {
-                    title: '反馈',
-                    info: '欢迎对iLinks提出建议与意见',
-                    icon: 'el-icon-chat-line-square',
-                    key: 'feedback',
-                },
+                // {
+                //     title: '反馈',
+                //     info: '欢迎对iLinks提出建议与意见',
+                //     icon: 'el-icon-chat-line-square',
+                //     key: 'feedback',
+                // },
             ],
         };
     },

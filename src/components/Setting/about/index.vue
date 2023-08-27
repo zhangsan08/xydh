@@ -4,72 +4,35 @@
             <a href="">iLinks官网</a>
         </div> -->
         <div class="title">加入官方社区</div>
-        <div class="cards">
-            <div class="card">
-                <el-popover
-                    placement="top-start"
-                    title="微信群"
-                    width="180"
-                    trigger="hover"
-                    popper-class="qr"
-                >
-                    <img src="~@/assets/wxq.jpg" class="logo" alt="wxq" />
-                    <div slot="reference">微信群</div>
-                </el-popover>
-            </div>
-            <div class="card">
-                <el-popover
-                    placement="top-start"
-                    title="知识星球"
-                    width="180"
-                    trigger="hover"
-                    popper-class="qr"
-                >
-                    <img src="~@/assets/zsxq.jpg" class="logo" alt="zsxq" />
-                    <div slot="reference">知识星球</div>
-                </el-popover>
-            </div>
-        </div>
-        <div class="title">我们活跃在这些平台</div>
-        <div class="cards">
-            <div class="card">
-                <el-popover
-                    placement="top-start"
-                    title="微信公众号"
-                    width="180"
-                    trigger="hover"
-                    popper-class="qr"
-                >
-                    <img src="~@/assets/gzh.jpg" alt="gzh" />
-                    <div  slot="reference">微信公众号</div>
-                </el-popover>
-            </div>
-            <div class="card">
-                <el-popover
-                    placement="top-start"
-                    width="180"
-                    trigger="hover"
-                    popper-class="qr"
-                    title="Bilibili(点码可直接跳转)"
-                >
-                    <a href="https://space.bilibili.com/107370169" target="_blank">
-                        <img src="~@/assets/bilibili.jpg" class="logo" alt="bilibili" />
-                    </a>
-                    <div slot="reference">Bilibili</div>
-                </el-popover>
-            </div>
-        </div>
-        <div class="title">鼓励作者</div>
-        <div class="card zanshang" >
+        <div class="card" >
             <div>
-                请作者喝杯咖啡
+                公众号
             </div>
-            <img src="~@/assets/zanshang.jpg" class="logo" alt="赞赏码" />
+            <img src="~@/assets/gzh.jpg" class="logo" alt="wxq" />
         </div>
-        <div class="title">关于我们</div>
+        <!-- <div class="card" >
+            <div>
+                微信群
+            </div>
+            <img src="~@/assets/wxq.jpg" class="logo" alt="wxq" />
+        </div> -->
+        <div class="card" >
+            <div>
+                知识星球
+            </div>
+            <img src="~@/assets/zsxq.jpg" class="logo" alt="zsxq" />
+        </div>
+        
+        <div class="title">联系我们</div>
         <div class="card">
-            <div>合作邮箱：xydh@126.com</div>
+            <div><a href="https://support.qq.com/products/106426/#label=show" class="felx" target="_blank">
+                                产品反馈 <i class="el-icon-top-right"></i></a></div>
         </div>
+        <div class="card">
+            <div>邮箱：xuanyuandaohang@126.com</div>
+        </div>
+       
+        
     </div>
 </template>
 <script>

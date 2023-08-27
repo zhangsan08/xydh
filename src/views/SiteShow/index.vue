@@ -81,7 +81,7 @@
                             </div>
                         </li>
                         <div v-for="item in subscribe.list" :key="item.id">
-                            <el-popover
+                            <!-- <el-popover
                                 placement="top"
                                 trigger="hover"
                             >
@@ -90,13 +90,13 @@
                                         :href="`https://xydh.fun/${item.id}`"
                                         target="_blank"
                                     >前往站长主页 <i class="el-icon-top-right"></i></a>
-                                </div>
+                                </div> -->
                                 <li @click="clickTab(item.id,item.user_name)" slot="reference">
                                     <div :class="item.id === activeTabId ? 'active' : ''">
                                         {{ item.alias || item.user_name }}
                                     </div>
                                 </li>
-                            </el-popover>
+                            <!-- </el-popover> -->
                         </div>
 
                     </ul>
@@ -308,6 +308,7 @@ export default {
             subscribe: {
                 open: false,
                 list: [],
+                allowRecommend: true,
             },
             timeoutId: null, // 存储 setTimeout 的 ID
             top_bottom: {
@@ -553,6 +554,17 @@ export default {
                     }
                     if (res.data.site_info.subscribe) {
                         this.subscribe = JSON.parse(res.data.site_info.subscribe);
+                        if (this.subscribe.allowRecommend) {
+                            // 安排上最新推荐
+                            this.subscribe.list.push(
+                                {user_name:'admin',alias:'球哥',id:999991},
+                                {user_name:'chenyixi',alias:'以西',id:999992},
+                                {user_name:'gmengshuai',alias:'小帅',id:999993},
+                                {user_name:'loveai',alias:'ChatGPT',id:999994},
+                                {user_name:'yyds007',alias:'YYDS',id:999995},
+                                {user_name:'tiantian666',alias:'文学',id:999996},
+                            )
+                        }
                     }
 
                     if (res.data.site_info.top_bottom !== '') {

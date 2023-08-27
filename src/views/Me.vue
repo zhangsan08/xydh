@@ -111,7 +111,9 @@ export default {
             isVIP: false,
             userAllInfo: {
                 usedFolderNum: 0,
-                usedLinks: 0
+                usedLinks: 0,
+                max_folder:1,
+                max_link:1,
             },
             LoginCode: -1,
             Folders: [],

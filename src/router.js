@@ -40,12 +40,12 @@ const router = new Router({
         },
         {
             path: '/u/copy',
-            name: 'UExport',
+            name: 'UCopy',
             component: () => import('./views/LinksCopy.vue'),
         },
         {
             path: '/u/importBookmarks',
-            name: 'UExport',
+            name: 'UImport',
             component: () => import('./views/ImportBookmarks.vue'),
         },
         {
