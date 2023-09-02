@@ -88,7 +88,7 @@ export default {
     }
     .settingArea{
         text-align: right;
-        line-height: 1.4;
+        line-height: 2;
         cursor: pointer;
     }
     /deep/.module{

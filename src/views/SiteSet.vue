@@ -40,29 +40,39 @@
                 >
                 </el-switch>
                 <div v-if="SiteForm.bg_switch">
-                    <el-row>
-                        <p>横版(适用于PC端展示)</p>
-                        <el-input
-                            type="text"
-                            v-model="SiteForm.bg"
-                            minlength="0"
-                            maxlength="100"
-                            placeholder="请自行选择图床上传背景图片 不填则是默认"
-                        ></el-input>
-                    </el-row>
-                    <el-row>
-                        <p>竖版(适用于手机端展示)</p>
-                        <el-input
-                            type="text"
-                            v-model="SiteForm.mobile_bg"
-                            minlength="0"
-                            maxlength="100"
-                            placeholder="请自行选择移动端背景图片图床地址 不填则与PC端相同"
-                        ></el-input>
-                    </el-row>
+                    <el-radio-group v-model="SiteForm.bgRadioType">
+                        <el-radio :label="1">自定义背景</el-radio>
+                        <el-radio :label="2">每日必应</el-radio>
+                        <el-radio :label="3">随机风景</el-radio>
+                        <el-radio :label="4">随机动漫</el-radio>
+                    </el-radio-group>
+                    <div v-if="SiteForm.bgRadioType===1">
+                        <el-row>
+                            <p>横版(适用于PC端展示)</p>
+                            <el-input
+                                type="text"
+                                v-model="SiteForm.bg"
+                                minlength="0"
+                                maxlength="100"
+                                placeholder="请自行选择图床上传背景图片 不填则是默认"
+                            ></el-input>
+                        </el-row>
+                        <el-row>
+                            <p>竖版(适用于手机端展示)</p>
+                            <el-input
+                                type="text"
+                                v-model="SiteForm.mobile_bg"
+                                minlength="0"
+                                maxlength="100"
+                                placeholder="请自行选择移动端背景图片图床地址 不填则与PC端相同"
+                            ></el-input>
+                        </el-row>
+                    </div>
+
                     <!-- <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62946'>怎么自定义背景图片?</a> -->
                 </div>
-                <div v-else>
+                <div v-else class="flex">
+                    背景颜色：
                     <el-color-picker v-model="SiteForm.bg_color" :predefine="predefineColors"></el-color-picker>
                 </div>
             </el-form-item>
@@ -209,7 +219,7 @@
                                     type="text"
                                     v-model="scope.row.user_name"
                                     :disabled="scope.row.disabled"
-                                    maxlength="18" 
+                                    maxlength="18"
                                 ></el-input>
                             </template>
                         </el-table-column>
@@ -325,6 +335,7 @@ export default {
                 music: '',
                 top_bottom: '',
                 subscribe: '',
+                bgRadioType: 1,
             },
             texiao: [
                 {value: 0, label: '关闭'},
@@ -396,6 +407,7 @@ export default {
                 this.SiteForm.mobile_bg = res.data.mobile_bg;
                 this.SiteForm.btn_switch = res.data.btn_switch;
                 this.SiteForm.bg_switch = res.data.bg_switch;
+                this.SiteForm.bgRadioType = res.data.bgRadioType || 1
                 this.SiteForm.bg_color = res.data.bg_color;
                 this.SiteForm.font_color = res.data.font_color;
                 this.SiteForm.bglizi = res.data.bglizi;
@@ -465,9 +477,10 @@ export default {
             }
             siteService.updateSite(this.SiteForm).then(res => {
                 if (res.code > 0) {
-                    this.$notify.error({
+                    this.$notify({
                         title: '更新失败',
                         message: res.msg,
+                        type: 'error',
                     });
                 } else {
                     this.$notify({
@@ -534,6 +547,9 @@ export default {
         .item{
             margin-right: 10px;
         }
-
+    }
+    .flex{
+        display: flex;
+        align-items: center;
     }
 </style>

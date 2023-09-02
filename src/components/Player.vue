@@ -1,26 +1,19 @@
 <template>
     <span :class="['amusic', musicIsMini ? 'musicIsMini' : 'musicIsNoMini']">
         <aplayer
-            :music="musicList[0]"
-            :list="musicList"
-            :narrow="false"
-            :float="false"
+            :audio="musicList"
+            ref="aplayer"
+            fixed
+            :mini="musicIsMini"
             :listFolded="true"
             autoplay
-            :mini="musicIsMini"
-            ref="aplayer"
-            theme="#fff"
         ></aplayer>
     </span>
 </template>
 <script>
-import Aplayer from 'vue-aplayer';
-
 export default {
     name: 'Player',
-    components: {
-        Aplayer,
-    },
+    components: {},
     props: {
         musicList: {
             type: Array,
@@ -65,69 +58,244 @@ export default {
         left: 0;
         z-index: 999;
         max-width: 100%;
-        /deep/ .aplayer {
-            background-color: rgba(0, 125, 184, 0.4);
-            backdrop-filter: blur(3px);
-            margin: 0;
-            .aplayer-pic {
-                height: 55px;
-                width: 55px;
-                border-radius: 7px;
-                margin-top: 6px;
-                margin-left: 6px;
-                margin-bottom: 6px;
-            }
-            .aplayer-info {
-                border: none !important;
-            }
-            .aplayer-title {
-                color: #fff;
-            }
-            .aplayer-author {
-                color: #c0c0c0;
-            }
-            .aplayer-controller {
-                height: 30px;
-                .aplayer-time {
-                    min-width: 30%;
-                    .aplayer-time-inner {
-                        font-size: 14px;
-                        min-width: 100px;
+
+        /deep/ .aplayer-fixed {
+            max-width: 100%;
+
+            .aplayer-body {
+                // background-color: rgba(0, 125, 184, 0.4);
+                // backdrop-filter: blur(3px);
+                background-color: #fff;
+                margin: 0;
+                max-width: 100%;
+                box-sizing: content-box;
+                padding-right: 0;
+                width: 100%;
+                height: auto;
+
+                .aplayer-pic {
+                    height: 50px;
+                    width: 50px;
+                    border-radius: 7px;
+                    margin-top: 5px;
+                    margin-left: 5px;
+                    margin-bottom: 5px;
+                    z-index: 2;
+                }
+
+                .aplayer-info {
+                    border: none !important;
+                    position: relative;
+                    margin: 0;
+                    height: auto;
+                    padding: 9px 7px 0 10px;
+
+                    .aplayer-music {
+                        position: absolute;
+                        text-align: left;
+                        width: auto;
+                        left: 66px;
+                        display: flex;
+                        align-items: center;
                     }
-                    .aplayer-icon {
-                        width: 20px;
-                        height: 20px;
-                    }
-                    .aplayer-volume-wrap {
-                        margin-left: 0px;
-                        margin-right: 0px;
-                        .aplayer-volume-bar-wrap:after {
-                            background-color: transparent;
-                            bottom: -20px;
-                            height: 66px;
+
+                    @media screen and (max-width: 500px) {
+                        .aplayer-music {
+                            left: 55px !important;
                         }
-                        .aplayer-volume-bar {
-                            bottom: 4px;
-                            left: 17px;
-                            width: 6px;
-                        }
-                    }
-                    .aplayer-icon {
-                        margin-left: 10px !important;
-                        margin-right: 10px;
                     }
                 }
+
+                .aplayer-title {
+                    color: #000;
+                }
+
+                @media screen and (max-width: 500px) {
+                    .aplayer-title {
+                        max-width: 75px;
+                        display: inline-block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    .aplayer-author {
+                        max-width: 50px;
+                        display: inline-block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+
+                .aplayer-controller {
+                    width: 100%;
+
+                    .aplayer-bar-wrap {
+                        position: absolute;
+                        width: 100vw;
+                        bottom: 60px;
+                        left: -15px;
+                        padding: 0;
+
+                        .aplayer-played {
+                            background-color: #c20c0c !important;
+                        }
+                    }
+
+                    .aplayer-time {
+                        min-width: 30%;
+                        position: static;
+                        height: 100%;
+                        width: 100%;
+
+                        .aplayer-icon-back {
+                            position: absolute;
+                            left: 42%;
+
+                            path {
+                                fill: #c20c0c;
+                            }
+                        }
+
+                        .aplayer-icon-play {
+                            left: 48%;
+                            width: 35px !important;
+                            height: 35px !important;
+                            bottom: 13px !important;
+
+                            path {
+                                fill: #c20c0c;
+                            }
+                        }
+
+                        .aplayer-icon-forward {
+                            left: 55%;
+
+                            path {
+                                fill: #c20c0c;
+                            }
+                        }
+
+                        .aplayer-icon-menu {
+                            position: absolute;
+                            right: 5%;
+                        }
+
+                        @media screen and (max-width: 500px) {
+                            .aplayer-time-inner {
+                                left: 51px !important;
+                            }
+
+                            .aplayer-icon-play {
+                                left: 48%;
+                            }
+
+                            .aplayer-icon-menu {
+                                right: 0%;
+                            }
+
+                            .aplayer-icon-loop {
+                                right: 16% !important;
+                            }
+
+                            .aplayer-icon-order {
+                                right: 8% !important;
+                            }
+                        }
+
+                        .aplayer-time-inner {
+                            font-size: 14px;
+                            min-width: 100px;
+                            position: absolute;
+                            left: 61px;
+                            bottom: 12px;
+                            text-align: left;
+                        }
+
+                        .aplayer-icon {
+                            width: 20px;
+                            height: 20px;
+
+                            &:hover {
+                                path {
+                                    fill: #c20c0c;
+                                }
+                            }
+                        }
+
+                        .aplayer-volume-bar-wrap {
+                            right: 0;
+
+                            .aplayer-volume {
+                                width: 6px;
+                            }
+                        }
+
+                        .aplayer-volume-wrap {
+                            right: 20%;
+                            bottom: 20px;
+                            position: absolute;
+
+                            .aplayer-volume-bar-wrap:after {
+                                background-color: transparent;
+                                bottom: -20px;
+                                height: 67px;
+                            }
+
+                            .aplayer-volume-bar {
+                                bottom: 4px;
+                                left: 17px;
+                                width: 6px;
+                            }
+                        }
+
+                        .aplayer-icon-order {
+                            right: 10%;
+                            position: absolute;
+                        }
+
+                        .aplayer-icon-loop {
+                            position: absolute;
+                            width: 20px;
+                            height: 20px;
+                            right: 15%;
+                        }
+
+                        .aplayer-icon {
+                            margin-left: 10px !important;
+                            margin-right: 10px;
+                            bottom: 20px;
+                        }
+                    }
+                }
+
+                .aplayer-miniswitcher {
+                    display: none;
+                }
             }
+
             .aplayer-list {
                 background: #fff;
+                margin-bottom: 60px;
+
+                .aplayer-list-index {
+                    float: left;
+                }
+
+                .aplayer-list-title {
+                    color: #666;
+                }
             }
         }
     }
+
     .musicIsNoMini {
         width: 100%;
     }
+
     .musicIsMini {
-        /deep/ .aplayer {
+        /deep/ .aplayer .aplayer-body {
             background-color: transparent;
             box-shadow: none;
         }

@@ -19,7 +19,7 @@
                         公告：
                         <el-carousel class="carousel" height="50px" direction="vertical" indicator-position="none">
                             <el-carousel-item> 站点订阅功能上线啦~ </el-carousel-item>
-                            <el-carousel-item> 站点订阅功能上线啦~ </el-carousel-item>
+                            <el-carousel-item> 背景图可以随机啦~ </el-carousel-item>
                             <el-carousel-item> 站点订阅功能上线啦~ </el-carousel-item>
                         </el-carousel>
                     </div>
@@ -112,8 +112,8 @@ export default {
             userAllInfo: {
                 usedFolderNum: 0,
                 usedLinks: 0,
-                max_folder:1,
-                max_link:1,
+                max_folder: 1,
+                max_link: 1,
             },
             LoginCode: -1,
             Folders: [],

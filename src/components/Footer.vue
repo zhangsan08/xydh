@@ -7,7 +7,7 @@
             :href="friendlyLink.url"
             v-for="friendlyLink in friendlyLinks"
             :key="friendlyLink.name"
-        ><span class="line">|</span> <span class="name">{{ friendlyLink.name }}</span></a>
+        ><span class="line">|</span><span class="name">{{ friendlyLink.name }}</span></a>
     </div>
 </template>
 <script>

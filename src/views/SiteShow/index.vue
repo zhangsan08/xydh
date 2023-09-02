@@ -91,11 +91,11 @@
                                         target="_blank"
                                     >前往站长主页 <i class="el-icon-top-right"></i></a>
                                 </div> -->
-                                <li @click="clickTab(item.id,item.user_name)" slot="reference">
-                                    <div :class="item.id === activeTabId ? 'active' : ''">
-                                        {{ item.alias || item.user_name }}
-                                    </div>
-                                </li>
+                            <li @click="clickTab(item.id,item.user_name)" slot="reference">
+                                <div :class="item.id === activeTabId ? 'active' : ''">
+                                    {{ item.alias || item.user_name }}
+                                </div>
+                            </li>
                             <!-- </el-popover> -->
                         </div>
 
@@ -202,6 +202,7 @@
 
         <!-- 音乐 -->
         <Player :musicList="music.list" v-if="music.open"/>
+
         <!-- 跑马灯（暂时去掉了 本想留作广告位。发现接不到 -->
         <el-col :span="24">
             <div class="totop">
@@ -298,11 +299,12 @@ export default {
             music: {
                 open: false,
                 list: [
-                    // {
-                    //     title: '孤独面店',
-                    //     artist: '姜云升',
-                    //     url: 'https://cdn.jsdelivr.net/gh/mlchsq/tuchuang/姜云升 - 孤独面店.mp3',
-                    // },
+                    // 默认有一条数据，否则初始化报错
+                    {
+                        name: '孤独面店',
+                        artist: '姜云升',
+                        url: 'https://cdn.jsdelivr.net/gh/mlchsq/tuchuang/姜云升 - 孤独面店.mp3',
+                    },
                 ],
             },
             subscribe: {
@@ -510,31 +512,25 @@ export default {
                     var obj = document.getElementsByTagName('body')[0];
                     var style = document.createElement('style');
 
-                    if (res.data.site_info.bg_switch) {
-                        // if (window.innerWidth < 768 && this.mobile_bg) {
-                        //     obj.style.backgroundImage = 'url(' + this.mobile_bg + ')';
-                        // } else {
-                        //     obj.style.backgroundImage = 'url(' + res.data.site_info.bg + ')';
-                        // }
-
-                        if (window.innerWidth < 768 && this.mobile_bg) {
-                            let bg = this.mobile_bg;
-                            style.innerHTML = `body::before { background-image: url(${bg})}`;
-                        } else {
-                            let bg = res.data.site_info.bg;
-                            style.innerHTML = `body::before { background-image: url(${bg})}`;
+                    if (res.data.site_info.bg_switch) {// 有背景图
+                        let bgRadioType = res.data.site_info.bgRadioType || 1
+                        let bg = ''
+                        if (bgRadioType === 1) {
+                            if (window.innerWidth < 768 && this.mobile_bg) {
+                                bg = this.mobile_bg;
+                            } else {
+                                bg = res.data.site_info.bg;
+                            }
+                        } else if (bgRadioType === 2) {
+                            bg = 'https://api.dujin.org/bing/1920.php';
+                        } else if (bgRadioType === 3) {
+                            bg = 'https://api.aixiaowai.cn/gqapi/gqapi.php';
+                        } else if (bgRadioType === 4) {
+                            bg = 'https://api.aixiaowai.cn/api/api.php';
                         }
-
-                        this.isBorder = res.data.site_info.bg !== '';
-
+                        this.isBorder = true;
+                        style.innerHTML = `body::before { background-image: url(${bg})}`;
                         document.head.appendChild(style);
-                        // window.onresize = () => {
-                        //     if(window.innerWidth < 768 && this.mobile_bg) {
-                        //         obj.style.backgroundImage = "url(" + this.mobile_bg + ")"
-                        //     } else {
-                        //         obj.style.backgroundImage = "url(" + res.data.site_info.bg + ")"
-                        //     }
-                        // }
                     } else {
                         obj.style.backgroundColor = res.data.site_info.bg_color;
                     }
@@ -547,8 +543,14 @@ export default {
                     }
                     // 载入音乐和自定义底部
                     if (res.data.site_info.music !== '') {
-                        this.music = JSON.parse(res.data.site_info.music);
+                        let musicInfo = JSON.parse(res.data.site_info.music)
+
+                        let newList = musicInfo.list.map((item) => {
+                            return {...item, name: item.title}
+                        })
+                        this.music = {...musicInfo, list: newList};
                     }
+
                     if (!this.is_vip) {
                         this.music.list.splice(1);
                     }
@@ -557,12 +559,12 @@ export default {
                         if (this.subscribe.allowRecommend) {
                             // 安排上最新推荐
                             this.subscribe.list.push(
-                                {user_name:'admin',alias:'球哥',id:999991},
-                                {user_name:'chenyixi',alias:'以西',id:999992},
-                                {user_name:'gmengshuai',alias:'小帅',id:999993},
-                                {user_name:'loveai',alias:'ChatGPT',id:999994},
-                                {user_name:'yyds007',alias:'YYDS',id:999995},
-                                {user_name:'tiantian666',alias:'文学',id:999996},
+                                {user_name: 'admin', alias: '球哥', id: 999991},
+                                {user_name: 'chenyixi', alias: '以西', id: 999992},
+                                {user_name: 'gmengshuai', alias: '小帅', id: 999993},
+                                {user_name: 'loveai', alias: 'ChatGPT', id: 999994},
+                                {user_name: 'yyds007', alias: 'YYDS', id: 999995},
+                                {user_name: 'tiantian666', alias: '文学', id: 999996},
                             )
                         }
                     }
@@ -606,7 +608,7 @@ export default {
             case '.jpeg':
             case '.gif':
             case '.svg':
-            this.openImgLink(linkInfo);
+                this.openImgLink(linkInfo);
                 return;
             default:
                 break;
