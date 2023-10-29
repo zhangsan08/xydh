@@ -26,8 +26,10 @@
             </div>
             <div style="height: 80px" v-if="!navSwitch && !labSwitch"></div>
             <!-- 搜索框 -->
-            <SearchTool :AllLinks="AllLinks"></SearchTool>
-
+            <!-- <SearchTool :AllLinks="AllLinks"></SearchTool> -->
+            <div class="SearchTool">
+                <Search ref="search" :AllLinks="AllLinks" :customSearchEngines="customSearchEngines"/>
+            </div>
             <!-- 点击实验室按钮会打开实验室页面 -->
             <div class="Lab totop" v-if="labSwitch">
                 <div class="hidden-sm-and-up" style="height: 50px"></div>
@@ -172,7 +174,7 @@
                                         <div
                                             class="link"
                                             :class="{[env]: true, 'lineTextCenter': lineTextCenter }"
-                                            v-on:mouseenter="linkMouseEnter(link.info, Folder.id)"
+                                            v-on:mouseenter="linkMouseEnter(link.info, link.name, Folder.id)"
                                             v-on:mouseleave="linkMouseLeave"
                                         >
                                             <a @click="goToUrl(link)" target="_blank" rel="nofollow">
@@ -180,6 +182,7 @@
                                                     <span class="icon" v-if="showLineIcon">
                                                         <i :class="'fa fa-' + link.icon" v-if="link.icon"></i>
                                                         <i :class="'fa fa-bookmark-o'" v-else></i>
+                                                        <!-- <img :src="`http://www.google.com/s2/favicons?domain=${link.url}`" alt=""> -->
                                                     </span>
                                                     <span class="linkName">{{link.name}}</span>
                                                 </div>
@@ -250,6 +253,7 @@ import Loading from '@/components/Loading.vue';
 import InitLoading from '@/components/InitLoading.vue';
 import MoreLinkModal from '@/components/MoreLinkModal.vue';
 import ImgLinkModal from '@/components/ImgLinkModal.vue';
+import Search from '@/components/Search/index.vue';
 
 export default {
     name: 'ShowSite',
@@ -259,7 +263,8 @@ export default {
         },
     },
     components: {
-        SearchTool,
+        // SearchTool,
+        Search,
         // Paomadeng,
         Header,
         Footer,
@@ -311,6 +316,15 @@ export default {
                 open: false,
                 list: [],
                 allowRecommend: true,
+            },
+            customSearchEngines: {
+                type: '自定义',
+                list: [
+                    // {
+                    //     title: '必应1',
+                    //     url: 'https://cn.bing.com/search',
+                    // },
+                ],
             },
             timeoutId: null, // 存储 setTimeout 的 ID
             top_bottom: {
@@ -398,11 +412,18 @@ export default {
         }
     },
     methods: {
-        linkMouseEnter(info, id) {
-            if (!info) return;
+        linkMouseEnter(info, name, id) {
+            if (!info && !name) {
+                return
+            }
             this.hoverFileId = id;
             this.showMessage = true;
-            this.infoTips = info;
+            if (info) {
+                this.infoTips = info;
+            }
+            else {
+                this.infoTips = name;
+            }
         },
         linkMouseLeave() {
             this.showMessage = false;
@@ -513,23 +534,15 @@ export default {
                     var style = document.createElement('style');
 
                     if (res.data.site_info.bg_switch) {// 有背景图
-                        let bgRadioType = res.data.site_info.bgRadioType || 1
                         let bg = ''
-                        if (bgRadioType === 1) {
-                            if (window.innerWidth < 768 && this.mobile_bg) {
-                                bg = this.mobile_bg;
-                            } else {
-                                bg = res.data.site_info.bg;
-                            }
-                        } else if (bgRadioType === 2) {
-                            bg = 'https://api.dujin.org/bing/1920.php';
-                        } else if (bgRadioType === 3) {
-                            bg = 'https://api.aixiaowai.cn/gqapi/gqapi.php';
-                        } else if (bgRadioType === 4) {
-                            bg = 'https://api.aixiaowai.cn/api/api.php';
+                        if (window.innerWidth < 768 && this.mobile_bg) {
+                            bg = this.mobile_bg;
+                        } else {
+                            bg = res.data.site_info.bg;
                         }
                         this.isBorder = true;
-                        style.innerHTML = `body::before { background-image: url(${bg})}`;
+                        const shadow = 'radial-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%)'
+                        style.innerHTML = `body::before { background-image: ${shadow},url(${bg})}`;
                         document.head.appendChild(style);
                     } else {
                         obj.style.backgroundColor = res.data.site_info.bg_color;
@@ -546,14 +559,14 @@ export default {
                         let musicInfo = JSON.parse(res.data.site_info.music)
 
                         let newList = musicInfo.list.map((item) => {
-                            return {...item, name: item.title}
+                            return {...item, name: item.title, cover: item.pic}
                         })
                         this.music = {...musicInfo, list: newList};
                     }
 
-                    if (!this.is_vip) {
-                        this.music.list.splice(1);
-                    }
+                    // if (!this.is_vip) {
+                    //     this.music.list.splice(1);
+                    // }
                     if (res.data.site_info.subscribe) {
                         this.subscribe = JSON.parse(res.data.site_info.subscribe);
                         if (this.subscribe.allowRecommend) {
@@ -568,7 +581,9 @@ export default {
                             )
                         }
                     }
-
+                    if (res.data.site_info.customSearchEngines) {
+                        this.customSearchEngines.list = JSON.parse(res.data.site_info.customSearchEngines);
+                    }
                     if (res.data.site_info.top_bottom !== '') {
                         this.top_bottom = JSON.parse(res.data.site_info.top_bottom);
                     }

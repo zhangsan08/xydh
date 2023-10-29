@@ -40,34 +40,29 @@
                 >
                 </el-switch>
                 <div v-if="SiteForm.bg_switch">
-                    <el-radio-group v-model="SiteForm.bgRadioType">
-                        <el-radio :label="1">自定义背景</el-radio>
-                        <el-radio :label="2">每日必应</el-radio>
-                        <el-radio :label="3">随机风景</el-radio>
-                        <el-radio :label="4">随机动漫</el-radio>
-                    </el-radio-group>
-                    <div v-if="SiteForm.bgRadioType===1">
-                        <el-row>
-                            <p>横版(适用于PC端展示)</p>
-                            <el-input
-                                type="text"
-                                v-model="SiteForm.bg"
-                                minlength="0"
-                                maxlength="100"
-                                placeholder="请自行选择图床上传背景图片 不填则是默认"
-                            ></el-input>
-                        </el-row>
-                        <el-row>
-                            <p>竖版(适用于手机端展示)</p>
-                            <el-input
-                                type="text"
-                                v-model="SiteForm.mobile_bg"
-                                minlength="0"
-                                maxlength="100"
-                                placeholder="请自行选择移动端背景图片图床地址 不填则与PC端相同"
-                            ></el-input>
-                        </el-row>
+                    <div v-for="item in bgAddress" :key="item.label">
+                        <el-button type="success" size="mini" @click="easyUseBg(item.url)"> 一键使用 </el-button>&nbsp;&nbsp;{{item.label}}：{{ item.url }}
                     </div>
+                    <el-row>
+                        <p>横版(适用于PC端展示)</p>
+                        <el-input
+                            type="text"
+                            v-model="SiteForm.bg"
+                            minlength="0"
+                            maxlength="100"
+                            placeholder="请自行选择图床上传背景图片 不填则是默认"
+                        ></el-input>
+                    </el-row>
+                    <el-row>
+                        <p>竖版(适用于手机端展示)</p>
+                        <el-input
+                            type="text"
+                            v-model="SiteForm.mobile_bg"
+                            minlength="0"
+                            maxlength="100"
+                            placeholder="请自行选择移动端背景图片图床地址 不填则与PC端相同"
+                        ></el-input>
+                    </el-row>
 
                     <!-- <a target='_blank' rel='nofollow' href='https://support.qq.com/products/106426/faqs/62946'>怎么自定义背景图片?</a> -->
                 </div>
@@ -97,6 +92,46 @@
                     show-word-limit
                     placeholder=""
                 ></el-input>
+            </el-form-item>
+            <!-- 自定义搜索模块 -->
+            <el-form-item label="自定义搜索引擎">
+                <div>
+                    <div>
+                        <span style="margin-right: 10px">
+                            <el-button type="success" :disabled="customSearchEngines.list.length > 7" @click="addToList(customSearchEngines.list, 2, 2)" size="medium">
+                                添加搜索引擎
+                            </el-button>
+                        </span>
+                    </div>
+                    <el-table :data="customSearchEngines.list">
+                        <el-table-column label="名称" width="250">
+                            <template slot-scope="scope">
+                                <el-input
+                                    type="text"
+                                    v-model="scope.row.title"
+                                    maxlength="4"
+                                    show-word-limit
+                                ></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="地址(例：https://cn.bing.com/search?q=)">
+                            <template slot-scope="scope">
+                                <el-input type="text" v-model="scope.row.url"></el-input>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作" width="160">
+                            <template slot-scope="scope">
+                                <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="deleteFromList(customSearchEngines.list, scope.row)"
+                                >
+                                    删除
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
             </el-form-item>
             <!-- 音乐模块 -->
             <el-form-item label="背景音乐">
@@ -169,11 +204,9 @@
                 </el-switch>
                 <div v-if="subscribe.open">
                     <div class="recommendSubscribe">
-                        <span class="item">
-                            热门订阅（VIP功能，限时免费）
-                        </span>
+                        <span class="item"> 热门订阅（VIP功能，限时免费） </span>
                         <el-tooltip class="item" effect="dark" placement="top">
-                            <div slot="content">将热门/优质站点的内容嵌入到自己的页面<br/></div>
+                            <div slot="content">将热门/优质站点的内容嵌入到自己的页面<br /></div>
                             <i :class="'fa fa-question-circle-o'" />
                         </el-tooltip>
 
@@ -188,13 +221,14 @@
                     </div>
 
                     <div>
-                        <span style="margin-right: 10px;">
+                        <span style="margin-right: 10px">
                             <el-button
                                 type="success"
                                 @click="addToList(subscribe.list, 3, 2)"
                                 size="medium"
                                 :disabled="
-                                    (!isVIP && this.subscribe.list.length > 2) || (isVIP && this.subscribe.list.length > 7)
+                                    (!isVIP && this.subscribe.list.length > 2) ||
+                                        (isVIP && this.subscribe.list.length > 7)
                                 "
                             >
                                 <span v-if="!isVIP && this.subscribe.list.length > 2">
@@ -225,7 +259,12 @@
                         </el-table-column>
                         <el-table-column label="别名(实际展示名称)">
                             <template slot-scope="scope">
-                                <el-input type="text" v-model="scope.row.alias" maxlength="8" show-word-limit></el-input>
+                                <el-input
+                                    type="text"
+                                    v-model="scope.row.alias"
+                                    maxlength="8"
+                                    show-word-limit
+                                ></el-input>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作" width="160">
@@ -238,12 +277,7 @@
                                 >
                                     删除
                                 </el-button>
-                                <el-button
-                                    size="mini"
-                                    @click="goPreview(scope.row.user_name)"
-                                >
-                                    预览
-                                </el-button>
+                                <el-button size="mini" @click="goPreview(scope.row.user_name)"> 预览 </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -335,7 +369,7 @@ export default {
                 music: '',
                 top_bottom: '',
                 subscribe: '',
-                bgRadioType: 1,
+                customSearchEngines: '',
             },
             texiao: [
                 {value: 0, label: '关闭'},
@@ -343,6 +377,11 @@ export default {
                 {value: 2, label: '科技线条'},
                 {value: 3, label: '搞怪猫(会使背景图片失效)'},
                 {value: 4, label: '吹气泡(点击生成气泡)'},
+            ],
+            bgAddress: [
+                {url: 'https://api.dujin.org/bing/1920.php', label: '每日一图'},
+                {url: 'https://api.aixiaowai.cn/gqapi/gqapi.php', label: '随机风景'},
+                {url: 'https://api.aixiaowai.cn/api/api.php', label: '随机动漫'},
             ],
             predefineColors: [
                 '#000000',
@@ -362,7 +401,10 @@ export default {
             subscribe: {
                 open: true,
                 list: [],
-                allowRecommend: true
+                allowRecommend: true,
+            },
+            customSearchEngines: {
+                list: [],
             },
             top_bottom: {
                 top_switch: true,
@@ -386,6 +428,10 @@ export default {
         });
     },
     methods: {
+        easyUseBg(url) {
+            this.SiteForm.bg = url
+            this.SiteForm.mobile_bg = url
+        },
         rowDrop() {
             if (this.subscribe.open) {
                 const tableBody = this.$refs.table.$el.querySelector('.el-table__body-wrapper tbody');
@@ -407,7 +453,6 @@ export default {
                 this.SiteForm.mobile_bg = res.data.mobile_bg;
                 this.SiteForm.btn_switch = res.data.btn_switch;
                 this.SiteForm.bg_switch = res.data.bg_switch;
-                this.SiteForm.bgRadioType = res.data.bgRadioType || 1
                 this.SiteForm.bg_color = res.data.bg_color;
                 this.SiteForm.font_color = res.data.font_color;
                 this.SiteForm.bglizi = res.data.bglizi;
@@ -417,6 +462,9 @@ export default {
                 }
                 if (res.data.subscribe) {
                     this.subscribe = JSON.parse(res.data.subscribe);
+                }
+                if (res.data.customSearchEngines) {
+                    this.customSearchEngines = JSON.parse(res.data.customSearchEngines);
                 }
                 if (res.data.top_bottom) {
                     this.top_bottom = JSON.parse(res.data.top_bottom);
@@ -440,6 +488,16 @@ export default {
             });
         },
         updateSite() {
+            if (
+                this.hasEmptyValue(this.customSearchEngines.list, 'title') ||
+                    this.hasEmptyValue(this.customSearchEngines.list, 'url')
+            ) {
+                this.notifyError('搜索引擎有内容未填写，请检查');
+                return;
+            }
+
+            this.SiteForm.customSearchEngines = JSON.stringify(this.customSearchEngines.list);
+
             if (this.subscribe.open) {
                 if (this.subscribe.list.length === 0 && this.subscribe.allowRecommend == false) {
                     this.notifyError('订阅站点开关已打开，但未添加');
@@ -518,7 +576,7 @@ export default {
         },
         goPreview(user_name) {
             window.open(`https://xydh.fun/${user_name}`, '_blank');
-        }
+        },
     },
 };
 </script>
@@ -541,14 +599,14 @@ export default {
         z-index: 99;
         right: 100px;
     }
-    .recommendSubscribe{
+    .recommendSubscribe {
         display: flex;
         align-items: center;
-        .item{
+        .item {
             margin-right: 10px;
         }
     }
-    .flex{
+    .flex {
         display: flex;
         align-items: center;
     }

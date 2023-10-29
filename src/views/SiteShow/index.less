@@ -32,7 +32,12 @@ body {
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
+        background-color: radial-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%);
     }
+}
+.SearchTool{
+    margin-top: 70px;
+    margin-bottom: 30px;
 }
 .navLoading {
     margin-top: 20px;
@@ -154,7 +159,7 @@ body {
     border-radius: 20px;
     overflow: auto;
     box-sizing: border-box;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(1.5px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     border-right: 1px solid rgba(255, 255, 255, 0.4);
     box-shadow: rgba(0, 0, 0, 0.3) -1px -1px 5px;
@@ -165,8 +170,8 @@ body {
     &:hover {
         color: white;
         box-sizing: border-box;
-        backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
-        // background: rgba(0, 0, 0, 0.3)
+        // backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
+        background: rgba(0, 0, 0, 0.3)
     }
 }
 
@@ -175,7 +180,7 @@ body {
     border-radius: 20px;
     overflow: auto;
     box-sizing: border-box;
-    backdrop-filter: blur(3px);
+    // backdrop-filter: blur(3px);
     border: 1px solid rgba(255, 255, 255, 0.4);
     padding: 13px 0;
     font-size: 13px;
@@ -183,7 +188,7 @@ body {
     &:hover {
         color: white;
         box-sizing: border-box;
-        backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
+        // backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
     }
 }
 

@@ -13,6 +13,7 @@ export default new Vuex.Store({
             showHistory: true,
             lineTextCenter: false,
             showLineIcon: true,
+            searchBoxFillet: true,
         },
     },
     mutations: {

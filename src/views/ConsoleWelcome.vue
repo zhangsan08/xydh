@@ -62,7 +62,7 @@
                                     type="primary"
                                     target="_blank"
                                     href=" https://docs.qq.com/doc/DQXJKbkplRUtORGFI"
-                                >点击加入微信群</el-link>
+                                >扫码关注公众号</el-link>
                             </p>
                         </div>
                         <div>
@@ -72,7 +72,7 @@
                                     type="primary"
                                     target="_blank"
                                     href="https://pic1.58cdn.com.cn/nowater/webim/big/n_v27b7aa70b649d4943b27cb7399f44d8a6.png"
-                                >iLinks 高质量知识星球</el-link>
+                                >扫码加入高质量知识星球</el-link>
                             </p>
                         </div>
                     </div>

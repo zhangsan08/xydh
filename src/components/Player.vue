@@ -53,25 +53,31 @@ export default {
 </script>
 <style scoped lang="less">
     .amusic {
-        position: fixed;
-        bottom: 0;
-        left: 0;
+        // position: fixed;
+        // bottom: 100px;
+        // left: 0;
         z-index: 999;
         max-width: 100%;
 
         /deep/ .aplayer-fixed {
-            max-width: 100%;
-
+            max-width: 650px;
+            border-radius: 0 7px 0 0;
+            overflow: hidden;
             .aplayer-body {
                 // background-color: rgba(0, 125, 184, 0.4);
                 // backdrop-filter: blur(3px);
-                background-color: #fff;
+                background-color: #e0e5ec;
+                color: darken(#7e8a98, 10%);
+                // box-shadow:  0px 0px 15px 5px #a3b1c6a8;
+                border: 0;
                 margin: 0;
-                max-width: 100%;
+                // max-width: 100%;
+                max-width: 650px;
                 box-sizing: content-box;
                 padding-right: 0;
                 width: 100%;
                 height: auto;
+                border-radius: 0 7px 0 0;
 
                 .aplayer-pic {
                     height: 50px;
@@ -107,12 +113,14 @@ export default {
                 }
 
                 .aplayer-title {
-                    color: #000;
+                    color: darken(#7e8a98, 10%);
                 }
-
+                .aplayer-author {
+                    color: #7e8a98;
+                }
                 @media screen and (max-width: 500px) {
                     .aplayer-title {
-                        max-width: 75px;
+                        max-width: 85px;
                         display: inline-block;
                         white-space: nowrap;
                         overflow: hidden;
@@ -133,75 +141,97 @@ export default {
 
                     .aplayer-bar-wrap {
                         position: absolute;
-                        width: 100vw;
-                        bottom: 60px;
-                        left: -15px;
+                        width: 560px;
                         padding: 0;
+                        top: -7px;
+                        left: 57px;
 
                         .aplayer-played {
-                            background-color: #c20c0c !important;
+                            background-color: #7e8a98 !important;
                         }
                     }
+                    @media screen and (max-width: 500px) {
+                        .aplayer-bar-wrap {
+                        width: 85%;
+                        left: 48px;
+                    }
+                    }
+                    .aaa {
+                        padding: 5px;
+                        border-radius: 30px;
+                        color: #7e8a98;
+                        outline: none;
+                        cursor: pointer;
+                        box-shadow: -5px -5px 15px 0px #ffffff9e, 5px 5px 15px 0px #a3b1c6a8;
+                        background: #e0e5ec;
+                        border-radius: 2em;
+                        border: 0;
 
+                        path {
+                            fill: #7e8a98;
+                        }
+                    }
                     .aplayer-time {
                         min-width: 30%;
                         position: static;
                         height: 100%;
                         width: 100%;
-
+                        color: #7e8a98;
                         .aplayer-icon-back {
                             position: absolute;
-                            left: 42%;
-
-                            path {
-                                fill: #c20c0c;
-                            }
+                            left: 43%;
+                            .aaa;
                         }
 
                         .aplayer-icon-play {
-                            left: 48%;
-                            width: 35px !important;
-                            height: 35px !important;
+                            left: 52%;
+                            width: 30px !important;
+                            height: 30px !important;
                             bottom: 13px !important;
-
-                            path {
-                                fill: #c20c0c;
-                            }
+                            .aaa;
                         }
 
                         .aplayer-icon-forward {
-                            left: 55%;
-
-                            path {
-                                fill: #c20c0c;
-                            }
+                            left: 63%;
+                            .aaa;
                         }
 
                         .aplayer-icon-menu {
                             position: absolute;
-                            right: 5%;
+                            right: 0%;
+                            bottom: 20px !important;
                         }
 
                         @media screen and (max-width: 500px) {
                             .aplayer-time-inner {
                                 left: 51px !important;
                             }
-
-                            .aplayer-icon-play {
+                            .aplayer-icon-back {
                                 left: 48%;
                             }
-
+                            .aplayer-icon-play {
+                                left: 60%;
+                            }
+                            .aplayer-icon-forward {
+                                left: 75%;
+                            }
                             .aplayer-icon-menu {
                                 right: 0%;
+                                path {
+                                    fill: #7e8a98;
+                                }
                             }
 
                             .aplayer-icon-loop {
                                 right: 16% !important;
+                                display: none;
                             }
 
                             .aplayer-icon-order {
-                                right: 8% !important;
+                                right: 5% !important;
+                                display: none;
                             }
+
                         }
 
                         .aplayer-time-inner {
@@ -217,11 +247,11 @@ export default {
                             width: 20px;
                             height: 20px;
 
-                            &:hover {
-                                path {
-                                    fill: #c20c0c;
-                                }
-                            }
+                            // &:hover {
+                            //     path {
+                            //         fill: #c20c0c;
+                            //     }
+                            // }
                         }
 
                         .aplayer-volume-bar-wrap {
@@ -233,7 +263,7 @@ export default {
                         }
 
                         .aplayer-volume-wrap {
-                            right: 20%;
+                            right: 15%;
                             bottom: 20px;
                             position: absolute;
 
@@ -251,7 +281,8 @@ export default {
                         }
 
                         .aplayer-icon-order {
-                            right: 10%;
+                            right: 5%;
+                            bottom: 20px !important;
                             position: absolute;
                         }
 
@@ -259,13 +290,17 @@ export default {
                             position: absolute;
                             width: 20px;
                             height: 20px;
-                            right: 15%;
+                            right: 10%;
+                            bottom: 20px !important;
                         }
 
                         .aplayer-icon {
                             margin-left: 10px !important;
                             margin-right: 10px;
-                            bottom: 20px;
+                            bottom: 17px;
+                            path {
+                                fill: #7e8a98;
+                            }
                         }
                     }
                 }
@@ -278,6 +313,8 @@ export default {
             .aplayer-list {
                 background: #fff;
                 margin-bottom: 60px;
+                border-radius: 0 7px 0 0;
+                border: none;
 
                 .aplayer-list-index {
                     float: left;

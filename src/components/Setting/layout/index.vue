@@ -11,6 +11,14 @@
             </div>
         </div> -->
         <div class="card felx">
+            <div>搜索框圆角</div>
+            <el-switch
+                v-model="searchBoxFillet"
+                @change="(v)=>handel(v,'searchBoxFillet')"
+            >
+            </el-switch>
+        </div>
+        <div class="card felx">
             <div>足迹开关</div>
             <el-switch
                 v-model="showHistory"
@@ -47,6 +55,7 @@ export default {
     },
     data() {
         return {
+            searchBoxFillet: this.$store.state.userConfig.searchBoxFillet,
             showHistory: this.$store.state.userConfig.showHistory,
             lineTextCenter: this.$store.state.userConfig.lineTextCenter,
             showLineIcon: this.$store.state.userConfig.showLineIcon,
