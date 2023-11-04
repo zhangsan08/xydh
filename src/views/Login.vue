@@ -48,12 +48,12 @@
                                 <span>确认密码</span>
                             </div>
                             <div class="inputBox">
-                                <input type="text" required v-model="registerForm.yuankey" />
+                                <input type="text" required v-model="registerForm.yuankey" placeholder="公众号文章留言获取"/>
                                 <span>邀请码</span>
                             </div>
                             <div class="links">
                                 <span> <span>已有账号？</span> <a @click="goLogin">登录</a> </span>
-                                <a href="https://jinshuju.net/f/yukl9Z" target="_blank">获取邀请码</a>
+                                <!-- <a href="https://jinshuju.net/f/yukl9Z" target="_blank">获取邀请码</a> -->
                             </div>
                             <div class="submitButton" @click="handleRegisterSubmit">注册</div>
                         </div>
@@ -92,12 +92,12 @@
                                     <span>确认密码</span>
                                 </div>
                                 <div class="inputBox">
-                                    <input type="text" required v-model="registerForm.yuankey" />
+                                    <input type="text" required v-model="registerForm.yuankey" placeholder="公众号文章留言获取"/>
                                     <span>邀请码</span>
                                 </div>
                                 <div class="links">
                                     <span> <span>已有账号？</span> <a @click="goLogin">登录</a> </span>
-                                    <a href="https://jinshuju.net/f/yukl9Z" target="_blank">获取邀请码</a>
+                                    <!-- <a href="https://jinshuju.net/f/yukl9Z" target="_blank">获取邀请码</a> -->
                                 </div>
                                 <div class="submitButton" @click="handleRegisterSubmit">注册</div>
                             </div>

@@ -1,3 +1,5 @@
+@text-color: inherit; /* 定义变量保存文字颜色值 */
+
 .searchArea {
     .sou {
         max-width: 600px;
@@ -42,7 +44,7 @@
         width: 100%;
         height: 43px;
         border-radius: 4px;
-        color: #efefef;
+        color: @text-color;
         overflow: hidden;
         background-color: rgba(255, 255, 255, 0.25);
         box-shadow: rgba(0, 0, 0, 0.2) 0 0 10px;
@@ -55,17 +57,17 @@
         box-shadow: 0 0 20px #00000033;
     }
 
-    .sou  .wd {
+    .sou .wd {
         width: 100%;
         height: 100%;
         line-height: 100%;
         text-indent: 4px;
         font-size: 1.25rem;
-        color: #fff;
+        color: @text-color;
         /* background-color: transparent; */
     }
-    .sou  .se,
-    .sou  .s {
+    .sou .se,
+    .sou .s {
         width: 40px;
         height: 40px;
         display: flex;
@@ -78,10 +80,10 @@
     #icon-se,
     #icon-sou {
         font-size: 1.25rem;
-        color: #efefef;
+        color: @text-color;
     }
 
-    .sou  .se {
+    .sou .se {
         transition: 0.3s;
         border-radius: 0px 30px 30px 0px;
         span {
@@ -91,7 +93,7 @@
         }
     }
 
-    .sou  .se:hover {
+    .sou .se:hover {
         transition: 0.3s;
         background: #00000040;
         border-radius: 0px 30px 30px 0px;
@@ -108,15 +110,11 @@
     }
     .all-search {
         input::-webkit-input-placeholder {
-            color: #efefef;
+            color: @text-color;
             text-align: center;
         }
         input::-moz-placeholder {
-            color: #efefef;
-            text-align: center;
-        }
-        input::-moz-placeholder {
-            color: #efefef;
+            color: @text-color;
             text-align: center;
         }
     }
@@ -126,7 +124,7 @@
         top: 50px;
         box-sizing: border-box;
         padding: 10px;
-        color: #efefef;
+        color: @text-color;
         // background-color: #00000040;
         background: rgba(255, 255, 255, 0.1);
         box-shadow: 0 0 20px #0000000d;
@@ -175,9 +173,16 @@
         border-radius: 8px;
         transition: 0.3s;
         background: #00000040;
+        position: relative;
+        box-sizing: border-box;
+      
     }
     .active-se-li {
-        background-color: #acacac60;
+        border-width: 1px;
+        border-style:solid;
+        border-color: @text-color;
+        box-sizing: border-box;
+       
     }
     .se-li:hover {
         cursor: pointer;
@@ -207,10 +212,10 @@
         width: 100%;
         top: 50px;
         font-size: small;
-        color: #efefef;
+        color: @text-color;
         // background-color: #00000040;
         background: rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 20px #0000000d;
+        box-shadow: 0 4px 12px rgba(190,196,207,.58);
         border-radius: 4px;
         // display: none;
         z-index: 999;
@@ -265,5 +270,5 @@
     opacity: 0;
 }
 .el-tabs__item {
-    color: #fff;
+    color: @text-color;
 }

@@ -1,3 +1,5 @@
+@text-color: inherit; /* 定义变量保存文字颜色值 */
+
 body {
     background-position: center center;
     background-color: black;
@@ -181,13 +183,17 @@ body {
     overflow: auto;
     box-sizing: border-box;
     // backdrop-filter: blur(3px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    // border: 1px solid @text-color; 
+    border-width: 1px;
+    border-style:solid;
+    border-color: @text-color 70;
     padding: 13px 0;
     font-size: 13px;
     transition: all 0.3s;
     &:hover {
         color: white;
         box-sizing: border-box;
+        background: rgba(0, 0, 0, 0.3);
         // backdrop-filter: brightness(calc(100% - 50% / 1.666666667)) contrast(100%) saturate(140%) blur(12px);
     }
 }
