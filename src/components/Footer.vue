@@ -16,6 +16,10 @@ export default {
         return {
             friendlyLinks: [
                 {
+                    name: 'iLinks',
+                    url: 'https://xydh.fun/',
+                },
+                {
                     name: '奔跑中的奶酪',
                     url: 'https://www.runningcheese.com/',
                 },
