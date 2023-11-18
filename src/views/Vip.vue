@@ -19,7 +19,7 @@
                 <div class="card-item c-vip">
                     <span class="card-tips" data-v-5291983e="">限时特惠</span>
                     <p class="t1" data-v-5291983e="">VIP年卡</p>
-                    <p class="t2" data-v-5291983e="">¥<span data-v-5291983e="">68.00</span>/年</p>
+                    <p class="t2" data-v-5291983e="">¥<span data-v-5291983e="">50.00</span>/年</p>
                     <div class="card-foot" data-v-5291983e="">享 多种特权</div>
                 </div>
                 <!-- <div class="card-item c-vip">

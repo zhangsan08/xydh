@@ -81,13 +81,13 @@ module.exports = {
             },
         });
     },
-    chainWebpack: config => {
-        config.plugins.delete('prefetch');
-        config.plugin('chunkPlugin').use(webpack.optimize.LimitChunkCountPlugin, [
-            {
-                maxChunks: 2, // 必须大于或等于 1，此处设置成最多生成5个chuank.js文件
-                minChunkSize: 10000,
-            },
-        ]);
-    },
+    // chainWebpack: config => {
+    //     config.plugins.delete('prefetch');
+    //     config.plugin('chunkPlugin').use(webpack.optimize.LimitChunkCountPlugin, [
+    //         {
+    //             maxChunks: 2, // 必须大于或等于 1，此处设置成最多生成5个chuank.js文件
+    //             minChunkSize: 10000,
+    //         },
+    //     ]);
+    // },
 };

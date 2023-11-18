@@ -41,7 +41,9 @@
                 </el-switch>
                 <div v-if="SiteForm.bg_switch">
                     <div v-for="item in bgAddress" :key="item.label">
-                        <el-button type="success" size="mini" @click="easyUseBg(item.url)"> 一键使用 </el-button>&nbsp;&nbsp;{{item.label}}：{{ item.url }}
+                        <el-button type="success" size="mini" @click="easyUseBg(item.url)"> 一键使用 </el-button>&nbsp;&nbsp;{{item.label}}：<a :href="item.url" target="_blank">
+                            {{ item.url }}
+                        </a>
                     </div>
                     <el-row>
                         <p>横版(适用于PC端展示)</p>
