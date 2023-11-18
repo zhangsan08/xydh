@@ -95,17 +95,18 @@ export default {
             x: [
                 // 常用
                 [
-                    {id: '0', name: '百度', text: '百度一下,你就知道', url: 'https://www.baidu.com/s?wd='},
-                    {
-                        id: '1',
-                        name: 'F搜',
-                        text: '按下回车搜索',
-                        url: 'https://fsoufsou.com/search?tbn=all&autoCorrection=0&q=',
-                    },
+                    {id: '0', name: '百度', text: '百度一下,你就知道111', url: 'https://www.baidu.com/s?wd='},
+                   
                     {id: '2', name: '谷歌', text: '请自备工具', url: 'https://www.google.com/search?q='},
                     {id: '3', name: '360', text: '', url: 'https://www.so.com/s?q='},
                     {id: '4', name: 'Bing', text: '', url: 'https://cn.bing.com/search?q='},
                     {id: '6', name: '搜狗', text: '', url: 'https://www.sogou.com/web?query='},
+                    {
+                        id: '1',
+                        name: 'BackData',
+                        text: '按下回车搜索',
+                        url: 'https://backdata.net/search.html?q=',
+                    },
                 ],
                 //  视频
                 [

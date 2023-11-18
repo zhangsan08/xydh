@@ -48,7 +48,7 @@ export default {
             hotdata: [],
             selectedSite: 0,
             selectedSiteClass: 0,
-            text: "百度一下,你就知道",
+            text: "百度一下,你就知道111",
             txt: "",
             url: "https://www.baidu.com/s?wd=",
             siteClasses: [

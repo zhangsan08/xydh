@@ -16,18 +16,6 @@ export default {
         return {
             friendlyLinks: [
                 {
-                    name: 'iLinks',
-                    url: 'https://xydh.fun/',
-                },
-                {
-                    name: '奔跑中的奶酪',
-                    url: 'https://www.runningcheese.com/',
-                },
-                {
-                    name: '遇见数据仓库',
-                    url: 'https://met.red/',
-                },
-                {
                     name: '24k导航',
                     url: 'https://www.24kdh.net/',
                 },
@@ -38,14 +26,6 @@ export default {
                 {
                     name: 'ZYPlayer',
                     url: 'http://zyplayer.fun/',
-                },
-                {
-                    name: '乐于分享',
-                    url: 'https://www.oovvv.com/',
-                },
-                {
-                    name: '奈斯搜索',
-                    url: 'https://www.niceso.fun/',
                 },
                 {
                     name: '爱达杂货铺',

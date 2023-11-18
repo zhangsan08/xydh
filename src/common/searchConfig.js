@@ -6,7 +6,7 @@ export const searchEngineList = [
                 title: '百度',
                 url: 'https://www.baidu.com/s?wd=',
                 icon: 'iconfont icon-baidu',
-                placeholder: '百度一下,你就知道',
+                placeholder: '输入可站内搜索，回车百度一下',
             },
             {
                 title: '必应',

@@ -92,7 +92,7 @@ export default {
                 type: '搜索引擎',
                 url: 'https://www.baidu.com/s?wd=',
                 title: '百度',
-                placeholder: '百度一下,你就知道',
+                placeholder: '输入可站内搜索，回车触发百度',
                 icon: 'iconfont icon-baidu',
             },
             searchResultLinks: [],

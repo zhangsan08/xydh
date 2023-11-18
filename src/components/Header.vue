@@ -28,7 +28,7 @@
                         <a class=" settingIcon" href="/hgs" target="_blank">
                             <i class="el-icon-s-data " slot="reference"></i></a>
                     </el-tooltip>
-                    <el-tooltip
+                    <!-- <el-tooltip
                         class="item"
                         effect="dark"
                         content="登陆/注册"
@@ -37,7 +37,7 @@
                         <a class=" settingIcon" href="https://xydh.fun/me" target="_blank">
                             <i class="el-icon-user-solid" slot="reference"></i>
                         </a>
-                    </el-tooltip>
+                    </el-tooltip> -->
                     <!-- <el-popover
                         title="您尚未登录"
                         width="200"

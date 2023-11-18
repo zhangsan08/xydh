@@ -94,7 +94,7 @@
                 ></el-input>
             </el-form-item>
             <!-- 自定义搜索模块 -->
-            <el-form-item label="自定义搜索引擎">
+            <!-- <el-form-item label="自定义搜索引擎">
                 <div>
                     <div>
                         <span style="margin-right: 10px">
@@ -132,7 +132,7 @@
                         </el-table-column>
                     </el-table>
                 </div>
-            </el-form-item>
+            </el-form-item> -->
             <!-- 音乐模块 -->
             <el-form-item label="背景音乐">
                 <el-switch
