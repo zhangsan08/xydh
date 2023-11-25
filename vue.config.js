@@ -1,7 +1,7 @@
 // 导入compression-webpack-plugin
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const path = require('path');
 // 本地环境是否需要使用cdn
 const devNeedCdn = true;

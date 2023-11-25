@@ -15,11 +15,15 @@ export default new Vuex.Store({
             showLineIcon: true,
             searchBoxFillet: true,
         },
+        userNavInfo:{}
     },
     mutations: {
         updateUserConfig(state, newData) {
             state.userConfig = {...state.userConfig, ...newData};
             window.localStorage.setItem('userConfig', JSON.stringify(state.userConfig));
+        },
+        updateUserNavInfo(state, newData) {
+            state.userNavInfo = {...state.userNavInfo, ...newData};
         },
     },
     actions: {},

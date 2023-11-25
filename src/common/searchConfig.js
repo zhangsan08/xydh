@@ -109,6 +109,10 @@ export const searchEngineList = [
         type: '学术',
         list: [
             {
+                title: '谷歌学术',
+                url: 'https://scholar.google.com/scholar?q=',
+            },
+            {
                 title: 'SCI-Hub',
                 url: 'https://sci-hub.shop/',
                 placeholder: '请直接输入SCI/DOI文章地址 如https://doi.org/10.1094/MPMI-08-19-0239-IA',

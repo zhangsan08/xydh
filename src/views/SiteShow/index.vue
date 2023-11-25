@@ -21,7 +21,7 @@
 
             <!-- 名称简介 -->
             <div class="siteTitle">
-                <h2 class="siteName" @click="generateFile()">{{ sitename }}????</h2>
+                <h2 class="siteName">{{ sitename }}</h2>
                 <h2 class="siteInfo">{{ siteinfo }}</h2>
             </div>
             <div style="height: 80px" v-if="!navSwitch && !labSwitch"></div>
@@ -523,6 +523,11 @@ export default {
                     obj.style.color = res.data.site_info.font_color;
                     // 取文件夹和书签
                     this.Folders = this.handlelinkSort(res.data.folder_with_links);
+                    const userNavInfo={
+                        ...res.data,
+                        folder_with_links:this.Folders
+                    }
+                    this.$store.commit('updateUserNavInfo', userNavInfo);
                     //    载入所有书签到 AllLinks,检索用
                     for (let i = 0; i < this.Folders.length; i++) {
                         this.AllLinks = this.AllLinks.concat(this.Folders[i].links);
@@ -691,35 +696,6 @@ export default {
             this.imgLinkInfo = IMGLink;
             this.imgLinkModalVisible = true;
         },
-        generateFile() {
-            // 获取页面数据
-            const data = this.Folders;
-            const listItems = data.map(item => `<li>${item.name}</li>`).join('');
-            const htmlContent = `
-      <html>
-        <head>
-          <title>iLinks 数据导出</title>
-        </head>
-        <body>
-          <h1>${this.sitename}</h1>
-          <p>${this.siteinfo}</p>
-          <ul>
-            ${listItems}
-          </ul>
-
-          <p>数据是每个用户宝贵的财富，您可以定期使用我们的数据导出能力，以免在我们受到恶意攻击时仍然可以获取到您的书签。</p>
-          <p>请关注我们的公众号【炫技巧】</p>
-        </body>
-      </html>
-    `;
-
-            // 创建一个 Blob 对象
-            const blob = new Blob([htmlContent], { type: 'text/html' });
-
-            // 使用 file-saver 保存 HTML 文件到本地
-            const fileName = 'data.html'; // 文件名
-            saveAs(blob, fileName);
-        }
     },
 };
 </script>
