@@ -5,7 +5,7 @@
             <h2>炫猿,炫猿导航,网址导航,自定义网址导航,定制网址导航,炫猿邀请码,iLinks</h2>
         </div>
 
-        <InitLoading/>
+        <InitLoading />
         <div v-if="isWeiXin" class="wx">
             <img src="~@/assets/share.png" class="logo" alt="logo" />
             更多内容，请点击右上角分享按钮，在默认浏览器打开
@@ -21,14 +21,14 @@
 
             <!-- 名称简介 -->
             <div class="siteTitle">
-                <h2 class="siteName">{{ sitename }}</h2>
+                <h2 class="siteName" @click="generateFile()">{{ sitename }}????</h2>
                 <h2 class="siteInfo">{{ siteinfo }}</h2>
             </div>
             <div style="height: 80px" v-if="!navSwitch && !labSwitch"></div>
             <!-- 搜索框 -->
             <!-- <SearchTool :AllLinks="AllLinks"></SearchTool> -->
             <div class="SearchTool">
-                <Search ref="search" :AllLinks="AllLinks" :customSearchEngines="customSearchEngines"/>
+                <Search ref="search" :AllLinks="AllLinks" :customSearchEngines="customSearchEngines" />
             </div>
             <!-- 点击实验室按钮会打开实验室页面 -->
             <div class="Lab totop" v-if="labSwitch">
@@ -49,12 +49,10 @@
                 </transition>
             </el-drawer> -->
             <!-- 历史足迹 -->
-            <el-row  v-if="showHistory">
+            <el-row v-if="showHistory">
                 <div class="historyLinks">
-                    <div
-                        @click="switchHistory()"
-                        class="historyLinksArrow"
-                    >我的足迹<i class="el-icon-arrow-down" v-if='historySwitch'></i>
+                    <div @click="switchHistory()" class="historyLinksArrow">我的足迹<i class="el-icon-arrow-down"
+                            v-if='historySwitch'></i>
                         <i class="el-icon-arrow-up" v-else></i>
                     </div>
                     <div v-if="historySwitch">
@@ -77,7 +75,7 @@
             <div class="bookmark" v-if="!labSwitch && navSwitch">
                 <div class="nav" v-if="subscribe.open">
                     <ul>
-                        <li  @click="clickTab(0,username)">
+                        <li @click="clickTab(0, username)">
                             <div :class="0 === activeTabId ? 'active' : ''">
                                 首页
                             </div>
@@ -93,7 +91,7 @@
                                         target="_blank"
                                     >前往站长主页 <i class="el-icon-top-right"></i></a>
                                 </div> -->
-                            <li @click="clickTab(item.id,item.user_name)" slot="reference">
+                            <li @click="clickTab(item.id, item.user_name)" slot="reference">
                                 <div :class="item.id === activeTabId ? 'active' : ''">
                                     {{ item.alias || item.user_name }}
                                 </div>
@@ -113,7 +111,7 @@
                         <div class="foldername">
                             <h3>快捷导航</h3>
                         </div>
-                        <el-row :class="isBorder?'folder':'folderNoBorder'">
+                        <el-row :class="isBorder ? 'folder' : 'folderNoBorder'">
                             <el-col :span="8" v-for="Folder in Folders" :key="Folder.id">
                                 <div class="link" :class="env">
                                     <span class="icon">
@@ -142,41 +140,25 @@
                                 </div>
                             </el-tooltip>
                         </div>
-                        <div
-                            :class="isBorder?'folder':'folderNoBorder'"
-                            class="totop"
-                            :style="{height: screenWidth > 768 ? '140px' : 'auto'}"
-                            :id="Folder.id"
-                            onselectstart="return false;"
-                        >
+                        <div :class="isBorder ? 'folder' : 'folderNoBorder'" class="totop"
+                            :style="{ height: screenWidth > 768 ? '140px' : 'auto' }" :id="Folder.id"
+                            onselectstart="return false;">
                             <div class="linkbox">
                                 <div class="inputPWD" v-if="Folder.need_password">
                                     <p><i class="el-icon-lock"></i></p>
-                                    <p v-if="Folder.info">密码提示：{{Folder.info}}</p>
+                                    <p v-if="Folder.info">密码提示：{{ Folder.info }}</p>
                                     <!-- 如果文件夹需要密码 -->
-                                    <el-input
-                                        type="text"
-                                        autosize
-                                        v-model="passwords[index]"
-                                        clearable
-                                        class="input"
-                                        placeholder="输入密码"
-                                    >
-                                        <span
-                                            slot="append"
-                                            type="text"
-                                            @click="GetPWDFolder(index, Folder.id, passwords[index])"
-                                        >确定</span>
+                                    <el-input type="text" autosize v-model="passwords[index]" clearable class="input"
+                                        placeholder="输入密码">
+                                        <span slot="append" type="text"
+                                            @click="GetPWDFolder(index, Folder.id, passwords[index])">确定</span>
                                     </el-input>
                                 </div>
                                 <div class="links" v-else v-for="link in Folder.links" :key="link.id">
                                     <el-col :span="8">
-                                        <div
-                                            class="link"
-                                            :class="{[env]: true, 'lineTextCenter': lineTextCenter }"
+                                        <div class="link" :class="{ [env]: true, 'lineTextCenter': lineTextCenter }"
                                             v-on:mouseenter="linkMouseEnter(link.info, link.name, Folder.id)"
-                                            v-on:mouseleave="linkMouseLeave"
-                                        >
+                                            v-on:mouseleave="linkMouseLeave">
                                             <a @click="goToUrl(link)" target="_blank" rel="nofollow">
                                                 <div class="linkContent">
                                                     <span class="icon" v-if="showLineIcon">
@@ -184,7 +166,7 @@
                                                         <i :class="'fa fa-bookmark-o'" v-else></i>
                                                         <!-- <img :src="`http://www.google.com/s2/favicons?domain=${link.url}`" alt=""> -->
                                                     </span>
-                                                    <span class="linkName">{{link.name}}</span>
+                                                    <span class="linkName">{{ link.name }}</span>
                                                 </div>
                                             </a>
                                         </div>
@@ -196,15 +178,11 @@
                 </div>
             </div>
         </div>
-        <MoreLinkModal
-            :visible="moreLinkModalVisible"
-            :foldersInfo="foldersInfo"
-            @close-click="moreLinkModalCloseClick"
-        />
+        <MoreLinkModal :visible="moreLinkModalVisible" :foldersInfo="foldersInfo" @close-click="moreLinkModalCloseClick" />
         <ImgLinkModal :visible="imgLinkModalVisible" :imgLinkInfo="imgLinkInfo" @close-click="imgLinkModalCloseClick" />
 
         <!-- 音乐 -->
-        <Player :musicList="music.list" v-if="music.open"/>
+        <Player :musicList="music.list" v-if="music.open" />
 
         <!-- 跑马灯（暂时去掉了 本想留作广告位。发现接不到 -->
         <el-col :span="24">
@@ -217,15 +195,9 @@
                     <Footer></Footer>
                 </div>
                 <div v-else class="footer">
-                    <a
-                        @click="goToUrl(link)"
-                        target="_blank"
-                        rel="nofollow"
-                        class="name"
-                        v-for="(link,index) in top_bottom.bottom_list"
-                        :key="`${link.title}-${index}`"
-                        style="margin: 0 5px;"
-                    >
+                    <a @click="goToUrl(link)" target="_blank" rel="nofollow" class="name"
+                        v-for="(link, index) in top_bottom.bottom_list" :key="`${link.title}-${index}`"
+                        style="margin: 0 5px;">
                         {{ link.title }}
                     </a>
                 </div>
@@ -237,11 +209,11 @@
 <script>
 // import * as UserAPI from '@/api/user/'
 // import * as SiteAPI from '@/api/site/'
-import {siteService} from '@/common/api';
-import {cookieGet, cookieSet} from '@/common/cookie';
+import { siteService } from '@/common/api';
+import { cookieGet, cookieSet } from '@/common/cookie';
 import IndexLab from '@/views/IndexLab.vue';
-import {getUrl} from '@/common/pickup';
-import {isWeiXin, getEnv} from '@/common/env';
+import { getUrl } from '@/common/pickup';
+import { isWeiXin, getEnv } from '@/common/env';
 // import RightBar from '@/components/RightBar'
 import SearchTool from '@/components/SearchTool.vue';
 // import Paomadeng from '@/components/Paomadeng.vue'
@@ -254,6 +226,7 @@ import InitLoading from '@/components/InitLoading.vue';
 import MoreLinkModal from '@/components/MoreLinkModal.vue';
 import ImgLinkModal from '@/components/ImgLinkModal.vue';
 import Search from '@/components/Search/index.vue';
+import { saveAs } from 'file-saver';
 
 export default {
     name: 'ShowSite',
@@ -559,9 +532,9 @@ export default {
                         let musicInfo = JSON.parse(res.data.site_info.music)
 
                         let newList = musicInfo.list.map((item) => {
-                            return {...item, name: item.title, cover: item.pic}
+                            return { ...item, name: item.title, cover: item.pic }
                         })
-                        this.music = {...musicInfo, list: newList};
+                        this.music = { ...musicInfo, list: newList };
                     }
 
                     // if (!this.is_vip) {
@@ -572,12 +545,12 @@ export default {
                         if (this.subscribe.allowRecommend) {
                             // 安排上最新推荐
                             this.subscribe.list.push(
-                                {user_name: 'admin', alias: '球哥', id: 999991},
-                                {user_name: 'chenyixi', alias: '以西', id: 999992},
-                                {user_name: 'gmengshuai', alias: '小帅', id: 999993},
-                                {user_name: 'loveai', alias: 'ChatGPT', id: 999994},
-                                {user_name: 'yyds007', alias: 'YYDS', id: 999995},
-                                {user_name: 'tiantian666', alias: '文学', id: 999996},
+                                { user_name: 'admin', alias: '球哥', id: 999991 },
+                                { user_name: 'chenyixi', alias: '以西', id: 999992 },
+                                { user_name: 'gmengshuai', alias: '小帅', id: 999993 },
+                                { user_name: 'loveai', alias: 'ChatGPT', id: 999994 },
+                                { user_name: 'yyds007', alias: 'YYDS', id: 999995 },
+                                { user_name: 'tiantian666', alias: '文学', id: 999996 },
                             )
                         }
                     }
@@ -618,15 +591,15 @@ export default {
             var thisUrl = linkInfo.url;
             var houzhui = /.[^.]+$/.exec(thisUrl);
             switch (houzhui[0]) {
-            case '.png':
-            case '.jpg':
-            case '.jpeg':
-            case '.gif':
-            case '.svg':
-                this.openImgLink(linkInfo);
-                return;
-            default:
-                break;
+                case '.png':
+                case '.jpg':
+                case '.jpeg':
+                case '.gif':
+                case '.svg':
+                    this.openImgLink(linkInfo);
+                    return;
+                default:
+                    break;
             }
 
             let cache = cookieGet('cacheLinkList');
@@ -718,10 +691,39 @@ export default {
             this.imgLinkInfo = IMGLink;
             this.imgLinkModalVisible = true;
         },
+        generateFile() {
+            // 获取页面数据
+            const data = this.Folders;
+            const listItems = data.map(item => `<li>${item.name}</li>`).join('');
+            const htmlContent = `
+      <html>
+        <head>
+          <title>iLinks 数据导出</title>
+        </head>
+        <body>
+          <h1>${this.sitename}</h1>
+          <p>${this.siteinfo}</p>
+          <ul>
+            ${listItems}
+          </ul>
+
+          <p>数据是每个用户宝贵的财富，您可以定期使用我们的数据导出能力，以免在我们受到恶意攻击时仍然可以获取到您的书签。</p>
+          <p>请关注我们的公众号【炫技巧】</p>
+        </body>
+      </html>
+    `;
+
+            // 创建一个 Blob 对象
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+
+            // 使用 file-saver 保存 HTML 文件到本地
+            const fileName = 'data.html'; // 文件名
+            saveAs(blob, fileName);
+        }
     },
 };
 </script>
 
 <style lang="less">
-    @import './index.less';
+@import './index.less';
 </style>
