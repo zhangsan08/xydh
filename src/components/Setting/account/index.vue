@@ -74,6 +74,7 @@ export default {
                     <html>
                         <head>
                         <title>iLinks 数据导出</title>
+                        <meta charset="utf-8">
                         </head>
                         <body>
                         <h1 style="text-align: center;">${site_info.name}</h1>
@@ -82,7 +83,7 @@ export default {
                             ${listItems}
                         </ul>
                         <p style="text-align: center;">数据是每个用户宝贵的财富，您可以定期使用我们的数据导出能力，以在我们受到恶意攻击时仍然可以获取到您的书签。</p>
-                        <p style="text-align: center;">请关注我们的公众号【炫技巧】</p>
+                        <p style="text-align: center;">请关注我们的公众号【炫技巧】防止失联</p>
                         </body>
                     </html>
                     `;
