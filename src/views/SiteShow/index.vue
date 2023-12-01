@@ -19,6 +19,12 @@
                 <Header :isOpen="top_bottom.top_switch"></Header>
             </div>
 
+            <!-- 最近 7 天添加的书签 -->
+            <div class="recent_links" v-for="item in recentLinks" :key="item.id">
+                最近更新：
+                <li>{{ item.name }}</li>
+            </div>
+
             <!-- 名称简介 -->
             <div class="siteTitle">
                 <h2 class="siteName">{{ sitename }}</h2>
@@ -317,6 +323,7 @@ export default {
             imgLinkModalVisible: false,
             foldersInfo: {},
             imgLinkInfo: {},
+            recentLinks: [],
         };
     },
     computed: {
@@ -523,9 +530,9 @@ export default {
                     obj.style.color = res.data.site_info.font_color;
                     // 取文件夹和书签
                     this.Folders = this.handlelinkSort(res.data.folder_with_links);
-                    const userNavInfo={
+                    const userNavInfo = {
                         ...res.data,
-                        folder_with_links:this.Folders
+                        folder_with_links: this.Folders
                     }
                     this.$store.commit('updateUserNavInfo', userNavInfo);
                     //    载入所有书签到 AllLinks,检索用
@@ -565,6 +572,21 @@ export default {
                     if (res.data.site_info.top_bottom !== '') {
                         this.top_bottom = JSON.parse(res.data.site_info.top_bottom);
                     }
+
+                    // 给AllLinks 排个序。看看有没有最近更新的书签
+                    this.AllLinks.sort(function (l1, l2) {
+                        return  l2.update_time_unix - l1.update_time_unix
+                    });
+                    let sevenDaysAgo = Date.now()/1000 - (7 * 24 * 60 * 60 )
+                    console.log(sevenDaysAgo, new Date(sevenDaysAgo))
+                    for (var i = 0; i < 10; i++) {
+                        console.log(this.AllLinks[i].update_time_unix)
+                        console.log(new Date(this.AllLinks[i].update_time_unix))
+                        if (this.AllLinks[i].update_time_unix > sevenDaysAgo) {
+                            this.recentLinks.push(this.AllLinks[i])
+                        }
+                    }
+                    console.log(this.recentLinks)
                 }
             });
         },
