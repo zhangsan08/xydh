@@ -20,8 +20,9 @@ function errorLog(info) {
 // }
 
 // 创建一个 axios 实例
+const baseURL = window.location.protocol + '//' + window.location.host;
 const service = axios.create({
-    baseURL: process.env.VUE_APP_API,
+    baseURL: baseURL,
     timeout: 1000 * 180,
     withCredentials: true,
 });

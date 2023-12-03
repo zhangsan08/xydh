@@ -20,9 +20,13 @@
             </div>
 
             <!-- 最近 7 天添加的书签 -->
-            <div class="recent_links" v-for="item in recentLinks" :key="item.id">
+            <div class="recent_links" v-if="recentLinks.length > 0">
                 最近更新：
-                <li>{{ item.name }}</li>
+                <li v-for="item in recentLinks" :key="item.id">
+                    <a target="_blank" :href="item.url"><i :class="'fa fa-' + item.icon" v-if="item.icon"></i>
+                     <i :class="'fa fa-bookmark-o'" v-else></i>
+                     {{ item.name }}</a>
+                </li>
             </div>
 
             <!-- 名称简介 -->
@@ -118,7 +122,7 @@
                             <h3>快捷导航</h3>
                         </div>
                         <el-row :class="isBorder ? 'folder' : 'folderNoBorder'">
-                            <el-col :span="8" v-for="Folder in Folders" :key="Folder.id">
+                            <el-col :span="6" :md="6" :sm="8" v-for="Folder in Folders" :key="Folder.id">
                                 <div class="link" :class="env">
                                     <span class="icon">
                                         <i :class="'fa fa-mail-forward'"></i>
@@ -574,19 +578,18 @@ export default {
                     }
 
                     // 给AllLinks 排个序。看看有没有最近更新的书签
+                    this.AllLinks = this.AllLinks.filter(link => link && link.update_time_unix); // 过滤掉空值和没有 update_time_unix 属性的对象
                     this.AllLinks.sort(function (l1, l2) {
                         return  l2.update_time_unix - l1.update_time_unix
                     });
                     let sevenDaysAgo = Date.now()/1000 - (7 * 24 * 60 * 60 )
-                    console.log(sevenDaysAgo, new Date(sevenDaysAgo))
-                    for (var i = 0; i < 10; i++) {
-                        console.log(this.AllLinks[i].update_time_unix)
-                        console.log(new Date(this.AllLinks[i].update_time_unix))
+                    
+                    for (var i = 0; i < 20; i++) {
                         if (this.AllLinks[i].update_time_unix > sevenDaysAgo) {
                             this.recentLinks.push(this.AllLinks[i])
                         }
                     }
-                    console.log(this.recentLinks)
+                    
                 }
             });
         },
