@@ -24,8 +24,8 @@
                 最近更新：
                 <li v-for="item in recentLinks" :key="item.id">
                     <a target="_blank" :href="item.url"><i :class="'fa fa-' + item.icon" v-if="item.icon"></i>
-                     <i :class="'fa fa-bookmark-o'" v-else></i>
-                     {{ item.name }}</a>
+                        <i :class="'fa fa-bookmark-o'" v-else></i>
+                        {{ item.name }}</a>
                 </li>
             </div>
 
@@ -61,8 +61,10 @@
             <!-- 历史足迹 -->
             <el-row v-if="showHistory">
                 <div class="historyLinks">
-                    <div @click="switchHistory()" class="historyLinksArrow">我的足迹<i class="el-icon-arrow-down"
-                            v-if='historySwitch'></i>
+                    <div @click="switchHistory()" class="historyLinksArrow">我的足迹<i
+                        class="el-icon-arrow-down"
+                        v-if='historySwitch'
+                    ></i>
                         <i class="el-icon-arrow-up" v-else></i>
                     </div>
                     <div v-if="historySwitch">
@@ -122,7 +124,13 @@
                             <h3>快捷导航</h3>
                         </div>
                         <el-row :class="isBorder ? 'folder' : 'folderNoBorder'">
-                            <el-col :span="6" :md="6" :sm="8" v-for="Folder in Folders" :key="Folder.id">
+                            <el-col
+                                :span="6"
+                                :md="6"
+                                :sm="8"
+                                v-for="Folder in Folders"
+                                :key="Folder.id"
+                            >
                                 <div class="link" :class="env">
                                     <span class="icon">
                                         <i :class="'fa fa-mail-forward'"></i>
@@ -150,25 +158,41 @@
                                 </div>
                             </el-tooltip>
                         </div>
-                        <div :class="isBorder ? 'folder' : 'folderNoBorder'" class="totop"
-                            :style="{ height: screenWidth > 768 ? '140px' : 'auto' }" :id="Folder.id"
-                            onselectstart="return false;">
+                        <div
+                            :class="isBorder ? 'folder' : 'folderNoBorder'"
+                            class="totop"
+                            :style="{ height: screenWidth > 768 ? '140px' : 'auto' }"
+                            :id="Folder.id"
+                            onselectstart="return false;"
+                        >
                             <div class="linkbox">
                                 <div class="inputPWD" v-if="Folder.need_password">
                                     <p><i class="el-icon-lock"></i></p>
                                     <p v-if="Folder.info">密码提示：{{ Folder.info }}</p>
                                     <!-- 如果文件夹需要密码 -->
-                                    <el-input type="text" autosize v-model="passwords[index]" clearable class="input"
-                                        placeholder="输入密码">
-                                        <span slot="append" type="text"
-                                            @click="GetPWDFolder(index, Folder.id, passwords[index])">确定</span>
+                                    <el-input
+                                        type="text"
+                                        autosize
+                                        v-model="passwords[index]"
+                                        clearable
+                                        class="input"
+                                        placeholder="输入密码"
+                                    >
+                                        <span
+                                            slot="append"
+                                            type="text"
+                                            @click="GetPWDFolder(index, Folder.id, passwords[index])"
+                                        >确定</span>
                                     </el-input>
                                 </div>
                                 <div class="links" v-else v-for="link in Folder.links" :key="link.id">
                                     <el-col :span="8">
-                                        <div class="link" :class="{ [env]: true, 'lineTextCenter': lineTextCenter }"
+                                        <div
+                                            class="link"
+                                            :class="{ [env]: true, 'lineTextCenter': lineTextCenter }"
                                             v-on:mouseenter="linkMouseEnter(link.info, link.name, Folder.id)"
-                                            v-on:mouseleave="linkMouseLeave">
+                                            v-on:mouseleave="linkMouseLeave"
+                                        >
                                             <a @click="goToUrl(link)" target="_blank" rel="nofollow">
                                                 <div class="linkContent">
                                                     <span class="icon" v-if="showLineIcon">
@@ -205,9 +229,15 @@
                     <Footer></Footer>
                 </div>
                 <div v-else class="footer">
-                    <a @click="goToUrl(link)" target="_blank" rel="nofollow" class="name"
-                        v-for="(link, index) in top_bottom.bottom_list" :key="`${link.title}-${index}`"
-                        style="margin: 0 5px;">
+                    <a
+                        @click="goToUrl(link)"
+                        target="_blank"
+                        rel="nofollow"
+                        class="name"
+                        v-for="(link, index) in top_bottom.bottom_list"
+                        :key="`${link.title}-${index}`"
+                        style="margin: 0 5px;"
+                    >
                         {{ link.title }}
                     </a>
                 </div>
@@ -452,6 +482,7 @@ export default {
         },
         // 排序
         handlelinkSort(data) {
+            let i;
             // 取文件夹和书签
             let linksData = data;
             // 文件夹排序
@@ -459,11 +490,30 @@ export default {
                 return f1.weight - f2.weight; // weight
             });
             // 文件夹里的每个书签排序
-            for (var i = 0; i < linksData.length; i++) {
+            for (i = 0; i < linksData.length; i++) {
                 if (!linksData[i].links) continue;
                 linksData[i].links.sort(function (l1, l2) {
                     return l2.weight - l1.weight; // weight
                 });
+            }
+            this.AllLinks = []
+            //    载入所有书签到 AllLinks,检索用
+            for (let i = 0; i < linksData.length; i++) {
+                this.AllLinks = this.AllLinks.concat(linksData[i].links);
+            }
+            // 给AllLinks 排个序。看看有没有最近更新的书签
+            // 过滤掉空值和没有 update_time_unix 属性的对象
+            this.AllLinks = this.AllLinks.filter(link => link && link.update_time_unix);
+            this.AllLinks.sort(function (l1, l2) {
+                return l2.update_time_unix - l1.update_time_unix
+            });
+            let sevenDaysAgo = Date.now() / 1000 - (7 * 24 * 60 * 60 )
+
+            this.recentLinks = []
+            for (i = 0; i < 20; i++) {
+                if (this.AllLinks[i].update_time_unix > sevenDaysAgo) {
+                    this.recentLinks.push(this.AllLinks[i])
+                }
             }
             return linksData;
         },
@@ -539,10 +589,10 @@ export default {
                         folder_with_links: this.Folders
                     }
                     this.$store.commit('updateUserNavInfo', userNavInfo);
-                    //    载入所有书签到 AllLinks,检索用
-                    for (let i = 0; i < this.Folders.length; i++) {
-                        this.AllLinks = this.AllLinks.concat(this.Folders[i].links);
-                    }
+                    // //    载入所有书签到 AllLinks,检索用
+                    // for (let i = 0; i < this.Folders.length; i++) {
+                    //     this.AllLinks = this.AllLinks.concat(this.Folders[i].links);
+                    // }
                     // 载入音乐和自定义底部
                     if (res.data.site_info.music !== '') {
                         let musicInfo = JSON.parse(res.data.site_info.music)
@@ -577,19 +627,19 @@ export default {
                         this.top_bottom = JSON.parse(res.data.site_info.top_bottom);
                     }
 
-                    // 给AllLinks 排个序。看看有没有最近更新的书签
-                    this.AllLinks = this.AllLinks.filter(link => link && link.update_time_unix); // 过滤掉空值和没有 update_time_unix 属性的对象
-                    this.AllLinks.sort(function (l1, l2) {
-                        return  l2.update_time_unix - l1.update_time_unix
-                    });
-                    let sevenDaysAgo = Date.now()/1000 - (7 * 24 * 60 * 60 )
-                    
-                    for (var i = 0; i < 20; i++) {
-                        if (this.AllLinks[i].update_time_unix > sevenDaysAgo) {
-                            this.recentLinks.push(this.AllLinks[i])
-                        }
-                    }
-                    
+                    // // 给AllLinks 排个序。看看有没有最近更新的书签
+                    // this.AllLinks = this.AllLinks.filter(link => link && link.update_time_unix); // 过滤掉空值和没有 update_time_unix 属性的对象
+                    // this.AllLinks.sort(function (l1, l2) {
+                    //     return  l2.update_time_unix - l1.update_time_unix
+                    // });
+                    // let sevenDaysAgo = Date.now()/1000 - (7 * 24 * 60 * 60 )
+
+                    // for (var i = 0; i < 20; i++) {
+                    //     if (this.AllLinks[i].update_time_unix > sevenDaysAgo) {
+                    //         this.recentLinks.push(this.AllLinks[i])
+                    //     }
+                    // }
+
                 }
             });
         },
@@ -621,15 +671,15 @@ export default {
             var thisUrl = linkInfo.url;
             var houzhui = /.[^.]+$/.exec(thisUrl);
             switch (houzhui[0]) {
-                case '.png':
-                case '.jpg':
-                case '.jpeg':
-                case '.gif':
-                case '.svg':
-                    this.openImgLink(linkInfo);
-                    return;
-                default:
-                    break;
+            case '.png':
+            case '.jpg':
+            case '.jpeg':
+            case '.gif':
+            case '.svg':
+                this.openImgLink(linkInfo);
+                return;
+            default:
+                break;
             }
 
             let cache = cookieGet('cacheLinkList');
