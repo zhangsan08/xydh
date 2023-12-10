@@ -110,111 +110,138 @@
                             </li>
                             <!-- </el-popover> -->
                         </div>
-
+                        <div v-for="item in expandList" :key="item.id">
+                            <li @click="clickTab(item.id)" slot="reference">
+                                <div :class="item.id === activeTabId ? 'active' : ''">
+                                    {{ item.title }}
+                                </div>
+                            </li>
+                        </div>
                     </ul>
                 </div>
-                <div v-if="Folders.length === 0" class="navLoading">
-                    <Loading />
-                </div>
-
-                <!-- 用户自定义内容 -->
-                <el-row v-else>
-                    <div class="totop quickNav" v-if="env === 'h5'">
-                        <div class="foldername">
-                            <h3>快捷导航</h3>
-                        </div>
-                        <el-row :class="isBorder ? 'folder' : 'folderNoBorder'">
-                            <el-col
-                                :span="6"
-                                :md="6"
-                                :sm="8"
-                                v-for="Folder in Folders"
-                                :key="Folder.id"
-                            >
-                                <div class="link" :class="env">
-                                    <span class="icon">
-                                        <i :class="'fa fa-mail-forward'"></i>
-                                    </span>
-                                    <a :href="'#' + Folder.name">
-                                        {{ Folder.name }}
-                                    </a>
-                                </div>
-                            </el-col>
-                        </el-row>
+                <div v-if="activeTabId!==4">
+                    <div v-if="Folders.length === 0" class="navLoading">
+                        <Loading />
                     </div>
-                </el-row>
-                <div class="folderContent" :class="env">
-                    <div v-for="(Folder, index) in Folders" :key="Folder.id" class="folderArea">
-                        <div class="infoTips" v-if="showMessage && hoverFileId === Folder.id">
-                            <i class="el-icon-info"></i>
-                            {{ infoTips }}
+                    <!-- 用户自定义内容 -->
+                    <el-row v-else>
+                        <div class="totop quickNav" v-if="env === 'h5'">
+                            <div class="foldername">
+                                <h3>快捷导航</h3>
+                            </div>
+                            <el-row :class="isBorder ? 'folder' : 'folderNoBorder'">
+                                <el-col
+                                    :span="6"
+                                    :md="6"
+                                    :sm="8"
+                                    v-for="Folder in Folders"
+                                    :key="Folder.id"
+                                >
+                                    <div class="link" :class="env">
+                                        <span class="icon">
+                                            <i :class="'fa fa-mail-forward'"></i>
+                                        </span>
+                                        <a :href="'#' + Folder.name">
+                                            {{ Folder.name }}
+                                        </a>
+                                    </div>
+                                </el-col>
+                            </el-row>
                         </div>
-                        <div class="foldername" :id="Folder.name">
-                            <h3 v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</h3>
-                            <h3 v-else>{{ Folder.name }}</h3>
-                            <el-tooltip content="展开文件夹" placement="top" v-if="env === 'pc'">
-                                <div class="openFolder" @click="openFolder(Folder)">
-                                    <i class="fa fa-arrows-alt"></i>
-                                </div>
-                            </el-tooltip>
-                        </div>
-                        <div
-                            :class="isBorder ? 'folder' : 'folderNoBorder'"
-                            class="totop"
-                            :style="{ height: screenWidth > 768 ? '140px' : 'auto' }"
-                            :id="Folder.id"
-                            onselectstart="return false;"
-                        >
-                            <div class="linkbox">
-                                <div class="inputPWD" v-if="Folder.need_password">
-                                    <p><i class="el-icon-lock"></i></p>
-                                    <p v-if="Folder.info">密码提示：{{ Folder.info }}</p>
-                                    <!-- 如果文件夹需要密码 -->
-                                    <el-input
-                                        type="text"
-                                        autosize
-                                        v-model="passwords[index]"
-                                        clearable
-                                        class="input"
-                                        placeholder="输入密码"
-                                    >
-                                        <span
-                                            slot="append"
+                    </el-row>
+                    <div class="folderContent" :class="env">
+                        <div v-for="(Folder, index) in Folders" :key="Folder.id" class="folderArea">
+                            <div class="infoTips" v-if="showMessage && hoverFileId === Folder.id">
+                                <i class="el-icon-info"></i>
+                                {{ infoTips }}
+                            </div>
+                            <div class="foldername" :id="Folder.name">
+                                <h3 v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</h3>
+                                <h3 v-else>{{ Folder.name }}</h3>
+                                <el-tooltip content="展开文件夹" placement="top" v-if="env === 'pc'">
+                                    <div class="openFolder" @click="openFolder(Folder)">
+                                        <i class="fa fa-arrows-alt"></i>
+                                    </div>
+                                </el-tooltip>
+                            </div>
+                            <div
+                                :class="isBorder ? 'folder' : 'folderNoBorder'"
+                                class="totop"
+                                :style="{ height: screenWidth > 768 ? '140px' : 'auto' }"
+                                :id="Folder.id"
+                                onselectstart="return false;"
+                            >
+                                <div class="linkbox">
+                                    <div class="inputPWD" v-if="Folder.need_password">
+                                        <p><i class="el-icon-lock"></i></p>
+                                        <p v-if="Folder.info">密码提示：{{ Folder.info }}</p>
+                                        <!-- 如果文件夹需要密码 -->
+                                        <el-input
                                             type="text"
-                                            @click="GetPWDFolder(index, Folder.id, passwords[index])"
-                                        >确定</span>
-                                    </el-input>
-                                </div>
-                                <div class="links" v-else v-for="link in Folder.links" :key="link.id">
-                                    <el-col :span="8">
-                                        <div
-                                            class="link"
-                                            :class="{ [env]: true, 'lineTextCenter': lineTextCenter }"
-                                            v-on:mouseenter="linkMouseEnter(link.info, link.name, Folder.id)"
-                                            v-on:mouseleave="linkMouseLeave"
+                                            autosize
+                                            v-model="passwords[index]"
+                                            clearable
+                                            class="input"
+                                            placeholder="输入密码"
                                         >
-                                            <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                                                <div class="linkContent">
-                                                    <span class="icon" v-if="showLineIcon">
-                                                        <i :class="'fa fa-' + link.icon" v-if="link.icon"></i>
-                                                        <i :class="'fa fa-bookmark-o'" v-else></i>
+                                            <span
+                                                slot="append"
+                                                type="text"
+                                                @click="GetPWDFolder(index, Folder.id, passwords[index])"
+                                            >确定</span>
+                                        </el-input>
+                                    </div>
+                                    <div class="links" v-else v-for="link in Folder.links" :key="link.id">
+                                        <el-col :span="8">
+                                            <div
+                                                class="link"
+                                                :class="{ [env]: true, 'lineTextCenter': lineTextCenter }"
+                                                v-on:mouseenter="linkMouseEnter(link.info, link.name, Folder.id)"
+                                                v-on:mouseleave="linkMouseLeave"
+                                            >
+                                                <a @click="goToUrl(link)" target="_blank" rel="nofollow">
+                                                    <div class="linkContent">
+                                                        <span class="icon" v-if="showLineIcon">
+                                                            <i :class="'fa fa-' + link.icon" v-if="link.icon"></i>
+                                                            <i :class="'fa fa-bookmark-o'" v-else></i>
                                                         <!-- <img :src="`http://www.google.com/s2/favicons?domain=${link.url}`" alt=""> -->
-                                                    </span>
-                                                    <span class="linkName">{{ link.name }}</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </el-col>
+                                                        </span>
+                                                        <span class="linkName">{{ link.name }}</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </el-col>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div v-else class="gameArea">
+                    <div v-for="item in gameList" :key="item.name" class="gameAreaItem" @click="clickGame(item)">
+                        <div class="icon">
+                            <i :class="'fa fa-gamepad'"></i>
+                        </div>
+                        <div class="info">
+                            <div class="title">
+                                {{ item.name }}
+                            </div>
+                            <div class="brief">
+                                {{ item.info ||'摸鱼神器，一键畅玩'}}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
         <MoreLinkModal :visible="moreLinkModalVisible" :foldersInfo="foldersInfo" @close-click="moreLinkModalCloseClick" />
         <ImgLinkModal :visible="imgLinkModalVisible" :imgLinkInfo="imgLinkInfo" @close-click="imgLinkModalCloseClick" />
-
+        <ExtendModal
+            :visible="extendModalVisible"
+            @close-click="extendModalCloseClick"
+            :gameData="activeGame"
+        />
         <!-- 音乐 -->
         <Player :musicList="music.list" v-if="music.open" />
 
@@ -267,6 +294,8 @@ import MoreLinkModal from '@/components/MoreLinkModal.vue';
 import ImgLinkModal from '@/components/ImgLinkModal.vue';
 import Search from '@/components/Search/index.vue';
 import { saveAs } from 'file-saver';
+import ExtendModal from '@/components/ExtendModal.vue';
+import { gameList } from '@/common/gameConfig';
 
 export default {
     name: 'ShowSite',
@@ -289,6 +318,7 @@ export default {
         InitLoading,
         MoreLinkModal,
         ImgLinkModal,
+        ExtendModal
     },
     props: ['userName'],
     data() {
@@ -330,6 +360,13 @@ export default {
                 list: [],
                 allowRecommend: true,
             },
+            expandList: [
+                {
+                    key: 'game',
+                    title: '游戏',
+                    id: 4
+                }
+            ],
             customSearchEngines: {
                 type: '自定义',
                 list: [
@@ -355,9 +392,12 @@ export default {
             isBorder: false,
             moreLinkModalVisible: false,
             imgLinkModalVisible: false,
+            extendModalVisible: false,
             foldersInfo: {},
             imgLinkInfo: {},
             recentLinks: [],
+            gameList: gameList,
+            activeGame: {}
         };
     },
     computed: {
@@ -426,6 +466,14 @@ export default {
         }
     },
     methods: {
+        clickGame(item) {
+            if (item.type === 'webPage') {
+                window.open(item.path, "_blank");
+                return
+            }
+            this.activeGame = item
+            this.extendModalVisible = true
+        },
         linkMouseEnter(info, name, id) {
             if (!info && !name) {
                 return
@@ -450,6 +498,9 @@ export default {
             this.Folders = [];
             // 设置当前活动的tabId
             this.activeTabId = id;
+            if (id === 4) {
+                return
+            }
             // 获取缓存数据
             const cacheKey = `xydh_tab_cached_data_for_id_${user_name}_${id}`;
             const cachedData = window.localStorage.getItem(cacheKey);
@@ -759,6 +810,9 @@ export default {
         },
         moreLinkModalCloseClick() {
             this.moreLinkModalVisible = false;
+        },
+        extendModalCloseClick() {
+            this.extendModalVisible = false;
         },
         imgLinkModalCloseClick() {
             this.imgLinkModalVisible = false;
