@@ -511,6 +511,19 @@ export default {
             // 请求数据
             this.getActiveLabelData(id, user_name);
         },
+        // 处理书签数据,存入localStorage
+        handleFoldersData(data, user_name, id) {
+            // 对数据进行相关处理
+            let linksData = this.handlelinkSort(data);
+            // 比较数据是否和缓存中的一致
+            const cacheKey = `xydh_tab_cached_data_for_id_${user_name}_${id}`;
+            const cachedData = window.localStorage.getItem(cacheKey);
+            if (!_.isEqual(linksData, cachedData)) {
+                // 如果不一致，则进行更新，并将数据存入localStorage中
+                this.Folders = [...linksData];
+                window.localStorage.setItem(cacheKey, JSON.stringify(linksData));
+            }
+        },
         // 切换tab,请求数据
         getActiveLabelData(id, user_name) {
             // 记录当前的随机数，用于判断是否需要更新数据
@@ -519,16 +532,7 @@ export default {
             siteService.getAllsiteandlinks(user_name).then(res => {
                 // 如果随机数已经变化，则表示已经更新了tab，需要丢弃当前的数据
                 if (this.random !== random) return;
-                // 对数据进行相关处理
-                let linksData = this.handlelinkSort(res.data.folder_with_links);
-                // 比较数据是否和缓存中的一致
-                const cacheKey = `xydh_tab_cached_data_for_id_${user_name}_${id}`;
-                const cachedData = window.localStorage.getItem(cacheKey);
-                if (!_.isEqual(linksData, cachedData)) {
-                    // 如果不一致，则进行更新，并将数据存入localStorage中
-                    this.Folders = [...linksData];
-                    window.localStorage.setItem(cacheKey, JSON.stringify(linksData));
-                }
+                this.handleFoldersData(res.data.folder_with_links, user_name, id)
             });
         },
         // 排序
@@ -580,7 +584,85 @@ export default {
             this.navSwitch = !this.navSwitch;
             cookieSet('navSwitch', this.navSwitch);
         },
+        // 处理网站数据
+        handleSiteData(data) {
+            // 加载用户
+            this.userid = data.target.id;
+            this.is_vip = data.target.is_vip;
+            // 加载 Site
+            this.sitename = data.site_info.name;
+            this.siteinfo = data.site_info.info;
+            this.bglizi = data.site_info.bglizi;
+            this.lybID = data.site_info.lyb_id;
+            this.mobile_bg = data.site_info.mobile_bg;
+            document.title = this.sitename;
+            // 改背景颜色或图片
+            var obj = document.getElementsByTagName('body')[0];
+            var style = document.createElement('style');
+
+            if (data.site_info.bg_switch) {// 有背景图
+                let bg = ''
+                if (window.innerWidth < 768 && this.mobile_bg) {
+                    bg = this.mobile_bg;
+                } else {
+                    bg = data.site_info.bg;
+                }
+                this.isBorder = true;
+                const shadow = 'radial-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%)'
+                style.innerHTML = `body::before { background-image: ${shadow},url(${bg})}`;
+                document.head.appendChild(style);
+            } else {
+                obj.style.backgroundColor = data.site_info.bg_color;
+            }
+            obj.style.color = data.site_info.font_color;
+            // // 取文件夹和书签
+            this.Folders = this.handlelinkSort(data.folder_with_links);
+            //    载入所有书签到 AllLinks,检索用
+            for (let i = 0; i < this.Folders.length; i++) {
+                this.AllLinks = this.AllLinks.concat(this.Folders[i].links);
+            }
+            // 载入音乐和自定义底部
+            if (data.site_info.music !== '') {
+                let musicInfo = JSON.parse(data.site_info.music)
+
+                let newList = musicInfo.list.map((item) => {
+                    return {...item, name: item.title, cover: item.pic}
+                })
+                this.music = {...musicInfo, list: newList};
+            }
+
+            // if (!this.is_vip) {
+            //     this.music.list.splice(1);
+            // }
+            if (data.site_info.subscribe) {
+                this.subscribe = JSON.parse(data.site_info.subscribe);
+                if (this.subscribe.allowRecommend) {
+                    // 安排上最新推荐
+                    this.subscribe.list.push(
+                        {user_name: 'admin', alias: '球哥', id: 999991},
+                        {user_name: 'chenyixi', alias: '以西', id: 999992},
+                        {user_name: 'gmengshuai', alias: '小帅', id: 999993},
+                        {user_name: 'loveai', alias: 'ChatGPT', id: 999994},
+                        {user_name: 'yyds007', alias: 'YYDS', id: 999995},
+                        {user_name: 'tiantian666', alias: '文学', id: 999996},
+                    )
+                }
+            }
+            if (data.site_info.customSearchEngines) {
+                this.customSearchEngines.list = JSON.parse(data.site_info.customSearchEngines);
+            }
+            if (data.site_info.top_bottom !== '') {
+                this.top_bottom = JSON.parse(data.site_info.top_bottom);
+            }
+        },
         load(uname) {
+            // 获取缓存数据
+            const cacheKey = `xydh_site_cached_data_for_id_${uname}`;
+            const cachedData = window.localStorage.getItem(cacheKey);
+            if (cachedData) {
+                // 如果有缓存的数据，则直接使用
+                this.handleSiteData(JSON.parse(cachedData));
+            }
             siteService.getAllsiteandlinks(uname).then(res => {
                 if (res.code > 0) {
                     this.$alert('', '走迷路了', {
@@ -590,9 +672,6 @@ export default {
                         },
                     });
                 } else {
-                    // 加载用户
-                    this.userid = res.data.target.id;
-                    this.is_vip = res.data.target.is_vip;
                     // 违规用户
                     if (res.data.target.level <= 0) {
                         this.$alert(
@@ -607,90 +686,13 @@ export default {
                         );
                         return;
                     }
-                    // 加载 Site
-                    this.sitename = res.data.site_info.name;
-                    this.siteinfo = res.data.site_info.info;
-                    this.bglizi = res.data.site_info.bglizi;
-                    this.lybID = res.data.site_info.lyb_id;
-                    this.mobile_bg = res.data.site_info.mobile_bg;
-                    document.title = this.sitename;
-                    // 改背景颜色或图片
-                    var obj = document.getElementsByTagName('body')[0];
-                    var style = document.createElement('style');
-
-                    if (res.data.site_info.bg_switch) {// 有背景图
-                        let bg = ''
-                        if (window.innerWidth < 768 && this.mobile_bg) {
-                            bg = this.mobile_bg;
-                        } else {
-                            bg = res.data.site_info.bg;
-                        }
-                        this.isBorder = true;
-                        const shadow = 'radial-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%)'
-                        style.innerHTML = `body::before { background-image: ${shadow},url(${bg})}`;
-                        document.head.appendChild(style);
-                    } else {
-                        obj.style.backgroundColor = res.data.site_info.bg_color;
+                    // 比较数据是否和缓存中的一致
+                    if (!_.isEqual(res.data, cachedData)) {
+                        // 如果不一致，则进行更新，并将数据存入localStorage中
+                        window.localStorage.setItem(cacheKey, JSON.stringify(res.data));
+                        this.handleSiteData(res.data);
                     }
-                    obj.style.color = res.data.site_info.font_color;
-                    // 取文件夹和书签
-                    this.Folders = this.handlelinkSort(res.data.folder_with_links);
-                    const userNavInfo = {
-                        ...res.data,
-                        folder_with_links: this.Folders
-                    }
-                    this.$store.commit('updateUserNavInfo', userNavInfo);
-                    // //    载入所有书签到 AllLinks,检索用
-                    // for (let i = 0; i < this.Folders.length; i++) {
-                    //     this.AllLinks = this.AllLinks.concat(this.Folders[i].links);
-                    // }
-                    // 载入音乐和自定义底部
-                    if (res.data.site_info.music !== '') {
-                        let musicInfo = JSON.parse(res.data.site_info.music)
-
-                        let newList = musicInfo.list.map((item) => {
-                            return { ...item, name: item.title, cover: item.pic }
-                        })
-                        this.music = { ...musicInfo, list: newList };
-                    }
-
-                    // if (!this.is_vip) {
-                    //     this.music.list.splice(1);
-                    // }
-                    if (res.data.site_info.subscribe) {
-                        this.subscribe = JSON.parse(res.data.site_info.subscribe);
-                        if (this.subscribe.allowRecommend) {
-                            // 安排上最新推荐
-                            this.subscribe.list.push(
-                                { user_name: 'admin', alias: '球哥', id: 999991 },
-                                { user_name: 'chenyixi', alias: '以西', id: 999992 },
-                                { user_name: 'gmengshuai', alias: '小帅', id: 999993 },
-                                { user_name: 'loveai', alias: 'ChatGPT', id: 999994 },
-                                { user_name: 'yyds007', alias: 'YYDS', id: 999995 },
-                                { user_name: 'tiantian666', alias: '文学', id: 999996 },
-                            )
-                        }
-                    }
-                    if (res.data.site_info.customSearchEngines) {
-                        this.customSearchEngines.list = JSON.parse(res.data.site_info.customSearchEngines);
-                    }
-                    if (res.data.site_info.top_bottom !== '') {
-                        this.top_bottom = JSON.parse(res.data.site_info.top_bottom);
-                    }
-
-                    // // 给AllLinks 排个序。看看有没有最近更新的书签
-                    // this.AllLinks = this.AllLinks.filter(link => link && link.update_time_unix); // 过滤掉空值和没有 update_time_unix 属性的对象
-                    // this.AllLinks.sort(function (l1, l2) {
-                    //     return  l2.update_time_unix - l1.update_time_unix
-                    // });
-                    // let sevenDaysAgo = Date.now()/1000 - (7 * 24 * 60 * 60 )
-
-                    // for (var i = 0; i < 20; i++) {
-                    //     if (this.AllLinks[i].update_time_unix > sevenDaysAgo) {
-                    //         this.recentLinks.push(this.AllLinks[i])
-                    //     }
-                    // }
-
+                    this.handleFoldersData(res.data.folder_with_links, uname, 0)
                 }
             });
         },
