@@ -29,14 +29,19 @@ export default {
                     imgSrc: require(`@/assets/dockIcon/searchIcon.txt`),
                 },
                 {
-                    title: '水帘洞',
-                    key: 'site2',
-                    imgSrc: 'https://pic.rmb.bdstatic.com/a8ca2a4481936ec697a4cf5b25922dd4.png',
+                    title: '搜索',
+                    key: 'search',
+                    imgSrc: require(`@/assets/dockIcon/searchIcon.txt`),
                 },
-                {
-                    title: '月光宝盒',
-                    imgSrc: 'https://pic.rmb.bdstatic.com/6ab1dd211f866ff2d0a869d4ee7b2597.png',
-                },
+                // {
+                //     title: '水帘洞',
+                //     key: 'site2',
+                //     imgSrc: 'https://pic.rmb.bdstatic.com/a8ca2a4481936ec697a4cf5b25922dd4.png',
+                // },
+                // {
+                //     title: '月光宝盒',
+                //     imgSrc: 'https://pic.rmb.bdstatic.com/6ab1dd211f866ff2d0a869d4ee7b2597.png',
+                // },
                 {
                     title: '设置',
                     key: 'setting',

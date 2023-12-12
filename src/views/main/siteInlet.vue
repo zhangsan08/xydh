@@ -51,7 +51,7 @@ export default {
     },
     computed: {
         themeType() {
-            return this.$store.state.userConfig.themeType;
+            return 1;
         },
     },
     created() {
