@@ -503,14 +503,16 @@ export default {
             }
             // 给AllLinks 排个序。看看有没有最近更新的书签
             // 过滤掉空值和没有 update_time_unix 属性的对象
-            this.AllLinks = this.AllLinks.filter(link => link && link.update_time_unix);
+            this.AllLinks = this.AllLinks.filter(function(value) {
+                return value !== null;
+            });
             this.AllLinks.sort(function (l1, l2) {
                 return l2.update_time_unix - l1.update_time_unix
             });
             let sevenDaysAgo = Date.now() / 1000 - (7 * 24 * 60 * 60 )
 
             this.recentLinks = []
-            for (i = 0; i < 20; i++) {
+            for (i = 0; i < 20 && i < this.AllLinks.length; i++) {
                 if (this.AllLinks[i].update_time_unix > sevenDaysAgo) {
                     this.recentLinks.push(this.AllLinks[i])
                 }
