@@ -1,13 +1,14 @@
 <template>
     <transition name="IModal" >
         <div class="IModal" v-if="visible" @click="close">
-            <div class="popInner" @click.stop :style="propsStyle">
+            <div class="popInner"  :class="{'full': isFull}" @click.stop :style="propsStyle">
                 <div>
                     <h3 class="foldersTitle">
                         {{ title}}
                     </h3>
                 </div>
                 <i class="el-icon-close close" @click="close"></i>
+                <i class="el-icon-full-screen fullIcon" @click="full"></i>
                 <!-- <img src="~@/assets/closeIcon.svg" alt="" class="close" @click="close"/> -->
                 <div class="IModalContent">
                     <slot></slot>
@@ -30,6 +31,11 @@ export default {
         propsStyle: {
             default: ''
         },
+    },
+    data() {
+        return {
+            isFull: false
+        };
     },
     watch: {
         visible(value) {
@@ -58,6 +64,9 @@ export default {
         },
         close() {
             this.$emit('close');
+        },
+        full() {
+            this.isFull = !this.isFull;
         },
     },
 };
@@ -90,6 +99,7 @@ export default {
             z-index: 999;
             padding: 15px;
             padding-top: 45px;
+            box-sizing: border-box;
             .foldersTitle {
                 position: absolute;
                 top: 9px;
@@ -110,6 +120,20 @@ export default {
                 //     transform: scale(0.95);
                 // }
             }
+            .fullIcon{
+                position: absolute;
+                top: 9px;
+                right: 40px;
+                font-size: 20px;
+                display: block;
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+        }
+        .full{
+            width: 98%;
+            height: 96%;
         }
     }
     // 弹窗动画

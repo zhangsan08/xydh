@@ -110,111 +110,138 @@
                             </li>
                             <!-- </el-popover> -->
                         </div>
-
+                        <div v-for="item in expandList" :key="item.id">
+                            <li @click="clickTab(item.id)" slot="reference">
+                                <div :class="item.id === activeTabId ? 'active' : ''">
+                                    {{ item.title }}
+                                </div>
+                            </li>
+                        </div>
                     </ul>
                 </div>
-                <div v-if="Folders.length === 0" class="navLoading">
-                    <Loading />
-                </div>
-
-                <!-- 用户自定义内容 -->
-                <el-row v-else>
-                    <div class="totop quickNav" v-if="env === 'h5'">
-                        <div class="foldername">
-                            <h3>快捷导航</h3>
-                        </div>
-                        <el-row :class="isBorder ? 'folder' : 'folderNoBorder'">
-                            <el-col
-                                :span="6"
-                                :md="6"
-                                :sm="8"
-                                v-for="Folder in Folders"
-                                :key="Folder.id"
-                            >
-                                <div class="link" :class="env">
-                                    <span class="icon">
-                                        <i :class="'fa fa-mail-forward'"></i>
-                                    </span>
-                                    <a :href="'#' + Folder.name">
-                                        {{ Folder.name }}
-                                    </a>
-                                </div>
-                            </el-col>
-                        </el-row>
+                <div v-if="activeTabId!==4">
+                    <div v-if="Folders.length === 0" class="navLoading">
+                        <Loading />
                     </div>
-                </el-row>
-                <div class="folderContent" :class="env">
-                    <div v-for="(Folder, index) in Folders" :key="Folder.id" class="folderArea">
-                        <div class="infoTips" v-if="showMessage && hoverFileId === Folder.id">
-                            <i class="el-icon-info"></i>
-                            {{ infoTips }}
+                    <!-- 用户自定义内容 -->
+                    <el-row v-else>
+                        <div class="totop quickNav" v-if="env === 'h5'">
+                            <div class="foldername">
+                                <h3>快捷导航</h3>
+                            </div>
+                            <el-row :class="isBorder ? 'folder' : 'folderNoBorder'">
+                                <el-col
+                                    :span="6"
+                                    :md="6"
+                                    :sm="8"
+                                    v-for="Folder in Folders"
+                                    :key="Folder.id"
+                                >
+                                    <div class="link" :class="env">
+                                        <span class="icon">
+                                            <i :class="'fa fa-mail-forward'"></i>
+                                        </span>
+                                        <a :href="'#' + Folder.name">
+                                            {{ Folder.name }}
+                                        </a>
+                                    </div>
+                                </el-col>
+                            </el-row>
                         </div>
-                        <div class="foldername" :id="Folder.name">
-                            <h3 v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</h3>
-                            <h3 v-else>{{ Folder.name }}</h3>
-                            <el-tooltip content="展开文件夹" placement="top" v-if="env === 'pc'">
-                                <div class="openFolder" @click="openFolder(Folder)">
-                                    <i class="fa fa-arrows-alt"></i>
-                                </div>
-                            </el-tooltip>
-                        </div>
-                        <div
-                            :class="isBorder ? 'folder' : 'folderNoBorder'"
-                            class="totop"
-                            :style="{ height: screenWidth > 768 ? '140px' : 'auto' }"
-                            :id="Folder.id"
-                            onselectstart="return false;"
-                        >
-                            <div class="linkbox">
-                                <div class="inputPWD" v-if="Folder.need_password">
-                                    <p><i class="el-icon-lock"></i></p>
-                                    <p v-if="Folder.info">密码提示：{{ Folder.info }}</p>
-                                    <!-- 如果文件夹需要密码 -->
-                                    <el-input
-                                        type="text"
-                                        autosize
-                                        v-model="passwords[index]"
-                                        clearable
-                                        class="input"
-                                        placeholder="输入密码"
-                                    >
-                                        <span
-                                            slot="append"
+                    </el-row>
+                    <div class="folderContent" :class="env">
+                        <div v-for="(Folder, index) in Folders" :key="Folder.id" class="folderArea">
+                            <div class="infoTips" v-if="showMessage && hoverFileId === Folder.id">
+                                <i class="el-icon-info"></i>
+                                {{ infoTips }}
+                            </div>
+                            <div class="foldername" :id="Folder.name">
+                                <h3 v-if="Folder.icon"><i :class="'fa fa-' + Folder.icon"></i>{{ Folder.name }}</h3>
+                                <h3 v-else>{{ Folder.name }}</h3>
+                                <el-tooltip content="展开文件夹" placement="top" v-if="env === 'pc'">
+                                    <div class="openFolder" @click="openFolder(Folder)">
+                                        <i class="fa fa-arrows-alt"></i>
+                                    </div>
+                                </el-tooltip>
+                            </div>
+                            <div
+                                :class="isBorder ? 'folder' : 'folderNoBorder'"
+                                class="totop"
+                                :style="{ height: screenWidth > 768 ? '140px' : 'auto' }"
+                                :id="Folder.id"
+                                onselectstart="return false;"
+                            >
+                                <div class="linkbox">
+                                    <div class="inputPWD" v-if="Folder.need_password">
+                                        <p><i class="el-icon-lock"></i></p>
+                                        <p v-if="Folder.info">密码提示：{{ Folder.info }}</p>
+                                        <!-- 如果文件夹需要密码 -->
+                                        <el-input
                                             type="text"
-                                            @click="GetPWDFolder(index, Folder.id, passwords[index])"
-                                        >确定</span>
-                                    </el-input>
-                                </div>
-                                <div class="links" v-else v-for="link in Folder.links" :key="link.id">
-                                    <el-col :span="8">
-                                        <div
-                                            class="link"
-                                            :class="{ [env]: true, 'lineTextCenter': lineTextCenter }"
-                                            v-on:mouseenter="linkMouseEnter(link.info, link.name, Folder.id)"
-                                            v-on:mouseleave="linkMouseLeave"
+                                            autosize
+                                            v-model="passwords[index]"
+                                            clearable
+                                            class="input"
+                                            placeholder="输入密码"
                                         >
-                                            <a @click="goToUrl(link)" target="_blank" rel="nofollow">
-                                                <div class="linkContent">
-                                                    <span class="icon" v-if="showLineIcon">
-                                                        <i :class="'fa fa-' + link.icon" v-if="link.icon"></i>
-                                                        <i :class="'fa fa-bookmark-o'" v-else></i>
+                                            <span
+                                                slot="append"
+                                                type="text"
+                                                @click="GetPWDFolder(index, Folder.id, passwords[index])"
+                                            >确定</span>
+                                        </el-input>
+                                    </div>
+                                    <div class="links" v-else v-for="link in Folder.links" :key="link.id">
+                                        <el-col :span="8">
+                                            <div
+                                                class="link"
+                                                :class="{ [env]: true, 'lineTextCenter': lineTextCenter }"
+                                                v-on:mouseenter="linkMouseEnter(link.info, link.name, Folder.id)"
+                                                v-on:mouseleave="linkMouseLeave"
+                                            >
+                                                <a @click="goToUrl(link)" target="_blank" rel="nofollow">
+                                                    <div class="linkContent">
+                                                        <span class="icon" v-if="showLineIcon">
+                                                            <i :class="'fa fa-' + link.icon" v-if="link.icon"></i>
+                                                            <i :class="'fa fa-bookmark-o'" v-else></i>
                                                         <!-- <img :src="`http://www.google.com/s2/favicons?domain=${link.url}`" alt=""> -->
-                                                    </span>
-                                                    <span class="linkName">{{ link.name }}</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </el-col>
+                                                        </span>
+                                                        <span class="linkName">{{ link.name }}</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </el-col>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div v-else class="gameArea">
+                    <div v-for="item in gameList" :key="item.name" class="gameAreaItem" @click="clickGame(item)">
+                        <div class="icon">
+                            <i :class="'fa fa-gamepad'"></i>
+                        </div>
+                        <div class="info">
+                            <div class="title">
+                                {{ item.name }}
+                            </div>
+                            <div class="brief">
+                                {{ item.info ||'摸鱼神器，一键畅玩'}}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
         <MoreLinkModal :visible="moreLinkModalVisible" :foldersInfo="foldersInfo" @close-click="moreLinkModalCloseClick" />
         <ImgLinkModal :visible="imgLinkModalVisible" :imgLinkInfo="imgLinkInfo" @close-click="imgLinkModalCloseClick" />
-
+        <ExtendModal
+            :visible="extendModalVisible"
+            @close-click="extendModalCloseClick"
+            :gameData="activeGame"
+        />
         <!-- 音乐 -->
         <Player :musicList="music.list" v-if="music.open" />
 
@@ -267,6 +294,8 @@ import MoreLinkModal from '@/components/MoreLinkModal.vue';
 import ImgLinkModal from '@/components/ImgLinkModal.vue';
 import Search from '@/components/Search/index.vue';
 import { saveAs } from 'file-saver';
+import ExtendModal from '@/components/ExtendModal.vue';
+import { gameList } from '@/common/gameConfig';
 
 export default {
     name: 'ShowSite',
@@ -289,6 +318,7 @@ export default {
         InitLoading,
         MoreLinkModal,
         ImgLinkModal,
+        ExtendModal
     },
     props: ['userName'],
     data() {
@@ -330,6 +360,13 @@ export default {
                 list: [],
                 allowRecommend: true,
             },
+            expandList: [
+                {
+                    key: 'game',
+                    title: '游戏',
+                    id: 4
+                }
+            ],
             customSearchEngines: {
                 type: '自定义',
                 list: [
@@ -355,9 +392,12 @@ export default {
             isBorder: false,
             moreLinkModalVisible: false,
             imgLinkModalVisible: false,
+            extendModalVisible: false,
             foldersInfo: {},
             imgLinkInfo: {},
             recentLinks: [],
+            gameList: gameList,
+            activeGame: {}
         };
     },
     computed: {
@@ -426,6 +466,14 @@ export default {
         }
     },
     methods: {
+        clickGame(item) {
+            if (item.type === 'webPage') {
+                window.open(item.path, "_blank");
+                return
+            }
+            this.activeGame = item
+            this.extendModalVisible = true
+        },
         linkMouseEnter(info, name, id) {
             if (!info && !name) {
                 return
@@ -450,6 +498,9 @@ export default {
             this.Folders = [];
             // 设置当前活动的tabId
             this.activeTabId = id;
+            if (id === 4) {
+                return
+            }
             // 获取缓存数据
             const cacheKey = `xydh_tab_cached_data_for_id_${user_name}_${id}`;
             const cachedData = window.localStorage.getItem(cacheKey);
@@ -460,6 +511,19 @@ export default {
             // 请求数据
             this.getActiveLabelData(id, user_name);
         },
+        // 处理书签数据,存入localStorage
+        handleFoldersData(data, user_name, id) {
+            // 对数据进行相关处理
+            let linksData = this.handlelinkSort(data);
+            // 比较数据是否和缓存中的一致
+            const cacheKey = `xydh_tab_cached_data_for_id_${user_name}_${id}`;
+            const cachedData = window.localStorage.getItem(cacheKey);
+            if (!_.isEqual(linksData, cachedData)) {
+                // 如果不一致，则进行更新，并将数据存入localStorage中
+                this.Folders = [...linksData];
+                window.localStorage.setItem(cacheKey, JSON.stringify(linksData));
+            }
+        },
         // 切换tab,请求数据
         getActiveLabelData(id, user_name) {
             // 记录当前的随机数，用于判断是否需要更新数据
@@ -468,16 +532,7 @@ export default {
             siteService.getAllsiteandlinks(user_name).then(res => {
                 // 如果随机数已经变化，则表示已经更新了tab，需要丢弃当前的数据
                 if (this.random !== random) return;
-                // 对数据进行相关处理
-                let linksData = this.handlelinkSort(res.data.folder_with_links);
-                // 比较数据是否和缓存中的一致
-                const cacheKey = `xydh_tab_cached_data_for_id_${user_name}_${id}`;
-                const cachedData = window.localStorage.getItem(cacheKey);
-                if (!_.isEqual(linksData, cachedData)) {
-                    // 如果不一致，则进行更新，并将数据存入localStorage中
-                    this.Folders = [...linksData];
-                    window.localStorage.setItem(cacheKey, JSON.stringify(linksData));
-                }
+                this.handleFoldersData(res.data.folder_with_links, user_name, id)
             });
         },
         // 排序
@@ -531,7 +586,85 @@ export default {
             this.navSwitch = !this.navSwitch;
             cookieSet('navSwitch', this.navSwitch);
         },
+        // 处理网站数据
+        handleSiteData(data) {
+            // 加载用户
+            this.userid = data.target.id;
+            this.is_vip = data.target.is_vip;
+            // 加载 Site
+            this.sitename = data.site_info.name;
+            this.siteinfo = data.site_info.info;
+            this.bglizi = data.site_info.bglizi;
+            this.lybID = data.site_info.lyb_id;
+            this.mobile_bg = data.site_info.mobile_bg;
+            document.title = this.sitename;
+            // 改背景颜色或图片
+            var obj = document.getElementsByTagName('body')[0];
+            var style = document.createElement('style');
+
+            if (data.site_info.bg_switch) {// 有背景图
+                let bg = ''
+                if (window.innerWidth < 768 && this.mobile_bg) {
+                    bg = this.mobile_bg;
+                } else {
+                    bg = data.site_info.bg;
+                }
+                this.isBorder = true;
+                const shadow = 'radial-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%)'
+                style.innerHTML = `body::before { background-image: ${shadow},url(${bg})}`;
+                document.head.appendChild(style);
+            } else {
+                obj.style.backgroundColor = data.site_info.bg_color;
+            }
+            obj.style.color = data.site_info.font_color;
+            // // 取文件夹和书签
+            this.Folders = this.handlelinkSort(data.folder_with_links);
+            //    载入所有书签到 AllLinks,检索用
+            for (let i = 0; i < this.Folders.length; i++) {
+                this.AllLinks = this.AllLinks.concat(this.Folders[i].links);
+            }
+            // 载入音乐和自定义底部
+            if (data.site_info.music !== '') {
+                let musicInfo = JSON.parse(data.site_info.music)
+
+                let newList = musicInfo.list.map((item) => {
+                    return {...item, name: item.title, cover: item.pic}
+                })
+                this.music = {...musicInfo, list: newList};
+            }
+
+            // if (!this.is_vip) {
+            //     this.music.list.splice(1);
+            // }
+            if (data.site_info.subscribe) {
+                this.subscribe = JSON.parse(data.site_info.subscribe);
+                if (this.subscribe.allowRecommend) {
+                    // 安排上最新推荐
+                    this.subscribe.list.push(
+                        {user_name: 'admin', alias: '球哥', id: 999991},
+                        {user_name: 'chenyixi', alias: '以西', id: 999992},
+                        {user_name: 'gmengshuai', alias: '小帅', id: 999993},
+                        {user_name: 'loveai', alias: 'ChatGPT', id: 999994},
+                        {user_name: 'yyds007', alias: 'YYDS', id: 999995},
+                        {user_name: 'tiantian666', alias: '文学', id: 999996},
+                    )
+                }
+            }
+            if (data.site_info.customSearchEngines) {
+                this.customSearchEngines.list = JSON.parse(data.site_info.customSearchEngines);
+            }
+            if (data.site_info.top_bottom !== '') {
+                this.top_bottom = JSON.parse(data.site_info.top_bottom);
+            }
+        },
         load(uname) {
+            // 获取缓存数据
+            const cacheKey = `xydh_site_cached_data_for_id_${uname}`;
+            const cachedData = window.localStorage.getItem(cacheKey);
+            if (cachedData) {
+                // 如果有缓存的数据，则直接使用
+                this.handleSiteData(JSON.parse(cachedData));
+            }
             siteService.getAllsiteandlinks(uname).then(res => {
                 if (res.code > 0) {
                     this.$alert('', '走迷路了', {
@@ -541,9 +674,6 @@ export default {
                         },
                     });
                 } else {
-                    // 加载用户
-                    this.userid = res.data.target.id;
-                    this.is_vip = res.data.target.is_vip;
                     // 违规用户
                     if (res.data.target.level <= 0) {
                         this.$alert(
@@ -558,90 +688,13 @@ export default {
                         );
                         return;
                     }
-                    // 加载 Site
-                    this.sitename = res.data.site_info.name;
-                    this.siteinfo = res.data.site_info.info;
-                    this.bglizi = res.data.site_info.bglizi;
-                    this.lybID = res.data.site_info.lyb_id;
-                    this.mobile_bg = res.data.site_info.mobile_bg;
-                    document.title = this.sitename;
-                    // 改背景颜色或图片
-                    var obj = document.getElementsByTagName('body')[0];
-                    var style = document.createElement('style');
-
-                    if (res.data.site_info.bg_switch) {// 有背景图
-                        let bg = ''
-                        if (window.innerWidth < 768 && this.mobile_bg) {
-                            bg = this.mobile_bg;
-                        } else {
-                            bg = res.data.site_info.bg;
-                        }
-                        this.isBorder = true;
-                        const shadow = 'radial-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%)'
-                        style.innerHTML = `body::before { background-image: ${shadow},url(${bg})}`;
-                        document.head.appendChild(style);
-                    } else {
-                        obj.style.backgroundColor = res.data.site_info.bg_color;
+                    // 比较数据是否和缓存中的一致
+                    if (!_.isEqual(res.data, cachedData)) {
+                        // 如果不一致，则进行更新，并将数据存入localStorage中
+                        window.localStorage.setItem(cacheKey, JSON.stringify(res.data));
+                        this.handleSiteData(res.data);
                     }
-                    obj.style.color = res.data.site_info.font_color;
-                    // 取文件夹和书签
-                    this.Folders = this.handlelinkSort(res.data.folder_with_links);
-                    const userNavInfo = {
-                        ...res.data,
-                        folder_with_links: this.Folders
-                    }
-                    this.$store.commit('updateUserNavInfo', userNavInfo);
-                    // //    载入所有书签到 AllLinks,检索用
-                    // for (let i = 0; i < this.Folders.length; i++) {
-                    //     this.AllLinks = this.AllLinks.concat(this.Folders[i].links);
-                    // }
-                    // 载入音乐和自定义底部
-                    if (res.data.site_info.music !== '') {
-                        let musicInfo = JSON.parse(res.data.site_info.music)
-
-                        let newList = musicInfo.list.map((item) => {
-                            return { ...item, name: item.title, cover: item.pic }
-                        })
-                        this.music = { ...musicInfo, list: newList };
-                    }
-
-                    // if (!this.is_vip) {
-                    //     this.music.list.splice(1);
-                    // }
-                    if (res.data.site_info.subscribe) {
-                        this.subscribe = JSON.parse(res.data.site_info.subscribe);
-                        if (this.subscribe.allowRecommend) {
-                            // 安排上最新推荐
-                            this.subscribe.list.push(
-                                { user_name: 'admin', alias: '球哥', id: 999991 },
-                                { user_name: 'chenyixi', alias: '以西', id: 999992 },
-                                { user_name: 'gmengshuai', alias: '小帅', id: 999993 },
-                                { user_name: 'loveai', alias: 'ChatGPT', id: 999994 },
-                                { user_name: 'yyds007', alias: 'YYDS', id: 999995 },
-                                { user_name: 'tiantian666', alias: '文学', id: 999996 },
-                            )
-                        }
-                    }
-                    if (res.data.site_info.customSearchEngines) {
-                        this.customSearchEngines.list = JSON.parse(res.data.site_info.customSearchEngines);
-                    }
-                    if (res.data.site_info.top_bottom !== '') {
-                        this.top_bottom = JSON.parse(res.data.site_info.top_bottom);
-                    }
-
-                    // // 给AllLinks 排个序。看看有没有最近更新的书签
-                    // this.AllLinks = this.AllLinks.filter(link => link && link.update_time_unix); // 过滤掉空值和没有 update_time_unix 属性的对象
-                    // this.AllLinks.sort(function (l1, l2) {
-                    //     return  l2.update_time_unix - l1.update_time_unix
-                    // });
-                    // let sevenDaysAgo = Date.now()/1000 - (7 * 24 * 60 * 60 )
-
-                    // for (var i = 0; i < 20; i++) {
-                    //     if (this.AllLinks[i].update_time_unix > sevenDaysAgo) {
-                    //         this.recentLinks.push(this.AllLinks[i])
-                    //     }
-                    // }
-
+                    this.handleFoldersData(res.data.folder_with_links, uname, 0)
                 }
             });
         },
@@ -761,6 +814,9 @@ export default {
         },
         moreLinkModalCloseClick() {
             this.moreLinkModalVisible = false;
+        },
+        extendModalCloseClick() {
+            this.extendModalVisible = false;
         },
         imgLinkModalCloseClick() {
             this.imgLinkModalVisible = false;
